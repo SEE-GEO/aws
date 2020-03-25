@@ -1,0 +1,18 @@
+Software needed:
+
+Atmlab: svn co https://arts.mi.uni-hamburg.de/svn/rt/atmlab/trunk/
+---
+See atmlab/CONFIGURE for instructions how to configure atmlab. Most imprtant is
+that atmlab_init is run automatically when you start Matlab.
+
+CloudArts: svn co http://cvs.rss.chalmers.se/svn/gem/patrick/Projects/CloudArts
+---
+Edit init_aws325ghz.m to include CloudArts
+
+
+Further:
+
+Dendrite must be mounted. For the moment it is assumed that the mounting point
+is ~/Dendrite.
+
+To get started, check if you can run test.m (you need to add path to "workfolder").
