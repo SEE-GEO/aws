@@ -1,0 +1,260 @@
+\documentclass[BCOR=1cm,12pt,bibliography=totoc]{article}
+
+
+% Overall formatting
+\sloppy
+\let\cleardoublepage\clearpage % do not force chapters to start on odd pages
+
+
+% Graphics
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.png,.pdf,.jpg}
+\graphicspath{{Figures/}}
+
+
+\usepackage[a4paper, total={16cm,25cm}]{geometry}
+
+
+
+% Tables
+\newlength{\mytabskip}   
+\setlength{\mytabskip}{-1.5ex}
+\newcommand{\tabrule}{\rule[\mytabskip]{0ex}{0ex}}
+\usepackage{tabularx}
+%\usepackage{longtable}
+
+
+% bibliography stuff 
+\usepackage{natbib}
+\bibliographystyle{plainnat} % to display the URLs
+
+
+\newcommand{\unit}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\degree}{\ensuremath{\mathrm{^\circ}}}
+
+%\newcommand{\FIXME}[1]{{\sffamily \bfseries #1}}
+\newcommand{\FIXME}[1]{{\sffamily {\bfseries \textcolor{red}{FIXME:} #1}}}
+
+
+\hyphenation{EUMETSAT}
+\hyphenation{Metop}
+
+
+
+\begin{document}
+
+
+
+\noindent
+\textbf{{\LARGE Arctic Weather Satellite (AWS) channels\\definition: Work plan}}  \vspace{5mm}\\
+{\bf Patrick Eriksson}\\
+Dept.\ of Space, Earth and Environment\\
+Chalmers University of Technology\\
+SE-412\,96, Gothenburg, Sweden \vspace{10mm}
+
+
+\section{Objectives}
+\label{sec:objectives}
+%
+Our understanding is that the main objectives of the study are:
+\begin{itemize}
+\item Demonstrate that channels around 325.15\,GHz provides a basis for cloud
+  filtering/correction of data measured around 183\,GHz, that is equivalent
+  or better than what can be achieved with a channel at 229\,GHz (as found on
+  the MicroWave Sounder, MWS). 
+\item Suggest specifications of 325\,GHz channels considering the specific
+  constraints of the AWS project. Matching in terms of weighting functions between
+  183 and 325\,GHz channels could be relevant in this context.
+\end{itemize}
+If feasible, other ways to compare the 229 and 325\,GHz options should be
+considered, such as degree of freedom in the measurements.
+
+
+\section{Reference documents and data}
+\label{sec:info}
+%
+The study report by \citet{rekha2012potential} will be used as reference with
+respect to cloud filtering using 229\,GHz through a scattering index (SI)
+approach. It should be considered if the specifications of the 325\,GHz
+channels could be the same as applied for ICI (Ice Cloud Imager), that are
+based on \citet{buehler:obser:12}.
+
+Omnisys will be consulted when it comes to technical assumptions and
+constraints. It is assumed that channels at 89, 166 and 183\,GHz will be placed
+as for MWS, except that AWS 183\,GHz channels will be single sideband (covering
+the lower MWS band). If needed, assumptions for a 229\,GHz channel will be
+taken from the MWS science plan. Required input from Omnisys includes: minimum
+and maximum intermediate frequency (IF) for 325\,GHz channels, maximum number
+of channels inside this range and expected receiver noise temperature at 166,
+183 and 325\,GHz.
+
+
+\section{Cloud filtering and correction}
+\label{sec:clouds}
+%
+As mentioned, \citet{rekha2012potential} suggested a SI-based cloud filtering
+approach for MWS, using data from 229\,GHz. SI-type cloud filtering based on
+183\,GHz data alone can also be performed \citep{buehler:aclou:07}. However,
+the cloud filtering performed operationally for NWP (numerical weather
+prediction) seems to mainly be based on deviations between observations and
+clear-sky simulations based on the background field (e.g.\
+\citet{chambon2015investigating}). The aim of both these approaches is just to
+reject data with a cloud impact exceeding some brightness temperature
+threshold. This means that even if these cloud filtering methods would work
+perfectly, they will still cause a bias in filtered data. This is the case as
+the presence of clouds gives throughout a decrease in 183\,GHz radiances (maybe
+except for outermost channels and very dry conditions). Expressed differently,
+compared to the true cloud and noise free brightness temperature, the filtered
+data will have an uncertainty distribution that is non-Gaussian. On one side
+the distribution will be determined by the measurement noise. On the other
+side, the distribution will be a combination of measurement noise and the cloud
+impacts that are below the threshold value. The mean of this distribution will
+deviate from zero. This is not optimal but likely the best that can be achieved
+with present sensors.
+
+The 325\,GHz transition is of similar strength as the 183\,GHz one (though a
+bit weaker and more highly affected by continuum absorption). On the other
+hand, the impact of high altitude cirrus clouds should be considerably higher.
+Weak cloud impact should mainly end up in the Rayleigh domain, where
+scattering follows $\lambda^4$. For 325 vs.\ 183\,GHz, this gives a factor very
+close to 10. That is, if a high cloud gives a 5\,K impact on a channel around
+325\,GHz the impact for a channel around 183\,GHz with similar (clear-sky)
+weighting function should be about 0.5\,K. The impact at 183\,GHz can not be
+detected, due to thermal noise and modelling uncertainties, while the impact at
+325\,GHz should be possible to estimate. Further, the estimated 325\,GHz cloud
+impact could even be used to compensate for the cloud impact at 183\,GHz.
+
+This later approach, i.e.\ to perform a cloud correction of 183\,GHz data, will
+be the primary option for this study. If successful, this will provide 183\,GHz
+data that are more useful for NWP and stand-alone 1DVAR that rely on
+``clear-sky'' data. At least the resulting data should have a lower bias than
+the existing approaches. The precision will depend on situation and the method
+for cloud correction should preferably also provide a case-specific uncertainty
+estimate.
+
+The suggested cloud correction scheme could be seen as forming clear-sky
+``super-channels'' by combining measurements at 183 and 325\,GHz. This would
+have the advantage that NWP systems not yet prepared for 325\,GHz, could still
+make use of these data early on. For situations where 325\,GHz lacks cloud
+impacts, theoretically the super-channels could have a resulting NEDT (Noise
+Equivalent Delta Temperature) lower than the one of 183\,GHz, as the
+combination of 183 and 325\,GHz together gives a higher effective bandwidth. In
+practice this can be hard to achieve due to a higher noise at 325\,GHz and
+modelling uncertainties, and the comment was added mainly to illustrate the
+approach.
+
+
+\section{Work plan}
+\label{sec:wp}
+%
+For clarity, the work as divided into a number of work packages (WPs). See
+next page. The work will be performed by (with WP responsibilities inside
+parenthesises):
+\begin{itemize}
+\item Patrick Eriksson (WP 1.1 and 3.3)
+\item Simon Pfreundschuh (WP 1.2 and 3.2)
+\item Inderpreet Kaur (WP 2.1, 2.2, and 3.1)
+\end{itemize}
+
+\newpage
+\subsection*{WP1}
+%
+\subsubsection*{WP1.1: Basic preparations}
+%
+\begin{itemize}
+\item Contact Omnisys to obtain required technical information.
+\item Determine the number of monochromatic frequencies needed to represent each
+  channel with sufficient accuracy. 
+\item Compare 183, 229 and 325\,GHz brightness temperatures and weighting
+  functions (clear-sky), for a set of climatological atmospheres. Based on
+  this, define preliminary specifications of 325\,GHz channels.
+\end{itemize}
+
+
+\subsubsection*{WP1.2: Setting up bulk simulations}
+%
+The task of this WP is to prepare and implement functions for creating a
+diverse set of simulations, to be used in later WPs. The simulations will be
+based on CloudSat reflectivities and ERA5 data, and largely follow the
+``dBZ-based model system'' introduced in \citet{ekelund:using:20}. The main
+deviations to \citet{ekelund:using:20} is that some along-track averaging of
+CloudSat data will be performed, the mapping from reflectivities will be
+performed by 1DVAR (and not by ``onion-peeling'') and that each footprint will
+be represented with a single pencil beam. To make it easier to streamline the
+calculations, a switch from Matlab to Python will also be made. Both clear-sky
+and all-sky data will be generated, using ARTS and its interface to the RT4
+scattering solver.
+
+
+\subsection*{WP2}
+%
+\subsubsection*{WP2.1: Bulk simulations}
+%
+Perform the required number of simulations. Data will be generated for randomly
+sampled positions, for latitudes up to  60$^\circ$N/S. Higher latitudes
+will be avoided initially as that require more care about surface emissivity.
+Both land and ocean areas will be considered but for land an altitude threshold
+will be applied, again due to limitations in the knowledge of surface
+emissivities. 
+
+Simulations covering channels at 89, 166, 183, 229 and 325\,GHz will be made. A
+number of scan angles, between nadir and swath edge, will be covered. A first
+batch of 100\,000 simulations will be made. If found necessary, adding more
+simulations could be possible. If time permits, extending the simulations to
+higher latitudes could also be considered.
+
+
+\subsubsection*{WP2.2: Post-processing of data}
+%
+Monochromatic data are weighted together to form channel antenna temperatures.
+For 325\,GHz channel data should be formed for some alternative channel
+specifications, for later comparison between the alternatives. Position,
+land/ocean, IWP and other data are added, to form a database suitable for the
+analysis in WP3. 
+
+
+\subsection*{WP3}
+%
+\subsubsection*{WP3.1: Cloud correction}
+%
+A cloud correction scheme of 183\,GHz data is developed. The main task if to
+find a suitable regression approach. In short, the regression shall, based on
+the simulated 325\,GHz data and the antenna temperature of the 183\,GHz channel
+of concern, predict the clear-sky, noise free, value. Different regression
+schemes and 325\,GHZ channel alternatives will be compared by assessing the
+error of the prediction. The error shall have as low bias and spread as
+possible. An error model will also be devised and assessed. Tests will be made
+for lower and higher assumed NEDT, to assess if there is any critical value
+that should be reflected in the requirements of AWS.
+
+A similar regression will be tested for 229\,GHz. If not working well, a
+perfect version of the approach by \citet{rekha2012potential} will be used
+instead for 229\,GHz. That is, the assumed error distribution is the one
+described in Sec.~\ref{sec:clouds},
+
+
+\subsubsection*{WP3.2: Measurements’ degrees of freedom (DoF)}
+%
+An analysis following the one in Sec.~4.3.2 of \citet[][]{eriksson:towar:20}
+for ICI will be made, based on the database of simulations. This WP requires
+that the database contains data for 89 and 166\,GHz, to give a correct view on
+the value of 229\,GHz. This is the case as 229\,GHz is a window channel (as 89
+and 166\,GHz) and there should be redundancy between 229\,GHz and the other
+window channels. In a similar way, 325\,GHz will give small increase in the DoF
+for clear clear-sky situations, due to redundancy with 183\,GHz, but should
+increase the DoF significantly in the presence of ice clouds.  
+
+
+\subsubsection*{WP3.3: Meetings and reporting}
+%
+This WP covers to analyse the results to reach a conclusion, as well as
+reporting the results. 
+
+
+
+
+
+
+\bibliography{j_abbr,references}
+
+\end{document}
