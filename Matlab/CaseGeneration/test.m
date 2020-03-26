@@ -3,6 +3,8 @@
 switch whoami
   case 'patrick'
     workfolder = '/home/patrick/WORKAREA';
+  case 'inderpreet'
+    workfolder = 'home/inderpreet/Projects/AWS'
   otherwise
     error( 'Unknown user' );
 end  
