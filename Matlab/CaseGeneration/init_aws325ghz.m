@@ -13,6 +13,9 @@ function init_aws325ghz
 switch whoami
   case 'patrick'
     run( '~/SVN/opengem/patrick/Projects/CloudArts/addpath_cloudarts' );
+  case 'inderpreet'
+    run( '~/SVN/CloudArts/addpath_cloudarts' );
+    atmlab( 'ATMLAB_DATA_PATH',   '~/SVN/atmlab-data');
   otherwise
     error( 'Unknown user' );
 end
