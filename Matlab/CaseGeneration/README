@@ -1,6 +1,6 @@
 Software needed:
 
-Atmlab: svn co https://arts.mi.uni-hamburg.de/svn/rt/atmlab/trunk/
+Atmlab: svn co https://arts.mi.uni-hamburg.de/svn/rt/atmlab/trunk/ atmlab
 ---
 See atmlab/CONFIGURE for instructions how to configure atmlab. Most important is
 that atmlab_init is run automatically when you start Matlab.
@@ -9,6 +9,12 @@ CloudArts: svn co http://cvs.rss.chalmers.se/svn/gem/patrick/Projects/CloudArts
 ---
 Edit init_aws325ghz.m (part of this project) to include CloudArts
 
+Static data: 
+
+atmlab-data : svn co  https://arts.mi.uni-hamburg.de/svn/rt/atmlab-data/trunk atmlab-data
+
+Edit init_aws325ghz.m to include atmlab-data, add the following line to the user 
+atmlab('ATMLAB_DATA_PATH', '/path/to/atmlab-data')
 
 Further:
 
