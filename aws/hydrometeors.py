@@ -1,7 +1,7 @@
 import os
 
 from parts.scattering import ScatteringSpecies
-from parts.scattering.psd import D14N
+from parts.scattering.psd import D14MN
 
 try:
     dendrite_path = os.environ["DENDRITE_PATH"]
@@ -28,6 +28,22 @@ shape_names = {
     "Plate Type 1" : "PlateType1",
     "Sector Snow Flake" : "SectorSnowflake"}
 
+class D14(D14MN):
+    """
+    Specialized class implementing a normalized modified gamma distribution
+    parametrized using mass density and mass weighted mean diameter (D_m).
+    The shape is the same as the one used for the DARDAR v3 retrievals.
+    """
+    def __init__(self, alpha, beta, rho):
+        super().__init__(alpha, beta, rho)
+        self.name = "d14"
+
+    @property
+    def moment_names(self):
+        return ["water_content", "n0"]
+
+
+
 
 class Ice(ScatteringSpecies):
     def __init__(self,
@@ -35,7 +51,7 @@ class Ice(ScatteringSpecies):
         # PSD, same as DARDAR V3
         alpha = -0.262
         beta = 1.754
-        psd = D14N(alpha, beta)
+        psd = D14(alpha, beta, 917.0)
         psd.t_max = 280.0
         # Look up particle name
         if shape in shape_names:
@@ -53,14 +69,14 @@ class Ice(ScatteringSpecies):
                                  "FullSet")
         scattering_data = os.path.join(ssdb_path, scattering_data)
         scattering_meta_data = os.path.join(ssdb_path, scattering_meta_data)
-        super().__init__("ice", psd, scattering_data, scattering_data)
+        super().__init__("ice", psd, scattering_data, scattering_meta_data)
 
 class Rain(ScatteringSpecies):
     def __init__(self):
         # PSD, same as DARDAR V3
         alpha = 0.0
         beta = 1.0
-        psd = D14N(alpha, beta, 1000.0)
+        psd = D14(alpha, beta, 1000.0)
         psd.t_min = 270.0
 
         ssdb_path = os.path.join(dendrite_path,
@@ -70,5 +86,5 @@ class Rain(ScatteringSpecies):
                                  "StandardHabits",
                                  "FullSet")
         scattering_data = os.path.join(ssdb_path, "LiquidSphere.xml")
-        scattering_meta_data = os.path.join(ssdb_path, "LiquidSphere.xml")
-        super().__init__("rain", psd, scattering_data, scattering_data)
+        scattering_meta_data = os.path.join(ssdb_path, "LiquidSphere.meta.xml")
+        super().__init__("rain", psd, scattering_data, scattering_meta_data)

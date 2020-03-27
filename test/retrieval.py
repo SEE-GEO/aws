@@ -16,7 +16,13 @@ try:
 except:
     path = "."
 
-data_provider = Profiles(os.path.join(path, "..", "data", "test_data.mat"))
+data_provider = Profiles(os.path.join(path, "..", "data", "testdata.mat"))
 
-retrieval.setup()
 retrieval = Retrieval(data_provider)
+retrieval.setup()
+retrieval.run(4)
+
+ws = retrieval.workspace
+pbf = ws.particle_bulkprop_field.value
+y = ws.y.value
+yf = ws.yf.value

@@ -23,6 +23,3 @@ class Simulation(ArtsSimulation):
                          data_provider=data_provider,
                          sensors=[sensor],
                          scattering_solver=scattering_solver)
-
-
-
