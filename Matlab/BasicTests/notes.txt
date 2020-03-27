@@ -1,0 +1,4 @@
+setup_h2o_abs
+-
+Tests agreement between hard-coded MPM89 and line-by-line version, as well as
+compares to version mimicking RTTOV. 
