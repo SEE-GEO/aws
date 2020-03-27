@@ -16,7 +16,10 @@ S = settings;
 
 %- Define orbit part to process
 %
-S.csat.filename = find_csat_files( S, 2015, 204, 12 );
+year  = 2015;
+doy   = 204;
+ifile = 12;
+S.csat.filename = find_csat_files( S, year, doy, ifile );
 %
 S.csat.lat_lims    = [ 5 11 ];
 S.csat.orbitleg    = 2;
@@ -28,3 +31,9 @@ ATM = extract_atm2d( S, workfolder );
 %- Extract individual cases
 %
 C = extract_cases( S, ATM );
+
+%- Save to file
+%
+filename = sprintf('c_of_%04d_%03d_%02d', year, doy, ifile );
+%
+save( filename, '-v7.3', 'C' );
