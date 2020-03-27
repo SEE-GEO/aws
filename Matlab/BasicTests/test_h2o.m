@@ -1,4 +1,4 @@
-function setup_h2o_abs(atm,f_grid,r_surface)
+function test_h2o(atm,f_grid,r_surface)
 
 
 %= Expand atm settings
@@ -82,19 +82,15 @@ Q.INCLUDES              = { fullfile( 'ARTS_INCLUDES', 'general.arts' ), ...
                             fullfile( 'ARTS_INCLUDES', 'planet_earth.arts' ) };
 %
 Q.ABS_SPECIES(3).TAG{1}   = 'H2O,H2O-MPM89';
-Q.ABS_LINES_FORMAT        = 'ARTSCAT';
-Q.ABS_LINES               = fullfile( pwd, 'lines_mpm89.xml' );
-Q.ABS_LINESHAPE           = 'VP';
-Q.ABS_LINESHAPE_FACTOR    = 'VVW';
-Q.ABS_LINESHAPE_CUTOFF    = -1;
-Q.ABS_LINESHAPE_MIRRORING = 'Lorentz';
+Q.ABS_LINES_FORMAT        = 'XML';
+Q.ABS_LINES               = fullfile( pwd, 'abs_lines_h2o_mpm89.xml' );
 %
 y2 = arts_y( Q );
 
 
 %- RTTOV version
 %
-Q.ABS_LINES               = fullfile( pwd, 'lines_rttov.xml' );
+Q.ABS_LINES               = fullfile( pwd, 'abs_lines_h2o_rttov.xml' );
 %
 y3 = arts_y( Q );
 

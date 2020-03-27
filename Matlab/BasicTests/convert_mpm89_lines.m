@@ -97,13 +97,7 @@ isocorr      = 1/.997317;
 
 % Start of output file
 %
-if do_rttov
-  filename = 'lines_rttov.xml';
-else
-  filename = 'lines_mpm89.xml';
-end
-%
-fid = fopen( filename, 'w' );
+fid = fopen( 'tmp1.xml', 'w' );
 %
 fprintf( fid, '<?xml version="1.0"?>\n' );
 fprintf( fid, '<arts format="ascii" version="1">\n' );
@@ -151,3 +145,19 @@ fprintf( fid, '</ArrayOfLineRecord>\n' );
 fprintf( fid, '</arts>\n' );
 %
 fclose(fid);
+
+
+% Define lineshape etc, and convert to abs_lines XML file
+%
+if do_rttov
+  filename = 'abs_lines_h2o_rttov.xml';
+else
+  filename = 'abs_lines_h2o_mpm89.xml';
+end
+%
+!arts -r000 artscat2xml.arts
+%
+movefile( 'tmp2.xml', filename );
+%
+delete( 'tmp1.xml' );
+
