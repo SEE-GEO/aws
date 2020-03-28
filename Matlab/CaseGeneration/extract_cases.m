@@ -57,14 +57,21 @@ for i = 1 : length(ic1)
                                       [C(iout).lat,lonp] );
 
     % "Clear-sky" variables
-    C(iout).p_grid     = ATM.p_grid;
-    C(iout).z_field    = ATM.z_field(:,im);
-    C(iout).t_field    = ATM.t_field(:,im);
-    C(iout).h2o        = ATM.h2o_field(:,im);
-    C(iout).lwc        = ATM.lwc_field(:,im);
+    %
+    iz                 = find( ATM.z_field(:,im) > C(iout).z_surface );
+    C(iout).z_field    = [ C(iout).z_surface; ATM.z_field(iz,im) ];
+    %
+    C(iout).p_grid     = exp( interp1( ATM.z_field(:,im), log(ATM.p_grid), ...
+                                       C(iout).z_field ) );    
+    C(iout).t_field    = interp1( ATM.z_field(:,im), ATM.t_field(:,im), ...
+                                  C(iout).z_field );
+    C(iout).h2o        = interp1( ATM.z_field(:,im), ATM.h2o_field(:,im), ...
+                                  C(iout).z_field );
+    C(iout).lwc        = interp1( ATM.z_field(:,im), ATM.lwc_field(:,im), ...
+                                  C(iout).z_field );
     
     % Reflectivites
-    C(iout).dBZ        = 10 * log10( max( mean( R(:,ind), 2 ), 1e-10) );
+    C(iout).dBZ        = 10 * log10( [ 1e-10; max( mean( R(iz,ind), 2 ), 1e-10) ] );
     
   end
 end
