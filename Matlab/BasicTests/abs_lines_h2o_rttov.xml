@@ -10,7 +10,7 @@ Lines meta-data:
 	No cut-off will be applied.
 	The lines are considered as in pure LTE.
 	van Vleck and Weisskopf far-wing renormalization will be applied, i.e. F ~ (f/f0)^2
-	The line shape type is the Voigt profile.
+	The line shape type is the Lorentz profile.
 	These lines are mirrored around 0 Hz using the Lorentz line shape.
 	The reference temperature for all line parameters is 300 K.
 	If applicable, there is no line mixing limit.
@@ -30,7 +30,7 @@ Lines meta-data:
 			G0 ~ VMR(SELF) * 134928 * (300/T)^1 + VMR(AIR) * 26560 * (300/T)^0.69
 			D0 ~ VMR(SELF) * 0 * (300/T)^(0.25 + 1.5 * 0.69) + VMR(AIR) * 0 * (300/T)^(0.25 + 1.5 * 0.69)
 </comment>
-<AbsorptionLines nlines="30" species="H2O-161" cutofftype="None" mirroringtype="Lorentz" populationtype="LTE" normalizationtype="VVW" lineshapetype="VP" T0="300" cutofffreq="-1" linemixinglimit="-1" localquanta="" upperglobalquanta="" lowerglobalquanta="" broadeningspecies="SELF AIR" temperaturemodes="G0 T1 T1 D0 T5 T5">
+<AbsorptionLines nlines="30" species="H2O-161" cutofftype="None" mirroringtype="Lorentz" populationtype="LTE" normalizationtype="VVW" lineshapetype="LP" T0="300" cutofffreq="-1" linemixinglimit="-1" localquanta="" upperglobalquanta="" lowerglobalquanta="" broadeningspecies="SELF AIR" temperaturemodes="G0 T1 T1 D0 T5 T5">
 22235080000 1.325487e-18 8.86883e-21 0 0 0 nan nan 134928 1 0 0 0 0.69 0 0 26560 0.69 0 0 0 0.69 0 0 
 67813960000 4.079642e-20 3.615749e-20 0 0 0 nan nan 140899.4 0.82 0 0 0 0.69 0 0 28580 0.69 0 0 0 0.69 0 0 
 119995940000 4.59383e-20 3.457051e-20 0 0 0 nan nan 140914.4 0.79 0 0 0 0.7 0 0 29480 0.7 0 0 0 0.7 0 0 

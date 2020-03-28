@@ -97,7 +97,7 @@ isocorr      = 1/.997317;
 
 % Start of output file
 %
-fid = fopen( 'tmp1.xml', 'w' );
+fid = fopen( 'tmp1.ac', 'w' );
 %
 fprintf( fid, '<?xml version="1.0"?>\n' );
 fprintf( fid, '<arts format="ascii" version="1">\n' );
@@ -159,5 +159,5 @@ end
 %
 movefile( 'tmp2.xml', filename );
 %
-delete( 'tmp1.xml' );
+delete( 'tmp1.ac' );
 

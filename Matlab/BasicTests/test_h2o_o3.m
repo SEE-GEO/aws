@@ -1,4 +1,4 @@
-function setup_o2_n2(atm,f_grid,r_surface)
+function test_h2o_o3(atm,f_grid,r_surface)
 
 
 %= Expand atm settings
@@ -42,6 +42,7 @@ Q.RAW_ATMOSPHERE        = fullfile( atmlab( 'ARTS_XMLDATA_PATH' ), 'planets', ..
                                     'Earth', 'Fascod', atmlong, atmlong );
 %
 Q.ABSORPTION            = 'OnTheFly';
+Q.ABS_SPECIES(1).TAG{1} = 'N2-SelfContStandardType';
 %
 Q.Z_SURFACE             = 0;
 Q.WSMS_AT_START{end+1}  = sprintf( ...
@@ -59,47 +60,56 @@ Q.F_GRID                = vec2col( f_grid );
 Q.P_GRID                = z2p_simple( -500:250:50e3 )';
 
 
-%- Full version
+%- Standard MPM89
+%
+Q.INCLUDES              = { fullfile( 'ARTS_INCLUDES', 'general.arts' ), ...
+                            fullfile( 'ARTS_INCLUDES', 'agendas.arts' ), ...
+                            fullfile( 'ARTS_INCLUDES', 'continua.arts' ), ...
+                            fullfile( 'ARTS_INCLUDES', 'planet_earth.arts' ) };
+%
+Q.ABS_SPECIES(2).TAG{1} = 'H2O-MPM89';
+Q.ABS_LINES_FORMAT      = 'None';
+%
+%y1 = arts_y( Q );
+
+
+%- External version
 %
 Q.INCLUDES              = { fullfile( 'ARTS_INCLUDES', 'general.arts' ), ...
                             fullfile( 'ARTS_INCLUDES', 'agendas.arts' ), ...
                             fullfile( pwd, 'include_mpm89_cont.arts' ), ...
                             fullfile( 'ARTS_INCLUDES', 'planet_earth.arts' ) };
 %
-Q.ABS_SPECIES(1).TAG{1}   = 'N2-SelfContStandardType';
-Q.ABS_SPECIES(2).TAG{1}   = 'O2-PWR98';
-Q.ABS_SPECIES(3).TAG{1}   = 'H2O,H2O-MPM89';
-Q.ABS_LINES_FORMAT        = 'ARTSCAT';
-Q.ABS_LINES               = fullfile( pwd, 'lines_rttov.xml' );
-Q.ABS_LINESHAPE           = 'VP';
-Q.ABS_LINESHAPE_FACTOR    = 'VVW';
-Q.ABS_LINESHAPE_CUTOFF    = -1;
-Q.ABS_LINESHAPE_MIRRORING = 'Lorentz';
+Q.ABS_SPECIES(2).TAG{1}   = 'H2O,H2O-MPM89';
+Q.ABS_LINES_FORMAT        = 'XML';
+Q.ABS_LINES               = fullfile( pwd, 'abs_lines_h2o_mpm89.xml' );
 %
-y1 = arts_y( Q );
+%y2 = arts_y( Q );
 
 
-%- Ignore N2
+%- RTTOV version
 %
-Q.ABS_SPECIES(1).TAG{1}   = 'N2';
+Q.ABS_LINES               = fullfile( pwd, 'abs_lines_h2o_rttov.xml' );
 %
-y2 = arts_y( Q );
+%y3 = arts_y( Q );
 
 
-%- Ignore 02
+%- RTTOV version + O3
 %
-Q.ABS_SPECIES(1).TAG{1}   = 'N2-SelfContStandardType';
-Q.ABS_SPECIES(2).TAG{1}   = 'O2';
+Q.ABS_SPECIES(3).TAG{1}   = 'O3';
+Q.ABS_LINES               = { fullfile( pwd, 'abs_lines_h2o_rttov.xml' ), ...
+                              fullfile( pwd, 'abs_lines_o3_afew.xml' ) };
 %
-y3 = arts_y( Q );
+y4 = arts_y( Q );
+
 
 
 %- Plot results
 %
-plot( f_grid/1e9, y2-y1, f_grid/1e9, y3-y1 );
+plot( f_grid/1e9, y2-y1, f_grid/1e9, y3-y2, f_grid/1e9, y4-y3 );
 %
 xlabel( 'Frequency [GHz]' );
 ylabel( 'Difference [K]' );
-legend( 'Ignore N2', 'Ignoring O2' );
-
-
+legend( 'Line-by-line vs. MPM89', ...
+        'RTTOV vs. line-by-line', ...
+        'Include ozone lines' );
