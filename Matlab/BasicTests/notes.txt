@@ -1,4 +1,40 @@
-setup_h2o_abs
+Absorption:
 -
-Tests agreement between hard-coded MPM89 and line-by-line version, as well as
-compares to version mimicking RTTOV. 
+O2 can be ignored above 150 GHz, except around the few O2-transitions the exist
+above 150 GHz.
+N2 significant impact, more at 325 than 183 GHz.
+For range 150-340 GHz many lines in MPM89 can be ignored, keeping differecnes
+below a few 0.01 K. The function select_mpm_lines.m sets the lines to keep.
+-
+The final settings are found in q_basic.m.
+
+
+f_grid:
+-
+The idea is to perform monochromatic calculations at equidistant points over
+the full band. Here each side of 325 GHz line will be seen as an individual
+band. The Tb over the full band is estimated by and interpolation or a
+polynomial fit. The later would be to prefer as it would allow to analytically
+inegrate Tb over frequncy ranges (assuming rectangular channerl response).
+However, it was found that polynomial fitting requires more frequencies and the
+option was rejected.
+The lower 325 GHz band was found to be the most problematic to interpolate.
+Also higher surface reflectivity was harder to handle.
+Spline was found to work a bit better than pchip (cubic).  
+Settings for testing provided by test_f_input.m
+Actual testing done test_f_interp.m
+Example
+>> [f_grid,f_lims,f_chs,f0] = test_f_input('325u');
+>> test_f_interp(f_grid,f_lims,f_chs,0.4,10,8);
+-
+Eight frequencies per 183 and 325 GHz sideband maintains the error below 0.1K.
+In most cases with good margin.
+For 166 and 229 GHz, two frequencies suffice.
+These frequencies are presently suggested
+166 : 166.50e9 + [-0.8 0.8]*1e9
+183l: 183.31e9 + linspace(-8,-0.8,8)*1e9;
+229 : 229.00e9 + [ -1 1 ]*1e9;
+325l: 325.15e9 + linspace(-9,-0.75,8)*1e9;
+325u: 325.15e9 + linspace(0.75,9,8)*1e9;
+-
+This gives in total 28 frequencies. A bit high!
