@@ -2,9 +2,11 @@
 %
 switch whoami
   case 'patrick'
-    workfolder = '/home/patrick/WORKAREA';
+    workfolder  = '/home/patrick/WORKAREA';
+    do_radarinv = true;
   case 'inderpreet'
-    workfolder = 'home/inderpreet/Projects/AWS'
+    workfolder  = 'home/inderpreet/Projects/AWS'
+    do_radarinv = false;
   otherwise
     error( 'Unknown user' );
 end  
@@ -26,7 +28,7 @@ S.csat.orbitleg    = 2;
 
 %- Get 2D atmospheric view
 %
-ATM = extract_atm2d( S, workfolder );
+ATM = extract_atm2d( S, workfolder, do_radarinv );
 
 %- Extract individual cases
 %

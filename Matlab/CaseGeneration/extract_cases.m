@@ -1,3 +1,11 @@
+% FORMAT C = extract_cases(S,ATM)
+%
+% OUT   C     Structure array of case data
+% IN    S     Project settings structure
+%       ATM   Structure with atmospheric data.
+
+% 2020-03-25 Patrick Eriksson
+
 function C = extract_cases(S,ATM)
 
 % Start index of each case 
@@ -72,6 +80,17 @@ for i = 1 : length(ic1)
     
     % Reflectivites
     C(iout).dBZ        = 10 * log10( [ 1e-10; max( mean( R(iz,ind), 2 ), 1e-10) ] );
-    
+
+    % IWC and RWC
+    if isfield( ATM, 'IWC' )
+      C(iout).rwc_psd   = ATM.particle_model(1).psd.name;
+      C(iout).rwc_habit = ATM.particle_model(1).habit.name;
+      C(iout).rwc       = interp1( ATM.z_field(:,im), ATM.RWC(:,im), ...
+                                   C(iout).z_field );
+      C(iout).iwc_psd   = ATM.particle_model(2).psd.name;
+      C(iout).iwc_habit = ATM.particle_model(2).habit.name;
+      C(iout).iwc       = interp1( ATM.z_field(:,im), ATM.IWC(:,im), ...
+                                   C(iout).z_field );
+    end
   end
 end
