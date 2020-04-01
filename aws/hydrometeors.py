@@ -9,6 +9,10 @@ except:
     home = os.environ["HOME"]
     dendrite_path = os.path.join(home, "Dendrite")
 
+try:
+    data_path = os.path.join(os.path.dirname(__file__), "..", "data")
+except:
+    data_path = os.path.join(".", "..", "data")
 
 shape_names = {
     "6 Bullet Rosette" : "6-BulletRosette",
@@ -55,8 +59,8 @@ class Ice(ScatteringSpecies):
         psd.t_max = 280.0
         # Look up particle name
         if shape in shape_names:
-            scattering_data = shape_names[shape] + ".xml"
-            scattering_meta_data = shape_names[shape] + ".meta.xml"
+            name_data = shape_names[shape] + ".xml"
+            name_meta = shape_names[shape] + ".meta.xml"
         else:
             raise ValueError("{} is not a known shape. Available shapes are {}".
                              format(shape, shape_names.keys()))
@@ -67,8 +71,8 @@ class Ice(ScatteringSpecies):
                                  "ArtsScatDbase_v1.0.0",
                                  "StandardHabits",
                                  "FullSet")
-        scattering_data = os.path.join(ssdb_path, scattering_data)
-        scattering_meta_data = os.path.join(ssdb_path, scattering_meta_data)
+        scattering_data = os.path.join(data_path, "StandardHabits", name_data)
+        scattering_meta_data = os.path.join(ssdb_path, "StandardHabits", name_meta)
         super().__init__("ice", psd, scattering_data, scattering_meta_data)
 
 class Rain(ScatteringSpecies):
