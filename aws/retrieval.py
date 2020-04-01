@@ -60,10 +60,10 @@ class ObservationErrors(DataProviderBase):
         return np.diag(self.nedt * np.ones(range_bins.size - 1))
 
 
-class Retrieval(Simulation):
+class Retrieval(Simulation, DataProviderBase):
     def __init__(self,
                  data_provider,
-                 ice_shape = "8 Column Aggregate"):
+                 ice_shape = "8-ColumnAggregate"):
         sensor = CloudSat()
 
         data_provider.add(IceAPriori())
@@ -71,22 +71,24 @@ class Retrieval(Simulation):
         data_provider.add(ObservationErrors())
         self.data_provider = data_provider
 
-        super().__init__(sensor,
-                         data_provider,
-                         ice_shape=ice_shape)
+        DataProviderBase.__init__(self)
+        Simulation.__init__(self,
+                            sensor,
+                            data_provider,
+                            ice_shape=ice_shape)
 
         scatterers = self.atmosphere.scatterers
         # Add first moment ice to retrieval and set transform
         ice = [s for s in scatterers if s.name == "ice"][0]
         self.retrieval.add(ice.moments[0])
         ice.moments[0].transformation = Log10()
-        self.ice_water_content = ice.moments[0]
+        self._ice_water_content = ice.moments[0]
 
         # Add first moment of rain PSD to retrieval and set transform
         rain = [s for s in scatterers if s.name == "rain"][0]
         self.retrieval.add(rain.moments[0])
         rain.moments[0].transformation = Log10()
-        self.rain_water_content = rain.moments[0]
+        self._rain_water_content = rain.moments[0]
 
         self.iwc = [None] * data_provider.n_profiles
         self.rwc = [None] * data_provider.n_profiles
@@ -94,17 +96,21 @@ class Retrieval(Simulation):
         self.retrieval.settings["stop_dx"] = 1e-6
         self.setup()
 
-    def run(self, i):
+    def run(self, i, silent=False):
+
+        self.retrieval.settings["display_progress"] = int(not silent)
         Simulation.run(self, i)
-        self.iwc[i] = self.retrieval.results.get_result(self.ice_water_content)
-        self.rwc[i] = self.retrieval.results.get_result(self.rain_water_content)
+        self.iwc[i] = self.retrieval.results.get_result(self._ice_water_content,
+                                                        transform_back=True)
+        self.rwc[i] = self.retrieval.results.get_result(self._rain_water_content,
+                                                        transform_back=True)
 
     def get_ice_water_content(self, i):
         if self.iwc[i] is None:
-            self.run(i)
+            self.run(i, silent=True)
         return self.iwc[i]
 
     def get_rain_water_content(self, i):
         if self.rwc[i] is None:
-            self.run(i)
+            self.run(i, silent=True)
         return self.rwc[i]
