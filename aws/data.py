@@ -55,6 +55,12 @@ class Profiles(DataProviderBase):
         data = self.file[r][0, :]
         return data
 
+    def get_temperature_field(self):
+        t = []
+        for i in range(self.n_profiles):
+            t += [self.get_temperature(i)]
+        return np.stack(t)
+
     def get_surface_temperature(self, i):
         r = self.file["C"]["t_surface"][i][0]
         data = self.file[r][0, 0]
@@ -64,6 +70,12 @@ class Profiles(DataProviderBase):
         r = self.file["C"]["z_field"][i][0]
         data = self.file[r][0, :]
         return data
+
+    def get_altitude_field(self):
+        z = []
+        for i in range(self.n_profiles):
+            z += [self.get_altitude(i)]
+        return np.stack(z)
 
     def get_H2O(self, i):
         r = self.file["C"]["h2o"][i][0]
@@ -89,3 +101,33 @@ class Profiles(DataProviderBase):
         r = self.file["C"]["wind_dir"][i][0]
         data = self.file[r][0, :]
         return data
+
+    def get_latitude(self, i):
+        r = self.file["C"]["lat"][i][0]
+        data = self.file[r][0, :]
+        return data
+
+    def get_latitudes(self):
+        lat = []
+        for i in range(self.n_profiles):
+            lat += [self.get_latitude(i)]
+        return np.stack(lat)
+
+    def get_longitude(self, i):
+        r = self.file["C"]["lon"][i][0]
+        data = self.file[r][0, :]
+        return data
+
+    def get_ice_water_content_field(self):
+        iwc = []
+        for i in range(self.n_profiles):
+            r = self.file["C"]["iwc"][i][0]
+            iwc += [self.file[r][0, :]]
+        return np.stack(iwc)
+
+    def get_rain_water_content_field(self):
+        iwc = []
+        for i in range(self.n_profiles):
+            r = self.file["C"]["rwc"][i][0]
+            iwc += [self.file[r][0, :]]
+        return np.stack(iwc)

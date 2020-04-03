@@ -12,7 +12,7 @@ class RainAPriori(DataProviderBase):
     def get_rain_water_content_xa(self, *args, **kwargs):
         t = self.owner.get_temperature(*args, **kwargs)
         xa = np.zeros(t.shape)
-        xa[:] = 1e-6
+        xa[:] = 1e-5
         xa[t < 273.15] = 1e-12
         return np.log10(xa)
 
@@ -34,7 +34,7 @@ class IceAPriori(DataProviderBase):
     def get_ice_water_content_xa(self, *args, **kwargs):
         t = self.owner.get_temperature(*args, **kwargs)
         xa = np.zeros(t.shape)
-        xa[:] = 1e-6
+        xa[:] = 1e-5
         xa[t >= 273.15] = 1e-12
         return np.log10(xa)
 
@@ -48,7 +48,7 @@ class IceAPriori(DataProviderBase):
     def get_ice_n0(self, *args, **kwargs):
         t = self.owner.get_temperature(*args, **kwargs)
         t = t - 273.15
-        return np.log10(np.exp(-0.076586 * t + 17.948))
+        return np.exp(-0.076586 * t + 17.948)
 
 class ObservationErrors(DataProviderBase):
     def __init__(self, nedt=1.0):
