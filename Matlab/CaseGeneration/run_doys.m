@@ -29,7 +29,7 @@ end
 
 %- General settings
 %
-S = settings;
+S = s_default;
 %
 S.csat.lat_lims    = lat_lims;
 S.csat.orbitleg    = 2;
