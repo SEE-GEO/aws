@@ -14,7 +14,7 @@ end
 
 %- General settings
 %
-S = settings;
+S = s_default;
 
 %- Define orbit part to process
 %
