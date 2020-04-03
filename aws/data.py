@@ -1,11 +1,11 @@
 import os
 import numpy as np
 from h5py import File
-from parts.data_provider import DataProviderBase
+from artssat.data_provider import DataProviderBase
 
 class Profiles(DataProviderBase):
     """
-    Data provider class that provides the parts interface for an
+    Data provider class that provides the artssat interface for an
     input data file in HDF5 (matlab) format.
 
     Attributes:

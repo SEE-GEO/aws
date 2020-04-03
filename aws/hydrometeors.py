@@ -1,7 +1,7 @@
 import os
 
-from parts.scattering import ScatteringSpecies
-from parts.scattering.psd import D14MN
+from artssat.scattering import ScatteringSpecies
+from artssat.scattering.psd import D14MN
 
 try:
     dendrite_path = os.environ["DENDRITE_PATH"]

@@ -19,4 +19,5 @@ except:
 data_provider = Profiles(os.path.join(path, "..", "data", "testdata.mat"))
 
 retrieval = Retrieval(data_provider)
+rettrieval.run_ranges(range(4))
 

@@ -2,8 +2,8 @@ import numpy as np
 
 from aws.simulation import Simulation
 from aws.sensor import CloudSat
-from parts.jacobian import Log10
-from parts.data_provider import DataProviderBase
+from artssat.jacobian import Log10
+from artssat.data_provider import DataProviderBase
 
 class RainAPriori(DataProviderBase):
     def __init__(self):

@@ -1,5 +1,5 @@
 import numpy as np
-from parts.sensor import PassiveSensor, ActiveSensor
+from artssat.sensor import PassiveSensor, ActiveSensor
 
 class AWS(PassiveSensor):
     def __init__(self,

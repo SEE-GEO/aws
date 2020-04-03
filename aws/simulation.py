@@ -1,8 +1,8 @@
-from parts import ArtsSimulation
-from parts.atmosphere import Atmosphere1D
-from parts.atmosphere.absorption import H2O, CloudWater, O2, N2
-from parts.atmosphere.surface import Tessem
-from parts.scattering.solvers import RT4
+from artssat import ArtsSimulation
+from artssat.atmosphere import Atmosphere1D
+from artssat.atmosphere.absorption import H2O, CloudWater, O2, N2
+from artssat.atmosphere.surface import Tessem
+from artssat.scattering.solvers import RT4
 
 from aws.hydrometeors import Ice, Rain
 from aws.sensor import AWS
@@ -11,7 +11,7 @@ class Simulation(ArtsSimulation):
     def __init__(self,
                  sensor,
                  data_provider,
-                 ice_shape = "8 Column Aggregate"):
+                 ice_shape = "8-Column-Aggregate"):
         scatterers = [Ice(ice_shape), Rain()]
         absorbers = [H2O(), CloudWater()]
         surface = Tessem()
