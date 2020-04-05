@@ -36,7 +36,7 @@ if ~strcmp( Pl(il).psd.name, 'wang16' )
 end
 %
 if ~strcmp( Pi(ii).psd.name, 'dardar-apriori' )
-  error( 'F07t not found among ice pmodels.' );
+  error( 'Dardar-apriori not found among ice pmodels.' );
 end
 %
 Pl = Pl(il);
@@ -44,6 +44,7 @@ Pi = Pi(ii);
 
 % Set particle models
 %
+Pi.psd.name   = 'dardar-vX-apriori';
 Pi.habit.name = 'Perpendicular3BulletRosette';
 PMS{1} = [ Pl, Pi ];
 %
