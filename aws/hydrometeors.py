@@ -1,7 +1,7 @@
 import os
 
 from parts.scattering import ScatteringSpecies
-from parts.scattering.psd import D14MN
+from parts.scattering.psd import D14MN, AB12
 
 try:
     dendrite_path = os.environ["DENDRITE_PATH"]
@@ -80,7 +80,7 @@ class Rain(ScatteringSpecies):
         # PSD, same as DARDAR V3
         alpha = 0.0
         beta = 1.0
-        psd = D14(alpha, beta, 1000.0)
+        psd = D12()
         psd.t_min = 270.0
 
         ssdb_path = os.path.join(dendrite_path,
