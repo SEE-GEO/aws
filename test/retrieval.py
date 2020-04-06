@@ -19,10 +19,5 @@ except:
 data_provider = Profiles(os.path.join(path, "..", "data", "testdata.mat"))
 
 retrieval = Retrieval(data_provider)
-retrieval.setup()
-retrieval.run(4)
+retrieval.run_ranges(range(4))
 
-ws = retrieval.workspace
-pbf = ws.particle_bulkprop_field.value
-y = ws.y.value
-yf = ws.yf.value

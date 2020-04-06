@@ -1,10 +1,10 @@
-% SETTINGS   Project settings
+% S_DEFAULT   Project settings
 %
 %   General and hard-coded setings of the project
 %
-% FORMAT  S = settings
+% FORMAT  S = s_default
 
-function  S = settings
+function  S = s_default
 
 
 % 2D part

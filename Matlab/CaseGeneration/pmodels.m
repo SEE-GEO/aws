@@ -28,15 +28,15 @@ Pi  = ice_pmodels( 'strdhab_mat', '~/Outdata2/ScatData/StandardHabits' );
 
 % Check and extract 
 %
-il = 3;
+il = 4;
 ii = 3*length(Pi)/4 + 1;
 %
-if ~strcmp( Pl(il).psd.name, 'wang16' )
-  error( 'WangEtAl16 not found among liquid pmodels.' );
+if ~strcmp( Pl(il).psd.name, 'abel12' )
+  error( 'AbelBoutle12 not found among liquid pmodels.' );
 end
 %
 if ~strcmp( Pi(ii).psd.name, 'dardar-apriori' )
-  error( 'F07t not found among ice pmodels.' );
+  error( 'Dardar-apriori not found among ice pmodels.' );
 end
 %
 Pl = Pl(il);
@@ -44,6 +44,7 @@ Pi = Pi(ii);
 
 % Set particle models
 %
+Pi.psd.name   = 'dardar-vX-apriori';
 Pi.habit.name = 'Perpendicular3BulletRosette';
 PMS{1} = [ Pl, Pi ];
 %

@@ -1,13 +1,14 @@
 import numpy as np
-from parts.sensor import PassiveSensor, ActiveSensor
+from artssat.sensor import PassiveSensor, ActiveSensor
 
 class AWS(PassiveSensor):
     def __init__(self,
                  f_grid):
         self.sensor_pos = np.array
         super().__init__("aws", f_grid, stokes_dimension=2)
-        self.sensor_position = np.array([[600e3]])
         self.sensor_line_of_sight = np.arange(135, 181, 5).reshape(-1, 1)
+        self.sensor_position = np.broadcast_to(np.array([[600e3]]),
+                                               self.sensor_line_of_sight.shape)
 
 class CloudSat(ActiveSensor):
     def __init__(self):
@@ -23,4 +24,8 @@ class CloudSat(ActiveSensor):
         self.sensor_line_of_sight = np.array([[180.0]])
         self.nedt = 1.0
 
-
+band_166  = 166.50e9 + np.array([-0.8, 0.8]) * 1e9
+band_183l = 183.31e9 + np.linspace(-8.0, -0.8, 8.0) * 1e9;
+band_229  = 229.00e9 + np.array([-1.0, 1.0]) * 1e9;
+band_325l = 325.15e9 + np.linspace(-9.0, -0.75, 8.0) * 1e9;
+band_325u = 325.15e9 + np.linspace(0.75, 9.0, 8.0) * 1e9;
