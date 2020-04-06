@@ -28,11 +28,11 @@ Pi  = ice_pmodels( 'strdhab_mat', '~/Outdata2/ScatData/StandardHabits' );
 
 % Check and extract 
 %
-il = 3;
+il = 4;
 ii = 3*length(Pi)/4 + 1;
 %
-if ~strcmp( Pl(il).psd.name, 'wang16' )
-  error( 'WangEtAl16 not found among liquid pmodels.' );
+if ~strcmp( Pl(il).psd.name, 'abel12' )
+  error( 'AbelBoutle12 not found among liquid pmodels.' );
 end
 %
 if ~strcmp( Pi(ii).psd.name, 'dardar-apriori' )
