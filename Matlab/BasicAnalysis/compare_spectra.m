@@ -66,27 +66,25 @@ for i = 1 : length(atms)
   n = size( T183, 1 );
   l = {};
   %
+  D = apply_channels( f183, T183(:,:,i), chs183 );
+  semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '-', 'LineWidth', 1 );
+  hold on
   for c = 1 : size(chs183,1)
-    ind = find( f183>=chs183(c,1) & f183<=chs183(c,2) ); 
-    semilogy( mean(T183(:,ind,i),2), Q.P_GRID(end:-1:end-n+1)/1e2, ...
-              '-', 'LineWidth', 1 );
-    hold on
     l{end+1} = sprintf( '183 / %d', c );
   end
   set( gca, 'ColorOrderIndex', 1 );
+  %
+  D = apply_channels( f325, T325(:,:,i), chs325 );
+  semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '--', 'LineWidth', 1 );
   for c = 1 : size(chs325,1)
-    ind = find( f325>=chs325(c,1) & f325<=chs325(c,2) ); 
-    semilogy( mean(T325(:,ind,i),2), Q.P_GRID(end:-1:end-n+1)/1e2, ...
-              '--', 'LineWidth', 1 );
     l{end+1} = sprintf( '325 / %d', c );
   end
   set( gca, 'ColorOrderIndex', 1 );
-  for c = 1 : size(chs229,1)
-    ind = find( f229>=chs229(c,1) & f229<=chs229(c,2) ); 
-    semilogy( mean(T229(:,ind,i),2), Q.P_GRID(end:-1:end-n+1)/1e2, ...
-              '-.', 'LineWidth', 1 );
-    l{end+1} = '229';
-  end
+  %
+  D = apply_channels( f229, T229(:,:,i), chs229 );
+  semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '-.', 'LineWidth', 1 );
+  l{end+1} = '229';
+  %
   set( gca, 'YDir', 'rev' );
   xlabel( 'Transmissivity to space [-]' );
   ylabel( 'Pressure [hPa]' );
@@ -108,7 +106,7 @@ function [Y,J,T2S,atms,Q] = calc_atms( f_grid, r_surface )
     %
     Q             = q_basic( atms{i}, f_grid, r_surface );
     %
-    % Fix to extra cumulative transmissivities
+    % Fix to get cumulative transmissivities
     workfolder    = '/home/patrick/WORKAREA';
     outfile       = fullfile( workfolder, 'ctrans.xml' );
     Q.IY_MAIN_AGENDA = { 'ppathCalc', 'iyEmissionStandard', ...
