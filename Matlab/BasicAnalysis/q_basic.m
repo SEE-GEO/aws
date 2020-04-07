@@ -66,7 +66,7 @@ Q.SENSOR_POS            = 600e3;
 Q.SENSOR_LOS            = 170;
 %
 Q.F_GRID                = vec2col( f_grid );
-Q.P_GRID                = z2p_simple( -500:250:50e3 )';
+Q.P_GRID                = z2p_simple( -500:500:50e3 )';
 
 
 %- External version
