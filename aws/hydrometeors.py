@@ -45,6 +45,21 @@ class D14(D14MN):
     def moment_names(self):
         return ["water_content", "n0"]
 
+class Abel(AB12):
+    """
+    Specialized class implementing a normalized modified gamma distribution
+    parametrized using mass density and mass weighted mean diameter (D_m).
+    The shape is the same as the one used for the DARDAR v3 retrievals.
+    """
+    def __init__(self):
+        super().__init__()
+        self.name = "ab12"
+
+    @property
+    def moment_names(self):
+        return ["water_content"]
+
+
 
 
 
@@ -73,7 +88,7 @@ class Rain(ScatteringSpecies):
         # PSD, same as DARDAR V3
         alpha = 0.0
         beta = 1.0
-        psd = D12()
+        psd = Abel()
         psd.t_min = 270.0
 
         scattering_data = os.path.join(data_path, "StandardHabits", "LiquidSphere.xml")
