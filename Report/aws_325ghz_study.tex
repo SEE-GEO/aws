@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+
+
+% Overall formatting
+\sloppy
+\let\cleardoublepage\clearpage % do not force chapters to start on odd pages
+
+
+% Graphics
+\usepackage{graphicx}
+\DeclareGraphicsExtensions{.png,.pdf,.jpg}
+\graphicspath{{Figures/}}
+
+
+\usepackage[a4paper, total={16cm,25cm}]{geometry}
+
+
+
+% Tables
+\newlength{\mytabskip}   
+\setlength{\mytabskip}{-1.5ex}
+\newcommand{\tabrule}{\rule[\mytabskip]{0ex}{0ex}}
+\usepackage{tabularx}
+%\usepackage{longtable}
+
+
+% bibliography stuff 
+\usepackage{natbib}
+\bibliographystyle{kluwer} 
+
+
+\newcommand{\unit}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\degree}{\ensuremath{\mathrm{^\circ}}}
+
+%\newcommand{\FIXME}[1]{{\sffamily \bfseries #1}}
+\newcommand{\FIXME}[1]{{\sffamily {\bfseries \textcolor{red}{FIXME:} #1}}}
+
+
+\hyphenation{EUMETSAT}
+\hyphenation{Metop}
+
+
+
+\begin{document}
+
+
+
+\noindent
+\textbf{\LARGE Arctic Weather Satellite: Cloud ...}  \vspace{5mm}\\
+{\bf Patrick Eriksson, Simon Pfreundschuh and Inderpreet Kaur}\\
+Department of Space, Earth and Environment\\
+Chalmers University of Technology\\
+SE-412\,96, Gothenburg, Sweden \vspace{10mm}
+
+\section{Introduction}
+%
+\dots
+
+
+
+
+\bibliography{j_abbr,references}
+
+\end{document}
