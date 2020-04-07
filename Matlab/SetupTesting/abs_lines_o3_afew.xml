@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<arts format="ascii" version="1">
+<Array type="AbsorptionLines" nelem="1">
+<comment>
+Lines meta-data:
+	Species identity:
+		Species: O3-666
+		Lower Quantum Numbers: 
+		Upper Quantum Numbers: 
+	No cut-off will be applied.
+	The lines are considered as in pure LTE.
+	van Vleck and Weisskopf far-wing renormalization will be applied, i.e. F ~ (f/f0)^2
+	The line shape type is the Lorentz profile.
+	These lines are not mirrored at 0 Hz.
+	The reference temperature for all line parameters is 300 K.
+	If applicable, there is no line mixing limit.
+	There are 20 lines available.
+	The front line has:
+		f0: 1.73486e+11 Hz
+		i0: 5.85194e-18 m^2/Hz
+		e0: 2.34099e-22 J
+		Lower stat. weight: 0 [-]
+		Upper stat. weight: 0 [-]
+		A: 0 1/s
+		Zeeman splitting of lower state: nan [-]
+		Zeeman splitting of upper state: nan [-]
+		Lower state local quantum numbers:
+		Upper state local quantum numbers:
+		Line shape parameters (are normalized by sum(VMR)):
+			G0 ~ VMR(SELF) * 31784.6 * (300/T)^0.76 + VMR(AIR) * 23170.1 * (300/T)^0.76
+			D0 ~ VMR(SELF) * 0 * (300/T)^(0.25 + 1.5 * 0.76) + VMR(AIR) * 0 * (300/T)^(0.25 + 1.5 * 0.76)
+</comment>
+<AbsorptionLines nlines="20" species="O3-666" cutofftype="None" mirroringtype="None" populationtype="LTE" normalizationtype="VVW" lineshapetype="LP" T0="300" cutofffreq="-1" linemixinglimit="-1" localquanta="" upperglobalquanta="" lowerglobalquanta="" broadeningspecies="SELF AIR" temperaturemodes="G0 T1 T1 D0 T5 T5">
+173485540000 5.851942e-18 2.34099e-22 0 0 0 nan nan 31784.6494819867 0.76 0 0 0 0.76 0 0 23170.120349178 0.76 0 0 0 0.76 0 0 
+175186390000 1.285583e-17 6.86714e-21 0 0 0 nan nan 28294.2787249086 0.76 0 0 0 0.76 0 0 21090.7515894829 0.76 0 0 0 0.76 0 0 
+175445700000 1.972423e-17 3.73568e-21 0 0 0 nan nan 29259.6995812491 0.76 0 0 0 0.76 0 0 21165.0101637382 0.76 0 0 0 0.76 0 0 
+178577067100 1.676486e-18 1.47855e-20 0 0 0 nan nan 27477.3849155824 0.76 0 0 0 0.76 0 0 19679.7495920999 0.76 0 0 0 0.76 0 0 
+180001290000 2.619389e-18 1.34444e-20 0 0 0 nan nan 27551.6533883413 0.76 0 0 0 0.76 0 0 19828.2766391141 0.76 0 0 0 0.76 0 0 
+182180040200 2.814492e-18 1.47109e-20 0 0 0 nan nan 31116.2827196747 0.76 0 0 0 0.76 0 0 23244.3789234333 0.76 0 0 0 0.76 0 0 
+229575022700 2.435006e-17 6.01184e-21 0 0 0 nan nan 28442.8057719228 0.76 0 0 0 0.76 0 0 21016.483116724 0.76 0 0 0 0.76 0 0 
+231281491900 1.469603e-16 2.23564e-21 0 0 0 nan nan 30744.970051391 0.76 0 0 0 0.76 0 0 22798.8076808943 0.76 0 0 0 0.76 0 0 
+315875120000 2.231002e-16 6.01078e-21 0 0 0 nan nan 29408.2266282632 0.76 0 0 0 0.76 0 0 21907.6453988091 0.76 0 0 0 0.76 0 0 
+316327250000 1.838654e-16 7.8964e-22 0 0 0 nan nan 31116.2827196747 0.76 0 0 0 0.76 0 0 22650.2806338801 0.76 0 0 0 0.76 0 0 
+316681643900 2.98607e-17 8.33826e-21 0 0 0 nan nan 27700.1804353555 0.76 0 0 0 0.76 0 0 20942.2245424687 0.76 0 0 0 0.76 0 0 
+317195060000 2.270388e-17 6.00107e-22 0 0 0 nan nan 31116.2827196747 0.76 0 0 0 0.76 0 0 21907.6453988091 0.76 0 0 0 0.76 0 0 
+319996540000 1.98518e-16 3.43179e-21 0 0 0 nan nan 30373.6474846037 0.76 0 0 0 0.76 0 0 22204.6994928375 0.76 0 0 0 0.76 0 0 
+323703703900 1.35145e-17 1.27599e-20 0 0 0 nan nan 26883.2767275256 0.76 0 0 0 0.76 0 0 20273.8577801566 0.76 0 0 0 0.76 0 0 
+326480724500 1.079941e-17 1.48317e-20 0 0 0 nan nan 31413.3368137031 0.76 0 0 0 0.76 0 0 23170.120349178 0.76 0 0 0 0.76 0 0 
+326900993400 3.131843e-16 9.11811e-22 0 0 0 nan nan 31413.3368137031 0.76 0 0 0 0.76 0 0 23170.120349178 0.76 0 0 0 0.76 0 0 
+327844625700 5.766337e-17 2.08011e-21 0 0 0 nan nan 29853.8077693058 0.76 0 0 0 0.76 0 0 21090.7515894829 0.76 0 0 0 0.76 0 0 
+332704530600 2.1923e-16 1.12842e-21 0 0 0 nan nan 30893.4970984052 0.76 0 0 0 0.76 0 0 22501.7535868659 0.76 0 0 0 0.76 0 0 
+332881688500 8.412014e-17 7.84304e-23 0 0 0 nan nan 32230.2306230293 0.76 0 0 0 0.76 0 0 23244.3789234333 0.76 0 0 0 0.76 0 0 
+335271323900 5.722687e-17 4.50445e-21 0 0 0 nan nan 28739.8598659512 0.76 0 0 0 0.76 0 0 20867.9560697098 0.76 0 0 0 0.76 0 0 
+</AbsorptionLines>
+</Array>
+</arts>

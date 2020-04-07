@@ -14,4 +14,8 @@ abs_cont_descriptionAppend( tagname="O2-PWR98",
 abs_cont_descriptionAppend( tagname="H2O-MPM89",
                             model="MPM89Continuum" )
 
+# Ellison liquid cloud (2007)
+abs_cont_descriptionAppend( tagname="liquidcloud-ELL07",
+                            model="ELL07" )
+
 }

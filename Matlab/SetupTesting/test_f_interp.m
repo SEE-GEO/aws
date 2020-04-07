@@ -69,7 +69,6 @@ return
 function [Y,atms] = calc_atms( f_grid, r_surface )
   %
   atms = { 'tro', 'mls', 'mlw', 'sas', 'saw' };
-  %atms = { 'tro', 'mls', 'mlw' };
   %
   Y = zeros( length(f_grid), length(atms) );
   %
