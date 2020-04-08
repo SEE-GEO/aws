@@ -3,7 +3,7 @@
 switch whoami
   case 'patrick'
     workfolder  = '/home/patrick/WORKAREA';
-    do_radarinv = true;
+    do_radarinv = false;
   case 'inderpreet'
     workfolder  = 'home/inderpreet/Projects/AWS'
     do_radarinv = false;
