@@ -114,3 +114,7 @@ class Retrieval(Simulation, DataProviderBase):
         if self.rwc[i] is None:
             self.run(i, silent=True)
         return self.rwc[i]
+
+    def __setstate__(self, state):
+        self.__dict__ = state
+        self.setup()

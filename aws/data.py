@@ -1,5 +1,7 @@
 import os
 import numpy as np
+import re
+import glob
 from h5py import File
 from artssat.data_provider import DataProviderBase
 
@@ -131,3 +133,50 @@ class Profiles(DataProviderBase):
             r = self.file["C"]["rwc"][i][0]
             iwc += [self.file[r][0, :]]
         return np.stack(iwc)
+
+pattern = re.compile(".*c_of_[\d]*_[\d]*_[\d]*.mat")
+
+class RandomProfile(DataProviderBase):
+    """
+    Data provider returning a random profile from a folder of orbit files.
+
+    Attributes:
+        self.path: The folder containing the input orbits.
+    """
+    def __init__(self, path):
+        """
+        """
+        super().__init__()
+        files = glob.glob(os.path.join(path, "*.mat"))
+        self.files = [f for f in files if pattern.match(f)]
+
+        def make_getter(name):
+            def getter(self, *args, **kwargs):
+                profiles = self._get_random_file()
+                index = self._get_random_index(profiles)
+                fget = getattr(profiles, "get_" + name)
+                return fget(index)
+            return getter
+
+        getters = ["y_cloudsat",
+                   "cloudsat_range_bins",
+                   "pressure",
+                   "temperature",
+                   "surface_temperature",
+                   "altitude",
+                   "H2O",
+                   "cloud_water",
+                   "surface_altitude",
+                   "surface_windspeed",
+                   "surface_wind_direction",
+                   "latitude",
+                   "longitude"]
+
+        for g in getters:
+            self.__dict__["get_" + g] = make_getter(g).__get__(self)
+
+    def _get_random_file(self):
+        return Profiles(self.files[np.random.randint(len(self.files))])
+
+    def _get_random_index(self, profiles):
+        return np.random.randint(profiles.n_profiles)
