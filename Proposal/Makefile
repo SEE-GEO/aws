@@ -1,4 +1,4 @@
-aws_325ghz.pdf: aws_325ghz.tex Makefile *.tex *.bib
+aws_325ghz_proposal.pdf: aws_325ghz_proposal.tex Makefile *.tex *.bib
 	pdflatex $(@:%.pdf=%)
 	bibtex $(@:%.pdf=%)
 	pdflatex $(@:%.pdf=%)
@@ -10,5 +10,4 @@ clean:
 	rm -f *.log *.blg *.bbl *.aux *.dvi *.out *.toc
 
 clean-all: clean
-	rm -f aws_325ghz.pdf
-
+	rm -f aws_325ghz_proposal.pdf

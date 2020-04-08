@@ -7,7 +7,7 @@
 
 function mkfigs_spectra_wfuns(r_surface,chs183,chs229,chs325)
 
-df = linspace( -10e9, -0.5e9, 50 );
+df = linspace( -10e9, -0.5e9, 100 );
 nf = length( df );
 
 %- 183 GHz
@@ -31,7 +31,7 @@ J325 = ( J325(1:nf,:,:) + J325(nf*2:-1:nf+1,:,:) ) / 2;
 
 %- 229 GHz
 %
-df   = linspace( -1e9, -0.1, 5 );
+df   = linspace( -1e9, -0.1, 10 );
 nf   = length( df );
 c229 = 229e9;
 f229 = c229 + df;
@@ -40,6 +40,8 @@ ftmp = c229 + [df sort(-df) ];
 [Y229,J229,T229] = calc_atms( ftmp, r_surface );
 %
 Y229 = ( Y229(1:nf,:) + Y229(nf*2:-1:nf+1,:) ) / 2;
+T229 = ( T229(1:nf,:,:) + T229(nf*2:-1:nf+1,:,:) ) / 2;
+J229 = ( J229(1:nf,:,:) + J229(nf*2:-1:nf+1,:,:) ) / 2;
 
 
 %- Spectrum plot
@@ -52,7 +54,7 @@ set( gca, 'ColorOrderIndex', 1 );
 h2 = plot( (f325-c325)/1e9, Y325, '--', 'LineWidth', 1 );
 set( gca, 'ColorOrderIndex', 1 );
 h3 =plot( (f229-c229)/1e9, Y229, '-.', 'LineWidth', 1 );
-xlabel( 'Distance from centre/LO frequency [GHz]' );
+xlabel( 'Distance from reference frequency [GHz]' );
 ylabel( 'Tb [K]' );
 grid on
 %
