@@ -24,7 +24,9 @@ class Simulation(ArtsSimulation):
                  data_provider,
                  ice_shape = "8-Column-Aggregate"):
         scatterers = [Ice(ice_shape), Rain()]
-        absorbers = [H2O(), CloudWater()]
+        absorbers = [H2O(from_catalog=True),
+                     CloudWater(from_catalog=True),
+                     N2()]
         surface = Tessem()
         scattering_solver = RT4(nstreams=32)
         atmosphere = Atmosphere1D(absorbers=absorbers,
@@ -32,12 +34,12 @@ class Simulation(ArtsSimulation):
                                   surface=surface,
                                   catalog=LineCatalog("abs_lines_h2o_rttov.xml"))
 
+        super().__init__(atmosphere=atmosphere,
+                         data_provider=data_provider,
+                         sensors=[sensor],
+                         scattering_solver=scattering_solver)
 
         self.includes = ["general/general.arts",
                          "include_mpm89_cont.arts",
                          "general/planet_earth.arts"]
 
-        super().__init__(atmosphere=atmosphere,
-                         data_provider=data_provider,
-                         sensors=[sensor],
-                         scattering_solver=scattering_solver)
