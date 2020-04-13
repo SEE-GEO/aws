@@ -10,7 +10,7 @@
 \usepackage{graphicx}
 \DeclareGraphicsExtensions{.png,.pdf,.jpg}
 \graphicspath{{Figures/}}
-
+\usepackage{pdfpages}
 
 \usepackage[a4paper, total={16cm,25cm}]{geometry}
 
@@ -32,7 +32,6 @@
 \newcommand{\unit}[1]{\ensuremath{\mathrm{#1}}}
 \newcommand{\degree}{\ensuremath{\mathrm{^\circ}}}
 
-%\newcommand{\FIXME}[1]{{\sffamily \bfseries #1}}
 \newcommand{\FIXME}[1]{{\sffamily {\bfseries \textcolor{red}{FIXME:} #1}}}
 
 
@@ -43,10 +42,9 @@
 
 \begin{document}
 
-
-
 \noindent
-\textbf{{\Large Arctic Weather Satellite (AWS) channels definition:\\Work plan}}  \vspace{5mm}\\
+\textbf{{\Large Activity on the definition of the AWS
+high frequency\vspace{0.5ex}\\channels: Proposal}}  \vspace{5mm}\\
 {\bf Patrick Eriksson}\\
 Dept.\ of Space, Earth and Environment\\
 Chalmers University of Technology\\
@@ -253,5 +251,9 @@ reporting the results.
 
 {\footnotesize
  \bibliography{j_abbr,references}}
+
+\includepdf[pages={1}]{cv_pe_1page}
+\includepdf[pages={1}]{CV_IKaur_1Page}
+
 
 \end{document}

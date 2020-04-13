@@ -63,6 +63,7 @@ SE-412\,96, Gothenburg, Sweden \vspace{10mm}
 \subsection{Atmospheric scenarios}
 
 \subsubsection{Fascod}
+\label{sec:fascod}
 %
 The Fascod dataset \citep{anderson1986afgl} was used to represent different
 climate zones in overview calculations. The dataset consists of profiles of
@@ -93,7 +94,7 @@ to the hydrometeor category.
 
 This approach for generating atmospheric scenarios has been used by us since
 \citet{rydberg:nonga:09}, and more recently in e.g.\
-citet{eriksson:towar:20,barlakas:three:20}. It is also used in
+\citet{eriksson:towar:20,barlakas:three:20}. It is also used in
 \citet{ekelund:using:20}, where the approach is described more in detail. In
 the cited articles, the sensor's footprint has been considered in varying
 degree, as ``beam filling'' must be considered at high impact of hydrometeors.
@@ -163,32 +164,143 @@ Omnisys. * ]
 [* Inderpreet: Add equation and text about polarisation rotation (ie equations
 in the Sow) *]
 
+[* Tbs, transmissivities and Jacobians are averaged over the channels *]
+
+
 [* Describe settings for ATMS together with results, if included *)
 
 
 \section{Results}
 
-\subsection{Overview of the frequency bands}
+\subsection{Overview of the 183, 229 and 325\,GHz bands}
 %
-The simulations involving Fascod were done using a fixed satellite observation
-angle of 155$^\circ$ (from zenith) \dots
+The simulations in this section are based on five Fascod climate scenarios
+(Sec.~\ref{sec:fascod}), and performed with a fixed sensor viewing angle of
+25$^\circ$. No hydrometeors are included. For simpler interpretation of the
+results, the reflectivity is set to have no frequency variation, i.e.\ the same
+value is applied for all bands. The reflective is varied between 0 and 0.5.
 
+In the figures covering transmissivities and Jacobians, ICI's 325\,GHz channels
+are applied (Table~?).
+
+
+\subsubsection{Clear-sky brightness temperatures}
+%
+Figure~\ref{fig:tb:r000} shows brightness temperatures over the three bands, for
+a reflectivity of 0 (i.e.\ a blackbody surface). The figure takes into account
+that the 183\,GHz channels of AWS are of single-sideband character, while for
+229 and 325\,GHz averages of upper and lower sidebands are shown, plotted as
+a function from the centre frequency on the lower side.
 
 \begin{figure}[p]
   \centering
-  \includegraphics[width=0.7\textwidth]{fascod_tb_r000}
-  \caption{dd}
-  \label{fig:tb:r00}
+  \includegraphics[width=0.75\textwidth]{fascod_tb_r000}
+  \caption{Solid lines show brightness temperatures for the lower wing of the
+    183.31\,GHz transition. Dashed lines represent double-sideband measurements
+    around 325.15\,GHz, with the mean of upper and lower band shown on the low
+    side. Dash-dotted lines represent double-sideband measurements around
+    229.00\,GHz in the same manner, but only over the bandwidth of the
+    potential channel. For all three bands, spectra for all five
+    Fascod scenarios are included.}
+  \label{fig:tb:r000}
 \end{figure}
 \begin{figure}[p]
   \centering
-  \includegraphics[width=0.7\textwidth]{fascod_tb_r050}
+  \includegraphics[width=0.75\textwidth]{fascod_tb_r050}
   \caption{Same as figure above, but with a surface reflectivity of 0.5.}
-  \label{fig:tb:r00}
+  \label{fig:tb:r050}
+\end{figure}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.75\textwidth]{fascod_tr_mls}
+  \caption{Transmissivity to space as a function of altitude, for the
+    mid-latitude summer scenario. Solid lines represent 183\,GHz channels,
+    dashed lines 325\,GHz channels (ICI-5/6/7) and dashed-dotted the 229\,GHz
+    channel. These transmissivities are independent of surface reflectivity.}
+  \label{fig:tr:mls}
+\end{figure}
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.75\textwidth]{fascod_wf_mls_025}
+  \caption{Jacobians for relative humidity. Line symbols as in Fig.~\ref{fig:tr:mls}.
+    Surface reflectivity is set to 0.25.}
+  \label{fig:wf:mls:025}
 \end{figure}
 
+For 183 and 325\,GHz the brightness temperatures increase when moving away from
+the centre frequency of the transition. The ``kinks'' in the spectra correspond
+to ozone transitions, that are both more frequent and stronger in the 325\,GHz
+range than in the 183\,GHz one. See Fig.~1 of \citet{eriksson:towar:20} for how
+the ozone transitions are distributed between the lower and upper 325\,GHz
+sideband. The spectra of 183 and 325\,GHz deviate little close to the transition
+frequency, showing that the two frequencies are of similar strength, though the
+325\,GHz one is slightly weaker. The higher deviations further out in the wings
+are due to different contribution of far wing and continuum absorption, that is
+higher at 325\,GHz. The 229\,GHz brightness temperatures is higher than any
+value around 183 and 325\,GHz, as expected 229\,GHz being a window channel.
+
+In Figure~\ref{fig:tb:r050} the surface reflectivity is changed to 0.5, which
+should roughly correspond to the highest reflectivity encountered at these
+frequencies. The differences to Fig.~\ref{fig:tb:r000}  are small for 183 and
+325\,GHz for the tropical and the two summer scenarios. On the other hand,
+there is a clear impact in the wing part of 183\,GHz for the two winter
+scenarios. The same is true for 340\,GHz, but the influence of the surface
+reflectivity is considerably lower. [* Comment somewhere on the implications of
+this for retrievals at high latitudes *] Beside for the tropical case, for
+229\,GHz there is a pronounced dependency of the surface reflectivity, e.g.\
+about 35\,K for mid-latitude winter.
 
 
+\subsubsection{Clear-sky transmissivities to space}
+%
+Assuming that a cloud layer can be moved in altitude, its impact on measured
+brightness temperatures will roughly follow the transmissivity to space for the
+cloud altitude. In short, where the transmissivity is zero the cloud will have
+no impact, while where the transmissivity is unity the influence will be close
+to constant with altitude (especially when the single scattering albedo is
+high). This relationship just refers to the relative impact for a
+given frequency, the absolute impact (at transmissivity 1) increases in general
+with frequency. 
+
+Figure~\ref{fig:tr:mls} displays examples on transmissivities to space. The
+transmissivities refers to the up-welling radiation. The contribution from
+reflected down-welling is neglected and the considered transmissivity does not
+depend on surface reflectivity.
+
+The altitude variation of transmissivity exhibits same basic shape between all
+the 183 and 325\,GHz channels, but the altitude of optical thickness of 1
+(transmissivity of $e^{-1}\approx0.37$) varies. The curves of the end 183\,GHz
+channels brackets the ones corresponding to the ICI 325\,GHZ channels. The later
+channels show a higher deviation from 1 at 150\,hPa, due to some (weak) ozone
+attenuation in the stratosphere. The 229\,GHz has the highest transmissivities.
+
+
+
+
+
+\subsubsection{Clear-sky relative humidity weighting functions}
+%
+The sensitivity to humidity is most easily compared by the channels' weighting
+functions (i.e.\ the Jacobian), and examples are found in
+Fig.~\ref{fig:wf:mls:025}. The shape of the weighting functions depends on the
+unity selected for representing water vapour. As the absolute amount of water
+vapour varies with orders of magnitude from the surface to the tropopause, it
+is difficult to interpret weighting functions for absolute humidity units and
+it is more suitable to use a relative one. In Fig.~\ref{fig:wf:mls:025} the
+weighting functions correspond to an increase of relative humidity (RH) with one
+percent unit over 1\,km. RH with respect liquid/ice is applied above/below
+0$^\circ$C.
+
+The basic shape of the Jacobian is similar for all 183 and 325\,GHz channels,
+but the peak altitude varies. The end 183\,GHz channels brackets the 325\,GHz
+ICI ones, as for transmissivity. These Jacobians are negative, meaning that a
+change towards higher humidity results in decreased brightness temperatures.
+The 229\,GHz Jacobian is positive close to the surface, as this channel has
+sensitivity all the way down to the surface and more water vapour just above a
+reflecting surface results in higher brightness temperatures. The switch from
+negative to positive Jacobian depends on atmospheric scenario and surface
+reflectivity. For dry conditions also the outer 183 and 325\,GHz channels can
+have a positive part, as long as the reflectivity is not close to 0.
 
 \bibliography{j_abbr,references}
 
