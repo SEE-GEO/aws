@@ -84,6 +84,14 @@ class Profiles(DataProviderBase):
         data = self.file[r][0, :]
         return data
 
+    def get_N2(self, i):
+        z = self.get_altitude(i)
+        return 0.781 * np.ones(z.shape)
+
+    def get_O2(self, i):
+        z = self.get_altitude(i)
+        return 0.209 * np.ones(z.shape)
+
     def get_cloud_water(self, i):
         r = self.file["C"]["lwc"][i][0]
         data = self.file[r][0, :]
@@ -102,6 +110,11 @@ class Profiles(DataProviderBase):
     def get_surface_wind_direction(self, i):
         r = self.file["C"]["wind_dir"][i][0]
         data = self.file[r][0, :]
+        return data
+
+    def get_surface_type(self, i):
+        r = self.file["C"]["i_surface"][i][0]
+        data = np.round(self.file[r][0, :])
         return data
 
     def get_latitude(self, i):
@@ -134,7 +147,7 @@ class Profiles(DataProviderBase):
             iwc += [self.file[r][0, :]]
         return np.stack(iwc)
 
-pattern = re.compile(".*c_of_[\d]*_[\d]*_[\d]*.mat")
+pattern = re.compile(".*c_of_([\d]*)_([\d]*)_([\d]*).mat")
 
 class RandomProfile(DataProviderBase):
     """
@@ -148,35 +161,60 @@ class RandomProfile(DataProviderBase):
         """
         super().__init__()
         files = glob.glob(os.path.join(path, "*.mat"))
+        self.path = path
         self.files = [f for f in files if pattern.match(f)]
 
+        self.cycle = 1000000
+        np.random.seed(666)
+        self.file_indices = np.random.randint(0, len(files), size=self.cycle)
+        self.profile_indices = np.random.randint(0, len(files), size=self.cycle)
+
         def make_getter(name):
-            def getter(self, *args, **kwargs):
-                profiles = self._get_random_file()
-                index = self._get_random_index(profiles)
+            def getter(self, i):
+                profiles = self._get_random_file(i)
+                ri = self._get_random_index(profiles, i)
                 fget = getattr(profiles, "get_" + name)
-                return fget(index)
+                return fget(ri)
             return getter
 
         getters = ["y_cloudsat",
                    "cloudsat_range_bins",
                    "pressure",
                    "temperature",
-                   "surface_temperature",
                    "altitude",
-                   "H2O",
-                   "cloud_water",
-                   "surface_altitude",
-                   "surface_windspeed",
+                   "surface_temperature",
+                   "surface_type",
+                   "surface_wind_speed",
                    "surface_wind_direction",
+                   "H2O",
+                   "N2",
+                   "O2",
+                   "cloud_water",
+                   "y_cloudsat",
+                   "cloudsat_range_bins",
+                   "surface_altitude",
                    "latitude",
                    "longitude"]
 
         for g in getters:
             self.__dict__["get_" + g] = make_getter(g).__get__(self)
 
-    def _get_random_file(self):
-        return Profiles(self.files[np.random.randint(len(self.files))])
+    def _get_random_file(self, i):
+        ind = i % self.cycle
+        ri = self.file_indices[ind]
+        return Profiles(self.files[ri])
 
-    def _get_random_index(self, profiles):
-        return np.random.randint(profiles.n_profiles)
+    def _get_random_index(self, profiles, i):
+        ind = i % self.cycle
+        ri = self.profile_indices[i] % profiles.n_profiles
+        return ri
+
+    def get_filename(self, i):
+        ind = i % self.cycle
+        ri = self.file_indices[i]
+        return os.path.basename(self.files[ri])
+
+    def get_profile_index(self, i):
+        profiles = self._get_random_file(i)
+        ri = self._get_random_index(profiles, i)
+        return ri

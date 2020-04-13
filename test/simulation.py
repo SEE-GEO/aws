@@ -4,10 +4,9 @@ import os
 import os
 
 from aws.retrieval import Simulation, Retrieval
-from aws.data import Profiles
-from aws.sensor import AWS, band_166, band_183l, band_229, band_325l, band_325u
+from aws.sensor import ATMS
 from aws.retrieval import Retrieval
-from aws.data import Profiles
+from aws.data import RandomProfile
 
 try:
     from IPython import get_ipython
@@ -22,20 +21,14 @@ try:
 except:
     path = "."
 
-data_provider = Profiles(os.path.join(path, "..", "data", "testdata.mat"))
+data_provider = RandomProfile("/home/simonpf/Dendrite/Projects/AWS-325GHz/CasesV1")
 
 # Create the retrieval and let it act as data provider to simulations.
 retrieval = Retrieval(data_provider, "Perpendicular3BulletRosette")
 data_provider.add(retrieval)
 
 
-# Simulation
-frequencies = np.concatenate([band_166,
-                              band_183l,
-                              band_229,
-                              band_325l,
-                              band_325u])
-sensor = AWS(frequencies)
+sensor = ATMS()
 simulation = Simulation(sensor, data_provider, "Perpendicular3BulletRosette")
 simulation.setup()
-simulation.run(0)
+simulation.run(28)

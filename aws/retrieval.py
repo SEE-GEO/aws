@@ -3,7 +3,9 @@ import numpy as np
 from aws.simulation import Simulation
 from aws.sensor import CloudSat
 from artssat.jacobian import Log10
+from artssat.atmosphere.surface import Tessem
 from artssat.data_provider import DataProviderBase
+from artssat.atmosphere.absorption import O2
 
 class RainAPriori(DataProviderBase):
     def __init__(self):
@@ -77,7 +79,10 @@ class Retrieval(Simulation, DataProviderBase):
                             data_provider,
                             ice_shape=ice_shape)
 
+        self.atmosphere.absorbers += [O2(model="PWR98")]
+
         scatterers = self.atmosphere.scatterers
+        self.atmosphere._surface = Tessem()
         # Add first moment ice to retrieval and set transform
         ice = [s for s in scatterers if s.name == "ice"][0]
         self.retrieval.add(ice.moments[0])
@@ -90,30 +95,32 @@ class Retrieval(Simulation, DataProviderBase):
         rain.moments[0].transformation = Log10()
         self._rain_water_content = rain.moments[0]
 
-        self.iwc = [None] * data_provider.n_profiles
-        self.rwc = [None] * data_provider.n_profiles
-
         self.retrieval.settings["stop_dx"] = 1e-6
         self.setup()
+        self.cache_index = None
+
+        self.iwc = None
+        self.rwc = None
 
     def run(self, i, silent=False):
 
         self.retrieval.settings["display_progress"] = int(not silent)
         Simulation.run(self, i)
-        self.iwc[i] = self.retrieval.results.get_result(self._ice_water_content,
-                                                        transform_back=True)
-        self.rwc[i] = self.retrieval.results.get_result(self._rain_water_content,
-                                                        transform_back=True)
+        self.cache_index = i
+        self.iwc = self.retrieval.results.get_result(self._ice_water_content,
+                                                     transform_back=True)
+        self.rwc = self.retrieval.results.get_result(self._rain_water_content,
+                                                     transform_back=True)
 
     def get_ice_water_content(self, i):
-        if self.iwc[i] is None:
+        if not self.cache_index == i:
             self.run(i, silent=True)
-        return self.iwc[i]
+        return self.iwc
 
     def get_rain_water_content(self, i):
-        if self.rwc[i] is None:
+        if not self.cache_index == i:
             self.run(i, silent=True)
-        return self.rwc[i]
+        return self.rwc
 
     def __setstate__(self, state):
         self.__dict__ = state

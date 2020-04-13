@@ -14,7 +14,7 @@ class ATMS(PassiveSensor):
 
     def __init__(self):
         f_grid = np.array([166.5,])
-        f_grid = np.concatenate(f_grid, 183.31 + np.array([-7,-4.5,-3.0,-1.8,-1.0]))
+        f_grid = np.concatenate([f_grid, 183.31 + np.array([-7,-4.5,-3.0,-1.8,-1.0])])
         f_grid *= 1e9
         super().__init__("atms", f_grid, stokes_dimension=2)
         self.sensor_line_of_sight = np.arange(135, 181, 5).reshape(-1, 1)
