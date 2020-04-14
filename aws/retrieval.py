@@ -68,15 +68,15 @@ class Retrieval(Simulation, DataProviderBase):
                  ice_shape = "8-ColumnAggregate"):
         sensor = CloudSat()
 
-        data_provider.add(IceAPriori())
-        data_provider.add(RainAPriori())
-        data_provider.add(ObservationErrors())
-        self.data_provider = data_provider
-
         DataProviderBase.__init__(self)
+        self.add(IceAPriori())
+        self.add(RainAPriori())
+        self.add(ObservationErrors())
+        self.add(data_provider)
+
         Simulation.__init__(self,
                             sensor,
-                            data_provider,
+                            self,
                             ice_shape=ice_shape)
 
         self.atmosphere.absorbers += [O2(model="PWR98")]
@@ -96,13 +96,14 @@ class Retrieval(Simulation, DataProviderBase):
         self._rain_water_content = rain.moments[0]
 
         self.retrieval.settings["stop_dx"] = 1e-6
-        self.setup()
         self.cache_index = None
 
         self.iwc = None
         self.rwc = None
 
     def run(self, i, silent=False):
+        if not self._setup:
+            self.setup()
 
         self.retrieval.settings["display_progress"] = int(not silent)
         Simulation.run(self, i)
@@ -121,7 +122,3 @@ class Retrieval(Simulation, DataProviderBase):
         if not self.cache_index == i:
             self.run(i, silent=True)
         return self.rwc
-
-    def __setstate__(self, state):
-        self.__dict__ = state
-        self.setup()

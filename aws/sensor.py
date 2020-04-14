@@ -21,7 +21,6 @@ class ATMS(PassiveSensor):
         self.sensor_position = np.broadcast_to(np.array([[830e3]]),
                                                self.sensor_line_of_sight.shape)
 
-
 class CloudSat(ActiveSensor):
     def __init__(self):
         range_bins = np.arange(500.0, 18e3 + 1.0, 500.0)
