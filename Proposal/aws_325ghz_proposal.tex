@@ -43,8 +43,8 @@
 \begin{document}
 
 \noindent
-\textbf{{\Large Activity on the definition of the AWS
-high frequency\vspace{0.5ex}\\channels: Proposal}}  \vspace{5mm}\\
+\textbf{{\Large Proposal for activity on the definition of the AWS\vspace{0.5ex}\\
+high frequency channels}}  \vspace{5mm}\\
 {\bf Patrick Eriksson}\\
 Dept.\ of Space, Earth and Environment\\
 Chalmers University of Technology\\
@@ -56,16 +56,15 @@ SE-412\,96, Gothenburg, Sweden \vspace{10mm}
 %
 Our understanding is that the main objectives of the study are:
 \begin{itemize}
-\item Demonstrate that channels around 325.15\,GHz provides a basis for cloud
+\item Demonstrate that channels around 325.15\,GHz provide a basis for cloud
   filtering/correction of data measured around 183\,GHz, that is equivalent
   or better than what can be achieved with a channel at 229\,GHz (as found on
   the MicroWave Sounder, MWS). 
 \item Suggest specifications of 325\,GHz channels considering the specific
   constraints of the AWS project. Matching in terms of weighting functions between
-  183 and 325\,GHz channels could be relevant in this context.
+  183 and 325\,GHz channels and degree of freedom in the measurements should be
+  considered in the process.
 \end{itemize}
-If feasible, other ways to compare the 229 and 325\,GHz options should be
-considered, such as degree of freedom in the measurements.
 
 
 \section{Reference documents and data}
@@ -77,14 +76,14 @@ approach. It should be considered if the specifications of the 325\,GHz
 channels could be the same as applied for ICI (Ice Cloud Imager), that are
 based on \citet{buehler:obser:12}.
 
-Omnisys will be consulted when it comes to technical assumptions and
-constraints. It is assumed that channels at 89, 166 and 183\,GHz will be placed
-as for MWS, except that AWS 183\,GHz channels will be single sideband (covering
-the lower MWS band). If needed, assumptions for a 229\,GHz channel will be
-taken from the MWS science plan. Required input from Omnisys includes: minimum
-and maximum intermediate frequency (IF) for 325\,GHz channels, maximum number
-of channels inside this range and expected receiver noise temperature at 166,
-183 and 325\,GHz.
+Table~1 in Statement of Work will be followed for channels around 89, 166, 183
+and 229\,GHz. Omnisys will be consulted for further input on technical
+assumptions and constraints. Required input from Omnisys is: minimum and
+maximum intermediate frequency (IF) for 325\,GHz channels, maximum number of
+channels inside this range and expected receiver noise temperature at 166, 183,
+and 325\,GHz. We will also ask Omnisys for a confirmation on that 183\,GHz
+will be implemented as single-band channels (we will only consider one option
+for the 183\,GHz channels).
 
 
 \section{Cloud filtering and correction}
@@ -96,14 +95,14 @@ approach for MWS, using data from 229\,GHz. SI-type cloud filtering based on
 the cloud filtering performed operationally for NWP (numerical weather
 prediction) seems to mainly be based on deviations between observations and
 clear-sky simulations based on the background field (e.g.\
-\citet{chambon2015investigating}). The aim of both these approaches is just to
+\citet{chambon2015investigating}). The aim of these approaches is just to
 reject data with a cloud impact exceeding some brightness temperature
 threshold. This means that even if these cloud filtering methods would work
 perfectly, they will still cause a bias in filtered data. This is the case as
 the presence of clouds gives throughout a decrease in 183\,GHz radiances (maybe
 except for outermost channels and very dry conditions). Expressed differently,
 compared to the true cloud and noise free brightness temperature, the filtered
-data will have an uncertainty distribution that is non-Gaussian. On one side
+data will have an uncertainty distribution that is non-Gaussian. On one side,
 the distribution will be determined by the measurement noise. On the other
 side, the distribution will be a combination of measurement noise and the cloud
 impacts that are below the threshold value. The mean of this distribution will
@@ -113,7 +112,7 @@ with present sensors.
 The 325\,GHz transition is of similar strength as the 183\,GHz one (though a
 bit weaker and more highly affected by continuum absorption). On the other
 hand, the impact of high altitude cirrus clouds should be considerably higher.
-Weak cloud impact should mainly end up in the Rayleigh domain, where
+Weak cloud impact mainly end up in the Rayleigh domain, where
 scattering follows $\lambda^4$. For 325 vs.\ 183\,GHz, this gives a factor very
 close to 10. That is, if a high cloud gives a 5\,K impact on a channel around
 325\,GHz the impact for a channel around 183\,GHz with similar (clear-sky)
@@ -138,21 +137,23 @@ impacts, theoretically the super-channels could have a resulting NEDT (Noise
 Equivalent Delta Temperature) lower than the one of 183\,GHz, as the
 combination of 183 and 325\,GHz together gives a higher effective bandwidth. In
 practice this can be hard to achieve due to a higher noise at 325\,GHz and
-modelling uncertainties, and the comment was added mainly to illustrate the
+modelling uncertainties, and the comment is mainly made to illustrate the
 approach.
 
 
 \section{Work plan}
 \label{sec:wp}
 %
-For clarity, the work as divided into a number of work packages (WPs). See
-next page. The work will be performed by (with WP responsibilities inside
-parenthesises):
+For clarity, the work as divided into a number of work packages (WPs). See next
+page. The work will be performed by, with acronym and mean activity during the
+2 month study period inside parenthesis:
 \begin{itemize}
-\item Patrick Eriksson (WP 1.1 and 3.3)
-\item Simon Pfreundschuh (WP 1.2 and 3.2)
-\item Inderpreet Kaur (WP 2.1, 2.2, and 3.1)
+\item Patrick Eriksson (PE, 25\%)
+\item Inderpreet Kaur (OK, 35\%)
+\item Simon Pfreundschuh (SP, 10\%)
 \end{itemize}
+CVs of Patrick Eriksson and Inderpreet Kaur are attached (Simon Pfreundschuh is
+PhD student).
 
 \newpage
 \subsection*{WP1}
@@ -160,11 +161,14 @@ parenthesises):
 \subsubsection*{WP1.1: Basic preparations}
 %
 \begin{itemize}
+\item Overall planning
 \item Contact Omnisys to obtain required technical information.
 \item Determine the number of monochromatic frequencies needed to represent each
   channel with sufficient accuracy. 
-\item Compare 183, 229 and 325\,GHz brightness temperatures and weighting
-  functions (clear-sky), for a set of climatological atmospheres. Based on
+\item Compare 183, 229 and 325\,GHz brightness temperatures, weighting
+  functions (clear-sky) and transmissivity to space (following Fig.~4 in
+  \citet{eriksson:towar:20}), for a set of climatological atmospheres.
+  Based on
   this, define preliminary specifications of 325\,GHz channels.
 \end{itemize}
 
@@ -175,7 +179,7 @@ The task of this WP is to prepare and implement functions for creating a
 diverse set of simulations, to be used in later WPs. The simulations will be
 based on CloudSat reflectivities and ERA5 data, and largely follow the
 ``dBZ-based model system'' introduced in \citet{ekelund:using:20}. The main
-deviations to \citet{ekelund:using:20} is that some along-track averaging of
+deviations to \citet{ekelund:using:20} are that some along-track averaging of
 CloudSat data will be performed, the mapping from reflectivities will be
 performed by 1DVAR (and not by ``onion-peeling'') and that each footprint will
 be represented with a single pencil beam. To make it easier to streamline the
@@ -195,11 +199,11 @@ Both land and ocean areas will be considered but for land an altitude threshold
 will be applied, again due to limitations in the knowledge of surface
 emissivities. 
 
-Simulations covering channels at 89, 166, 183, 229 and 325\,GHz will be made. A
+Simulations covering channels at 166, 183, 229 and 325\,GHz will be made. A
 number of scan angles, between nadir and swath edge, will be covered. A first
-batch of 100\,000 simulations will be made. If found necessary, adding more
-simulations could be possible. If time permits, extending the simulations to
-higher latitudes could also be considered.
+batch of simulations (about 100\,000, exact number TBD) will be made. If found
+necessary, adding more simulations could be possible. If time permits,
+extending the simulations to higher latitudes could also be considered.
 
 
 \subsubsection*{WP2.2: Post-processing of data}
@@ -226,9 +230,9 @@ for lower and higher assumed NEDT, to assess if there is any critical value
 that should be reflected in the requirements of AWS.
 
 A similar regression will be tested for 229\,GHz. If not working well, a
-perfect version of the approach by \citet{rekha2012potential} will be used
-instead for 229\,GHz. That is, the assumed error distribution is the one
-described in Sec.~\ref{sec:clouds},
+perfect version of the approach by \citet{rekha2012potential} will instead be
+used as reference for 229\,GHz. That is, the assumed error distribution is the
+one described in Sec.~\ref{sec:clouds},
 
 
 \subsubsection*{WP3.2: Measurements’ degrees of freedom (DoF)}
@@ -249,6 +253,62 @@ This WP covers to analyse the results to reach a conclusion, as well as
 reporting the results. 
 
 
+\newpage
+\section{Financial proposal}
+%
+\subsection{Fit to engage}
+%
+We (the bidder) confirm the following;
+\begin{itemize}
+\item that the Bidder has the legal capacity to enter into the procurement contract;
+\item that the Bidder is not bankrupt or being wound up, is not having its affairs
+administered by the courts, have not entered into a judicial arrangement with creditors,
+have not suspended business activities, is not the subject of proceedings concerning
+those matters, or is not in any analogous situation arising from a similar procedure
+provided for in national legislation or regulations;
+\item that the Bidder and its key persons have not been convicted of an offence
+concerning their professional conduct by a judgement which has the force of res judicata;
+\item that the Bidder and its key persons have not been found guilty of grave
+professional misconduct;
+\item that the Bidder and its key persons have fulfilled its obligations relating to the
+payment of social security contributions or the payment of taxes in accordance with the
+legal provisions of the country in which it is established or those of the country where
+the contract is to be performed;
+\item that the Bidder and its key persons have not been the subject of a judgement which
+has the force of res judicata for fraud, corruption, involvement in a criminal organisation
+or any other illegal activity detrimental to the EUMETSAT’s interests; and,
+\item that the Bidder and its key persons are not currently subject to a suspension
+having been found guilty of misrepresentation in supplying the information required
+under the bullets hereinabove, or having failed to supply this information.
+\end{itemize}
+
+
+\subsection{Total overall binding price}
+%
+Department of Space, Earth and Environment at Chalmers University of Technology
+(Sweden) offers to execute the project at the Firm fixed price 14\,667 EUR. The
+price is broken down for the individual parts in the table below. There are
+only salary costs. We assume that no travelling to visit meetings will be
+requested by EUMETSAT.
+The offer is valid until end of June 2020.\\
+
+\begin{tabular}[h]{c|cccc|c}
+ WP& PE [h] & IK [h] & SP [h] & Total [h] & Cost [EUR] \\
+\hline
+1.1&	20&	4&	0&	24&	2,092 \\
+1.2&	8&	8&	16&	32&	1,863  \\
+2.1&	8&	24&	2&	34&	2,068 \\
+2.2&	4&	16&	0&	20&	1,194 \\
+3.1&	16&	44&	4&	64&	3,931 \\
+3.2&	8&	0&	8&	16&	1,105 \\
+  3.3&	16&	16&	2&	34&	2,414 \\
+  \hline
+Total&	80&	112&32&	224& 14,667 \\
+
+\end{tabular}
+
+
+\newpage
 {\footnotesize
  \bibliography{j_abbr,references}}
 
