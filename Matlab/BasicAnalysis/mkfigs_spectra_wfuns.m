@@ -51,17 +51,17 @@ clf
 h1 = plot( (f183-c183)/1e9, Y183, '-', 'LineWidth', 1 );
 hold on
 set( gca, 'ColorOrderIndex', 1 );
-h2 = plot( (f325-c325)/1e9, Y325, '--', 'LineWidth', 1 );
+h2 =plot( (f229-c229)/1e9, Y229, '-.', 'LineWidth', 1 );
 set( gca, 'ColorOrderIndex', 1 );
-h3 =plot( (f229-c229)/1e9, Y229, '-.', 'LineWidth', 1 );
+h3 = plot( (f325-c325)/1e9, Y325, '--', 'LineWidth', 1 );
 xlabel( 'Distance from reference frequency [GHz]' );
 ylabel( 'Tb [K]' );
 grid on
 %
 l        = upper( atms );
 l{1}     = [ l{1}, ', 183 GHz'];
-l{end+1} = '325 GHz';
 l{end+1} = '229 GHz';
+l{end+1} = '325 GHz';
 %
 legend( [h1;h2(1);h3(1)], l, 'Location', 'South' );
 hold off
@@ -83,20 +83,20 @@ for i = 1 : length(atms)
   semilogy( D, Q.P_GRID/1e2, '-', 'LineWidth', 1 );
   hold on
   for c = 1 : size(chs183,1)
-    l{end+1} = sprintf( '183 / %d', c );
-  end
-  set( gca, 'ColorOrderIndex', 1 );
-  %
-  D = apply_channels( f325, J325(:,:,i)/(100*dz), chs325 );
-  semilogy( D, Q.P_GRID/1e2, '--', 'LineWidth', 1 );
-  for c = 1 : size(chs325,1)
-    l{end+1} = sprintf( '325 / %d', c );
+    l{end+1} = sprintf( 'AWS-3%d', c+1 );
   end
   set( gca, 'ColorOrderIndex', 1 );
   %
   D = apply_channels( f229, J229(:,:,i)/(100*dz), chs229 );
   semilogy( D, Q.P_GRID/1e2, '-.', 'LineWidth', 1 );
-  l{end+1} = '229';
+  l{end+1} = 'AWS-41';
+  %
+  D = apply_channels( f325, J325(:,:,i)/(100*dz), chs325 );
+  semilogy( D, Q.P_GRID/1e2, '--', 'LineWidth', 1 );
+  for c = 1 : size(chs325,1)
+    l{end+1} = sprintf( 'ICI-%d', c+4 );
+  end
+  set( gca, 'ColorOrderIndex', 1 );
   %
   set( gca, 'YDir', 'rev' );
   xlabel( 'Jacobian [K/%RH/km]' );
@@ -120,20 +120,20 @@ for i = 1 : length(atms)
   semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '-', 'LineWidth', 1 );
   hold on
   for c = 1 : size(chs183,1)
-    l{end+1} = sprintf( '183 / %d', c );
-  end
-  set( gca, 'ColorOrderIndex', 1 );
-  %
-  D = apply_channels( f325, T325(:,:,i), chs325 );
-  semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '--', 'LineWidth', 1 );
-  for c = 1 : size(chs325,1)
-    l{end+1} = sprintf( '325 / %d', c );
+    l{end+1} = sprintf( 'AWS-3%d', c+1 );
   end
   set( gca, 'ColorOrderIndex', 1 );
   %
   D = apply_channels( f229, T229(:,:,i), chs229 );
   semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '-.', 'LineWidth', 1 );
-  l{end+1} = '229';
+  l{end+1} = 'AWS-41';
+  %
+  D = apply_channels( f325, T325(:,:,i), chs325 );
+  semilogy( D, Q.P_GRID(end:-1:end-n+1)/1e2, '--', 'LineWidth', 1 );
+  for c = 1 : size(chs325,1)
+    l{end+1} = sprintf( 'ICI-%d', c+4 );
+  end
+  set( gca, 'ColorOrderIndex', 1 );
   %
   set( gca, 'YDir', 'rev' );
   xlabel( 'Transmissivity to space [-]' );

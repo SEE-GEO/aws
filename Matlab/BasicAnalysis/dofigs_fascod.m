@@ -4,7 +4,7 @@
 [chs183,ch229] = channels_fixed;
 chs325         = channels_ici325ghz;
 
-if 0
+if 1
 % Results for r = 0
 %
 mkfigs_spectra_wfuns( 0, chs183, ch229, chs325 );
@@ -25,7 +25,6 @@ mkfigs_spectra_wfuns( 0.25, chs183, ch229, chs325 );
 %
 print -f3 fascod_wf_mls_025.pdf -dpdf
 print -f8 fascod_tr_mls.pdf -dpdf
-
 
 
 !pdfcropbatch *.pdf
