@@ -32,13 +32,13 @@ class Profiles(DataProviderBase):
     def n_profiles(self):
         return self.file["C"]["dBZ"].shape[0]
 
-    def get_y_cloudsat(self, i):
+    def get_y_cloudsat(self, i, **kwargs):
         r = self.file["C"]["dBZ"][i][0]
         data = self.file[r][0, :]
         data = np.maximum(data, -30.0)
         return data
 
-    def get_cloudsat_range_bins(self, i):
+    def get_cloudsat_range_bins(self, i, **kwargs):
         r = self.file["C"]["z_field"][i][0]
         z = self.file[r][0, :]
         range_bins = np.zeros(z.size + 1)
@@ -47,12 +47,12 @@ class Profiles(DataProviderBase):
         range_bins[-1] = 2 * range_bins[-2] - range_bins[-3]
         return range_bins
 
-    def get_pressure(self, i):
+    def get_pressure(self, i, **kwargs):
         r = self.file["C"]["p_grid"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_temperature(self, i):
+    def get_temperature(self, i, **kwargs):
         r = self.file["C"]["t_field"][i][0]
         data = self.file[r][0, :]
         return data
@@ -63,12 +63,12 @@ class Profiles(DataProviderBase):
             t += [self.get_temperature(i)]
         return np.stack(t)
 
-    def get_surface_temperature(self, i):
+    def get_surface_temperature(self, i, **kwargs):
         r = self.file["C"]["t_surface"][i][0]
         data = self.file[r][0, 0]
         return data
 
-    def get_altitude(self, i):
+    def get_altitude(self, i, **kwargs):
         r = self.file["C"]["z_field"][i][0]
         data = self.file[r][0, :]
         return data
@@ -79,56 +79,56 @@ class Profiles(DataProviderBase):
             z += [self.get_altitude(i)]
         return np.stack(z)
 
-    def get_H2O(self, i):
+    def get_H2O(self, i, **kwargs):
         r = self.file["C"]["h2o"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_N2(self, i):
+    def get_N2(self, i, **kwargs):
         z = self.get_altitude(i)
         return 0.781 * np.ones(z.shape)
 
-    def get_O2(self, i):
+    def get_O2(self, i, **kwargs):
         z = self.get_altitude(i)
         return 0.209 * np.ones(z.shape)
 
-    def get_cloud_water(self, i):
+    def get_cloud_water(self, i, **kwargs):
         r = self.file["C"]["lwc"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_surface_altitude(self, i):
+    def get_surface_altitude(self, i, **kwargs):
         r = self.file["C"]["z_field"][i][0]
         data = self.file[r][0, 0]
         return data
 
-    def get_surface_wind_speed(self, i):
+    def get_surface_wind_speed(self, i, **kwargs):
         r = self.file["C"]["wind_speed"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_surface_wind_direction(self, i):
+    def get_surface_wind_direction(self, i, **kwargs):
         r = self.file["C"]["wind_dir"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_surface_type(self, i):
+    def get_surface_type(self, i, **kwargs):
         r = self.file["C"]["i_surface"][i][0]
         data = np.round(self.file[r][0, :])
         return data
 
-    def get_latitude(self, i):
+    def get_latitude(self, i, **kwargs):
         r = self.file["C"]["lat"][i][0]
         data = self.file[r][0, :]
         return data
 
-    def get_latitudes(self):
+    def get_latitudes(self, **kwargs):
         lat = []
         for i in range(self.n_profiles):
             lat += [self.get_latitude(i)]
         return np.stack(lat)
 
-    def get_longitude(self, i):
+    def get_longitude(self, i, **kwargs):
         r = self.file["C"]["lon"][i][0]
         data = self.file[r][0, :]
         return data
@@ -209,12 +209,12 @@ class RandomProfile(DataProviderBase):
         ri = self.profile_indices[i] % profiles.n_profiles
         return ri
 
-    def get_filename(self, i):
+    def get_filename(self, i, **kwargs):
         ind = i % self.cycle
         ri = self.file_indices[i]
         return os.path.basename(self.files[ri])
 
-    def get_profile_index(self, i):
+    def get_profile_index(self, i, **kwargs):
         profiles = self._get_random_file(i)
         ri = self._get_random_index(profiles, i)
         return ri

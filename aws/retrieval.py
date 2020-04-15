@@ -113,12 +113,18 @@ class Retrieval(Simulation, DataProviderBase):
         self.rwc = self.retrieval.results.get_result(self._rain_water_content,
                                                      transform_back=True)
 
-    def get_ice_water_content(self, i):
+    def get_ice_water_content(self, i, clearsky=False):
+        if clearsky:
+            z = self.data_provider.get_altitude(i)
+            return np.zeros(z.shape)
         if not self.cache_index == i:
             self.run(i, silent=True)
         return self.iwc
 
-    def get_rain_water_content(self, i):
+    def get_rain_water_content(self, i, clearsky=False):
+        if clearsky:
+            z = self.data_provider.get_altitude(i)
+            return np.zeros(z.shape)
         if not self.cache_index == i:
             self.run(i, silent=True)
         return self.rwc
