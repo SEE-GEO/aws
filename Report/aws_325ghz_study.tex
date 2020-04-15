@@ -58,7 +58,124 @@ SE-412\,96, Gothenburg, Sweden \vspace{10mm}
 \dots
 
 
-\section{Data and methods}
+
+\section{Assumptions on AWS characteristics}
+%
+The assumption listed below are primarily taken for the Statement of Work
+(SoW), complemented with information provided by Anders Emrich at Omnisys
+(private communication, April 14 2020). The later data represent what Omnisys
+considers to be technically feasible inside the budget of the project.
+
+\subsection{Channel specifications}
+%
+Channels around 89, 166, 183 and 229\,GHz are assumed to be fixed, with name,
+position and widths defined in Table~\ref{tab:fixed:chs}. AWS channels 31 to 36
+will be implemented as a single front-end, but are here still considered as two
+``bands'', denoted as 166 and 183\,GHz.
+
+For 325\,GHz, it will be assumed that channels can be placed between 0.75 and
+8.0\,GHz in terms of intermediate frequency (IF), and that up to 4 channels
+inside this range can be implemented. There should be some gap between these
+channels, above 100\,-\,200\,MHz, to facilitate the technical implementation.
+For comparison, Table~\ref{tab:fixed:chs} includes also the position of the ICI
+325\,GHz channels. As the ICI channels extend to 11\,GHz in IF, they will not
+be considered for AWS but will be applied for demonstration and reference
+purposes.
+
+For simplicity, the frequency variation of all channel responses is assumed to
+be rectangular. This selection shall not be interpreted as any opinion on the
+optimal shape of these responses; a significant deviation from a rectangular
+shape should be of no concern as long as the actual shape is well
+characterised.
+
+\begin{table}[!bt]
+  \begin{minipage}[b]{0.5\linewidth}
+  \centering  
+  \begin{tabular}[c]{c|c|c}
+    Channel & Frequency   & Bandwidth \\
+    name    & [GHz] &  [MHz] \\
+    \hline
+    AWS-21  & \phantom{0}89.000 & 4000\\
+    AWS-31  & 165.500 & 2800\\
+    AWS-32  & 176.311 & 2000\\
+    AWS-33  & 178.811 & 2000\\
+    AWS-34  & 180.311 & 1000\\
+    AWS-35  & 181.511 & 1000\\
+    AWS-36  & 182.311 & \phantom{0}500\\
+    AWS-41  & 229.000 & 2000\\
+    \hline
+  \end{tabular}
+  \end{minipage}%
+  \begin{minipage}[b]{0.5\linewidth}
+  \centering  
+  \begin{tabular}[c]{c|c|c}
+    Channel & Frequency   & Bandwidth \\
+    name    & [GHz] &  [MHz] \\
+    \hline
+    ICI-5  & 325.15$\pm$9.50 & 3000\\
+    ICI-6  & 325.15$\pm$3.50 & 2400\\
+    ICI-7  & 325.15$\pm$1.50 & 1600\\
+    \hline
+  \end{tabular}
+  \end{minipage}  
+  \caption{Fixed channel position and widths. The left table covers channels of
+    AWS, with values taken from SoW. Channels AWS-21 to AWS-36 are at this
+    moment mandatory for AWS, while AWS-41 is so far tentative. The right table
+    lists the values of some channels of ICI \citep{eriksson:towar:20}.}
+  \label{tab:fixed:chs}
+\end{table}
+
+
+\subsection{Noise}
+%
+The nominal reciever noise temperature, $T_r$ of each band is listed in
+Table~\ref{tab:trec}. The noise of data for individual channels is calculated
+as
+\begin{equation}
+  \sigma^i = c \frac{T^i_r+T^i_a}{\sqrt{\Delta\!f^i\Delta t}}
+\end{equation}
+where $\sigma^i$ is the noise standard deviation of channel $i$, $c$ is a
+scaling factor (see below), $T^i_r$ is the reciever noise temperature of the
+channel, $T^i_a$ is the antenna temperature of the channel, $\Delta\!f^i$ is the
+bandwidth of channel and $\Delta t$ is the integration time.
+
+The factor $c$ is set to 1.2 to incorporate the additional noise caused by the
+calibration process. The bandwith applied is the one found in columns 3 of
+Table~\ref{tab:fixed:chs}. The integration time is set to match an effective
+15\,km resolution at 183\,GHz. This time was estimated to 3\,ms. 
+
+\begin{table}[!bt]
+  \centering
+  \begin{tabular}[b]{c|ccccc}
+    Band [GHz]   & 89 & 166 & 183 & 229 & 325 \\
+    \hline
+    $T_r$ [K]    & 390 & 650 & 650 & {\it 1000}  & 1200 \\
+    \hline
+  \end{tabular}
+  \caption{Assumed reciever noise temperatures. The value for 229\,GHz is
+    selected by us, remaining values are present assumptions at Omnisys.}
+  \label{tab:trec}
+\end{table}
+
+\subsection{Various}
+%
+The AWS satellite is assumed to be at an altitude of 600\,km. Data were
+generated for sensor viewing angles (the angle from nadir) from 0$^\circ$ to
+45$^\circ$, in steps of 5$^\circ$.
+
+The polarisation response of the bands is not yet determined and for simplicity
+``quasi-horisontal'' (defined in same way as for e.g.\ MWS) is throughout
+assumed. Antenna temperatures are obtained as:
+\begin{equation}
+  \label{eq:polrot}
+  T_a = T_b^V\sin^2(\theta) + T_b^H\cos^2(\theta)
+\end{equation}
+where $T_b^V$/$T_b^H$ is the brightness temprature at vertical/horisontal
+polarisation, respectively, and $\theta$ is the viewing angle (from nadir).
+
+
+
+\section{Input data and software}
 
 \subsection{Atmospheric scenarios}
 
@@ -149,27 +266,6 @@ agreement around or better than 0.?\,K was found.
 [* Write later, Simon? TRO only! *]
 
 
-\subsection{Sensor characteristics}
-%
-The AWS satellite was assumed to be at an altitude of 600\,km. Data were
-generated for sensor viewing angles (the angle from nadir) from 0$^\circ$ to
-45$^\circ$, in steps of 5$^\circ$.
-
-AWS channels that were included, and considered as fixed in terms of positions
-and widths, are found in Table\dots [* Finish after talking to Anders at
-Omnisys. * ]
-
-[* Clarify what polarisation we assume for the different channels *]
-
-[* Inderpreet: Add equation and text about polarisation rotation (ie equations
-in the Sow) *]
-
-[* Tbs, transmissivities and Jacobians are averaged over the channels *]
-
-
-[* Describe settings for ATMS together with results, if included *)
-
-
 \section{Results}
 
 \subsection{Overview of the 183, 229 and 325\,GHz bands}
@@ -179,9 +275,8 @@ The simulations in this section are based on five Fascod climate scenarios
 25$^\circ$. No hydrometeors are included. For simpler interpretation of the
 results, the reflectivity is set to have no frequency variation, i.e.\ the same
 value is applied for all bands. The reflective is varied between 0 and 0.5.
-
-In the figures covering transmissivities and Jacobians, ICI's 325\,GHz channels
-are applied (Table~?).
+In the figures covering transmissivities and Jacobians, the specifications
+of ICI is applied for 325\,GHz channels (Table~\ref{tab:fixed:chs}).
 
 
 \subsubsection{Clear-sky brightness temperatures}
@@ -215,8 +310,9 @@ a function from the centre frequency on the lower side.
   \includegraphics[width=0.75\textwidth]{fascod_tr_mls}
   \caption{Transmissivity to space as a function of altitude, for the
     mid-latitude summer scenario. Solid lines represent 183\,GHz channels,
-    dashed lines 325\,GHz channels (ICI-5/6/7) and dashed-dotted the 229\,GHz
-    channel. These transmissivities are independent of surface reflectivity.}
+    dashed lines 325\,GHz channels and dashed-dotted the 229\,GHz channel
+    (Table~\ref{tab:fixed:chs}). These transmissivities are independent of
+    surface reflectivity.}
   \label{fig:tr:mls}
 \end{figure}
 \begin{figure}[p]
@@ -269,13 +365,11 @@ depend on surface reflectivity.
 
 The altitude variation of transmissivity exhibits same basic shape between all
 the 183 and 325\,GHz channels, but the altitude of optical thickness of 1
-(transmissivity of $e^{-1}\approx0.37$) varies. The curves of the end 183\,GHz
-channels brackets the ones corresponding to the ICI 325\,GHZ channels. The later
-channels show a higher deviation from 1 at 150\,hPa, due to some (weak) ozone
-attenuation in the stratosphere. The 229\,GHz has the highest transmissivities.
-
-
-
+(transmissivity of $e^{-1}\approx0.37$) varies. The curves of the edge 183\,GHz
+channels (AWS-32 and 36) brackets the ones corresponding to the ICI 325\,GHZ
+channels. The later channels show a higher deviation from 1 at 150\,hPa, due to
+some (weak) ozone attenuation in the stratosphere. The 229\,GHz has the highest
+transmissivities.
 
 
 \subsubsection{Clear-sky relative humidity weighting functions}
@@ -292,15 +386,22 @@ percent unit over 1\,km. RH with respect liquid/ice is applied above/below
 0$^\circ$C.
 
 The basic shape of the Jacobian is similar for all 183 and 325\,GHz channels,
-but the peak altitude varies. The end 183\,GHz channels brackets the 325\,GHz
-ICI ones, as for transmissivity. These Jacobians are negative, meaning that a
-change towards higher humidity results in decreased brightness temperatures.
-The 229\,GHz Jacobian is positive close to the surface, as this channel has
-sensitivity all the way down to the surface and more water vapour just above a
-reflecting surface results in higher brightness temperatures. The switch from
-negative to positive Jacobian depends on atmospheric scenario and surface
-reflectivity. For dry conditions also the outer 183 and 325\,GHz channels can
-have a positive part, as long as the reflectivity is not close to 0.
+but the peak altitude varies. Again the edge 183\,GHz channels brackets the
+325\,GHz ICI ones, as for transmissivity. These Jacobians are negative, meaning
+that a change towards higher humidity results in decreased brightness
+temperatures. The 229\,GHz Jacobian is positive close to the surface, as this
+channel has sensitivity all the way down to the surface and more water vapour
+just above a reflecting surface results in higher brightness temperatures. The
+switch from negative to positive Jacobian depends on atmospheric scenario and
+surface reflectivity. For dry conditions also the outer 183 and 325\,GHz
+channels can have a positive part, as long as the reflectivity is not close to
+0.
+
+\section{Notes}
+\begin{itemize}
+\item Discuss selection of polarisation
+\end{itemize}
+
 
 \bibliography{j_abbr,references}
 
