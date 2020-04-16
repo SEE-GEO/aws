@@ -1,5 +1,5 @@
 % Makes figures with spectra, weighting functions and transmissivity to
-% space for all five Fascod atmospheres.
+% space for all bands and all five Fascod atmospheres.
 %
 % FORMAT  mkfigs_spectra_wfuns(r_surface,chs183,chs229,chs325)
 
