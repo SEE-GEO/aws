@@ -1,0 +1,696 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running simulations &mdash; AWS 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Required software and data" href="../dependencies_and_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> AWS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Running simulations</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gold.html">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gold.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gold.html#preparing-access-to-the-remote-machines">Preparing access to the remote machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gold.html#copying-the-ipyparallel-profile">Copying the IPyParallel profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gold.html#starting-the-controller-and-engines">Starting the controller and engines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../dependencies_and_data.html">Required software and data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dependencies_and_data.html#software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dependencies_and_data.html#data">Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Connecting-to-IPyParallel">Connecting to IPyParallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Setting-up-the-simulation">Setting up the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Choosing-the-sensor">Choosing the sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Setting-the-ice-habit">Setting the ice habit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Setting up the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Output-file">Output file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Running-the-simulations">Running the simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Running-clearsky-simulations">Running clearsky simulations</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AWS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Running simulations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/run_simulations.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    min-width: 5ex;
+    padding-top: 0.3rem;
+    padding-right: 0.3rem;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 0.3rem;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Running-simulations">
+<h1>Running simulations<a class="headerlink" href="#Running-simulations" title="Permalink to this headline">¶</a></h1>
+<p>The basic functionality for performing the AWS simulations is implemented by the <code class="docutils literal notranslate"><span class="pre">aws</span></code> package. With this in place, running simulations is a matter of setting up the simulations with the desired parameters and then executing them via IPyParallel.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">ipyparallel</span> <span class="k">as</span> <span class="nn">ipp</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">aws.retrieval</span> <span class="kn">import</span> <span class="n">Simulation</span><span class="p">,</span> <span class="n">Retrieval</span>
+<span class="kn">from</span> <span class="nn">aws.data</span> <span class="kn">import</span> <span class="n">RandomProfile</span>
+<span class="kn">from</span> <span class="nn">aws.sensor</span> <span class="kn">import</span> <span class="n">ATMS</span><span class="p">,</span> <span class="n">AWS</span>
+<span class="kn">from</span> <span class="nn">aws</span> <span class="kn">import</span> <span class="n">aws_path</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Connecting-to-IPyParallel">
+<h2>Connecting to IPyParallel<a class="headerlink" href="#Connecting-to-IPyParallel" title="Permalink to this headline">¶</a></h2>
+<p>Assuming that the IPyParallel controller, hub and engines are running we create a client, which holds the connection to the controller.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">aws.retrieval</span> <span class="kn">import</span> <span class="n">Retrieval</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">ipp</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s2">&quot;gold&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Since we are already running 4 engines on each of the gold machines, which only have 4 cores, we set the <code class="docutils literal notranslate"><span class="pre">OMP_NUM_THREADS</span></code> environment variable to 1 on all engines to avoid ARTS from launching to many threads.</p>
+<p>Note that this notebook is running on your local machine, not on the gold cluster. To execute a cell on the engines we need to use the <code class="docutils literal notranslate"><span class="pre">%%px</span></code> cell magic, which executes the cell on the remote engines instead on the local machine.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%</span><span class="k">px</span>
+%env OMP_NUM_THREADS=1
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[stdout:0] env: OMP_NUM_THREADS=1
+[stdout:1] env: OMP_NUM_THREADS=1
+[stdout:2] env: OMP_NUM_THREADS=1
+[stdout:3] env: OMP_NUM_THREADS=1
+[stdout:4] env: OMP_NUM_THREADS=1
+[stdout:5] env: OMP_NUM_THREADS=1
+[stdout:6] env: OMP_NUM_THREADS=1
+[stdout:7] env: OMP_NUM_THREADS=1
+[stdout:8] env: OMP_NUM_THREADS=1
+[stdout:9] env: OMP_NUM_THREADS=1
+[stdout:10] env: OMP_NUM_THREADS=1
+[stdout:11] env: OMP_NUM_THREADS=1
+[stdout:12] env: OMP_NUM_THREADS=1
+[stdout:13] env: OMP_NUM_THREADS=1
+[stdout:14] env: OMP_NUM_THREADS=1
+[stdout:15] env: OMP_NUM_THREADS=1
+[stdout:16] env: OMP_NUM_THREADS=1
+[stdout:17] env: OMP_NUM_THREADS=1
+[stdout:18] env: OMP_NUM_THREADS=1
+[stdout:19] env: OMP_NUM_THREADS=1
+[stdout:20] env: OMP_NUM_THREADS=1
+[stdout:21] env: OMP_NUM_THREADS=1
+[stdout:22] env: OMP_NUM_THREADS=1
+[stdout:23] env: OMP_NUM_THREADS=1
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Setting-up-the-simulation">
+<h2>Setting up the simulation<a class="headerlink" href="#Setting-up-the-simulation" title="Permalink to this headline">¶</a></h2>
+<p>The next step is to setup the simulation with the desired configuration.</p>
+</div>
+<div class="section" id="Choosing-the-sensor">
+<h2>Choosing the sensor<a class="headerlink" href="#Choosing-the-sensor" title="Permalink to this headline">¶</a></h2>
+<p>Currently two sensor configurations are available:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ATMS</span></code>: Simplified version of the upper channels of the ATMS sensor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AWS</span></code>: The channel setup to use for the full simulations.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sensor</span> <span class="o">=</span> <span class="n">ATMS</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Setting-the-ice-habit">
+<h2>Setting the ice habit<a class="headerlink" href="#Setting-the-ice-habit" title="Permalink to this headline">¶</a></h2>
+<p>The ice shape to use in the simulations. Shoule be one of * <code class="docutils literal notranslate"><span class="pre">&quot;Perpendicular3BulletRosette&quot;</span></code> * <code class="docutils literal notranslate"><span class="pre">&quot;LargePlateAggregate&quot;</span></code> * <code class="docutils literal notranslate"><span class="pre">&quot;LargeColumnAggregate&quot;</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ice_shape</span> <span class="o">=</span> <span class="s2">&quot;Perpendicular3BulletRosette&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Setting up the simulation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># The input data.</span>
+<span class="n">data_provider</span> <span class="o">=</span> <span class="n">RandomProfile</span><span class="p">(</span><span class="s2">&quot;~/Dendrite/Projects/AWS-325GHz/CasesV1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Setup the IWC/RWC retrieval, which then becomes the</span>
+<span class="c1"># data_provider for the simulation.</span>
+<span class="n">retrieval</span> <span class="o">=</span> <span class="n">Retrieval</span><span class="p">(</span><span class="n">data_provider</span><span class="p">,</span> <span class="n">ice_shape</span><span class="p">)</span>
+
+<span class="c1"># Setup the simulation</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="n">Simulation</span><span class="p">(</span><span class="n">sensor</span><span class="p">,</span> <span class="n">retrieval</span><span class="p">,</span> <span class="n">ice_shape</span><span class="p">)</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;name_length&quot;</span><span class="p">,)),</span>
+          <span class="p">(</span><span class="s2">&quot;profile_index&quot;</span><span class="p">,</span> <span class="p">())]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Output-file">
+<h2>Output file<a class="headerlink" href="#Output-file" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">aws_path</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;simulations_allsky_v1.nc&quot;</span><span class="p">)</span>
+<span class="n">simulation</span><span class="o">.</span><span class="n">initialize_output_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                                 <span class="p">[(</span><span class="s2">&quot;cases&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span> <span class="c1"># Name of dimension for different simulations</span>
+                                 <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Running-the-simulations">
+<h2>Running the simulations<a class="headerlink" href="#Running-the-simulations" title="Permalink to this headline">¶</a></h2>
+<p>Running the simulations is performed by executing the <code class="docutils literal notranslate"><span class="pre">run_ranges</span></code> method which distributes the simulations for the given range of profiles on the IPyParallel cluster.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">24</span> <span class="c1"># Number of simulations to run</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">run_ranges</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">ipyparallel_client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Simulations are executed asynchronously, which means the <code class="docutils literal notranslate"><span class="pre">run_ranges</span></code> will return berfore the simulations are finished. To monitor progress you can print the results object, which will display the amount of completed simulations. If any simulations failed, the exceptions can be accessed via the <code class="docutils literal notranslate"><span class="pre">results.failed</span></code> attribute.</p>
+<blockquote>
+<div><p><strong>NOTE:</strong> The profile order is random but fixed. Running <code class="docutils literal notranslate"><span class="pre">simulation.run_ranges(1000)</span></code> multiple times will produce the same results.</p>
+</div></blockquote>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Distributed ARTS simulation: 24 tasks, 0 completed, 0 failed
+         Avg. execution time: nan
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Running-clearsky-simulations">
+<h2>Running clearsky simulations<a class="headerlink" href="#Running-clearsky-simulations" title="Permalink to this headline">¶</a></h2>
+<p>Running clearsky simulations is performed in a separate simulation. All that is required to run clearsky versions of the simulations is to pass the <code class="docutils literal notranslate"><span class="pre">clearsky=True</span></code> keyword argument to the <code class="docutils literal notranslate"><span class="pre">run_ranges</span></code> method.</p>
+<p>Note, however, that you will need to write the results to a different file, otherwise the results from the allsky simulations will be overwritten</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">aws_path</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;simulations_clearsky_v1.nc&quot;</span><span class="p">)</span>
+<span class="n">simulation</span><span class="o">.</span><span class="n">initialize_output_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span>
+                                 <span class="p">[(</span><span class="s2">&quot;cases&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span> <span class="c1"># Name of dimension for different simulations</span>
+                                 <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">simulation</span><span class="o">.</span><span class="n">run_ranges</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+                                <span class="n">ipyparallel_client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                               <span class="n">clearsky</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Distributed ARTS simulation: 24 tasks, 0 completed, 0 failed
+         Avg. execution time: nan
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../dependencies_and_data.html" class="btn btn-neutral float-left" title="Required software and data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Simon Pfreundschuh, Inderpreet Kaur, Patrick Eriksson
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

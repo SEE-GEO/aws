@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Setup &mdash; AWS 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Required software and data" href="dependencies_and_data.html" />
+    <link rel="prev" title="AWS" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> AWS
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Running simulations</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Setup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preparing-access-to-the-remote-machines">Preparing access to the remote machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#copying-the-ipyparallel-profile">Copying the IPyParallel profile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-the-controller-and-engines">Starting the controller and engines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dependencies_and_data.html">Required software and data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dependencies_and_data.html#software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dependencies_and_data.html#data">Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/run_simulations.html">Running simulations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Connecting-to-IPyParallel">Connecting to IPyParallel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Setting-up-the-simulation">Setting up the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Choosing-the-sensor">Choosing the sensor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Setting-the-ice-habit">Setting the ice habit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#id1">Setting up the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Output-file">Output file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Running-the-simulations">Running the simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/run_simulations.html#Running-clearsky-simulations">Running clearsky simulations</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">AWS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Setup</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/gold.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<p>We will make use of the gold servers for the simulations. The addresses
+of the servers are</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>gold&lt;i&gt;.rss.chalmers.se
+</pre></div>
+</div>
+<p>for i in [2, 3, 4, 5, 6, 7]. Each server has 4 cores, so we can run 24
+simulations in parallel. To run simulations in parallel distributed on the six
+machines we are using the <a class="reference external" href="https://ipyparallel.readthedocs.io/en/latest/index.html">IPyParallel</a> package.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The AWS simulations require only minimal interaction with the IPyParallel
+package but it is still good to have an overview over the general computational
+architecture to understand which steps are required to start the simulations.</p>
+<p>The IPyParallel infrastructure consists of a controller and a hub running on the
+local machine and several engines running on the remote machines (in our case
+the gold server). The hub manages communication between engines and controller
+but should not be of further concern for us. Our main interaction will be with
+the controller. We will use a Python script running on the local machine to the controller
+and execute tasks on the remote engines.</p>
+<p>Running simulations on the gold cluster thus always involves two steps:</p>
+<ol class="arabic simple">
+<li><p>Start the IPyParallel controller hub and engines.</p></li>
+<li><p>Run a Python script to connect to the controller and execute code
+on the engines.</p></li>
+</ol>
+</div>
+<div class="section" id="preparing-access-to-the-remote-machines">
+<h2>Preparing access to the remote machines<a class="headerlink" href="#preparing-access-to-the-remote-machines" title="Permalink to this headline">¶</a></h2>
+<p>For IPyParallel to be able to connect to the remote machines, it needs to be
+able to ssh into them without a password. For this you need to enable ssh
+key-based authentication, by copying your public key to the machines.</p>
+<div class="section" id="generating-an-ssh-key">
+<h3>Generating an SSH key<a class="headerlink" href="#generating-an-ssh-key" title="Permalink to this headline">¶</a></h3>
+<p>If you are unsure whether you already have a SSH key, follow the steps described
+<a class="reference external" href="https://help.github.com/en/enterprise/2.17/user/github/authenticating-to-github/checking-for-existing-ssh-keys">here</a>
+and <a class="reference external" href="https://help.github.com/en/enterprise/2.17/user/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">here</a>
+to find out whether you have already generated a key and if not generate a new one.
+Keep in mind to leave the pass phrase empty in case you are generating a new key.</p>
+</div>
+<div class="section" id="copying-you-key-to-the-gold-machines">
+<h3>Copying you key to the gold machines<a class="headerlink" href="#copying-you-key-to-the-gold-machines" title="Permalink to this headline">¶</a></h3>
+<p>To copy  the ssh key to the gold machines run</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ssh-copy-id &lt;username&gt;@gold2.rss.chalmers.se
+</pre></div>
+</div>
+<p>Since the machines run on a shared file system it should be sufficient to copy the
+key to only one of them.</p>
+<p>You should now be able to login to any of the gold machines without entering
+your password.</p>
+</div>
+</div>
+<div class="section" id="copying-the-ipyparallel-profile">
+<h2>Copying the IPyParallel profile<a class="headerlink" href="#copying-the-ipyparallel-profile" title="Permalink to this headline">¶</a></h2>
+<p>The information which tells IPyParallel to which machines to connect is stored
+in a profile. I have setup a <code class="code docutils literal notranslate"><span class="pre">gold</span></code> profile to use to connect to the gold
+servers. To use it, you will need to copy the profile folder to your local
+<code class="code docutils literal notranslate"><span class="pre">~/.ipython</span></code> directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp -r /home/simonpf/.ipython/profile_gold ~/.ipython
+</pre></div>
+</div>
+</div>
+<div class="section" id="starting-the-controller-and-engines">
+<h2>Starting the controller and engines<a class="headerlink" href="#starting-the-controller-and-engines" title="Permalink to this headline">¶</a></h2>
+<p>To start the IPyParallel hub, controller and engines, we use the <code class="code docutils literal notranslate"><span class="pre">ipcluster</span></code>
+command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ipcluster start --profile=gold --ip=* --debug
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">--debug</span></code> flag is not strictly required and produces quite a lot of output
+but especially in the beginning it can be helpful to see what’s happening. Since
+you want to keep this process alive as long as the simulations are running it
+is a good idea to run in a <code class="code docutils literal notranslate"><span class="pre">tmux</span></code> session.</p>
+<p>It can be convenient to define an alias to start the IPyParallel cluster in tmux:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>alias start_gold_cluster=&quot;tmux new-session -d -s gold_cluster &#39;ipcluster start --profile=gold --ip=* --debug&#39;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dependencies_and_data.html" class="btn btn-neutral float-right" title="Required software and data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="AWS" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Simon Pfreundschuh, Inderpreet Kaur, Patrick Eriksson
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(false);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
