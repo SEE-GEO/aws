@@ -10,6 +10,7 @@ from pyarts.workspace.api import include_path_push, arts_include_path
 
 from aws.hydrometeors import Ice, Rain
 from aws.sensor import AWS
+from aws import aws_path
 
 try:
     aws_path = os.path.dirname(__file__)
@@ -31,7 +32,7 @@ class Simulation(ArtsSimulation):
                      CloudWater(from_catalog=True,
                                 model="ELL07"),
                      N2()]
-        telsem = Telsem("/home/simonpf/src/aws/data/")
+        telsem = Telsem(os.path.join(aws_path, "data"))
         telsem.d_max = 100e3
         surface = CombinedSurface(Tessem(), telsem)
         scattering_solver = RT4(nstreams=16)
