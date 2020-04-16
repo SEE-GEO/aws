@@ -76,7 +76,7 @@ class Ice(ScatteringSpecies):
                              format(shape, particle_names))
 
         scattering_data = os.path.join(data_path,
-                                       "StandardHabits",
+                                       "StandardHabits_small",
                                        name_data)
         scattering_meta_data = os.path.join(data_path,
                                             "StandardHabits_small",
@@ -92,7 +92,7 @@ class Rain(ScatteringSpecies):
         psd.t_min = 270.0
 
         scattering_data = os.path.join(data_path,
-                                       "StandardHabits",
+                                       "StandardHabits_small",
                                        "LiquidSphere.xml")
         scattering_meta_data = os.path.join(data_path,
                                             "StandardHabits_small",

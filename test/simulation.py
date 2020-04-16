@@ -1,6 +1,5 @@
 import numpy as np
 import os
-
 import os
 
 from aws.retrieval import Simulation, Retrieval

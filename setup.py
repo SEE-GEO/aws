@@ -14,7 +14,7 @@ setup(
     url='https://github.com/simonpf/aws',  # Optional
     author='Simon Pfreundschuh, Patrick Eriksson, Inderpreet Kaur',  # Optional
     author_email='simon.pfreundschuh@chalmers.se',  # Optional
-    install_requires=["artssat", "h5py"],
+    install_requires=["artssat"],
     packages=["aws"],
     python_requires='>=3.6',
     project_urls={  # Optional
