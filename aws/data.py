@@ -23,6 +23,7 @@ class Profiles(DataProviderBase):
             path(:code:`str`): The path to the input file.
         """
         super().__init__()
+        path = os.path.expanduser(path)
         if not os.path.exists(path):
             raise ValueError("Could not find file {}.".format(path))
         self.path = path
@@ -159,6 +160,7 @@ class RandomProfile(DataProviderBase):
     def __init__(self, path):
         """
         """
+        path = os.path.expanduser(path)
         super().__init__()
         files = glob.glob(os.path.join(path, "*.mat"))
         self.path = path
