@@ -44,7 +44,7 @@
 \begin{document}
 
 
-
+\thispagestyle{empty}
 \noindent
 \textbf{\Large Study to support the definition of Arctic Weather \vspace{1mm}\\
 Satellite (AWS) high frequency channels} \vspace{8mm}\\
@@ -53,10 +53,22 @@ Department of Space, Earth and Environment\\
 Chalmers University of Technology\\
 SE-412\,96, Gothenburg, Sweden \vspace{10mm}
 
+\section*{Summary}
+%
+To written \dots
+
+
+
+\setcounter{tocdepth}{1} 
+\tableofcontents
+
+
+\newpage
+\setcounter{page}{1}
+
 \section{Introduction}
 %
 \dots
-
 
 
 \section{Assumptions on AWS characteristics}
@@ -88,7 +100,7 @@ optimal shape of these responses; a significant deviation from a rectangular
 shape should be of no concern as long as the actual shape is well
 characterised.
 
-\begin{table}[!bt]
+\begin{table}[!b]
   \begin{minipage}[b]{0.5\linewidth}
   \centering  
   \begin{tabular}[c]{c|c|c}
@@ -266,9 +278,7 @@ agreement around or better than 0.?\,K was found.
 [* Write later, Simon? TRO only! *]
 
 
-\section{Results}
-
-\subsection{Overview of the 183, 229 and 325\,GHz bands}
+\section{Overview of the 183, 229 and 325\,GHz bands}
 %
 The simulations in this section are based on five Fascod climate scenarios
 (Sec.~\ref{sec:fascod}), and performed with a fixed sensor viewing angle of
@@ -279,7 +289,7 @@ In the figures covering transmissivities and Jacobians, the specifications
 of ICI is applied for 325\,GHz channels (Table~\ref{tab:fixed:chs}).
 
 
-\subsubsection{Clear-sky brightness temperatures}
+\subsection{Clear-sky brightness temperatures}
 %
 Figure~\ref{fig:tb:r000} shows brightness temperatures over the three bands, for
 a reflectivity of 0 (i.e.\ a blackbody surface). The figure takes into account
@@ -347,7 +357,7 @@ this for retrievals at high latitudes *] Beside for the tropical case, for
 about 35\,K for mid-latitude winter.
 
 
-\subsubsection{Clear-sky transmissivities to space}
+\subsection{Clear-sky transmissivities to space}
 %
 Assuming that a cloud layer can be moved in altitude, its impact on measured
 brightness temperatures will roughly follow the transmissivity to space for the
@@ -372,7 +382,7 @@ some (weak) ozone attenuation in the stratosphere. The 229\,GHz has the highest
 transmissivities.
 
 
-\subsubsection{Clear-sky relative humidity weighting functions}
+\subsection{Clear-sky relative humidity weighting functions}
 %
 The sensitivity to humidity is most easily compared by the channels' weighting
 functions (i.e.\ the Jacobian), and examples are found in
@@ -397,12 +407,32 @@ surface reflectivity. For dry conditions also the outer 183 and 325\,GHz
 channels can have a positive part, as long as the reflectivity is not close to
 0.
 
+
+\section{Preliminary options for 325\,GHz channels}
+
+\subsection{...}
+%
+\dots Fig.~\ref{fig:wfuns:325ul}
+
+\begin{figure}[!tb]
+  \centering
+  \includegraphics[height=65mm]{fascod_wf_325l_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=65mm]{fascod_wf_325u_tro}
+ \caption{...}
+  \label{fig:wfuns:325ul}
+\end{figure}
+
+
+
+
+
 \section{Notes}
 \begin{itemize}
 \item Discuss selection of polarisation
 \end{itemize}
 
-
+{\footnotesize
 \bibliography{j_abbr,references}
+}
 
 \end{document}
