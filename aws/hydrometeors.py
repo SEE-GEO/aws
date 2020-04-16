@@ -79,7 +79,7 @@ class Ice(ScatteringSpecies):
                                        "StandardHabits",
                                        name_data)
         scattering_meta_data = os.path.join(data_path,
-                                            "StandardHabits",
+                                            "StandardHabits_small",
                                             name_meta)
         super().__init__("ice", psd, scattering_data, scattering_meta_data)
 
@@ -95,6 +95,6 @@ class Rain(ScatteringSpecies):
                                        "StandardHabits",
                                        "LiquidSphere.xml")
         scattering_meta_data = os.path.join(data_path,
-                                            "StandardHabits",
+                                            "StandardHabits_small",
                                             "LiquidSphere.meta.xml")
         super().__init__("rain", psd, scattering_data, scattering_meta_data)

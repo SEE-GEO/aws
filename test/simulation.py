@@ -26,17 +26,8 @@ data_provider_2 = RandomProfile("/home/simonpf/Dendrite/Projects/AWS-325GHz/Case
 
 # Create the retrieval and let it act as data provider to simulations.
 retrieval = Retrieval(data_provider, "Perpendicular3BulletRosette")
-retrieval.add(data_provider)
 
 sensor = ATMS()
-simulation = Simulation(sensor, data_provider, "Perpendicular3BulletRosette")
-#simulation.setup()
-#simulation.run(28)
-
-import dill
-dill.dump(simulation, open("sim.pckl", "wb"))
-
-for i in range(100):
-    print(i)
-    sim = dill.load(open("sim.pckl", "rb"))
-    sim.data_provider = None
+simulation = Simulation(sensor, retrieval, "Perpendicular3BulletRosette")
+simulation.setup()
+simulation.run(0)

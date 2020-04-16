@@ -12,13 +12,9 @@ from aws.hydrometeors import Ice, Rain
 from aws.sensor import AWS
 from aws import aws_path
 
-try:
-    aws_path = os.path.dirname(__file__)
-except:
-    aws_path = "."
 
-include_path_push(os.path.join(aws_path, "include"))
-arts_include_path += [os.path.join(aws_path, "include")]
+include_path_push(os.path.join(aws_path, "aws", "include"))
+arts_include_path += [os.path.join(aws_path, "aws", "include")]
 
 
 class Simulation(ArtsSimulation):
