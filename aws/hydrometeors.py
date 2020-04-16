@@ -59,10 +59,6 @@ class Abel(AB12):
     def moment_names(self):
         return ["water_content"]
 
-
-
-
-
 class Ice(ScatteringSpecies):
     def __init__(self,
                  shape):
@@ -79,8 +75,12 @@ class Ice(ScatteringSpecies):
             raise ValueError("{} is not a known shape. Available shapes are {}".
                              format(shape, particle_names))
 
-        scattering_data = os.path.join(data_path, "StandardHabits_small", name_data)
-        scattering_meta_data = os.path.join(data_path, "StandardHabits_small", name_meta)
+        scattering_data = os.path.join(data_path,
+                                       "StandardHabits_small",
+                                       name_data)
+        scattering_meta_data = os.path.join(data_path,
+                                            "StandardHabits_small",
+                                            name_meta)
         super().__init__("ice", psd, scattering_data, scattering_meta_data)
 
 class Rain(ScatteringSpecies):
@@ -91,6 +91,10 @@ class Rain(ScatteringSpecies):
         psd = Abel()
         psd.t_min = 270.0
 
-        scattering_data = os.path.join(data_path, "StandardHabits_small", "LiquidSphere.xml")
-        scattering_meta_data = os.path.join(data_path, "StandardHabits_small", "LiquidSphere.meta.xml")
+        scattering_data = os.path.join(data_path,
+                                       "StandardHabits_small",
+                                       "LiquidSphere.xml")
+        scattering_meta_data = os.path.join(data_path,
+                                            "StandardHabits_small",
+                                            "LiquidSphere.meta.xml")
         super().__init__("rain", psd, scattering_data, scattering_meta_data)
