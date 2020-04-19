@@ -29,6 +29,9 @@ class Profiles(DataProviderBase):
         self.path = path
         self.file = File(path, mode="r")
 
+    def __del__(self):
+        self.file.close()
+
     @property
     def n_profiles(self):
         return self.file["C"]["dBZ"].shape[0]
@@ -172,11 +175,11 @@ class RandomProfile(DataProviderBase):
         self.profile_indices = np.random.randint(0, len(files), size=self.cycle)
 
         def make_getter(name):
-            def getter(self, i):
+            def getter(self, i, **kwargs):
                 profiles = self._get_random_file(i)
                 ri = self._get_random_index(profiles, i)
                 fget = getattr(profiles, "get_" + name)
-                return fget(ri)
+                return fget(ri, **kwargs)
             return getter
 
         getters = ["y_cloudsat",
