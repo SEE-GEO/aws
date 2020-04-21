@@ -211,7 +211,7 @@ ERA-Interim. The core idea of the approach is to use CloudSat reflectivities to
 obtain as realistic vertical profiles of ice hydrometeors and rain as
 possible. No external CloudSat retrievals are involved. Instead the CloudSat
 reflectivites are mapped to properties for the passive simulations by assuming
-a particle size distribution (PSD) and a particle habit, together denoted as
+a particle size distribution and a particle habit, together denoted as
 the particle model. The process involves an inversion of the radar data, but as,
 the same particle model is used for that inversion and to map ice water content
 (IWC) and rain water content (RWC) to single scattering data when performing
@@ -277,7 +277,29 @@ agreement around or better than 0.?\,K was found [* expand *].
 
 \subsubsection{Hydrometeor properties}
 %
-[* Write later, Simon? TRO only! *]
+As mentioned above, LWC is taken from ERA-Interim and is assumed to be totally
+absorbing. LWC is allowed to exist at temperatures below 0$^\circ$C, i.e.\
+super-cooled liquid cloud droplets are present in the simulations. In the
+mapping of CloudSat reflectivities to RWC and IWC a total separation between
+liquid and ice phase is assumed. All scattering hydrometeors at temperatures
+above 0$^\circ$C are assumed to be rain, and all below 0$^\circ$C are assumed
+to be ice hydrometeors.
+
+For RWC the particle size distribution of \citet{abel2012improved} is applied.
+The PSD of IWC follows the basic formulation applied in DARDAR, using latest
+parameter values (i.e.\ $\alpha$ and $\beta$) as given by
+\citet{amt-12-2819-2019}. This PSD can be considered as a ``two moment''
+scheme, but is here applied in a one moment manner by setting $N_0^*$ (as a
+function of temperature) following Table~5 of \citet{delanoe2014normalized},
+and letting the radar reflectivity set the remaining moment.
+
+Single scattering data are taken from \citet{eriksson:agene:18}. For ice
+hydrometeors, three habits are applied: Perpendicular 3-bullet rosette, Large
+plate aggregate and Large column aggregate. In the two later cases, the
+aggregates are complemented with single crystal data to also cover smaller
+sizes. These data describe particles assumed to have a totally random
+orientation. To apply oriented particles is much more computationally costly
+and could not be accommodated inside the study.
 
 
 \section{Overview of the 183, 229 and 325\,GHz bands}
@@ -435,7 +457,7 @@ As expected, when the channel is moved away the centre frequency, the weighting
 function moves downwards. However, moving the channel from 5\,-\,8\,GHz to
 8\,-\,11\,GHz (in IF) results only a small shift, about 400 and 200\,m for the
 lower and upper side, respectively. In terms of the resulting double sideband
-channel the the shift would be 300\,m. Accordingly, there is little gain
+channel the the shift would be 300\,m. Accordingly, there is little gain by
 inforcing the IF range to go above 8\,GHz. As a rule of thumb, a higher ratio
 between highest and lowest IF is more costly to implement. Albeit small, a
 negative consequence of a 8\,-\,11\,GHz channel, compared to 5\,-\,8\,GHz, is
@@ -452,12 +474,13 @@ and development time of AWS.
 %
 The ICI channels give a rough RH weighting functions matching with AWS-32,
 AWS-33 and AWS-34 (Fig.~\ref{fig:wf:mls:025}), and to find a tentative three
-channel option for the AWS 325\,GHz channels specifications providing an even
-better matching were tried out. The resulting specifications are found in
-Table~\ref{tab:chs:prel} and example weighting functions are displayed in
-Fig.~\ref {fig:3ch:prel}. This option has a IF range of 1.0 to 8.0\,GHz, and
-leaves a 100\,MHz space between AWS-42 and AWS-43, and 200\,MHz space between
-AWS-41 and AWS-42.
+channel option an even better matching was used as constrain to set the
+specifications. The resulting values are found in Table~\ref{tab:chs:prel} and
+example weighting functions are displayed in Fig.~\ref {fig:3ch:prel}. This
+option has a IF range of 1.0 to 8.0\,GHz, and leaves a 100\,MHz space between
+AWS-42 and AWS-43, and 200\,MHz space between AWS-41 and AWS-42. That is, the
+suggestion uses the complete IF bandwidth as far as possible, that is
+technically possible.
 
 \begin{table}[!b]
   \begin{minipage}[b]{0.5\linewidth}
@@ -517,13 +540,44 @@ The tentative four channel option in Table~\ref{tab:chs:prel} gives a broader
 altitude coverage, towards higher altitudes, and offers weighting functions
 roughly equally spaced in altitude (Fig.~\ref {fig:4ch:prel}). This option has
 a IF range of 0.7 to 8.0\,GHz, and leaves 200\,MHz space between AWS-41 and
-AWS-42 and has 100\,MHz between the other channels.
+AWS-42 and has 100\,MHz between the other channels. Also this suggestion uses
+the complete IF bandwidth.
 
 
-\section{Notes}
-\begin{itemize}
-\item Discuss selection of polarisation
-\end{itemize}
+\section{Discussion}
+
+
+\subsection{Shape of channel response functions}
+%
+The simulations have assumed rectangularly shaped response functions, for
+simplicity. We have left some frequency gaps between the channels to simplify
+the technical implementation, i.e.\ to decrease the demand on very sharp
+ransitions from high to low response. We have assumed that 100\,MHz is
+sufficient in the lower end of the IF-range and 200\,MHz in the upper part. If
+found necessary we don't see any problem in increasing the gaps, beside that
+the bandwidth decreases and the NE$\Delta$T of the channel will somewhat
+increase.
+
+
+
+\subsection{Polarisation response}
+%
+Polarisation aspects have not been considered in full detail. Some polarisation
+is induced by the surface in the simulations, but hydrometeors are assumed to
+be totally randomly oriented and do not cause polarisation. To involve oriented
+particles was not possible due to the limited time allocated for the study.
+
+The basic recommendation would be to use the same polarisation response as far
+as possible. If both quasi-horisontal and quasi-vertical bands must be applied,
+the recommedation prioritize to use the polarisation option for 183 and
+325\,GHz, to maintain a similar influence of polarisation between the bands.
+
+
+
+\section{Conclusion}
+%
+\dots
+
 
 {\footnotesize
 \bibliography{j_abbr,references}
