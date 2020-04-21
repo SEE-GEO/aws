@@ -80,17 +80,18 @@ considers to be technically feasible inside the budget of the project.
 
 \subsection{Channel specifications}
 %
-Channels around 89, 166, 183 and 229\,GHz are assumed to be fixed, with name,
-position and widths defined in Table~\ref{tab:fixed:chs}. AWS channels 31 to 36
-will be implemented as a single front-end, but are here still considered as two
-``bands'', denoted as 166 and 183\,GHz.
+The specifications of channels around 89, 166, 183 and 229\,GHz are assumed to
+be fixed, with name, position and widths defined in Table~\ref{tab:fixed:chs}.
+AWS channels 31 to 36 will be implemented as a single front-end, but are here
+still considered as two ``bands'', denoted as 166 and 183\,GHz, to more easily
+separate the channels in the text. 
 
 For 325\,GHz, it will be assumed that channels can be placed between 0.75 and
 8.0\,GHz in terms of intermediate frequency (IF), and that up to 4 channels
 inside this range can be implemented. There should be some gap between these
 channels, above 100\,-\,200\,MHz, to facilitate the technical implementation.
-For comparison, Table~\ref{tab:fixed:chs} includes also the position of the ICI
-325\,GHz channels. As the ICI channels extend to 11\,GHz in IF, they will not
+For comparison, Table~\ref{tab:fixed:chs} includes also the position of 
+325\,GHz channels of ICI. As the ICI channels extend to 11\,GHz in IF, they will not
 be considered for AWS but will be applied for demonstration and reference
 purposes.
 
@@ -114,7 +115,7 @@ characterised.
     AWS-34  & 180.311 & 1000\\
     AWS-35  & 181.511 & 1000\\
     AWS-36  & 182.311 & \phantom{0}500\\
-    AWS-41  & 229.000 & 2000\\
+    AWS-4X  & 229.000 & 2000\\
     \hline
   \end{tabular}
   \end{minipage}%
@@ -132,7 +133,7 @@ characterised.
   \end{minipage}  
   \caption{Fixed channel position and widths. The left table covers channels of
     AWS, with values taken from SoW. Channels AWS-21 to AWS-36 are at this
-    moment mandatory for AWS, while AWS-41 is so far tentative. The right table
+    moment mandatory for AWS, while AWS-4X is so far tentative. The right table
     lists the values of some channels of ICI \citep{eriksson:towar:20}.}
   \label{tab:fixed:chs}
 \end{table}
@@ -148,8 +149,9 @@ as
 \end{equation}
 where $\sigma^i$ is the noise standard deviation of channel $i$, $c$ is a
 scaling factor (see below), $T^i_r$ is the reciever noise temperature of the
-channel, $T^i_a$ is the antenna temperature of the channel, $\Delta\!f^i$ is the
-bandwidth of channel and $\Delta t$ is the integration time.
+channel, $T^i_a$ is the antenna temperature of the channel, $\Delta\!f^i$ is
+the bandwidth (in terms of IF) of channel and $\Delta t$ is the integration
+time.
 
 The factor $c$ is set to 1.2 to incorporate the additional noise caused by the
 calibration process. The bandwith applied is the one found in columns 3 of
@@ -209,8 +211,8 @@ ERA-Interim. The core idea of the approach is to use CloudSat reflectivities to
 obtain as realistic vertical profiles of ice hydrometeors and rain as
 possible. No external CloudSat retrievals are involved. Instead the CloudSat
 reflectivites are mapped to properties for the passive simulations by assuming
-a particle size distribution (PSD) and a particle habit, together denoted as
-the particle model. The process involves an inversion of the radar data, but as
+a particle size distribution and a particle habit, together denoted as
+the particle model. The process involves an inversion of the radar data, but as,
 the same particle model is used for that inversion and to map ice water content
 (IWC) and rain water content (RWC) to single scattering data when performing
 the passive radiative transfer calculations, the impact of clouds on the
@@ -223,7 +225,7 @@ to the hydrometeor category.
 
 This approach for generating atmospheric scenarios has been used by us since
 \citet{rydberg:nonga:09}, and more recently in e.g.\
-\citet{eriksson:towar:20,barlakas:three:20}. It is also used in
+\citet{eriksson:towar:20} and \citet{barlakas:three:20}. It is also used in
 \citet{ekelund:using:20}, where the approach is described more in detail. In
 the cited articles, the sensor's footprint has been considered in varying
 degree, as ``beam filling'' must be considered at high impact of hydrometeors.
@@ -245,9 +247,9 @@ All radiative transfer calculations are made by the Atmospheric Radiative
 Transfer System (ARTS, \citet{eriksson:arts2:11,buehler:artst:18}), version
 arts-2.3.????. Models and input used for absorption and hydrometeor properties
 are described below. Ocean/water and land emissivities are taken from
-TESSEM \citet{prigent2017sea} and TELSEM \citet{aires2011tool}, respectively.
+TESSEM \citep{prigent2017sea} and TELSEM \citep{aires2011tool}, respectively.
 
-The calculations were performed for each atmospheric cases. One ''clear-sky''
+Two calculations were performed for each atmospheric cases. One ''clear-sky''
 where all hydrometeors contents were set to zero, and one ``all-sky'' where IWC
 and RWC derived from CloudSat reflectivities and LWC from ERA-Interim were
 included. Both sets of calculations were were made by ARTS's interface to the
@@ -263,19 +265,41 @@ polarisation.
 The absorption of nitrogen is modelled following \citet{pwr:93}. Nitrogen has a
 significant impact at least around 325\,GHz at dry conditions. Also oxygen
 absorption follows \citet{pwr:93}. Oxygen is in this study mainly of concern
-for the 89\,GHz CloudSat simulations. LWC was treated to be
+for the 94\,GHz CloudSat simulations. LWC was treated to be
 purely absorbing, based on \citet{ellison2007permittivity}.
 
 For water vapour the present settings in RTTOV are applied. That is, largely
 MPM89 \citep{liebe:89} is followed, but some parameters for the 22 and 183\,GHz
 transitions are replaced \citep{saunders2018update,turner2019amsutran}. A basic
 comparison to RTTOV (12.?) was made (with MHS as assumed sensor) and an
-agreement around or better than 0.?\,K was found.
+agreement around or better than 0.?\,K was found [* expand *].
 
 
 \subsubsection{Hydrometeor properties}
 %
-[* Write later, Simon? TRO only! *]
+As mentioned above, LWC is taken from ERA-Interim and is assumed to be totally
+absorbing. LWC is allowed to exist at temperatures below 0$^\circ$C, i.e.\
+super-cooled liquid cloud droplets are present in the simulations. In the
+mapping of CloudSat reflectivities to RWC and IWC a total separation between
+liquid and ice phase is assumed. All scattering hydrometeors at temperatures
+above 0$^\circ$C are assumed to be rain, and all below 0$^\circ$C are assumed
+to be ice hydrometeors.
+
+For RWC the particle size distribution of \citet{abel2012improved} is applied.
+The PSD of IWC follows the basic formulation applied in DARDAR, using latest
+parameter values (i.e.\ $\alpha$ and $\beta$) as given by
+\citet{amt-12-2819-2019}. This PSD can be considered as a ``two moment''
+scheme, but is here applied in a one moment manner by setting $N_0^*$ (as a
+function of temperature) following Table~5 of \citet{delanoe2014normalized},
+and letting the radar reflectivity set the remaining moment.
+
+Single scattering data are taken from \citet{eriksson:agene:18}. For ice
+hydrometeors, three habits are applied: Perpendicular 3-bullet rosette, Large
+plate aggregate and Large column aggregate. In the two later cases, the
+aggregates are complemented with single crystal data to also cover smaller
+sizes. These data describe particles assumed to have a totally random
+orientation. To apply oriented particles is much more computationally costly
+and could not be accommodated inside the study.
 
 
 \section{Overview of the 183, 229 and 325\,GHz bands}
@@ -342,7 +366,7 @@ sideband. The spectra of 183 and 325\,GHz deviate little close to the transition
 frequency, showing that the two frequencies are of similar strength, though the
 325\,GHz one is slightly weaker. The higher deviations further out in the wings
 are due to different contribution of far wing and continuum absorption, that is
-higher at 325\,GHz. The 229\,GHz brightness temperatures is higher than any
+higher at 325\,GHz. The 229\,GHz brightness temperatures are higher than any
 value around 183 and 325\,GHz, as expected 229\,GHz being a window channel.
 
 In Figure~\ref{fig:tb:r050} the surface reflectivity is changed to 0.5, which
@@ -350,7 +374,7 @@ should roughly correspond to the highest reflectivity encountered at these
 frequencies. The differences to Fig.~\ref{fig:tb:r000}  are small for 183 and
 325\,GHz for the tropical and the two summer scenarios. On the other hand,
 there is a clear impact in the wing part of 183\,GHz for the two winter
-scenarios. The same is true for 340\,GHz, but the influence of the surface
+scenarios. The same is true for 325\,GHz, but the influence of the surface
 reflectivity is considerably lower. [* Comment somewhere on the implications of
 this for retrievals at high latitudes *] Beside for the tropical case, for
 229\,GHz there is a pronounced dependency of the surface reflectivity, e.g.\
@@ -410,26 +434,150 @@ channels can have a positive part, as long as the reflectivity is not close to
 
 \section{Preliminary options for 325\,GHz channels}
 
-\subsection{...}
+\subsection{Impact of upper end of IF band}
 %
-\dots Fig.~\ref{fig:wfuns:325ul}
+Figure~\ref{fig:wfuns:325ul} assumes that the channel placed at the high end of
+the IF band is 3\,GHz wide (as for ICI, Table~\ref{tab:fixed:chs}), and shows
+the RH weighting function if the outer channel ends at 11, 10, 9 or 8\,GHz. The
+weighting functions for each sideband are here kept separated.
 
 \begin{figure}[!tb]
   \centering
   \includegraphics[height=65mm]{fascod_wf_325l_tro}\hspace{5mm}% 
   \includegraphics[clip,trim=43 0 0 0,height=65mm]{fascod_wf_325u_tro}
- \caption{...}
+  \caption{RH weighting functions for the lower (left) and upper (right) side
+    of the 325.15\,GHz transition. All weighting functions are for a 3\,GHz
+    bandwidth. The stated frequencies are the centre frequency of each. In
+    terms of IF range, the channels cover 8-11, 7-10, 6-9 and 5-8\,GHz (from
+    top-to-bottom in the order given in the legends). }
   \label{fig:wfuns:325ul}
 \end{figure}
 
+As expected, when the channel is moved away the centre frequency, the weighting
+function moves downwards. However, moving the channel from 5\,-\,8\,GHz to
+8\,-\,11\,GHz (in IF) results only a small shift, about 400 and 200\,m for the
+lower and upper side, respectively. In terms of the resulting double sideband
+channel the the shift would be 300\,m. Accordingly, there is little gain by
+inforcing the IF range to go above 8\,GHz. As a rule of thumb, a higher ratio
+between highest and lowest IF is more costly to implement. Albeit small, a
+negative consequence of a 8\,-\,11\,GHz channel, compared to 5\,-\,8\,GHz, is
+some assymetry in the altitude response between lower and upper sideband. This
+assymetry is caused by higher continuum and far wing absorption on the upper
+side.
+
+In summary, the benefit of extending the IF band above 8\,GHz is small and
+placing channels above 8\,GHz seems unnecessary considering the limited budget
+and development time of AWS.
+
+
+\subsection{A three channel option}
+%
+The ICI channels give a rough RH weighting functions matching with AWS-32,
+AWS-33 and AWS-34 (Fig.~\ref{fig:wf:mls:025}), and to find a tentative three
+channel option an even better matching was used as constrain to set the
+specifications. The resulting values are found in Table~\ref{tab:chs:prel} and
+example weighting functions are displayed in Fig.~\ref {fig:3ch:prel}. This
+option has a IF range of 1.0 to 8.0\,GHz, and leaves a 100\,MHz space between
+AWS-42 and AWS-43, and 200\,MHz space between AWS-41 and AWS-42. That is, the
+suggestion uses the complete IF bandwidth as far as possible, that is
+technically possible.
+
+\begin{table}[!b]
+  \begin{minipage}[b]{0.5\linewidth}
+  \centering  
+  \begin{tabular}[c]{c|c|c}
+    Channel & Frequency   & Bandwidth \\
+    name    & [GHz] &  [MHz] \\
+    \hline
+    AWS-41  & 325.15$\pm$6.50 & 3000\\
+    AWS-42  & 325.15$\pm$3.55 & 2500\\
+    AWS-43  & 325.15$\pm$1.60 & 1200\\
+    \hline
+  \end{tabular}
+  \end{minipage}%
+  \begin{minipage}[b]{0.5\linewidth}
+  \centering  
+  \begin{tabular}[c]{c|c|c}
+    Channel & Frequency   & Bandwidth \\
+    name    & [GHz] &  [MHz] \\
+    \hline
+    AWS-41  & 325.15$\pm$6.60 & 2800\\
+    AWS-42  & 325.15$\pm$4.05 & 1900\\
+    AWS-43  & 325.15$\pm$2.35 & 1300\\
+    AWS-44  & 325.15$\pm$1.20 & \phantom{0}800\\
+    \hline
+  \end{tabular}
+  \end{minipage}  
+  \caption{Preliminary specifications of AWS 325\,GHz channels, in the case of
+    of three (left) and four (right) channels.}
+  \label{tab:chs:prel}
+\end{table}
+
+
+\begin{figure}[!tb]
+  \centering
+  \includegraphics[height=64mm]{fascod_3chopt_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=64mm]{fascod_3chopt_mlw}
+  \caption{RH weighting functions of the three channel option in
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    winter (right) scenarios.}
+  \label{fig:3ch:prel}
+\end{figure}
+\begin{figure}[!tb]
+  \centering
+  \includegraphics[height=64mm]{fascod_4chopt_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=64mm]{fascod_4chopt_mlw}
+  \caption{RH weighting functions of the four channel option in
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    winter (right) scenarios.}
+  \label{fig:4ch:prel}
+\end{figure}
+
+
+\subsection{A four channel option}
+%
+The tentative four channel option in Table~\ref{tab:chs:prel} gives a broader
+altitude coverage, towards higher altitudes, and offers weighting functions
+roughly equally spaced in altitude (Fig.~\ref {fig:4ch:prel}). This option has
+a IF range of 0.7 to 8.0\,GHz, and leaves 200\,MHz space between AWS-41 and
+AWS-42 and has 100\,MHz between the other channels. Also this suggestion uses
+the complete IF bandwidth.
+
+
+\section{Discussion}
+
+
+\subsection{Shape of channel response functions}
+%
+The simulations have assumed rectangularly shaped response functions, for
+simplicity. We have left some frequency gaps between the channels to simplify
+the technical implementation, i.e.\ to decrease the demand on very sharp
+ransitions from high to low response. We have assumed that 100\,MHz is
+sufficient in the lower end of the IF-range and 200\,MHz in the upper part. If
+found necessary we don't see any problem in increasing the gaps, beside that
+the bandwidth decreases and the NE$\Delta$T of the channel will somewhat
+increase.
 
 
 
+\subsection{Polarisation response}
+%
+Polarisation aspects have not been considered in full detail. Some polarisation
+is induced by the surface in the simulations, but hydrometeors are assumed to
+be totally randomly oriented and do not cause polarisation. To involve oriented
+particles was not possible due to the limited time allocated for the study.
 
-\section{Notes}
-\begin{itemize}
-\item Discuss selection of polarisation
-\end{itemize}
+The basic recommendation would be to use the same polarisation response as far
+as possible. If both quasi-horisontal and quasi-vertical bands must be applied,
+the recommedation prioritize to use the polarisation option for 183 and
+325\,GHz, to maintain a similar influence of polarisation between the bands.
+
+
+
+\section{Conclusion}
+%
+\dots
+
 
 {\footnotesize
 \bibliography{j_abbr,references}
