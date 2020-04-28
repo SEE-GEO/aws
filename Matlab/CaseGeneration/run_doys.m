@@ -6,11 +6,11 @@
 %
 % IN   year      Year
 %      doys      A vector with day-of-years
-% OPT  lat_lims  Latitude limites. For default, see code.
+% OPT  lat_lims  Latitude limites. Default is [-60,60].
 
 function run_doys(year,doys,lat_lims)
 %
-if nargin < 3, lat_lims = [-30 30]; end   % Change for later versions
+if nargin < 3, lat_lims = [-60 60]; end  
 
 
 %- Set work folder to use
@@ -34,7 +34,7 @@ S = s_default;
 S.csat.lat_lims    = lat_lims;
 S.csat.orbitleg    = 2;
 %
-do_radarinv = false;
+do_radarinv        = false;
 
 
 %- Loop doys and files of the day
@@ -64,7 +64,7 @@ for doy = vec2row(doys)
 
         %- Save to file
         %
-        filename = fullfile( dendrite, 'Projects/AWS-325GHz/CasesV1', ...
+        filename = fullfile( dendrite, 'Projects/AWS-325GHz/Cases_m60_p60', ...
                              sprintf('c_of_%04d_%03d_%02d', year, doy, ifile  ) );
         %
         save( filename, '-v7.3', 'C' );
