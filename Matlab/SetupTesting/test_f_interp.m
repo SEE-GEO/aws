@@ -6,6 +6,7 @@
 % IN    f_grid   Fine grid. Data on this grid represents the truth. Should
 %                cover all other frequencies.
 %       f_lims   Frequency limits for equidistant sparse grid.
+%       f_must   Mandatory frequency. Can be empty. Only considered for n>=4.
 %       f_chs    Edge frequencies for each channel to evaluate. One row per channel.
 %       r_surface  Surface reflectivity.
 %       nmax     Max points in sparse grid to consider
@@ -13,7 +14,7 @@
 
 % 2020-04-15 Patrick Eriksson
 
-function f_n = test_f_interp(f_grid,f_lims,f_chs,r_surface,nmax,nout)
+function f_n = test_f_interp(f_grid,f_lims,f_must,f_chs,r_surface,nmax,nout)
 
 %- Get reference spectrum
 %
@@ -41,10 +42,14 @@ for n = nstart : nmax
   elseif n == 1
     f_test   = (f_lims(1) + f_lims(end)) / 2;
   else
-    f_test   = linspace( f_lims(1), f_lims(end), n );
+    if n < 4 | isempty( f_must)
+      f_test   = linspace( f_lims(1), f_lims(end), n );
+    else
+      f_test   = sort( [f_must, linspace( f_lims(1), f_lims(end), n-1 ) ] );
+    end
   end
   [Y,atms] = calc_atms( f_test, r_surface );
-  if 0
+  if 1
     imethod = 'spline';
     if n == 1
       dY      = repmat( Y, length(f_grid), 1 );
