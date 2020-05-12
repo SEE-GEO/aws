@@ -574,6 +574,25 @@ the recommedation prioritize to use the polarisation option for 183 and
 
 
 
+\subsection{Statistical comparison of simulations and ATMS}
+\begin{figure}[p]
+	\centering
+	\includegraphics[height=62mm]{ATMS_C16_distribution}\hspace{5mm}% 
+	\includegraphics[height=62mm]{ATMS_C17_distribution}
+	\includegraphics[height=62mm]{ATMS_C18_distribution}\hspace{5mm}% 
+	\includegraphics[height=62mm]{ATMS_C19_distribution}
+	\includegraphics[height=62mm]{ATMS_C20_distribution}\hspace{5mm}% 
+	\includegraphics[height=62mm]{ATMS_C21_distribution}
+	\includegraphics[height=62mm]{ATMS_C22_distribution}
+	\caption{Distributions of simulated and observed ATMS channels brightness temperatures for channels 16 - 22 and nadir viewing angle. The data covers latitude range $60^{\degree}$S to $60^{\degree}$N.  Simulation "all-sky thinned" refers to the simulation dataset from which 50\% of the clear-sky simulations are removed. Both land and ocean measurements are considered and only daytime ATMS data is included.}
+	\label{fig:pdf:c16-22}
+\end{figure}
+Following the simulation setup described in Section 3, around 77000 cases were simulated based on randomly selected CloudSat orbits during August 2015. The input data was restricted between $60^{\degree}$S to $60^{\degree}$N and no differentiation was made between the observations over water and land. The statistical comparison of the simulations to actual ATMS data at nadir (zenith angle = $180^{\degree}$) for channels 16-22 is shown in Figure~\ref{fig:pdf:c16-22}. For the comparison, the daytime ATMS observations were selected.
+ For 183 GHz channels (Channels 18-22), the simulations and observations have a good agreement for clear-sky conditions although, the peak of distribution is higher than the observations. The fraction of cloudy observations is lower in ATMS in comparison to simulations, but in the transitional region (left of the clear sky peak), the occurence frequency of ATMS is higher. For example, for Channel 19 (183.31 $\pm$ 4.5GHz), the occurence rate of simulations is almost 3 times lower than the observations. In the present study, this transitional region is of high interest, so the fraction of cloudy simulations in the database was effectively increased by removing a fraction of the clear sky simulations. After testing various values of 'clear-sky removal fraction', it was found that removing 50\% of the total clear sky simulations gave a comparable match with the occurence rate of ATMS in this region. 
+ This smaller dataset was used to correct the cloud impact in the simulations, discussed in the next section. 
+
+\subsection{}
+
 \section{Conclusion}
 %
 \dots
