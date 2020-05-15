@@ -657,7 +657,7 @@ The results from the correction approach using the cubic  model are promising, h
 In the first filter, 50\% of all measurements with noise free $Tb1_{as} - TB1_{cs} < 0.2$ are removed. The clear-sky thinning has two effects. Firstly, it helps to flag measurements without any cloud impact, and secondly it improves the representation of the cloudy cases in the database as already shown in validation against ATMS data(Figure\ref{fig:pdf:c16-22}).  
 In the second filter, only measurements with cloudy adjustment greater than ``noise-threshold'' are corrected. The value of the noise-threshold is assumed to be of the order of the standard deviation of the noise. This filter is tested with two values of the noise-threshold :  $1\sigma$ and  $2\sigma$, where $\sigma$ is the standard deviation of noise. 
 
-Figure~\ref{fig:correction:c34-42:thinned} shows the results when the filtered cloudy cases are corrected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats}. When cloudy measurements are filtered with noise-threshold = 1$\sigma$, around 14\% cases of the thinned dataset are classified as corrected and the average deviation in the corrected dataset is -0.069 K. Whereas, with noise-threshold= 2$\sigma$, only 9\% are classfied as cloudy and the average deviation is -0.117 K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
+Figure~\ref{fig:correction:c34-42:thinned} shows the results when the filtered cloudy cases are corrected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats}. When cloudy measurements are filtered with noise-threshold = 1$\sigma$, around 14\% cases of the thinned dataset are classified as cloudy and the average deviation in the corrected dataset is -0.069 K. Whereas, with noise-threshold= 2$\sigma$, only 9\% are classfied as cloudy and the average deviation is -0.117 K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
 
 \begin{table}[!bt]
 	\centering
@@ -670,10 +670,10 @@ Figure~\ref{fig:correction:c34-42:thinned} shows the results when the filtered c
 		thinned& -0.465& 1.556& -5.007\\
 		$1\sigma$& -0.069& 0.904& -2.543\\
 		$2\sigma$& -0.117& 0.903& -2.597\\
-		sreerekha& -0.181& 0.731& -0.506\\
+		sreerekha et al& -0.181& 0.731& -0.506\\
 		\hline
 	\end{tabular}
-	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset),  All (all measurements are considered), thinned (50\% of clear sky measurements are removed), $1\sigma$ (cloudy measurements are filtered with noise-index = 1$\sigma$), $2\sigma$ (cloudy measurements are filtered with noise-index = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
+	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset),  All (all measurements are considered), thinned (50\% of clear sky measurements are removed), $1\sigma$ (cloudy measurements are filtered with noise-threshold = 1$\sigma$), $2\sigma$ (cloudy measurements are filtered with noise-threshold = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
 	\label{tab:correction:stats}
 \end{table}
 %
