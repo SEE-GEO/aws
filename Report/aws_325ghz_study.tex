@@ -604,49 +604,84 @@ the complete IF bandwidth.
 
 \section{Cloud correction by a simple scheme}
 %
+\subsection{Formulation of correction scheme}
+%
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=65mm]{fit_C34_C42}\hspace{5mm}% 
 	\caption{Brightness temperature difference of channel-34 from channel-42 plotted against cloud impact in channel-34 (TB allsky - TB cleasky). The black curve represents the line of best fit as a third order polynomial. }
 	\label{fig:fit:c34-42}
 \end{figure}
+%
+In this section, the 325GHz three channel option is evaluated for detection and correction of the ice-cloud cases in 183 GHz channels. Combinations of brightness temperature (TB) differences between 183 GHz and 325 Ghz are used as a measure of the cloud impact.  A regression based approach is used to estimate the adjustment need to predict the clear-sky values. 
 
+Let C1 and C2 represent the one of the channels each from 183 GHz and 325 GHz respectively, and Tb1 and Tb2 represent the corresponding TB. The correction scheme formulates a relationship between the cloud impact in C1 to the TB differences between C1 and C2:
+\begin{equation}
+Tb1_{as}-Tb2_{cs} = f(Tb2_{as} - Tb1_{as})
+\end{equation}
+where, the subscripts ``as'' and ``cs'' denote the all-sky and clear-sky cases respectively.  
+
+The combinations of C1 and C2 are selected by matching their weighting functions as shown in  Figure~\ref{fig:3ch:prel}. Five  183 GHz and 325 GHz paired combinations are possible, for example one such paired combination is channel-34(180.311 GHz) and channel-42 (325$\pm$3.55 GHz). For each of the five 183 GHz channels, the correction scheme is derived from its corresponding counterpart in 325 GHz channel.  
+
+As an example, the relationship between the TB differences for C1 and C2 and the cloud impact in C1 is shown in  Figure~\ref{fig:fit:c34-42}. For this particular case, C1 is 180.311 GHz and C2 is 325$\pm$3.55 GHz, and around 40000 simulations are used. The two variables have a reasonably strong correlation for small TB differences, but as the impact of cloud increases the correlations are poor. The data can be fitted to linear or non-linear models. The fitted model can be used to interpolate the adjustment required to compensate the brightness temperature for cloudy cases. To avoid fitting the ``too cloudy'' cases which do not show any reasonable correlation, cases with cloud impact greater than 25 K are excluded in the fit. 
+
+\subsection{Application of correction scheme}
 \begin{figure}[!th]
 	\centering
-	\includegraphics[height=85mm]{PDF_corrected_C34_C42}
-	\caption{Deviation of channel-34 measurements to noise free clear-sky simulations. The various curves represent the measurements before and after correction. The correction according to \cite{rekha2012potential} is also shown. The two curves with label ``after correction'' are for two different values of clear-sky threshold. The fraction of cases rejected by the regression approach are given as ``fraction rejected'' in the title, while the number in the parentheses is fraction of cases rejected according  to \cite{rekha2012potential}. The average deviation for each dataset is also provided in the legend. }
+	\includegraphics[clip,trim=0 0 0 0,height=85mm]{PDF_corrected_C34_C42}
+	\caption{Deviation of 180.311 GHz measurements to noise free clear-sky simulations before and after correction corrected using a linear, quadratic and cubic model. The spread of noise is also shown as reference. The measurements have been corrected using brightness temperatures from 325$\pm$3.55 GHz. }
 	\label{fig:correction:c34-42}
 \end{figure}
+%
+In this section, we test the applicability of the correction scheme in detail. To analyse the performance of the approach, we apply it to correct the measurements from C1. Without the availability of actual data, the simulation dataset but with noise is used mimic the measurements. The noise for individual channels is calculated according to Equation~\ref{eq:noise}.  Since, the fit is not valid for ``too cloudy'' cases, such cases are not corrected. Among the measurements, cases with TB difference between C1 and C2 greater than 25 K were classifed as ``too cloudy''. As an initial step, no other filter is introduced in the measurements.  
 
+To test the efficacy of the correction scheme, three different models :linear, quadratic and cubic are evaluated to fit the TB differences between C1 and C2. 
+The clear-sky adjustment for each measurement is calculated from all three models, and the three predicted datasets are compared. The error in the predicted measurements is assessed by calculating the deviation to noise-free clear-sky observations. The occurrence frequency of the deviations is shown in Figure~\ref{fig:correction:c34-42}.
+In this example, channel 180.311 GHz has been corrected with 325$\pm$3.55 GHz channel. The occurence frequency of the all measurement without any filtering/corection is also plotted as reference (orange color). If all measurements are devoid of any cloud impact, the deviations should follow the gaussian distribution of noise. However, in real scenarios, measurements are not free from the impact of clouds, which is also evident from the large skewness in the distribution.
 
-In this section, the 325GHz three channel option  is evaluated for ice cloud correction for 183 GHz channels. We predict the clears-sky value for 183GHz channel based on the brightness temperatures of simulated 325GHz channel data. For correction, the channels from the three option 325GHz and 183GHz are matched according to their weighting functions(Figure~\ref{fig:3ch:prel}). From the five  183 GHz and 325 GHz combinations possible, the weighting functions for channel-34 and channel-42 have the best match, thus we use this combination for the development of the correction scheme.
+All three models are able to reduce the skewness of the distribution curve indicating similar performance for cases with high cloud impact. 
 
-A simple regression approach is implemented to estimate the clear-sky values from the measurements. From the simulation dataset, 40000 clear-sky and the corresponding all-sky simulations are selected to develop the correction scheme. Without the availability of actual data, an identical simulation dataset but with noise is used mimic the measurements. The noise for individual channels is calculated according to Equation~\ref{eq:noise}. Before deriving any relationship between the different variables, 50\% of the clear-sky simulations are removed from the dataset. This clear-sky removal is to remove any under-representation of cloudy simulations, as discussed in the Validation section. Further, the simulations from channel-34 with cloud impact (clear - allsky) greater than 25 K are considered as "too cloudy" and are not included in the correction.
+[** incomplete - to be added - disussion of results from three models**]
 
-Among the various possible combinations of clear-sky and all-sky pairs for channel-34 and channel-43, the brightness temperature (TB)  differences of channels-34 and 42 are found to be reasonably well correlated against the channel-34 cloud impact (TB clear-sky minus all-sky ). Figure ~\ref{fig:fit:c34-42}  shows the scatter plot of the TB channel-34 minus TB channel-42 against the channel-34 cloud impact. The regression between the two variables gives the correction estimate for channel-34 all-sky measurements :
-\begin{equation}
-correction = tb^{34} + f(tb0^{42}_{as} - tb0^{32}_{cs})   
-\end{equation}
-where, $ tb^{34}$ are channel-34 measurements, and $tb0^{42}_{as}$ and $tb0^{32}_{cs}$ are channel-42 and channel-34 simulations for all-sky and clear-sky respectively. 
-The correction is applied only to cloudy measurements. If TB differences between the measurements from channel-34 and channel-42 are less than 0.2 K or are greater than 25 K, they are considered as ``clear'' or ``too cloudy''  respectively and are not corrected. Further, it is also important to not to correct the cases which are classified as cloudy, but are clear instead. To avoid correcting such cases, another check is introduced. Assuming cloud impact for clear-sky cases in channel-34 to be twice the standard deviation of noise, the corresponding TB difference between measurements from channel-34 and 42 is interpolated from the fit. This value is assumed to be an estimate of the ``clear-sky threshold''. All measurements with TB differences between channel-34 and 42 less than this threshold are assumed to be true cloudy cases and are corrected. 
-
-The error in the predicted measurements is assessed by calculating the deviation to noise-free clear-sky observations. The occurrence frequency of the deviations is shown in Figure~\ref{fig:correction:c34-42}. The value in parentheses in the legend is the average bias for each dataset. If all measurements are correctly adjusted for cloud impact, the deviations should follow the gaussian distribution of noise. However, without any correction, the distribution function is skewed towards the left, indicating the presence of clouds (orange line). This cloudy impact is slightly reduced when cases with cloud impact greater than 25 K  are removed (green line). The reduction is mostly for cases with low TBs, indicating ``too cloudy'' measurements. When the regression approach is applied to adjust the remaining cloudy cases, the cloud impact in the measurements is considerably reduced, though the spread increases (red line). The sensitivity of the algorithm to correctly adjust the cloudy cases two different values of the noise-index: $1 \sigma$ and $2\sigma$. As evident from the figure, both values give almost similar results indicating that the algorithm can correctly identify and adjust most of the cloudy measurements. 
-
-For completeness, we also include results from the cloud filtering approach described by \cite{rekha2012potential}. In the report, they describe the usability of 229 GHz (channel-4x) to identify the ice clouds, and filter out all measurements with TB difference between channel-32 and channel-4x greater than 4K. The correction approach when applied to channel-34 is also shown in the Figure (brown curve). The performance of cloud filtering by \cite{rekha2012potential} seems comparable with the regression approach described in this report, however they risk rejecting more than 50\% of the clear cases. With the regression approach, only 2-4\% of the total cases are rejected. 
-
-
+The total bias in the measurements is -0.81 K, however after correction with a cubic model the bias is reduced to 0.05 K. 
+%
 \begin{figure}[!tb]
 	\centering
-	\includegraphics[height=70mm]{PDF_corrected_C32_C41}\hspace{5mm}% 
-	\includegraphics[height=70mm]{PDF_corrected_C33_C41}
-	\includegraphics[height=70mm]{PDF_corrected_C35_C43}\hspace{5mm}% 
-	\includegraphics[height=70mm]{PDF_corrected_C36_C43}
-	\caption{Same as for Figure~\ref{fig:correction:c34-42}, but for other possible combinations of 183GHz and 325 GHz. }
-	\label{fig:correction:allchannels}
+	\includegraphics[height=85mm]{PDF_corrected_C34_C42_thinned}
+	\caption{Same as Figure~\ref{fig:correction:c34-42}, but for different subsets of the measurement dataset. The different datasets are: thinned measurements (50\% of the clear-sky cases removed), corrected measurements 1$\sigma$ (cloudy measurements are filtered with noise-threshold = 1$\sigma$), corrected measurements 2$\sigma$(cloudy measurements are filtered with noise-threshold = 2$\sigma$), sreerekha et al (cloud filtering according to criteria described in \cite{rekha2012potential}) }
+	\label{fig:correction:c34-42:thinned}
 \end{figure}
+%
+The results from the correction approach using the cubic  model are promising, however they lack a clear-sky check. From Figure\ref{fig:correction:c34-42} it is evident that the majority of the measurements do not have any cloud impact. It is important to classify such cases correctly to avoid any undesirable adjustment. To avoid this two filters are introduced in the measurement dataset. 
+
+In the first filter, 50\% of all measurements with noise free $Tb1_{as} - TB1_{cs} < 0.2$ are removed. The clear-sky thinning has two effects. Firstly, it helps to flag measurements without any cloud impact, and secondly it improves the representation of the cloudy cases in the database as already shown in validation against ATMS data(Figure\ref{fig:pdf:c16-22}).  
+In the second filter, only measurements with cloudy adjustment greater than ``noise-threshold'' are corrected. The value of the noise-threshold is assumed to be of the order of the standard deviation of the noise. This filter is tested with two values of the noise-threshold :  $1\sigma$ and  $2\sigma$, where $\sigma$ is the standard deviation of noise. 
+
+Figure~\ref{fig:correction:c34-42:thinned} shows the results when the filtered cloudy cases are corrected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats}. When cloudy measurements are filtered with noise-threshold = 1$\sigma$, around 14\% cases of the thinned dataset are classified as corrected and the average deviation in the corrected dataset is -0.069 K. Whereas, with noise-threshold= 2$\sigma$, only 9\% are classfied as cloudy and the average deviation is -0.117 K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		 Dataset & Bias & Standard & Measure\\
+		 		 & [K] & deviation[K] & skewness [K]\\	
+		\hline
+		noise & 0.006& 0.628& -0.006\\
+		all& -0.818& 4.699& -10.385\\
+		thinned& -0.465& 1.556& -5.007\\
+		$1\sigma$& -0.069& 0.904& -2.543\\
+		$2\sigma$& -0.117& 0.903& -2.597\\
+		sreerekha& -0.181& 0.731& -0.506\\
+		\hline
+	\end{tabular}
+	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset),  All (all measurements are considered), thinned (50\% of clear sky measurements are removed), $1\sigma$ (cloudy measurements are filtered with noise-index = 1$\sigma$), $2\sigma$ (cloudy measurements are filtered with noise-index = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
+	\label{tab:correction:stats}
+\end{table}
+%
+In past, \cite{rekha2012potential} have highlighted the applicability of 229 GHz channel to identify the ice clouds. In the report, they use 229 GHz (channel-4x) to identify the ice clouds in 183.31$\pm$7 GHz. In their approach, all cases with TB difference between 229 Ghz and 183.31$\pm$7 GHz greater than 4 K as classified as cloudy. This information can be used to filter out the cloudy cases in all other 183 GHz channels. No correction is provided to the cloudy cases. In order to compare the performance of the correction scheme described here, the filtering scheme by \cite{rekha2012potential} is used a reference. The results from approach are also shown in Figure\ref{fig:correction} and Table~\ref{tab:correction:stats}. The performance of cloud filtering by \cite{rekha2012potential} seems comparable with the regression approach described in this report, albeit they risk rejecting more than 50\% of the clear cases.
+
 
 The regression approach described above is also extended to other four channel combinations and the results are shown in Figure\ref{fig:correction:allchannels}.
-
+ [** incomplete to be added ** add tables or figures? **]
 
 \section{Cloud correction by QRNN}
 %
