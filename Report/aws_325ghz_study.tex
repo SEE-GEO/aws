@@ -68,7 +68,68 @@ To written \dots
 
 \section{Introduction}
 %
-\dots
+\subsection{Background}
+The Arctic Weather Satellite (AWS) is a small platform carrying a single
+radiometer package. This instrument is an across-track scanning microwave
+radiometer. The exact channel configuration of AWS is not yet set. The main
+issue for this report is that AWS will have channels at 183\,GHz, but also one
+or several channels a higher frequencies. A number of channels around 325\,GHz
+was considered as the main option before AWS became an ESA/EUMETSAT mission,
+but it has now also been suggested to have a single channel at 229\,GHz. This
+suggestion is based on MWS (MicroWave Sounder), one of the instruments onboard
+the next generation of Metop satellites. The 229\,GHz was added to MWS as an
+help for performing cloud screening of 183\,GHz data
+\citep{rekha2012potential}. For comparison, it can be mentioned that ICI (Ice
+Cloud Imager), another new Metop sensor, will include 325\,GHz channels.
+
+\subsection{Aim}
+%
+To support the selection between 229 and 325\,GHz channels for AWS, this report
+investigates the possibility to use the later range in forming 183\,GHz data of
+``clear-sky'' character. That is, following \citet{rekha2012potential}, the
+assumption, is that the 183\,GHz data will be used in an system not yet
+capable of doing ``all -sky'' assimilation.
+
+In \citet{rekha2012potential} the task was defined to screen out observations
+having a cloud impact exceeding 4\,K at 183$\pm$7\,GHz. Their final suggestion
+for screening does not involve data from any other channel than 229\,GHz, but
+requires radiative transfer calculations (as a ``B-O test'' is made). Only 
+screening of 183$\pm$7\,GHz was discussed.
+
+In this report, the task is defined in a somewhat different manner. The aim is
+not just to estimate the cloud impact, but also to investigate to which degree
+the cloud impact can be removed, i.e.\ to make a cloud correction. Further, in
+this report only schemes that can be based directly on AWS data will be
+considered and versions involving ``B-O tests'' are left for possible future
+studies. On the other hand, cloud correction of all AWS 183\,GHz channels are
+investigated. Another important difference is that our simulations aim to be a
+random sample of real situations, while the simulations of
+\citet{rekha2012potential} have a strong over-representation of cloudy
+cases.
+
+
+
+\subsection{Comparison to \citet{rekha2012potential}}
+%
+Results from \citet{rekha2012potential} will be used as reference. They did not
+suggest specific settings of their algorithm. The main consideration of the
+scheme is a threshold value. We assume below 6\,K for
+this value, as it used most frequently as example in
+\citet{rekha2012potential}. According to their Table~3, this results in that
+2.4\% of the ``cloudy'' cases are miss-classified as ``clear''. We assume that
+these cases have a cloud impact of 4 to 8\,K (i.e.\ the screening is 100\%
+successful for cloud impact above 8\,K). For a 6\,K threshold 41\% of the
+``clear'' cases are classified as ``cloudy'' and a removed in the screening
+process. 
+
+The selected threshold value is towards the high side of the ones considered by 
+\citet{rekha2012potential}. A lower value improves the removal of ``cloudy'' cases,
+but the fraction of incorrectly removed ``clear'' cases increases quickly. For
+example, a threshold of 3\,K decreases the miss-classification of ``cloudy''
+cases to 0.6\%, but increases the miss-classification for ``clear'' cases to 77\%.
+If 183$\pm$7\,GHz is classified as cloudy, we assume that also the data from
+other 183\,GHz channels are rejected.
+
 
 
 \section{Assumptions on AWS characteristics}
@@ -255,8 +316,8 @@ included. Both sets of calculations were were made by ARTS's interface to the
 RT4 solver \citep{evans1995microwavec}. This ``scattering solver'' was used
 also for clear-sky, to avoid a possible bias between clear-sky and all-sky for
 insignificant hydrometeor contents. RT4 handles the first two elements of the
-Stokes vector, that were converted to brightness temperatures for H- and V-
-polarisation.
+Stokes vector, that were converted to brightness temperatures for H- and
+V-polarisation.
 
 
 \subsubsection{Absorption models}
@@ -269,7 +330,10 @@ purely absorbing, based on \citet{ellison2007permittivity}.
 
 For water vapour the present settings in RTTOV are applied. That is, largely
 MPM89 \citep{liebe:89} is followed, but some parameters for the 22 and 183\,GHz
-transitions are replaced \citep{saunders2018update,turner2019amsutran}. 
+transitions are replaced \citep{saunders2018update,turner2019amsutran}. A
+smaller comparison to RTTOV has been made, that indciated an agreement better
+than 0.1\,K in general. Deviations between 0.1 and 0.2\,K were found for some
+channels at incidence angles above 40$^\circ$.
 
 
 \subsubsection{Hydrometeor properties}
@@ -499,17 +563,6 @@ the IF band is 3\,GHz wide (as for ICI, Table~\ref{tab:fixed:chs}), and shows
 the RH weighting function if the outer channel ends at 11, 10, 9 or 8\,GHz. The
 weighting functions for each sideband are here kept separated.
 
-\begin{figure}[!tb]
-  \centering
-  \includegraphics[height=65mm]{fascod_wf_325l_tro}\hspace{5mm}% 
-  \includegraphics[clip,trim=43 0 0 0,height=65mm]{fascod_wf_325u_tro}
-  \caption{RH weighting functions for the lower (left) and upper (right) side
-    of the 325.15\,GHz transition. All weighting functions are for a 3\,GHz
-    bandwidth. The stated frequencies are the centre frequency of each. In
-    terms of IF range, the channels cover 8-11, 7-10, 6-9 and 5-8\,GHz (from
-    top-to-bottom in the order given in the legends). }
-  \label{fig:wfuns:325ul}
-\end{figure}
 
 As expected, when the channel is moved away the centre frequency, the weighting
 function moves downwards. However, moving the channel from 5\,-\,8\,GHz to
@@ -527,6 +580,36 @@ In summary, the benefit of extending the IF band above 8\,GHz is small and
 placing channels above 8\,GHz seems unnecessary considering the limited budget
 and development time of AWS.
 
+\begin{figure}[!p]
+  \centering
+  \includegraphics[height=61mm]{fascod_wf_325l_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_wf_325u_tro}
+  \caption{RH weighting functions for the lower (left) and upper (right) side
+    of the 325.15\,GHz transition. All weighting functions are for a 3\,GHz
+    bandwidth. The stated frequencies are the centre frequency of each. In
+    terms of IF range, the channels cover 8-11, 7-10, 6-9 and 5-8\,GHz (from
+    top-to-bottom in the order given in the legends). }
+  \label{fig:wfuns:325ul}
+\end{figure}
+\begin{figure}[!p]
+  \centering
+  \includegraphics[height=61mm]{fascod_3chopt_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_3chopt_mlw}
+  \caption{RH weighting functions of the three channel option in
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    winter (right) scenarios.}
+  \label{fig:3ch:prel}
+\end{figure}
+\begin{figure}[!p]
+  \centering
+  \includegraphics[height=61mm]{fascod_4chopt_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_4chopt_mlw}
+  \caption{RH weighting functions of the four channel option in
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    winter (right) scenarios.}
+  \label{fig:4ch:prel}
+\end{figure}
+
 
 \subsection{A three channel option}
 %
@@ -540,7 +623,7 @@ AWS-42 and AWS-43, and 200\,MHz space between AWS-41 and AWS-42. That is, the
 suggestion uses the complete IF bandwidth as far as possible, that is
 technically possible.
 
-\begin{table}[!b]
+\begin{table}[!t]
   \begin{minipage}[b]{0.5\linewidth}
   \centering  
   \begin{tabular}[c]{c|c|c}
@@ -572,24 +655,6 @@ technically possible.
 \end{table}
 
 
-\begin{figure}[!tb]
-  \centering
-  \includegraphics[height=64mm]{fascod_3chopt_tro}\hspace{5mm}% 
-  \includegraphics[clip,trim=43 0 0 0,height=64mm]{fascod_3chopt_mlw}
-  \caption{RH weighting functions of the three channel option in
-    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
-    winter (right) scenarios.}
-  \label{fig:3ch:prel}
-\end{figure}
-\begin{figure}[!tb]
-  \centering
-  \includegraphics[height=64mm]{fascod_4chopt_tro}\hspace{5mm}% 
-  \includegraphics[clip,trim=43 0 0 0,height=64mm]{fascod_4chopt_mlw}
-  \caption{RH weighting functions of the four channel option in
-    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
-    winter (right) scenarios.}
-  \label{fig:4ch:prel}
-\end{figure}
 
 
 \subsection{A four channel option}
