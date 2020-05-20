@@ -710,42 +710,144 @@ In this section, we test the applicability of the correction scheme in detail. T
 To test the efficacy of the correction scheme, three different models :linear, quadratic and cubic are evaluated to fit the TB differences between C1 and C2. For all three models, cases with $Tb2-Tb1 < $ -15\,K are assumed to be ``too cloudy'' and are not corrected.  The clear-sky adjustment for all eligible measurements (without clear-sky screening) is calculated from all three models, and the three predicted datasets are compared. The error in the predicted measurements is assessed by calculating the deviation to noise-free clear-sky observations. The occurrence frequency of the deviations from three models is shown in Figure~\ref{fig:correction:c34-42}. The occurence frequency of the all measurement without any filtering or correction is also plotted as reference (orange color). If all measurements are devoid of any cloud impact, the deviations should follow the gaussian distribution of noise. However, in real scenarios, the distribution is skewed due to the impact of clouds. It should also be noted that since no clear-sky screening was included in the measurements, the measurements with zero deviation to noise-free clear-sky were reduced. This indicates that it is extremely important to correctly classify the cases as clear/cloudy. Among the three models, the quadratic and cubic models work better than a liner model. Both quadratic and cubic models are able to correct the cloud impact in the measurements, however the values of average bias indicates that the cubic model performs better. The average deviation in the dataset is -0.82\,K and after correction with a cubic model, it reduces to -0.02\,K, while for quadratic model, the average bias after correction is 0.24\,K. For all other results described in this section, a cubic model is used.
 
 
- 
-
-******** 
-
-TEXT NOT UPDATED BELOW 
-Before applying the clear-sky screening, the measurement dataset was also thinned in order to improve the representation of the cloudy cases. Validation of the simulations against ATMS data(Figure\ref{fig:pdf:c16-22}) showed that the cloudy cases were a bit underrepreseneted than the observations. Removing 50\% of the clear-sky cases, helped in improving the percentage of total cloudy cases in the database. 
+Before applying the clear-sky screening, the measurement dataset was also thinned in order to improve the representation of the cloudy cases. Validation of the simulations against ATMS data(Figure\ref{fig:pdf:c16-22}) showed that the cloudy cases were a bit underrepresented than the observations. Removing 50\% of the clear-sky cases, helped in improving the percentage of total cloudy cases in the database. 
 
 
-To implement the clear-sky screening as discussed in the previous section, two different values of the noise-index are tested : $1\sigma$ and  $2\sigma$, where $\sigma$ is the standard deviation of noise. For both values of noise-index the corresponding clear-sky cut-off is calculated using Eq~\ref{eq:dtb}. Figure~\ref{fig:correction:c34-42:thinned} shows the results when only the screened cloudy cases are corrected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats}. When cloudy measurements are filtered with noise-index = 1$\sigma$, around 13.5\% cases of the thinned dataset are classified as cloudy and the average deviation in the corrected dataset is -0.069 K. Whereas, with noise-threshold= 2$\sigma$, only 7.5\% are classified as cloudy and the average deviation is -0.117 K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
+To implement the clear-sky screening as discussed in the previous section, two different values of the noise-index are tested : $1\sigma$ and  $2\sigma$, where $\sigma$ is the standard deviation of noise. For both values of noise-index the corresponding clear-sky cut-off is calculated using Eq~\ref{eq:dtb}. The ``too cloudy'' screening ($Tb2-Tb1 < $ -15\,K) rejects almost 50\% of the cases in the measurement dataset. When the clear-sky screening is applied to this dataset, around 13.5\% of the cases are classfied as cloudy by noise-index = 1$\sigma$, while with 2$\sigma$ around 7.5\% are classified as cloudy. These cloudy cases are corrected according to the cubic model. Figure~\ref{fig:correction:c34-42:thinned} shows the results when only the screened cloudy cases are corrected/rejected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats:34:42}. The results from \cite{rekha2012potential} are also shown as reference. In their approach, the cases with TB difference between AWS-4x and AWS-32 greater than 6\,K are classified as cloudy and are rejected. Assuming that the measuremnt is cloudy in AWS-32, the corresponding measuremnt in other 183GHz channels is also rejected. In order to have a fair comparison of our approach with  \cite{rekha2012potential}, we also include a dataset where all the cloudy cases according to the clear-ksy screening are filtered out from the measurements. The metrics from this dataset are also provided in under label ``filtered''. 
+
+With noise-index = 1$\sigma$, the average bias in the corrected dataset in -0.067\,K, while with 2$\sigma$, the average bias is -0.119\,K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
+%
 %
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=85mm]{PDF_corrected_AWS-34_AWS-42_thinned}
-	\caption{Same as Figure~\ref{fig:correction:c34-42}, but for different subsets of the measurement dataset. The different datasets are: thinned measurements (50\% of the clear-sky cases removed), corrected measurements 1$\sigma$ (cloudy measurements are filtered with noise-threshold = 1$\sigma$), corrected measurements 2$\sigma$(cloudy measurements are filtered with noise-threshold = 2$\sigma$), sreerekha et al (cloud filtering according to criteria described in \cite{rekha2012potential}) }
+	\caption{Same as Figure~\ref{fig:correction:c34-42}, but for different subsets of the measurement dataset. The different datasets are:- thinned: 50\% of the clear-sky cases removed, filtered (1$\sigma$): cloudy measurements are filtered with noise-threshold = 1$\sigma$,   corrected (1$\sigma$): cloudy measurements are corrected with noise-threshold = 1$\sigma$, sreerekha et al: cloud filtering according to criteria described in \cite{rekha2012potential} }
 	\label{fig:correction:c34-42:thinned}
 \end{figure}
 %
+
 \begin{table}[!bt]
 	\centering
 	\begin{tabular}[b]{c|c|c|c}
-		 Dataset & Bias & Standard & Measure\\
-		 		 & [K] & deviation[K] & skewness [K]\\	
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
 		\hline
-		Noise& 0.005& 0.633& -0.008\\
-		%all& -0.818& 4.699& -10.392\\
-		thinned& -0.303& 0.981& -2.318\\
-		1$\sigma$& -0.067& 0.756& -0.303\\
-		2$\sigma$& -0.119& 0.747& -0.519\\
-		sreerekha et al & -0.224& 0.798& -0.996\\
+		Noise            &   0.00 &  0.63 &              -0.00 \\
+		all               &  -0.75 &  4.62 &             -11.78 \\
+		thinned           &  -0.30 &  1.00 &              -2.63 \\
+		corrected(2$\sigma$) &  -0.11 &  0.75 &              -0.70 \\
+		corrected(1$\sigma$) &  -0.06 &  0.76 &              -0.47 \\
+		sreerekha et al   &  -0.21 &  0.79 &              -1.02 \\
+		filtered(1$\sigma$)   &  -0.13 &  0.68 &              -0.25 \\
 		\hline
 	\end{tabular}
-	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset), thinned (50\% of clear sky measurements are removed), $1\sigma$ (cloudy measurements are filtered with noise-index = 1$\sigma$), $2\sigma$ (cloudy measurements are filtered with noise-index = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
-	\label{tab:correction:stats}
+	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset), thinned (50\% of clear sky measurements are removed), filtered $1\sigma$ (cloudy measurements are filtered with noise-index = 1$\sigma$), corrected $1\sigma$ (cloudy measurements are corrected with noise-index = 1$\sigma$), corrected $2\sigma$ (cloudy measurements are corrected with noise-index = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
+	\label{tab:correction:stats:34:42}
 \end{table}
-%
-In past, \cite{rekha2012potential} have highlighted the applicability of 229 GHz channel to identify the ice clouds. In the report, they use 229 GHz (channel-4x) to identify the ice clouds in 183.31$\pm$7 GHz. In their approach, all cases with TB difference between 229 Ghz and 183.31$\pm$7 GHz greater than 4 K as classified as cloudy. This information can be used to filter out the cloudy cases in all other 183 GHz channels. No correction is provided to the cloudy cases. In order to compare the performance of the correction scheme described here, the filtering scheme by \cite{rekha2012potential} is used a reference. The results from approach are also shown in Figure\ref{fig:correction} and Table~\ref{tab:correction:stats}. The performance of cloud filtering by \cite{rekha2012potential} seems comparable with the regression approach described in this report, albeit they risk rejecting more than 50\% of the clear cases.
+
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=85mm]{PDF_corrected_AWS-32_AWS-4X_thinned}
+	\caption{Same as Figure~\ref{fig:correction:c34-42:thinned}, but for channel combinations: AWS-32 and AWS-4X.}
+	\label{fig:correction:c32-4X:thinned}
+\end{figure}
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
+		\hline
+	Noise             &   0.00 &  0.45 &              -0.00 \\
+	all               &  -1.37 &  6.98 &              -8.92 \\
+	thinned           &  -0.62 &  1.77 &              -4.60 \\
+	filtered(1$\sigma$)   &  -0.22 &  0.52 &              -0.65 \\
+	corrected(1$\sigma$) &   0.87 &  1.75 &              -1.31 \\
+	corrected(2$\sigma$) &   0.76 &  1.80 &              -1.08 \\
+	sreerekha et al   &  -0.41 &  1.00 &              -2.54 \\
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42}, but for channel combinations: AWS-32 and AWS-4X.   }
+	\label{tab:correction:stats:32:4X}
+\end{table}
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
+		\hline
+Noise             &   0.00 &  0.45 &               0.01 \\
+all               &  -1.37 &  6.98 &              -8.92 \\
+thinned           &  -0.48 &  1.82 &             -14.92 \\
+filtered(1$\sigma$)   &  -0.21 &  0.55 &              -0.62 \\	
+corrected(1$\sigma$) &   0.47 &  1.68 &             -15.20 \\
+corrected(2$\sigma$) &   0.47 &  1.68 &             -15.16 \\
+sreerekha et al   &  -0.41 &  1.00 &              -2.54 \\		
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42}, but for channel combinations: AWS-32 and AWS-41.   }
+	\label{tab:correction:stats:32:41}
+\end{table}
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
+		\hline
+Noise             &  -0.00 &  0.45 &               0.01 \\
+all               &  -1.04 &  5.74 &             -10.19 \\
+thinned           &  -0.33 &  0.91 &              -3.15 \\
+filtered(1$\sigma$)   &  -0.13 &  0.49 &          -0.39 \\
+corrected(1$\sigma$) &  -0.04 &  0.59 &           -0.85 \\
+corrected(2$\sigma$) &  -0.11 &  0.57 &           -1.17 \\
+sreerekha et al   &  -0.29 &  0.79 &              -2.21 \\		
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42}, but for channel combinations: AWS-33 and AWS-41.   }
+	\label{tab:correction:stats:33:41}
+\end{table}
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
+		\hline
+Noise             &  -0.00 &  0.63 &              -0.00 \\
+all               &  -0.48 &  3.40 &              -14.25 \\
+thinned           &  -0.27 &  1.05 &              -4.43 \\
+filtered(1$\sigma$)   &  -0.13 &  0.68 &          -0.47 \\
+corrected(1$\sigma$) &   0.01 &  0.90 &           -1.66 \\
+corrected(2$\sigma$) &  -0.09 &  0.83 &           -2.37 \\
+sreerekha et al   &  -0.13 &  0.70 &              -0.58 \\
+
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42}, but for channel combinations: AWS-35 and AWS-43.   }
+	\label{tab:correction:stats:35:43}
+\end{table}
+
+\begin{table}[!bt]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		Dataset  		  &   bias &   std &   measure  \\
+		&   [K]  &   [K] & skewness[K]\\
+		\hline
+	Noise             &  -0.00 &  0.88 &              -0.00 \\
+	all               &  -0.31 &  2.59 &             -15.34 \\
+	thinned           &  -0.16 &  1.02 &              -0.87 \\
+	fitered(1$\sigma$)   &  -0.11 &  0.92 &              -0.14 \\
+	corrected(1$\sigma$) &  -0.07 &  0.93 &              -0.08 \\
+	corrected(2$\sigma$) &  -0.11 &  0.94 &              -0.19 \\
+	sreerekha et al   &  -0.09 &  0.91 &              -0.12 \\
+
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42}, but for channel combinations: AWS-36 and AWS-43.   }
+	\label{tab:correction:stats:36:43}
+\end{table}
 
 
 The regression approach described above is also extended to other four channel combinations and the results are shown in Figure\ref{fig:correction:allchannels}.
