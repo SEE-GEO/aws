@@ -704,9 +704,10 @@ derived from its corresponding counterpart in 325\,GHz channel.
 	\includegraphics[height=85mm]{fit_AWS-34_AWS-42}\hspace{5mm}% 
 	\caption{Brightness temperature difference of AWS-34 from AWS-42 plotted
       against cloud impact in AWS-34. The black curve represents the line of
-      best fit as a third order polynomial. Red and green color represent the
-      clear and cloudy cases respectively in the simulation dataset. The blue
-      vertical line represents a clear-sky screening threshold of 0.2\,K. }
+      best fit (of green points) as a third order polynomial. Red and green
+      color represent the clear and cloudy cases respectively in the simulation
+      dataset. The blue vertical line represents a clear-sky screening
+      threshold of 0.2\,K. }
 	\label{fig:fit:c34-42}
 \end{figure}
 %
@@ -716,15 +717,15 @@ the cloud impact in C1 is shown in Fig.~\ref{fig:fit:c34-42}. For this
 particular case, C1 is AWS-34 and C2 is AWS-42, and around 125\,000 simulations
 are used. The two variables have a reasonably strong correlation for small TB
 differences, but as the impact of cloud increases the correlations gets poorer.
-The data can be fitted to linear or non-linear models. The fitted model can be
-used to interpolate the adjustment required to compensate the brightness
+The data can be fitted by linear or non-linear models. The fitted model can be
+used to obtain the adjustment required to compensate the brightness
 temperature for cloudy cases. To avoid fitting the ``too cloudy'' cases which
 do not show any reasonable correlation, cases with $Tb2-Tb1< -40$\,K are
 excluded in the fit. Also, cases with $Tb2-Tb1 < 0.2$\,K (red color dots) are
 assumed to be clear-sky are not included in the model.
 
 It is also important to have a manner for making a clear/cloudy classification.
-This is useful for making a filtering in line with \citep{rekha2012potential},
+This is useful for making a filtering in line with \citet{rekha2012potential},
 but is also needed in the correction scheme. The latter is the case as the
 polynomial fit derived gives a non-zero correction for clear-sky cases. In
 Fig.~\ref{fig:fit:c34-42} the difference between clear-sky values of channel C1
@@ -769,7 +770,7 @@ noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T).
 \subsection{Application of correction scheme}
 \begin{figure}[!p]
 	\centering
-	\includegraphics[clip,trim=0 0 0 0,height=90mm]{PDF_corrected_AWS-34_AWS-42}
+	\includegraphics[clip,trim=0 0 0 0,height=80mm]{PDF_corrected_AWS-34_AWS-42}
 	\caption{Deviation of AWS-34 measurements to noise free clear-sky
       simulations before and after correction, corrected using a linear,
       quadratic and cubic model. The spread of noise is also shown as
@@ -779,9 +780,9 @@ noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T).
 \end{figure}
 %
 
-\begin{figure}[!]
+\begin{figure}[!p]
 	\centering
-	\includegraphics[height=90mm]{PDF_corrected_AWS-34_AWS-42_thinned}
+	\includegraphics[height=80mm]{PDF_corrected_AWS-34_AWS-42_thinned}
 	\caption{Deviation of AWS-34 measurements to noise free clear-sky
       simulations before and after correction. The measurements have been
       corrected using a cubic model. The different datasets are: thinned: 50\%
@@ -836,37 +837,47 @@ To test the efficacy of the correction scheme, three different models: linear,
 quadratic and cubic are evaluated to fit the TB differences between C1 and C2.
 For all three models, cases with $Tb2-Tb1 < $ -15\,K are assumed to be ``too
 cloudy'' and are not corrected. The clear-sky adjustment for all eligible
-measurements (without clear/cloudy classification) is calculated from all three models,
-and the three predicted datasets are compared. The error in the predicted
-measurements is assessed by calculating the deviation to noise-free clear-sky
-observations. The occurrence frequency of the deviations from three models is
-shown in Fig.~\ref{fig:correction:c34-42}. The occurence frequency of the
-measurement without any filtering or correction is also plotted as reference
-(orange color). If all measurements are devoid of any cloud impact, the
-deviations should follow the gaussian distribution of noise. However, in real
-scenarios, the distribution is skewed due to the impact of clouds. It should
-also be noted that since no clear-sky screening was included in the
-measurements, the measurements with zero deviation to noise-free clear-sky were
-reduced. This indicates that it is extremely important to correctly classify
-the cases as clear/cloudy. Among the three models, the quadratic and cubic
-models work better than the linear model. Both quadratic and cubic models are
-able to correct the cloud impact in the measurements, however the values of
-average bias indicates that the cubic model performs better. The average
-deviation in the dataset is -0.82\,K and after correction with a cubic model,
-it reduces to -0.02\,K, while for quadratic model, the average bias after
-correction is 0.24\,K. For all other results described in this section, a cubic
-model is used.
+measurements (without clear/cloudy classification) is calculated from all three
+models, and the three predicted datasets are compared. The error in the
+predicted measurements is assessed as the deviation to corresponding noise-free
+clear-sky value.
 
+The occurrence frequency of the deviations from three models is shown in
+Fig.~\ref{fig:correction:c34-42}. The occurence frequency of the measurement
+without any filtering or correction is also plotted as reference (orange
+color). If all measurements are devoid of any cloud impact, the deviations
+should follow the gaussian distribution of noise. However, in real scenarios,
+the distribution is skewed due to the impact of clouds. It should also be noted
+that since no clear-sky screening was included in the measurements, the
+measurements with zero deviation to noise-free clear-sky were reduced. [* Don't
+get what you mean here * ] This
+indicates that it is extremely important to correctly classify the cases as
+clear/cloudy. Among the three models, the quadratic and cubic models work
+better than the linear model. Both quadratic and cubic models are able to
+correct the cloud impact in the measurements, however the values of average
+bias indicates that the cubic model performs better. The average deviation in
+the dataset is -0.82\,K and after correction with a cubic model, it reduces to
+-0.02\,K, while for quadratic model, the average bias after correction is
+0.24\,K. For all other results described in this section, a cubic model is
+used.
 
-To implement the clear/cloudy classification as discussed in the previous section, two
-different values of $dtb_{cs}$ are tested: $1\sigma$ and $2\sigma$. For both values of $dtb_{cs}$ the
-corresponding clear-sky cut-off ($x_{cs}$) is calculated using
-Eq~\ref{eq:dtb}. Figure~\ref{fig:correction:c34-42} shows the deviation of the uncorrected and corrected measurements to their noise-free clear-sky values. The results from
+[* The text seems to indicate that you here move to Fig 11, but you refer to
+Fig 10. *]
+
+To implement the clear/cloudy classification as discussed in the previous
+section, two different values of $dtb_{cs}$ are tested: $1\sigma$ and
+$2\sigma$. For both values of $dtb_{cs}$ the corresponding clear-sky cut-off
+($x_{cs}$) is calculated using Eq~\ref{eq:dtb}.
+Figure~\ref{fig:correction:c34-42} shows the deviation of the uncorrected and
+corrected measurements to their noise-free clear-sky values. The results from
 \cite{rekha2012potential} are also shown as reference (see Sec.~\ref{sec:rekha}
-for our assumptions). In order to have a fair comparison
-of our approach with \cite{rekha2012potential}, we also include the dataset,``Filtered'', where all cloudy cases are rejected.  Apart from the fit based cloudy classfication, it is also assumed that cases with $Tb2-Tb1 < $ -15\,K are ``too-cloudy'', and are rejected.
-Various metrics corresponding to the Figure~\ref{fig:correction:c34-42} are shown in
-Table~\ref{tab:correction:stats:34:42}. 
+for our assumptions). In order to allow a more direct comparison of our
+approach with \cite{rekha2012potential}, we also include the
+dataset,``Filtered'', where all cloudy cases are rejected. Apart from the fit
+based cloudy classfication, it is also assumed that cases with $Tb2-Tb1 < $
+-15\,K are ``too-cloudy'', and are rejected. Various metrics corresponding to
+the Figure~\ref{fig:correction:c34-42} are shown in
+Table~\ref{tab:correction:stats:34:42}.
 
 The distribution of the deviations in the pure-filtered data is non-Gaussian. The
 right side of the distribution follows the measurement noise while the left
@@ -878,7 +889,16 @@ measurements. Before correction, the average bias for measurements is -0.19\,K
 but after correction it reduces to -0.05\,K and -0.09\,K for the two values of
 the $dtb_{cs}$ respectively. 
 
-In Sec.~\ref{sec:validation} the validation of simulations against ATMS data (Fig.\ref{fig:pdf:c16-22}) showed that the cloudy cases in the simulations were underrepresented in comparison to the observations. In order to have a better representation of the cloudy cases, we thin the measurement dataset by rejecting 50\% of the clear-sky cases. Results from this smaller dataset are shown in Table~\ref{fig:correction:c34-42:thinned}. In comparison to the original dataset, the statistics in the thinned dataset is slightly worse, as expected. But overall the performance of the correction scheme is comparable. For all further analysis presented in this report, we use the thinned dataset.
+In Sec.~\ref{sec:validation} the validation of simulations against ATMS data
+(Fig.\ref{fig:pdf:c16-22}) showed that the cloudy cases in the simulations were
+underrepresented in comparison to the observations. In order to have a better
+representation of the cloudy cases, we thin the measurement dataset by
+rejecting 50\% of the clear-sky cases. Results from this smaller dataset are
+shown in Table~\ref{fig:correction:c34-42:thinned}. [* You mean FIgure? But you
+should the also refer to Table 5. *]In comparison to the
+original dataset, the statistics in the thinned dataset is slightly worse, as
+expected. But overall the performance of the correction scheme is comparable.
+For all further analysis presented in this report, we use the thinned dataset.
 %
 \subsection{Application of correction scheme using AWS-4X}
 %
@@ -896,10 +916,17 @@ correction scheme described above to correct AWS-32 using AWS-4X (following
 TB correlations between AWS-32 and AWS-4X are poor and show a large spread
 particularly for large cloud impacts (not shown). We fit the data to a polynomial model as described in Sec.~\ref{sec:correction:scheme} but exclude cases with $Tb2-Tb1 <$ -20\,K in the fit.
 
-Fig.~\ref{fig:correction:c32-4X:thinned} shows the deviations of the measurements to
-clear-sky values before and after correction, and the corresponding metrics are
-provided in Table~\ref{tab:correction:stats:32:4X}. Rejecting all the cloudy cases reduces the average bias in the measurements from -0.62\,K to -0.22\,K, but when these cases are corrected, the total bias increases to 0.87\,K. This indicates that the relationship between AWS-32 and AWS-4X is inadequate to estimate the cloud impact in AWS-32.
-% 
+Fig.~\ref{fig:correction:c32-4X:thinned} shows the deviations of the
+measurements to clear-sky values before and after correction, and the
+corresponding metrics are provided in Table~\ref{tab:correction:stats:32:4X}.
+Rejecting all the cloudy cases reduces the average bias in the measurements
+from -0.62\,K to -0.22\,K, but when these cases are corrected, the total bias
+increases to 0.87\,K. This indicates that the relationship between AWS-32 and
+AWS-4X is inadequate to estimate the cloud impact in AWS-32.
+[* You should discuss the high fraction reject we get for ``filtered'', but is
+this the best we can do? *]
+
+%
 \begin{table}[!h]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
@@ -932,11 +959,21 @@ AWS-32 and  AWS-41 is poor.
 
 Table~\ref{tab:correction:stats:33:41} shows the statistics when AWS-33 is
 corrected using AWS-41. The TB differences for this combination and the cloud
-impact in AWS-33 are highly correlated. Rejecting the cloudy cases reduces the average bias in the measurements from -0.33\,K to -0.13\,K, while a correction of cloudy cases according to the correction scheme reduces the bias further to 0.01\,K.
+impact in AWS-33 are highly correlated. Rejecting the cloudy cases reduces the
+average bias in the measurements from -0.33\,K to -0.13\,K, while a correction
+of cloudy cases according to the correction scheme reduces the bias further to
+0.01\,K. [* Last value not consistent with table *]
 
 A similar performance is seen for the combination AWS-35 and AWS-43, where 21\%
-of the measurements are classfied as cloudy. Table~\ref{tab:correction:stats:35:43} shows the statistics obtained from this combination. The statistics from the channel combination AWS-36 and AWS-42 are shown in Table~\ref{tab:correction:stats:36:43}.
-%
+of the measurements are classfied as cloudy.
+Table~\ref{tab:correction:stats:35:43} shows the statistics obtained from this
+combination. The statistics from the channel combination AWS-36 and AWS-42 are
+shown in Table~\ref{tab:correction:stats:36:43}. [* Add a bit of discussion for
+both combiniations. *]
+
+[* Should not the fraction of rejected for Sreerekha et al be the same for all
+channel combinations? *]
+
 \begin{table}[!bt]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
