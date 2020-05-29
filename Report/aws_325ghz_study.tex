@@ -558,6 +558,11 @@ channels can have a positive part, as long as the reflectivity is not close to
 
 \section{Preliminary options for 325\,GHz channels}
 
+[* Anders just informed us (May 29) that it would be good to avoid an IF of 1.7\,GHz, as that frequency could be used for downlink and there is a risk for
+interference. The four channel option can easily be adopted to this, but what
+do with the three channel one? *]
+
+
 \subsection{Impact of upper end of IF band}
 %
 Figure~\ref{fig:wfuns:325ul} assumes that the channel placed at the high end of
@@ -747,7 +752,9 @@ $x_m\leq x_{cs}$, the measurement is rejected if a pure filtering is made, or
 it is adjusted if the correction scheme is applied. We will largely set
 $dtb_{cs}$ based on the noise level of the 183\,GHz channel involved, to be
 1$\sigma$ or 2$\sigma$ where $\sigma$ refers to the magnitude of measurement
-noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T). We will use $1\sigma$ for the development of the scheme, however, the sensitivity of the scheme to 1$\sigma$ and 2$\sigma$  threshold is also provided later in the text. 
+noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T). We will use $1\sigma$ for
+the development of the scheme, however, the sensitivity of the scheme to
+a 1$\sigma$ or 2$\sigma$ threshold is also provided later in the text.
 
 
 
@@ -766,9 +773,10 @@ clear-sky value. The average bias, standard deviation and the measure of skewnes
 To test the efficacy of the correction scheme, three different models: linear,
 quadratic and cubic are evaluated to fit the TB differences between C1 and C2.
 For all three models, cases with $Tb2-Tb1 < $ -15\,K are assumed to be ``too
-cloudy'' and are not corrected. Also, cases classified as clear according to $1\sigma$ threshold are not corrected. The clear-sky adjustment for all eligible
-measurements is calculated from all three
-models, and the three predicted datasets are compared.
+cloudy'' and are not corrected. Also, cases classified as clear according to
+the $1\sigma$ threshold are not corrected. The clear-sky adjustment for all
+eligible measurements is calculated from all three models, and the three
+predicted datasets are compared.
 
 The occurrence frequency of the deviations from three models is shown in
 Fig.~\ref{fig:correction:c34-42:fit} and their corresponding statistics are shown in Table~\ref{tab:correction:stats:34:42:allfits}. The occurrence frequency of the
@@ -781,9 +789,9 @@ In Sec.~\ref{sec:validation} the validation of simulations against ATMS data
 (Fig.\ref{fig:pdf:c16-22}) showed that the cloudy cases in the simulations were
 underrepresented in comparison to the observations. In order to have a higher
 representation of cloudy cases, we thinned the measurement dataset by removing
-50\% of the clear-sky cases. Since the distribution of thinned dataset is more closer to real conditions, all the analyses presented further in this section are based on the thinned dataset. 
-
-
+50\% of the clear-sky cases. The distribution of thinned dataset is more closer
+to real conditions in the region matching weak cloud impacts and all the
+analyses presented further in this section are based on the thinned dataset.
 
 Figure~\ref{fig:correction:c34-42:thinned} shows the deviation of the uncorrected and
 corrected measurements to their noise-free clear-sky values for the thinned dataset. The results from
@@ -944,7 +952,11 @@ Table~\ref{tab:correction:stats:33:41} shows the statistics when AWS-33 is
 corrected using AWS-41. The TB differences for this combination and the cloud
 impact in AWS-33 are highly correlated. Rejecting the cloudy cases reduces the
 average bias in the measurements from -1.74\,K to -0.13\,K, while a correction
-of cloudy cases reduces the bias further to 0.05\,K. The standard deviation and skewness of the corrected dataset are higher than pure-filtering, but smaller than the approach by  ``sreerekha et al''. Using $2\sigma$ threshold corrects a smaller fraction of cases than $1\sigma$ but the overall statistics are poorer in comparison to $1\sigma$, but still better than the ``sreerekha et al''.
+of cloudy cases reduces the bias further to 0.05\,K. The standard deviation and
+skewness of the corrected dataset are higher than pure-filtering, but smaller
+than the approach by Sreerekha et al. Using $2\sigma$ threshold corrects a
+smaller fraction of cases than $1\sigma$ but the overall statistics are poorer
+in comparison to $1\sigma$, but still better than Sreerekha et al.
 
 Table~\ref{tab:correction:stats:35:43} shows the statistics for the combination AWS-35 and AWS-43. Here the two filtered datasets have a comparable performance, while on correction, the bias is reduced, but skewness and standard deviation are increased. After correction ($1\sigma$) the bias due to cloudy measurements reduces from -0.83\,K to 0.01\,K while rejecting only 2.86\% of the total cases.  The performance of $1\sigma$ threshold in this case is also better than $2\sigma$.  
  
@@ -1035,6 +1047,16 @@ sreerekha et al 	 &  -0.09 &  0.91 &              -0.10 &               45.36 \\
 
 \section{Cloud correction by QRNN}
 %
+There are two main drawbacks of the simple scheme introdoced in the previous
+section. The filtering/correction only involves a single 325\,GHz channel. The
+scheme could be extended to consider a higher number of channels, but there is
+no obvious formulation of the expressions to apply. The second problem is that
+no case-specific uncertainty estimate is provided, only the overal bias and
+standard deviations are known. The first drawback hints towards using a machine
+learning approach, and the second one suggests to use the special form denoted
+QRNN (Quantile Regression Neural Network), that was introduced for ratmospheric
+retrievals by \citet{pfreundschuh:aneur:18}.
+
 \dots
 
 
