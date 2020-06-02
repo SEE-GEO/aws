@@ -48,14 +48,14 @@
 \noindent
 \textbf{\Large Study to support the definition of Arctic Weather \vspace{1mm}\\
 Satellite (AWS) high frequency channels} \vspace{8mm}\\
-{\bf Patrick Eriksson, Simon Pfreundschuh and Inderpreet Kaur}\\
+{\bf Patrick Eriksson, Inderpreet Kaur and Simon Pfreundschuh}\\
 Department of Space, Earth and Environment\\
 Chalmers University of Technology\\
-SE-412\,96, Gothenburg, Sweden \vspace{10mm}
+SE-412\,96, Gothenburg, Sweden\vspace{10mm}
 
 \section*{Summary}
 %
-To written \dots
+To be written \dots
 
 
 
@@ -110,6 +110,7 @@ cases.
 
 
 \subsection{Comparison to \citet{rekha2012potential}}
+\label{sec:rekha}
 %
 Results from \citet{rekha2012potential} will be used as reference. They did not
 suggest specific settings of their algorithm. The main consideration of the
@@ -202,7 +203,7 @@ characterised.
 
 \subsection{Noise}
 %
-The nominal reciever noise temperature, $T_r$ of each band is listed in
+The nominal receiver noise temperature, $T_r$ of each band is listed in
 Table~\ref{tab:trec}. The noise of data for individual channels is calculated
 as
 \begin{equation}
@@ -210,13 +211,13 @@ as
   \label{eq:noise}
 \end{equation}
 where $\sigma^i$ is the noise standard deviation of channel $i$, $c$ is a
-scaling factor (see below), $T^i_r$ is the reciever noise temperature of the
+scaling factor (see below), $T^i_r$ is the receiver noise temperature of the
 channel, $T^i_a$ is the antenna temperature of the channel, $\Delta\!f^i$ is
 the bandwidth (in terms of IF) of channel and $\Delta t$ is the integration
 time.
 
 The factor $c$ is set to 1.2 to incorporate the additional noise caused by the
-calibration process. The bandwith applied is the one found in columns 3 of
+calibration process. The bandwidth applied is the one found in columns 3 of
 Table~\ref{tab:fixed:chs}. The integration time is set to match an effective
 15\,km resolution at 183\,GHz. This time was estimated to 3\,ms. 
 
@@ -228,7 +229,7 @@ Table~\ref{tab:fixed:chs}. The integration time is set to match an effective
     $T_r$ [K]    & 390 & 650 & 650 & {\it 1000}  & 1200 \\
     \hline
   \end{tabular}
-  \caption{Assumed reciever noise temperatures. The value for 229\,GHz is
+  \caption{Assumed receiver noise temperatures. The value for 229\,GHz is
     selected by us, remaining values are present assumptions at Omnisys.}
   \label{tab:trec}
 \end{table}
@@ -240,13 +241,13 @@ generated for sensor viewing angles (the angle from nadir) from 0$^\circ$ to
 45$^\circ$, in steps of 5$^\circ$.
 
 The polarisation response of the bands is not yet determined and for simplicity
-``quasi-horisontal'' (defined in same way as for e.g.\ MWS) is throughout
+``quasi-horizontal'' (defined in same way as for e.g.\ MWS) is throughout
 assumed. Antenna temperatures are obtained as:
 \begin{equation}
   \label{eq:polrot}
   T_a = T_b^V\sin^2(\theta) + T_b^H\cos^2(\theta)
 \end{equation}
-where $T_b^V$/$T_b^H$ is the brightness temprature at vertical/horisontal
+where $T_b^V$/$T_b^H$ is the brightness temperature at vertical/horizontal
 polarisation, respectively, and $\theta$ is the viewing angle (from nadir).
 
 
@@ -272,7 +273,7 @@ A database of atmospheric cases was created based on data from CloudSat and
 ERA-Interim. The core idea of the approach is to use CloudSat reflectivities to
 obtain as realistic vertical profiles of ice hydrometeors and rain as
 possible. No external CloudSat retrievals are involved. Instead the CloudSat
-reflectivites are mapped to properties for the passive simulations by assuming
+reflectivities are mapped to properties for the passive simulations by assuming
 a particle size distribution and a particle habit, together denoted as
 the particle model. The process involves an inversion of the radar data, but as,
 the same particle model is used for that inversion and to map ice water content
@@ -331,7 +332,7 @@ purely absorbing, based on \citet{ellison2007permittivity}.
 For water vapour the present settings in RTTOV are applied. That is, largely
 MPM89 \citep{liebe:89} is followed, but some parameters for the 22 and 183\,GHz
 transitions are replaced \citep{saunders2018update,turner2019amsutran}. A
-smaller comparison to RTTOV has been made, that indciated an agreement better
+smaller comparison to RTTOV has been made, that indicated an agreement better
 than 0.1\,K in general. Deviations between 0.1 and 0.2\,K were found for some
 channels at incidence angles above 40$^\circ$.
 
@@ -364,6 +365,7 @@ and could not be accommodated inside the study.
 
 
 \subsection{Validation of simulations}
+\label{sec:validation}
 %
 Using the simulation setup described above, around 77000 cases were simulated
 based on randomly selected CloudSat orbits during August 2015. The input data
@@ -390,7 +392,7 @@ was made between the observations over water and land.
 
 A statistical comparison of the simulations to actual ATMS data, for channels
 16-22 at nadir (zenith angle = $180^{\degree}$), is shown in
-Figure~\ref{fig:pdf:c16-22}. For the comparison, the daytime ATMS observations
+Fig.~\ref{fig:pdf:c16-22}. For the comparison, the daytime ATMS observations
 were selected as CloudSat operates only during the day part of the orbit since
 2011. For the channels around 183\,GHz, the ATMS characteristics are not fully
 simulated. The ATMS channel widths are considered, but as AWS is only covering
@@ -407,7 +409,7 @@ comparison to simulations, for brightness temperatures below about 240\.K. This
 is due to the fact that the antenna pattern is not considered in the
 simulations.
 
-In the intermediate region, the simulations have a lower occurance rate. The
+In the intermediate region, the simulations have a lower occurrence rate. The
 impact of hydrometeors should be somewhat higher in the upper sideband of ATMS,
 which is not reflected in the simulations, but this is not sufficient to
 explain the deviation. As this region is well covered in the simulations
@@ -425,7 +427,8 @@ dataset will be considered in parallel below, to ensure that no fraction of the
 
 
 \section{Overview of the 183, 229 and 325\,GHz bands}
-%
+\label{sec:overview}
+% 
 The simulations in this section are based on five Fascod climate scenarios
 (Sec.~\ref{sec:fascod}), and performed with a fixed sensor viewing angle of
 25$^\circ$. No hydrometeors are included. For simpler interpretation of the
@@ -491,14 +494,13 @@ are due to different contribution of far wing and continuum absorption, that is
 higher at 325\,GHz. The 229\,GHz brightness temperatures are higher than any
 value around 183 and 325\,GHz, as expected 229\,GHz being a window channel.
 
-In Figure~\ref{fig:tb:r050} the surface reflectivity is changed to 0.5, which
+In Fig.~\ref{fig:tb:r050} the surface reflectivity is changed to 0.5, which
 should roughly correspond to the highest reflectivity encountered at these
 frequencies. The differences to Fig.~\ref{fig:tb:r000}  are small for 183 and
 325\,GHz for the tropical and the two summer scenarios. On the other hand,
 there is a clear impact in the wing part of 183\,GHz for the two winter
 scenarios. The same is true for 325\,GHz, but the influence of the surface
-reflectivity is considerably lower. [* Comment somewhere on the implications of
-this for retrievals at high latitudes *] Beside for the tropical case, for
+reflectivity is considerably lower.  Beside for the tropical case, for
 229\,GHz there is a pronounced dependency of the surface reflectivity, e.g.\
 about 35\,K for mid-latitude winter.
 
@@ -556,6 +558,11 @@ channels can have a positive part, as long as the reflectivity is not close to
 
 \section{Preliminary options for 325\,GHz channels}
 
+[* Anders just informed us (May 29) that it would be good to avoid an IF of 1.7\,GHz, as that frequency could be used for downlink and there is a risk for
+interference. The four channel option can easily be adopted to this, but what
+do with the three channel one? *]
+
+
 \subsection{Impact of upper end of IF band}
 %
 Figure~\ref{fig:wfuns:325ul} assumes that the channel placed at the high end of
@@ -569,11 +576,11 @@ function moves downwards. However, moving the channel from 5\,-\,8\,GHz to
 8\,-\,11\,GHz (in IF) results only a small shift, about 400 and 200\,m for the
 lower and upper side, respectively. In terms of the resulting double sideband
 channel the the shift would be 300\,m. Accordingly, there is little gain by
-inforcing the IF range to go above 8\,GHz. As a rule of thumb, a higher ratio
+enforcing the IF range to go above 8\,GHz. As a rule of thumb, a higher ratio
 between highest and lowest IF is more costly to implement. Albeit small, a
 negative consequence of a 8\,-\,11\,GHz channel, compared to 5\,-\,8\,GHz, is
-some assymetry in the altitude response between lower and upper sideband. This
-assymetry is caused by higher continuum and far wing absorption on the upper
+some asymmetry in the altitude response between lower and upper sideband. This
+asymmetry is caused by higher continuum and far wing absorption on the upper
 side.
 
 In summary, the benefit of extending the IF band above 8\,GHz is small and
@@ -596,7 +603,7 @@ and development time of AWS.
   \includegraphics[height=61mm]{fascod_3chopt_tro}\hspace{5mm}% 
   \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_3chopt_mlw}
   \caption{RH weighting functions of the three channel option in
-    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latitude
     winter (right) scenarios.}
   \label{fig:3ch:prel}
 \end{figure}
@@ -605,7 +612,7 @@ and development time of AWS.
   \includegraphics[height=61mm]{fascod_4chopt_tro}\hspace{5mm}% 
   \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_4chopt_mlw}
   \caption{RH weighting functions of the four channel option in
-    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latiude
+    Table~\ref{tab:chs:prel}, for the Fascod tropical (left) and mid-latitude
     winter (right) scenarios.}
   \label{fig:4ch:prel}
 \end{figure}
@@ -668,111 +675,473 @@ the complete IF bandwidth.
 
 
 \section{Cloud correction by a simple scheme}
+\label{sec:simple}
 %
-\subsection{Formulation of correction scheme}
-%
-\begin{figure}[!tb]
-	\centering
-	\includegraphics[height=65mm]{fit_AWS-34_AWS-42}\hspace{5mm}% 
-	\caption{Brightness temperature difference of AWS-34 from AWS-42 plotted against cloud impact in AWS-34. The black curve represents the line of best fit as a third order polynomial. Red and green color represent the clear and cloudy cases respectively in the simulation dataset. The blue vertical line represents the clear-sky screening threshold in the measurements for noise-threshold = 0.2\,K   }
-	\label{fig:fit:c34-42}
-\end{figure}
-%
-In this section, the 325GHz three channel option is evaluated for detection and correction of the ice-cloud cases in 183 GHz channels. Combinations of brightness temperature (TB) differences between 183 GHz and 325 Ghz are used as a measure of the cloud impact.  A regression based approach is used to estimate the adjustment need to predict the clear-sky values. 
+In this section, the 325\,GHz three channel option is evaluated for detection
+and correction of cloud interference in 183\,GHz channels. Combinations of
+brightness temperature (TB) differences between 183\,GHz and 325\,GHz are used
+as a measure of the cloud impact. A regression based approach is used to
+estimate the adjustment needed to predict the clear-sky values.
 
-Let C1 and C2 represent the one of the channels each from 183 GHz and 325 GHz respectively, and Tb1 and Tb2 represent the corresponding TB. The correction scheme formulates a relationship between the cloud impact in C1 to the TB differences between C1 and C2:
+
+
+
+\subsection{Formulation of correction scheme}
+\label{sec:correction:scheme}
+%
+Let C1 and C2 represent one of the channels each from 183\,GHz and 325\,GHz,
+respectively, and Tb1 and Tb2 represent the corresponding TB. The correction
+scheme formulates a relationship between the cloud impact in C1 to the TB
+differences between C1 and C2:
 \begin{equation}
-Tb1_{as}-Tb2_{cs} = f(x_m)
+Tb1_{as}-Tb1_{cs} = f(x_m)
 \label{eq:TB:diff}
 \end{equation}
 where, $x_m = Tb2_{as} - Tb1_{as}$, and the subscripts ``as'' and ``cs'' denote the all-sky and clear-sky cases respectively.  
 
-The combinations of C1 and C2 are selected by matching their weighting functions as shown in  Figure~\ref{fig:3ch:prel}. Five  183 GHz and 325 GHz paired combinations are possible, for example one such paired combination is AWS-34(180.311 GHz) and AWS-42 (325$\pm$3.55 GHz). For each of the five 183 GHz channels, the correction scheme is derived from its corresponding counterpart in 325 GHz channel.  
+The combinations of C1 and C2 are selected by matching their weighting
+functions as shown in Fig.~\ref{fig:3ch:prel}. Five 183\,GHz and 325\,GHz paired
+combinations are possible, for example one such paired combination is AWS-34
+and AWS-42.
 
-As an example, the relationship between the TB differences for C1 and C2 and the cloud impact in C1 is shown in  Figure~\ref{fig:fit:c34-42}. For this particular case, C1 is AWS-34 and C2 is AWS-42, and around 40000 simulations are used. The two variables have a reasonably strong correlation for small TB differences, but as the impact of cloud increases the correlations are poor. The data can be fitted to linear or non-linear models. The fitted model can be used to interpolate the adjustment required to compensate the brightness temperature for cloudy cases. To avoid fitting the ``too cloudy'' cases which do not show any reasonable correlation, cases with $Tb2-Tb1$< -40\,K  are excluded in the fit. Also, cases with $Tb2-Tb1$ < 0.2\,K (red color dots) are assumed to be clear are not included in the model.
-
-Before correcting the measurements, it is important to correctly classify all the cases into clear or cloudy. To avoid any undesirable adjustment of the clear cases, a clear-sky screening is added  to the correction scheme. In this screening, we assume that for clear cases, the average differences of the measurements to their noise-free clear-sky values are of the order of the instrument noise. Further in the text, we refer this value of noise as ``noise-index''. Assuming the function $f$ in eqn~\ref{eq:TB:diff} to be invertible, and if $x_{cs}$  represents the noise-index, the TB difference between the measurements from C1 and C2 for the noise-index can be used as a measure of clear-sky screening: ($dtb_{cs}$):
-\begin{equation}
-dtb_{cs}= f_{cs}^{-1}(x_{cs}) 
-\label{eq:dtb}
-\end{equation}
-The value of $dtb_{cs}$ is not constant and shall depend on the the combination of 183 GHz and 325 GHz used. The measurements with TB difference between C2 and C1 less than $dtb_{cs}$ are considered cloudy and are corrected. In Figure~\ref{fig:correction:c34-42}, the blue dotted line represents the clear-sky screening cut-off when noise-index = 0.2\,K. All measurements to the left of this line are classified as cloudy, and vice-versa. For the dataset shown in the figure, around 15\% of the total cases were classified as clear. The sensitivity of noise-index is discussed in detail in the next section. 
-\subsection{Application of correction scheme}
-\begin{figure}[!th]
+\begin{figure}[!tb]
 	\centering
-	\includegraphics[clip,trim=0 0 0 0,height=85mm]{PDF_corrected_AWS-34_AWS-42}
-	\caption{Deviation of AWS-34 measurements to noise free clear-sky simulations before and after correction corrected using a linear, quadratic and cubic model. The spread of noise is also shown as reference. The measurements have been corrected using brightness temperatures from AWS-42. }
-	\label{fig:correction:c34-42}
+	\includegraphics[height=85mm]{fit_AWS-34_AWS-42}\hspace{5mm}% 
+	\caption{Brightness temperature difference of AWS-34 from AWS-42 plotted
+      against cloud impact in AWS-34. Red and green colour represent the clear
+      and cloudy cases respectively in the simulation dataset. The black curve
+      represents the line of best fit (of green points) as a third order
+      polynomial. The blue vertical line represents the correction threshold,
+      $x_{cs}$, for $dtb_{cs} =$ 0.2\,K. }
+	\label{fig:fit:c34-42}
 \end{figure}
 %
-In this section, we test the applicability of the correction scheme in detail. To analyse the performance of the approach, we apply it to correct the measurements from C1. Without the availability of actual data, the simulation dataset but with noise is used mimic the measurements. The noise for individual channels is calculated according to Equation~\ref{eq:noise}. As an example, the results from the channel combination AWS-34 and AWS-42 are shown.
 
-To test the efficacy of the correction scheme, three different models :linear, quadratic and cubic are evaluated to fit the TB differences between C1 and C2. For all three models, cases with $Tb2-Tb1 < $ -15\,K are assumed to be ``too cloudy'' and are not corrected.  The clear-sky adjustment for all eligible measurements (without clear-sky screening) is calculated from all three models, and the three predicted datasets are compared. The error in the predicted measurements is assessed by calculating the deviation to noise-free clear-sky observations. The occurrence frequency of the deviations from three models is shown in Figure~\ref{fig:correction:c34-42}. The occurence frequency of the all measurement without any filtering or correction is also plotted as reference (orange color). If all measurements are devoid of any cloud impact, the deviations should follow the gaussian distribution of noise. However, in real scenarios, the distribution is skewed due to the impact of clouds. It should also be noted that since no clear-sky screening was included in the measurements, the measurements with zero deviation to noise-free clear-sky were reduced. This indicates that it is extremely important to correctly classify the cases as clear/cloudy. Among the three models, the quadratic and cubic models work better than a liner model. Both quadratic and cubic models are able to correct the cloud impact in the measurements, however the values of average bias indicates that the cubic model performs better. The average deviation in the dataset is -0.82\,K and after correction with a cubic model, it reduces to -0.02\,K, while for quadratic model, the average bias after correction is 0.24\,K. For all other results described in this section, a cubic model is used.
+As an example, the relationship between the TB differences for C1 and C2 and
+the cloud impact in C1 is shown in Fig.~\ref{fig:fit:c34-42}. For this
+particular case, C1 is AWS-34 and C2 is AWS-42, and around 125\,000 simulations
+are used. The two variables have a reasonably strong correlation for small TB
+differences, but as the impact of cloud increases, the correlations gets
+poorer. The data can be fitted by linear or non-linear models. The fitted model
+can be used to obtain the adjustment required to compensate the brightness
+temperature for cloudy cases. To avoid fitting the ``too cloudy'' cases which
+do not show any reasonable correlation, cases with $Tb2-Tb1< -40$\,K are
+excluded in the fit. Also, cases with a cloud impact below 0.2\,K (red colour
+dots) can be considered as clear-sky, are not included in the model.
+
+It is also important to have a manner for making a clear/cloudy classification
+that can be derived from actual measurement data. This is useful for making
+filtering in line with \citet{rekha2012potential}, but is also needed in the
+correction scheme. The latter is the case as the polynomial fit derived gives a
+non-zero correction for clear-sky cases. In Fig.~\ref{fig:fit:c34-42} the
+difference between clear-sky values of channel C1 and C2 (red dots) have a mean
+close to zero (as the weighting functions are well matched), but this is not
+the case for all channel combinations and some general rule for finding a
+threshold value (with respect to $x_m$) must be formulated. The polynomial fit
+will be used also for this part.
+
+We will simply treat cases that matches a correction below a certain value as
+``clear-sky''. If the correction limit is denoted as $dtb_{cs}$, the threshold
+value, $x_{cs}$, is obtained by inverting the polynomial fit:
+\begin{equation}
+x_{cs} = f_{cs}^{-1}(dtb_{cs}) 
+\label{eq:dtb}
+\end{equation}
+That is, if $x_m>x_{cs}$ a measurement is classified as clear-sky. If
+$x_m\leq x_{cs}$, the measurement is rejected if a pure filtering is made, or
+it is adjusted if the correction scheme is applied. We will largely set
+$dtb_{cs}$ based on the noise level of the 183\,GHz channel involved, to be
+1$\sigma$ or 2$\sigma$ where $\sigma$ refers to the magnitude of measurement
+noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T). We will use $1\sigma$ for
+the development of the scheme, however, the sensitivity of the scheme to
+a 1$\sigma$ or 2$\sigma$ threshold is also provided later in the text.
 
 
- 
 
-******** 
+\subsection{Application of correction scheme}
+%
+In this section, we test the applicability of the correction scheme in detail.
+To analyse the performance of the approach, we apply it to correct the
+measurements from C1 using data from C2. Without the availability of actual
+data, the simulation dataset but with noise added is used mimic the measurements. The
+noise for individual channels is calculated according to
+Equation~\ref{eq:noise}. As an example, the results from the channel
+combination AWS-34 and AWS-42 are shown. The error in the
+predicted measurements is assessed as the deviation to corresponding noise-free
+clear-sky value. The average bias, standard deviation and the measure of skewness, of the deviations are also calculated. Skewness gives a measure of asymmetry of the probability distribution of deviations around its mean.
 
-TEXT NOT UPDATED BELOW 
-Before applying the clear-sky screening, the measurement dataset was also thinned in order to improve the representation of the cloudy cases. Validation of the simulations against ATMS data(Figure\ref{fig:pdf:c16-22}) showed that the cloudy cases were a bit underrepreseneted than the observations. Removing 50\% of the clear-sky cases, helped in improving the percentage of total cloudy cases in the database. 
+To test the efficacy of the correction scheme, three different models: linear,
+quadratic and cubic are evaluated to fit the TB differences between C1 and C2.
+For all three models, cases with $Tb2-Tb1 < $ -15\,K are assumed to be ``too
+cloudy'' and are not corrected. Also, cases classified as clear according to
+the $1\sigma$ threshold are not corrected. The clear-sky adjustment for all
+eligible measurements is calculated from all three models, and the three
+predicted datasets are compared.
+
+The occurrence frequency of the deviations from three models is shown in
+Fig.~\ref{fig:correction:c34-42:fit} and their corresponding statistics are shown in Table~\ref{tab:correction:stats:34:42:allfits}. The occurrence frequency of the
+measurements without any filtering or correction is also plotted as reference
+(orange colour). If all measurements are devoid of cloud impact, the
+deviations should follow the Gaussian distribution of noise. In such a case, the skewness of the deviations is close to zero.  However, in real conditions, the distribution has a large negative skewness due to the impact of clouds. After correction, all the three models are successful in reducing the cloud impact in the
+measurements. The linear model has the lowest reduction in bias (from  -0.75\,K to -0.03\,K) but the highest values for skewness and standard deviation, in comparison to the other two models.  With the linear model, the error distribution of the corrected dataset has a relatively high positive skewness, which is undesirable. The positive skewness can be due to over-correction of cloudy cases, or erroneous correction of clear cases. The cubic  and quadratic models have almost similar statistics for bias and standard deviation, but the skewness in the cubic model is lower. Overall, the cubic model can be said to have the best performance, thus for all the results shown further, a cubic model is used.
+
+In Sec.~\ref{sec:validation} the validation of simulations against ATMS data
+(Fig.\ref{fig:pdf:c16-22}) showed that the cloudy cases in the simulations were
+underrepresented in comparison to the observations. In order to have a higher
+representation of cloudy cases, we thinned the measurement dataset by removing
+50\% of the clear-sky cases. The distribution of thinned dataset is more closer
+to real conditions in the region matching weak cloud impacts and all the
+analyses presented further in this section are based on the thinned dataset.
+
+Figure~\ref{fig:correction:c34-42:thinned} shows the deviation of the uncorrected and
+corrected measurements to their noise-free clear-sky values for the thinned dataset. The results from
+\cite{rekha2012potential} are also shown as reference (see Sec.~\ref{sec:rekha}
+for our assumptions). In order to allow a more direct comparison of our
+approach with \cite{rekha2012potential}, we also include the
+dataset, ``Filtered'', where all cloudy cases are rejected. Apart from the fit
+based cloudy classification, it is also assumed that cases with $Tb2-Tb1 < $
+-15\,K are ``too-cloudy'' and are rejected.  To analyse the sensitivity of our scheme to noise threhold, as discussed in the previous section, results from two different values of $dtb_{cs}$ are shown. For both values of $dtb_{cs}$ the corresponding clear-sky cut-off
+($x_{cs}$) is calculated using Eq~\ref{eq:dtb}. Various metrics corresponding to
+the Figure~\ref{fig:correction:c34-42:thinned} are shown in
+Table~\ref{tab:correction:stats:34:42:thinned}.
 
 
-To implement the clear-sky screening as discussed in the previous section, two different values of the noise-index are tested : $1\sigma$ and  $2\sigma$, where $\sigma$ is the standard deviation of noise. For both values of noise-index the corresponding clear-sky cut-off is calculated using Eq~\ref{eq:dtb}. Figure~\ref{fig:correction:c34-42:thinned} shows the results when only the screened cloudy cases are corrected. Various metrics from the corrected measurements are also shown in Table~\ref{tab:correction:stats}. When cloudy measurements are filtered with noise-index = 1$\sigma$, around 13.5\% cases of the thinned dataset are classified as cloudy and the average deviation in the corrected dataset is -0.069 K. Whereas, with noise-threshold= 2$\sigma$, only 7.5\% are classified as cloudy and the average deviation is -0.117 K. This indicates that a larger value of noise threshold can incorrectly classify some cloudy cases as clear. 
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=85mm]{PDF_corrected_AWS-34_AWS-42_allfits}
+	\caption{Deviation of AWS-34 measurements to noise free clear-sky
+      simulations before and after correction, corrected using a linear,
+      quadratic and cubic model. The distribution of noise alone is also shown
+      as reference. The measurements have been corrected using brightness
+      temperatures from AWS-42. The clear/cloudy classification is made with $dtb_{cs} = 1\sigma$ and also cases with $Tb2 - Tb1 > -15$\,K are rejected.}
+	\label{fig:correction:c34-42:fit}
+\end{figure}
+%
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &   skewness  & fraction  \\
+		&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+		noise                     &   0.00 &  0.63 &               0.00 &                - \\
+		uncorrected-all           &  -0.75 &  4.62 &             -11.78 &                - \\
+		corrected-linear model    &  -0.03 &  0.75 &               0.48 &                2.84 \\
+		corrected-quadratic model &  -0.06 &  0.71 &              -0.34 &                2.84 \\
+		corrected-cubic model     &  -0.05 &  0.72 &              -0.23 &                2.84 \\
+		\hline
+	\end{tabular}
+	\caption{Bias, standard deviation (std), and measure of skewness of error distributions
+		shown in Figure~\ref{fig:correction:c34-42:fit}.The fraction rejected describes the percentage of cases which are removed. Results from three different fit models are shown: linear, quadratic and cubic.}
+	\label{tab:correction:stats:34:42:allfits}
+\end{table}
 %
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=85mm]{PDF_corrected_AWS-34_AWS-42_thinned}
-	\caption{Same as Figure~\ref{fig:correction:c34-42}, but for different subsets of the measurement dataset. The different datasets are: thinned measurements (50\% of the clear-sky cases removed), corrected measurements 1$\sigma$ (cloudy measurements are filtered with noise-threshold = 1$\sigma$), corrected measurements 2$\sigma$(cloudy measurements are filtered with noise-threshold = 2$\sigma$), sreerekha et al (cloud filtering according to criteria described in \cite{rekha2012potential}) }
+	\caption{Deviation of AWS-34 measurements to noise free clear-sky
+      simulations before and after correction. The measurements have been
+      corrected using a cubic model. The different datasets are: noise
+      (simulation dataset), uncorrected (thinned measurements), filtered $1\sigma$ (cases classified as cloudy according to $dtb_{cs}$ = 1$\sigma$ are rejected), corrected $1\sigma$ (cases classified as cloudy according to $dtb_{cs}$ = 1$\sigma$ are corrected), corrected
+      $2\sigma$ (cases classified as cloudy according to $dtb_{cs}$ = 2$\sigma$ are corrected), Sreerekha et al (cloudy cases are filtered according to \citet{rekha2012potential}).}
 	\label{fig:correction:c34-42:thinned}
 \end{figure}
 %
-\begin{table}[!bt]
+\begin{table}[!tb]
 	\centering
-	\begin{tabular}[b]{c|c|c|c}
-		 Dataset & Bias & Standard & Measure\\
-		 		 & [K] & deviation[K] & skewness [K]\\	
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &   skewness  & fraction  \\
+		&   [K]  &   [K] & [-] & rejected [\%]\\
 		\hline
-		Noise& 0.005& 0.633& -0.008\\
-		%all& -0.818& 4.699& -10.392\\
-		thinned& -0.303& 0.981& -2.318\\
-		1$\sigma$& -0.067& 0.756& -0.303\\
-		2$\sigma$& -0.119& 0.747& -0.519\\
-		sreerekha et al & -0.224& 0.798& -0.996\\
+	noise             		&   0.00 &  0.63 &              -0.01 &                - \\
+	uncorrected     		&  -1.27 &  6.05 &              -8.97 &                - \\
+	filtered($1\sigma$)  	&  -0.13 &  0.68 &              -0.25 &               17.54 \\
+	corrected($1\sigma$) 	&  -0.06 &  0.76 &              -0.46 &                4.99 \\
+	corrected($2\sigma$) 	&  -0.11 &  0.75 &              -0.69 &                4.99 \\
+	sreerekha et al   		&  -0.20 &  0.78 &              -1.00 &               45.36 \\			
+		\hline
+\end{tabular}
+\caption{Bias, standard deviation (std), and measure of skewness of the
+	error distributions of datasets shown in Figure~\ref{fig:correction:c34-42:thinned}.}
+\label{tab:correction:stats:34:42:thinned}
+\end{table}
+
+The distributions of filtered data are non-Gaussian. The right side of the
+distribution follows measurement noise while the left side is skewed. The
+skewness in the distribution is due to cloud impacts which pass through the
+clear-sky threshold. The higher skewness in ``Sreerekha et al'' is mainly
+beacuse their method only aims at removing cloud impacts above 4\,K.
+Their approach also leads to a high rejection fraction (45.36\%). The filtering
+method introduced here leads to a considerable lower rejection of data
+(17.54\%).
+
+If the correction part for $1\sigma$ is added, the rejection is decreased even further (4.99\%)
+and the bias is also improved (from -1.27 to -0.06\,K). On the other hand, the
+correction gives some increase in standard deviation and skewness, compared to
+filtering alone. A correction using $2\sigma$ gives poorer performance, in particular the reduction in bias is smaller and the skewness is increased.
+
+
+%
+\subsection{Application of correction scheme using AWS-4X}
+%
+\begin{figure}[!t]
+	\centering
+	\includegraphics[height=85mm]{PDF_corrected_AWS-32_AWS-4X_thinned}
+	\caption{Same as Fig.~\ref{fig:correction:c34-42:thinned}, but for channel combinations AWS-32 and AWS-4X. The dataset ``corrected 2$\sigma$'' is not shown.  }
+	\label{fig:correction:c32-4X:thinned}
+\end{figure}
+%
+
+As a reference with respect to having a channel at 229\,GHz, we also apply the
+correction scheme described above to correct AWS-32 using AWS-4X (following
+\citet{rekha2012potential}). In this case, C1 and C2 are AWS-32 and AWS-4X. The
+TB correlations between AWS-32 and AWS-4X are poor and show a large spread
+particularly for large cloud impacts (not shown). We fit the data to a polynomial model as described in Sec.~\ref{sec:correction:scheme} but exclude cases with $Tb2-Tb1 <$ -20\,K in the fit.
+
+Fig.~\ref{fig:correction:c32-4X:thinned} shows the deviations of the
+measurements to clear-sky values before and after correction, and the
+corresponding metrics are provided in Table~\ref{tab:correction:stats:32:4X}.
+With clear/cloudy classification for $dtb_{cs} = 1\sigma$, around 85\% of the
+total measurements are classified as cloudy and are rejected in pure-filtering.
+Rejecting all the cloudy cases reduces the average bias in the measurements
+from -2.25\,K to -0.21\,K, while with the approach from
+\citet{rekha2012potential} only 45.36\% of the data is rejected and the average
+bias reduces to -0.41\,K. When all the cloudy cases, except the ``too cloudy'',
+are corrected, the total bias increases to 0.88\,K. The unusually high fraction
+of cloudy cases and an increase in bias on correction suggests misclassification
+of clear cases as cloudy. Since, the weighting functions of AWS-32 and AWS-4X
+are poorly matched, their relationship is inadequate to estimate the cloud
+impact in AWS-32. Without any additional information, the regression approach
+can only provide a successful filtering in comparison to the original approach
+described by \citet{rekha2012potential}, although at the cost of high rejection
+fraction. Additional information e.g., TB from other channels, is necessary
+improve the accuracy of the correction.
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std & skewness & fraction \\
+						&   [K]  &   [K] & [-] 		& rejected [\%]\\
+		\hline
+Noise             		&  0.00 &  0.45 &               0.01 &                - \\
+uncorrected       		&  -2.25 &  8.94 &              -6.85 &                - \\
+filtered($1\sigma$)  	&  -0.21 &  0.51 &              -0.65 &               85.43 \\
+corrected($1\sigma$) 	&   0.88 &  1.76 &              -1.30 &                5.35 \\
+corrected($2\sigma$) 	&   0.76 &  1.80 &              -1.07 &                5.35 \\
+sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 \\
 		\hline
 	\end{tabular}
-	\caption{Various metrics for different subsets of the measurement dataset. The different datasets are: noise(simulation dataset), thinned (50\% of clear sky measurements are removed), $1\sigma$ (cloudy measurements are filtered with noise-index = 1$\sigma$), $2\sigma$ (cloudy measurements are filtered with noise-index = 2$\sigma$), sreerekha (measurements are filtered according to criteria described in \cite{rekha2012potential})   }
-	\label{tab:correction:stats}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combinations: AWS-32 and AWS-4X.  }
+	\label{tab:correction:stats:32:4X}
 \end{table}
+
+\subsection{Application of correction scheme to AWS-32, AWS-33, AWS-35 and AWS-36}
 %
-In past, \cite{rekha2012potential} have highlighted the applicability of 229 GHz channel to identify the ice clouds. In the report, they use 229 GHz (channel-4x) to identify the ice clouds in 183.31$\pm$7 GHz. In their approach, all cases with TB difference between 229 Ghz and 183.31$\pm$7 GHz greater than 4 K as classified as cloudy. This information can be used to filter out the cloudy cases in all other 183 GHz channels. No correction is provided to the cloudy cases. In order to compare the performance of the correction scheme described here, the filtering scheme by \cite{rekha2012potential} is used a reference. The results from approach are also shown in Figure\ref{fig:correction} and Table~\ref{tab:correction:stats}. The performance of cloud filtering by \cite{rekha2012potential} seems comparable with the regression approach described in this report, albeit they risk rejecting more than 50\% of the clear cases.
+The correction scheme can also be extended to other combinations of 183GHz and
+325GHz channels. The most relevant combinations for clear-sky screening are: AWS-32 and
+AWS-41; AWS-33 and AWS-41; AWS-35 and AWS-43; AWS-36 and AWS-43.
+
+Table~\ref{tab:correction:stats:32:41} shows the statistics when AWS-32 is
+corrected using AWS-41. The statistics of the filtered dataset are better than
+the approach by \cite{rekha2012potential}, while the corrected data have poorer
+statistics. This is not surprising as the weighting function match between
+AWS-32 and AWS-41 is poor. The correction using $2\sigma$ as threshold works
+better $1\sigma$. This is an exception, the reverse is valid for AWS-34/42 (as
+mentioned) and the channel combinations discussed below.
+
+Table~\ref{tab:correction:stats:33:41} shows the statistics when AWS-33 is
+corrected using AWS-41. The TB differences for this combination and the cloud
+impact in AWS-33 are highly correlated. Rejecting the cloudy cases reduces the
+average bias in the measurements from -1.74\,K to -0.13\,K, while a correction
+of cloudy cases reduces the bias further to 0.05\,K. The standard deviation and
+skewness of the corrected dataset are higher than pure-filtering, but smaller
+than the approach by Sreerekha et al. Using $2\sigma$ threshold corrects a
+smaller fraction of cases than $1\sigma$ but the overall statistics are poorer
+in comparison to $1\sigma$, but still better than Sreerekha et al.
+
+Table~\ref{tab:correction:stats:35:43} shows the statistics for the combination AWS-35 and AWS-43. Here the two filtered datasets have a comparable performance, while on correction, the bias is reduced, but skewness and standard deviation are increased. After correction ($1\sigma$) the bias due to cloudy measurements reduces from -0.83\,K to 0.01\,K while rejecting only 2.86\% of the total cases.  The performance of $1\sigma$ threshold in this case is also better than $2\sigma$.  
+ 
+ 
+Table~\ref{tab:correction:stats:36:43} shows the statistics when AWS-36 is
+corrected using AWS-43. For this combination, the weighting functions have a
+poor match, but the TB differences and the cloud impact are strongly
+correlated, as the cloud impact in AWS-36 is relatively low in comparison to
+other 183\,GHz channels. The low fraction of rejection (7.38\%) also shows that
+most of the measurements are without cloud impact. However, the small fraction
+of cloudy cases which are corrected, helps in successfully reducing the average
+bias from -0.54\,K to -0.07\,K.
 
 
-The regression approach described above is also extended to other four channel combinations and the results are shown in Figure\ref{fig:correction:allchannels}.
- [** incomplete to be added ** add tables or figures? **]
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std & skewness & fraction \\
+							&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+noise             		&   0.00 &  0.45 &               0.00 &                - \\
+uncorrected       		&  -2.25 &  8.94 &              -6.85 &                 - \\
+filtered($1\sigma$)  	&  -0.26 &  0.77 &             -16.33 &               72.06 \\
+corrected($1\sigma$) 	&   0.43 &  1.70 &             -14.68 &                7.93 \\
+corrected($2\sigma$) 	&   0.25 &  1.72 &             -13.86 &                7.93 \\
+sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 \\
+\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-32 and AWS-41.   }
+	\label{tab:correction:stats:32:41}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &  skewness  & fraction\\
+						&   [K]  &   [K] & [-]  & rejected [\%]\\
+		\hline
+	noise       	    	&  0.00 &  0.45 &               0.00 &               - \\
+	uncorrected	    		&  -1.74 &  7.45 &              -7.77 &                - \\
+	filtered($1\sigma$)  	&  -0.13 &  0.49 &              -0.40 &               26.18 \\
+	corrected($1\sigma$) 	&  -0.05 &  0.59 &              -0.85 &                6.88 \\
+	corrected($2\sigma$) 	&  -0.11 &  0.57 &              -1.17 &                6.88 \\
+	sreerekha et al   		&  -0.29 &  0.78 &              -2.22 &               45.36 \\
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-33 and AWS-41.   }
+	\label{tab:correction:stats:33:41}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &   skewness & fraction \\
+							&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+ Noise           	  &  0.00 &  0.63 &               0.00 &                -\\
+uncorrected     	  &  -0.83 &  4.50 &             -10.85 &                - \\
+filtered($1\sigma$)	  &  -0.13 &  0.68 &              -0.46 &               21.30 \\
+corrected($1\sigma$)  &   0.01 &  0.90 &              -1.65 &                2.86 \\
+corrected($2\sigma$)  &  -0.09 &  0.83 &              -2.35 &                2.86 \\
+sreerekha et al  	  &  -0.13 &  0.70 &              -0.54 &               45.36 \\
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-35 and AWS-43.}
+	\label{tab:correction:stats:35:43}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &   skewness & fraction  \\
+							&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+ Noise            	 &  0.00 &  0.88 &              -0.01 &               - \\
+uncorrected      	 &  -0.54 &  3.40 &             -12.26 &                - \\
+filtered($1\sigma$)  &  -0.11 &  0.92 &              -0.13 &                7.38 \\
+corrected($1\sigma$) &  -0.07 &  0.93 &              -0.07 &                2.50 \\
+corrected($2\sigma$) &  -0.11 &  0.94 &              -0.19 &                2.50 \\
+sreerekha et al 	 &  -0.09 &  0.91 &              -0.10 &               45.36 \\
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-36 and AWS-43.   }
+	\label{tab:correction:stats:36:43}
+\end{table}
+
 
 \section{Cloud correction by QRNN}
 %
+There are two main drawbacks of the simple scheme introdoced in the previous
+section. The filtering/correction only involves a single 325\,GHz channel. The
+scheme could be extended to consider a higher number of channels, but there is
+no obvious formulation of the expressions to apply. The second problem is that
+no case-specific uncertainty estimate is provided, only the overal bias and
+standard deviations are known. The first drawback hints towards using a machine
+learning approach, and the second one suggests to use the special form denoted
+QRNN (Quantile Regression Neural Network), that was introduced for ratmospheric
+retrievals by \citet{pfreundschuh:aneur:18}.
+
 \dots
 
 
 \section{Discussion}
 
+\subsection{229 vs.\ 325\,GHz}
 
-\subsection{Shape of channel response functions}
+
+\subsubsection{Altitude coverage}
 %
-The simulations have assumed rectangularly shaped response functions, for
-simplicity. We have left some frequency gaps between the channels to simplify
-the technical implementation, i.e.\ to decrease the demand on very sharp
-ransitions from high to low response. We have assumed that 100\,MHz is
-sufficient in the lower end of the IF-range and 200\,MHz in the upper part. If
-found necessary we don't see any problem in increasing the gaps, beside that
-the bandwidth decreases and the NE$\Delta$T of the channel will somewhat
-increase.
+This discussion is based on figures and text found in Sec.~\ref{sec:overview}.
+A basic remark is that a channel at 229\,GHz channel has a lower sounding
+altitude than all the 183\,GHz channels for clear-sky conditions. Accordingly,
+there are no matching RH weighting functions between 229\,GHz and 183\,GHz
+channels. On the other hand, channels around 325\,GHz have quite similar
+characteristics as some of the 183\,GHz channels (for clear-sky), but
+consistently have a sounding altitude above the one of AWS-32.
+
+With respect to sensitivity to hydrometeors, 229\,GHz will react on rain and
+clouds at lower altitudes than the 183\,GHz channels. Due to the lower sounding
+altitude, 229\,GHz is also more influenced by the surface. Both these aspects
+could be beneficial in a wider perspective, but are not ideal for cloud
+filtering of 183\,GHz data. With respect to this application, the main drawback
+of the 325\,GHz region is the lack of a full coverage for AWS-32. There exists
+an altitude range where hydrometeors have an impact on AWS-32 but will largely
+be undetected by the 325\,GHz channels.
 
 
+\subsubsection{Performance of the basic scheme}
+%
+A simple approach for cloud filtering/correction based on 325\,GHz data is
+tested in Sec.~\ref{sec:simple}. The approach requires simulations for deriving
+some parameters (in the form of a polynomial fit), while the application only
+involves measurement data. Another advantage of the approach is that it is
+channel specific. That is, it could result in that e.g.\ AWS-32 and 33 are
+rejected, while that data for the higher peaking channels still can be used.
 
-\subsection{Polarisation response}
+The results for AWS-33, 34, 35 and 36 should be considered as satisfactorily.
+In short, a relatively low rejection rate is achieved and still data with
+relatively narrow and symmetric error distributions are provided. The lowest
+standard deviation and skewness are obtained by just performing a filtering.
+Activating the correction part (with $1\sigma$ as threshold value) decreases
+the bias and rejection rates significantly, but comes with the cost of
+increased standard deviation and skewness. However, the increase in standard
+deviation is throughout below 50\% (compared to the ideal case of that the
+error distribution only consists of noise). 
+
+For AWS-32, filtering based either AWS-4X or AWS-41 has a very high rejection rate, though the resulting dataset has low error. The high fraction of rejection can increase the probability of removing ``true'' clear cases. After correction, the error distributions are asymmetric and have large bias and standard deviation. Among the two combinations, the dataset corrected with AWS-41 has slightly better bias and standard deviation. As an exception to other 183\,GHz channels, the correction scheme for AWS-32 works better for $2\sigma$ threshold, as with a larger value of noise, relatively smaller number of cases are corrected. The effect of mismatch between weighting functions for AWS-32 and AWS-4X/41 is reflected in the performance of our correction scheme.
+
+\subsubsection{Comparison to \citet{rekha2012potential}}
+%
+Results from \citet{rekha2012potential} has been used as reference, but the
+comparison should only be considered as being qualitative. A more detailed
+comparison is not possible as the selection of atmospheric cases is very
+different between the studies. While in this study we aim to have a statistical
+distribution as close as possible to real conditions, there is a strong focus on
+cloudy conditions in the simulations used by \citet{rekha2012potential}. Our
+translation of the performance reported in \citet{rekha2012potential} to our
+conditions is found in Sec.~\ref{sec:rekha}.
+
+The results of \citet{rekha2012potential} is better than ours for AWS-32, while for the other 183\,GHz channels better results are obtained by using 325\,GHz data. However, when only pure-filtering is considered, our scheme performs better for AWS-32, albeit with a high rejection rate. For all later channels of 183\,GHz,  we reject only a small fraction of cases in comparison to \citet{rekha2012potential}, but the corrected datasets have symmetric error distributions with lower bias, standard deviations. Only for AWS-35 and AWS-36, the standard deviation and skewness of the corrected dataset is higher. 
+
+It should be noted that the approach of \citet{rekha2012potential} involves
+simulations for every case, to obtain a ``background minus observation''
+difference, while in this study a similar or better performance is obtained
+from using measurement data alone. 
+
+
+\subsection{Technical implementation}
+
+\subsubsection{Shape of channel response functions}
+%
+The simulations have assumed rectangularly shaped response functions. This was
+done for simplicity and shall in no way be taken as an indication on that this
+shape is required.
+
+We have left some frequency gaps between the channels to simplify the technical
+implementation, i.e.\ to decrease the demand on very sharp transitions from high
+to low response. We have assumed that 100\,MHz is sufficient in the lower end
+of the IF-range and 200\,MHz in the upper part. If found necessary we don't see
+any problem in increasing the gaps, beside that the bandwidth decreases and the
+NE$\Delta$T of the channel will somewhat increase.
+
+
+\subsubsection{Polarisation response}
 %
 Polarisation aspects have not been considered in full detail. Some polarisation
 is induced by the surface in the simulations, but hydrometeors are assumed to
@@ -780,15 +1149,23 @@ be totally randomly oriented and do not cause polarisation. To involve oriented
 particles was not possible due to the limited time allocated for the study.
 
 The basic recommendation would be to use the same polarisation response as far
-as possible. If both quasi-horisontal and quasi-vertical bands must be applied,
-the recommedation prioritize to use the polarisation option for 183 and
+as possible. If both quasi-horizontal and quasi-vertical bands must be applied,
+the recommendation prioritise to use the polarisation option for 183 and
 325\,GHz, to maintain a similar influence of polarisation between the bands.
+
+
+
 
 
 
 
 \section{Conclusion}
 %
+This study compares the options of having a channel at 229\,GHz or having some
+around 325\,GHz from a single perspective, cloud filtering/correction of
+183\,GHz data. There could be other important reasons to consider for the
+selection.
+
 \dots
 
 
