@@ -74,7 +74,7 @@ class awsData(Dataset):
         if self.batch_size is None:
             return self.x.shape[0]
         else:
-            return self.x.shape[0] // self.batch_size
+            return int(np.ceil(self.x.shape[0] / self.batch_size))
 
     def __getitem__(self, i):
         """
@@ -84,6 +84,11 @@ class awsData(Dataset):
         Args:
             i: The index of the sample to return
         """
+        if (i == 0):
+            indices = np.random.permutation(self.x.shape[0])
+            self.x = self.x[indices, :]
+            self.y = self.y[indices]
+
         if self.batch_size is None:
             return (torch.tensor(self.x[[i], :]),
                     torch.tensor(self.y[[i]]))
@@ -95,7 +100,7 @@ class awsData(Dataset):
             x_noise = np.float32(self.add_noise(x))
             x_norm = np.float32(self.normalise(x_noise))
             return (torch.tensor(x_norm),
-                    torch.tensor(self.y[i_start : i_end]))
+                    torch.tensor(self.y[i_start : i_end, np.newaxis]))
         
         
     def add_noise(self, x):        
