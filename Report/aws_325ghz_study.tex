@@ -1047,19 +1047,134 @@ sreerekha et al 	 &  -0.09 &  0.91 &              -0.10 &               45.36 \\
 
 \section{Cloud correction by QRNN}
 %
-There are two main drawbacks of the simple scheme introdoced in the previous
+There are two main drawbacks of the simple scheme introduced in the previous
 section. The filtering/correction only involves a single 325\,GHz channel. The
 scheme could be extended to consider a higher number of channels, but there is
 no obvious formulation of the expressions to apply. The second problem is that
 no case-specific uncertainty estimate is provided, only the overal bias and
 standard deviations are known. The first drawback hints towards using a machine
 learning approach, and the second one suggests to use the special form denoted
-QRNN (Quantile Regression Neural Network), that was introduced for ratmospheric
+QRNN (Quantile Regression Neural Network), that was introduced for atmospheric
 retrievals by \citet{pfreundschuh:aneur:18}.
 
 \dots
 
+\subsection{QRNN model}
+%
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[height=85mm]{quantile_loss_median.png}
+	\caption{The mean quantile loss for $\tau = 0.5$ with different configurations of layer width and hidden layers ($n_h$).}
+	\label{fig:quantile_loss_median}
+\end{figure}
 
+
+\subsection{Prediction accuracy}
+%
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=60mm]{distribution_predicted_C32}\hspace{5mm}% 
+	\includegraphics[height=60mm]{distribution_predicted_C33}
+	\includegraphics[height=60mm]{distribution_predicted_C34}\hspace{5mm}% 
+	\includegraphics[height=60mm]{distribution_predicted_C35}
+	\includegraphics[height=60mm]{distribution_predicted_C36}
+	\caption{ Probability distribution functions (PDFs) of predicted and observed noise free brightness temperatures for all 183\,GHz channels of AWS.  }
+	\label{fig:pdf:qrnn}
+\end{figure}
+
+
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=85mm]{Channel_C34.png}
+	\caption{Deviation of AWS-34 measurements to noise free clear-sky
+		simulations before and after correction with QRNNs. Predictions from both three channel and four channel options for 325 GHz are shown. }
+	\label{fig:qrnn_C34:deviations}
+\end{figure}
+
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+	Dataset  		  &   bias &   std &   skewness & fraction  \\
+	&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+Noise                     & -0.006 & 0.634 &              0.008 &      - \\
+uncorrected               & -0.678 & 3.678 &            -10.320 &     - \\
+corrected (three channel) &  0.050 & 0.617 &             -0.506 &      2.730 \\
+corrected (four channel)  &  0.077 & 0.608 &             -0.446 &      2.957 \\
+		\hline
+	\end{tabular}
+	\caption{ Bias, standard deviation and measure of skewness for the error distributions of the dataset shown in Figure~\ref{fig:qrnn_C34:deviations}}
+	\label{tab:qrnn:C34}
+\end{table}
+
+
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+	Dataset  		  &   bias &   std &   skewness & fraction  \\
+	&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+Noise                     &  0.004 & 0.455 &              0.006 &      - \\
+uncorrected               & -1.341 & 5.905 &             -7.482 &      - \\
+corrected (three channel) & -0.065 & 0.820 &             -2.312 &      4.902 \\
+corrected (four channel)  & -0.003 & 0.821 &             -2.158 &      4.906 \\
+		\hline
+	\end{tabular}
+	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-32.}
+	\label{tab:qrnn:C32}
+\end{table}
+
+
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+	Dataset  		  &   bias &   std &   skewness & fraction  \\
+	&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+Noise                     &  0.002 & 0.451 &             -0.017 &     - \\
+uncorrected               & -0.981 & 4.706 &             -8.755 &     - \\
+corrected (three channel) &  0.048 & 0.578 &             -0.596 &      4.189 \\
+corrected (four channel)  &  0.044 & 0.573 &             -0.603 &      4.280 \\
+		\hline
+	\end{tabular}
+	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-33.}
+	\label{tab:qrnn:C33}
+\end{table}
+
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+	Dataset  		  &   bias &   std &   skewness & fraction  \\
+	&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+Noise                      &  0.002 & 0.626 &             -0.003 &      - \\
+uncorrected                & -0.428 & 2.661 &            -12.451 &      - \\
+corrected (three channel)  &  0.036 & 0.601 &             -0.202 &      1.451 \\
+corrected (four channel)   &  0.017 & 0.572 &             -0.279 &      1.781 \\
+		\hline
+	\end{tabular}
+	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-35.}
+	\label{tab:qrnn:C35}
+\end{table}
+
+
+\begin{table}[!tb]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+	Dataset  		  &   bias &   std &   skewness & fraction  \\
+	&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+Noise                     & -0.000 & 0.888 &              0.005 &      - \\
+uncorrected               & -0.269 & 2.059 &            -11.899 &      - \\
+corrected (three channel) &  0.053 & 0.797 &             -0.143 &      1.263 \\
+corrected (four channel)  &  0.033 & 0.763 &             -0.140 &      1.148 \\
+		\hline
+	\end{tabular}
+	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-36.}
+	\label{tab:qrnn:C36}
+\end{table}
+
+\subsection{Uncertainity estimation}
 \section{Discussion}
 
 \subsection{229 vs.\ 325\,GHz}
