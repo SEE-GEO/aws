@@ -22,7 +22,7 @@
 \newcommand{\tabrule}{\rule[\mytabskip]{0ex}{0ex}}
 \usepackage{tabularx}
 %\usepackage{longtable}
-
+\usepackage{mathtools}
 
 % bibliography stuff 
 \usepackage{natbib}
@@ -1051,15 +1051,37 @@ There are two main drawbacks of the simple scheme introduced in the previous
 section. The filtering/correction only involves a single 325\,GHz channel. The
 scheme could be extended to consider a higher number of channels, but there is
 no obvious formulation of the expressions to apply. The second problem is that
-no case-specific uncertainty estimate is provided, only the overal bias and
+no case-specific uncertainty estimate is provided, only the overall bias and
 standard deviations are known. The first drawback hints towards using a machine
 learning approach, and the second one suggests to use the special form denoted
 QRNN (Quantile Regression Neural Network), that was introduced for atmospheric
 retrievals by \citet{pfreundschuh:aneur:18}.
 
-\dots
-
 \subsection{QRNN model}
+%
+The neural network training is a process of learning to predict the outputs {$y_i$} from inputs {$x_i$} through a series of learnable transformations. While training, neural networks seek to minimize the model error through a loss function. The choice of the loss function depends on the predictive problem. When a neural network is trained to minimize the mean of the quantile loss function to predict the quantiles of the distribution, it is called a Quantile Regression Neural Network (QRNN). 
+
+If $X$ is a random variable with cumulative distribution function $F(X)$, and $x_{\tau}$ is its $\tau$th quantile, the quantile loss function is defined as:
+\begin{equation}
+\mathcal{L}_\tau(y_\tau, y_{true}) =
+\begin{cases*}
+(1 - \tau)|y_\tau - y_{true}| &\text{if}  $y_\tau < y_\text{true}$\\
+\tau |y_\tau - y_\text{true}| & \text{ otherwise, }
+\end{cases*}
+\label{loss_function}
+\end{equation}
+
+A detailed description of QRNN can be found in \citet{pfreundschuh:aneur:18}.  
+
+\subsubsection{Training}
+%  
+In this section, QRNNs are used to correct the cloud impact in each of 183\,GHz channels using TBs from all available channels of 325\,GHz. We assess the performance of the scheme using both three channel and four channel options of 325\,GHz. A separate QRNN is used for each of the 183\,GHz channels. For example, to predict clear-sky TBs from AWS-34, the training data is TBs from all channels of 325\,GHz.
+
+To develop the QRNN based correction scheme, we use the same dataset as in the simple scheme . Out of 125\,000 simulations, 90\% are used to train the model, while the rest 10\% is used to evaluate the model's performance during training. In the training process, noise is added to the input according to Eqn~\ref{eq:noise}, every time the training data is exposed to the model. This ensures that the model is exposed to a new dataset on every iteration. Before training, the input data is normalized with mean and standard deviation.
+
+The structure of the QRNN is defined by various hyper-parameters which are tuned to achieve a high-performing model. These parameters determine the structure of the neural network and how the network is trained. We performed a grid search to determine structural parameters: depth (number of hidden layers) and width (number of neurons). The quantile loss for the $\tau = 0.5$ (median) is used to compare the performance of different hyper-parameter configurations. Figure~\ref{fig:quantile_loss_median} shows the mean quantile loss when QRNN is trained for predicting clear-sky values for AWS-34. Increasing both layer width and depth has a positive impact on performance of the network, however for four hidden layers, increasing the layer width leads to only small performance gains. On basis of these results, a neural network with four hidden layer and 128 neurons was chosen for training.
+
+For the training, we obtained the best performance when trained with a multiple learning rate schedule. We start the training process with a initial learning rate and after a certain number of epochs, the training is updated with a new initial learning rate. We chose the three training schedules with initial learning rates = 0.01, 0.001, 0.0001 respectively, updated after 20 epochs. The batch size was set to 256 samples.
 %
 \begin{figure}[!ht]
 	\centering
@@ -1067,10 +1089,23 @@ retrievals by \citet{pfreundschuh:aneur:18}.
 	\caption{The mean quantile loss for $\tau = 0.5$ with different configurations of layer width and hidden layers ($n_h$).}
 	\label{fig:quantile_loss_median}
 \end{figure}
-
-
+%
 \subsection{Prediction accuracy}
 %
+We train the QRNN to predict the quantiles $x_{\tau}$, for median, $\pm 1\sigma$ and $\pm 2 \sigma$ ($\tau$ = 0.05, 0.32, 0.5 , 0.68, 0.95). The expectation value of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value.
+
+To analyse the prediction accuracy, a testing dataset is constructed by randomly drawing 25\,000 cases from the simulation dataset. Noise is added to each simulation to mimic a new measurement dataset. The distributions of the predicted clear-sky noise-free values for each of the 183\, GHz channels are shown in Figure~\ref{fig:pdf:qrnn}. The simulated clear-sky distributions are also plotted for reference. It is evident from these results that QRNN is successful in predicting the clear-sky values from measurements. 
+
+
+Figure~\ref{fig:qrnn_C34:deviations} shows the error distributions of the measurements and predicted clear-sky TBs for AWS-34 using both three and four channel options of 325\,GHz. Measurements with cases with $Tb2 - Tb1 > -15$\,K are assumed to be too-cloudy and are filtered out. Both the three channel and four channel QRNN model are successful in predicting the clear-sky noise-free value for AWS-34, and the resulting error distribution is symmetric. The statistics corresponding to these distributions are provided in Table~\ref{tab:qrnn:C34}. For AWS-34, the performance of both three and four option 325\,GHz is comparable. The average bias, standard 
+
+
+The fraction of cases rejected as "too-cloudy" is also provided under ``fraction rejected''. 
+   c
+  
+
+
+
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=60mm]{distribution_predicted_C32}\hspace{5mm}% 
@@ -1099,8 +1134,8 @@ retrievals by \citet{pfreundschuh:aneur:18}.
 		\hline
 Noise                     & -0.006 & 0.634 &              0.008 &      - \\
 uncorrected               & -0.678 & 3.678 &            -10.320 &     - \\
-corrected (three channel) &  0.050 & 0.617 &             -0.506 &      2.730 \\
-corrected (four channel)  &  0.077 & 0.608 &             -0.446 &      2.957 \\
+corrected (three channel) &  0.079 & 0.620 &             -0.414 &      2.730 \\
+corrected (four channel)  &  0.075 & 0.619 &             -0.416 &      2.957 \\
 		\hline
 	\end{tabular}
 	\caption{ Bias, standard deviation and measure of skewness for the error distributions of the dataset shown in Figure~\ref{fig:qrnn_C34:deviations}}
@@ -1116,8 +1151,8 @@ corrected (four channel)  &  0.077 & 0.608 &             -0.446 &      2.957 \\
 		\hline
 Noise                     &  0.004 & 0.455 &              0.006 &      - \\
 uncorrected               & -1.341 & 5.905 &             -7.482 &      - \\
-corrected (three channel) & -0.065 & 0.820 &             -2.312 &      4.902 \\
-corrected (four channel)  & -0.003 & 0.821 &             -2.158 &      4.906 \\
+corrected (three channel) & -0.026 & 0.829 &             -2.110 &      4.902 \\
+corrected (four channel)  & -0.027 & 0.828 &             -2.187 &      4.906 \\
 		\hline
 	\end{tabular}
 	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-32.}
@@ -1133,8 +1168,10 @@ corrected (four channel)  & -0.003 & 0.821 &             -2.158 &      4.906 \\
 		\hline
 Noise                     &  0.002 & 0.451 &             -0.017 &     - \\
 uncorrected               & -0.981 & 4.706 &             -8.755 &     - \\
-corrected (three channel) &  0.048 & 0.578 &             -0.596 &      4.189 \\
-corrected (four channel)  &  0.044 & 0.573 &             -0.603 &      4.280 \\
+ corrected (three channel)&  0.053 & 0.573 &             -0.593 &      4.189 \\
+corrected (four channel)  &  0.035 & 0.572 &             -0.554 &      4.280 \\
+
+
 		\hline
 	\end{tabular}
 	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-33.}
@@ -1149,8 +1186,8 @@ corrected (four channel)  &  0.044 & 0.573 &             -0.603 &      4.280 \\
 		\hline
 Noise                      &  0.002 & 0.626 &             -0.003 &      - \\
 uncorrected                & -0.428 & 2.661 &            -12.451 &      - \\
-corrected (three channel)  &  0.036 & 0.601 &             -0.202 &      1.451 \\
-corrected (four channel)   &  0.017 & 0.572 &             -0.279 &      1.781 \\
+corrected (three channel)  &  0.031 & 0.600 &             -0.303 &      1.451 \\
+corrected (four channel)   &  0.049 & 0.581 &             -0.335 &      1.781 \\
 		\hline
 	\end{tabular}
 	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-35.}
@@ -1166,8 +1203,8 @@ corrected (four channel)   &  0.017 & 0.572 &             -0.279 &      1.781 \\
 		\hline
 Noise                     & -0.000 & 0.888 &              0.005 &      - \\
 uncorrected               & -0.269 & 2.059 &            -11.899 &      - \\
-corrected (three channel) &  0.053 & 0.797 &             -0.143 &      1.263 \\
-corrected (four channel)  &  0.033 & 0.763 &             -0.140 &      1.148 \\
+ corrected (three channel)&  0.064 & 0.797 &             -0.138 &      1.263 \\
+corrected (four channel)  &  0.057 & 0.765 &             -0.120 &      1.148 \\
 		\hline
 	\end{tabular}
 	\caption{ Same as Table~\ref{tab:qrnn:C34}, but for channel AWS-36.}
