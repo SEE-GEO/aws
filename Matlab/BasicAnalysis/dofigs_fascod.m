@@ -53,7 +53,6 @@ axis([-0.025 0 150 1000])
 %
 print -f1 fascod_wf_325u_tro.pdf -dpdf
 
-end
 
 
 % 3-channel set
@@ -68,10 +67,25 @@ mkfigs_spectra_wfuns( 0.24, chs183, ch229, chs325, is_ici );
 print -f2 fascod_3chopt_tro.pdf -dpdf
 print -f4 fascod_3chopt_mlw.pdf -dpdf
 
+end
+
+% Second 3-channel set
+%
+chs183 = channels_fixed;
+ch229  = [];
+chs325 = 325.15e9+[-8 -5; -4.8 -1.8; -1.6 -0.8]*1e9;
+is_ici = false;
+%
+mkfigs_spectra_wfuns( 0.24, chs183, ch229, chs325, is_ici );
+%
+print -f2 fascod_3bchopt_tro.pdf -dpdf
+print -f4 fascod_3bchopt_mlw.pdf -dpdf
+
 
 % 4-channel set
 %
 chs325 = 325.15e9+[-8 -5.2; -5.0 -3.1; -3.0 -1.7; -1.6 -0.8]*1e9;
+chs325 = 325.15e9+[-8 -5.2; -5.0 -3.2; -3.0 -1.8; -1.6 -0.8]*1e9;
 %
 mkfigs_spectra_wfuns( 0.24, chs183, ch229, chs325, is_ici );
 %

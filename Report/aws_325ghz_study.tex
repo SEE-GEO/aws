@@ -433,7 +433,9 @@ The simulations in this section are based on five Fascod climate scenarios
 (Sec.~\ref{sec:fascod}), and performed with a fixed sensor viewing angle of
 25$^\circ$. No hydrometeors are included. For simpler interpretation of the
 results, the reflectivity is set to have no frequency variation, i.e.\ the same
-value is applied for all bands. The reflective is varied between 0 and 0.5.
+value is applied for all bands. The reflectivity is varied between 0 and 0.5
+(these fixed values are only applied in this section, the bulk simulations are
+using TESSEM and TELSEM for seting the surface properties).
 In the figures covering transmissivities and Jacobians, the specifications
 of ICI is applied for 325\,GHz channels (Table~\ref{tab:fixed:chs}).
 
@@ -558,9 +560,6 @@ channels can have a positive part, as long as the reflectivity is not close to
 
 \section{Preliminary options for 325\,GHz channels}
 
-[* Anders just informed us (May 29) that it would be good to avoid an IF of 1.7\,GHz, as that frequency could be used for downlink and there is a risk for
-interference. The four channel option can easily be adopted to this, but what
-do with the three channel one? *]
 
 
 \subsection{Impact of upper end of IF band}
@@ -650,11 +649,21 @@ technically possible.
     name    & [GHz] &  [MHz] \\
     \hline
     AWS-41  & 325.15$\pm$6.60 & 2800\\
-    AWS-42  & 325.15$\pm$4.05 & 1900\\
-    AWS-43  & 325.15$\pm$2.35 & 1300\\
+    AWS-42  & 325.15$\pm$4.10 & 1800\\
+    AWS-43  & 325.15$\pm$2.40 & 1200\\
     AWS-44  & 325.15$\pm$1.20 & \phantom{0}800\\
     \hline
   \end{tabular}
+%  \begin{tabular}[c]{c|c|c}
+%    Channel & Frequency   & Bandwidth \\
+%    name    & [GHz] &  [MHz] \\
+%    \hline
+%    AWS-41  & 325.15$\pm$6.60 & 2800\\
+%    AWS-42  & 325.15$\pm$4.05 & 1900\\
+%    AWS-43  & 325.15$\pm$2.35 & 1300\\
+%    AWS-44  & 325.15$\pm$1.20 & \phantom{0}800\\
+%    \hline
+%  \end{tabular}
   \end{minipage}  
   \caption{Preliminary specifications of AWS 325\,GHz channels, in the case of
     of three (left) and four (right) channels.}
@@ -662,16 +671,59 @@ technically possible.
 \end{table}
 
 
-
-
 \subsection{A four channel option}
 %
 The tentative four channel option in Table~\ref{tab:chs:prel} gives a broader
 altitude coverage, towards higher altitudes, and offers weighting functions
 roughly equally spaced in altitude (Fig.~\ref {fig:4ch:prel}). This option has
-a IF range of 0.7 to 8.0\,GHz, and leaves 200\,MHz space between AWS-41 and
-AWS-42 and has 100\,MHz between the other channels. Also this suggestion uses
-the complete IF bandwidth.
+a IF range of 0.7 to 8.0\,GHz, and leaves 200\,MHz space between all the
+325\,GHz channels. Also this suggestion uses the complete IF bandwidth.
+
+
+\subsection{A second three channel option}
+%
+Relatively late in the study Omnisys informed us about that an IF of 1.7\,GHz
+should be avoided, as this frequency likely will be used for downlink of data.
+The four channel option needed just a marginal change to adopt to this
+constrain, while 1.7\,GHz is more or less at the centre of the three channel
+option. It was then decided to formulate second three channel option avoiding 
+1.7\,GHz, and the suggestion is found in Table~\ref{tab:chs:3b}.
+
+\begin{table}[!h]
+  \centering  
+  \begin{tabular}[c]{c|c|c}
+    Channel & Frequency   & Bandwidth \\
+    name    & [GHz] &  [MHz] \\
+    \hline
+    AWS-41  & 325.15$\pm$6.50 & 3000\\
+    AWS-42  & 325.15$\pm$3.30 & 3000\\
+    AWS-43  & 325.15$\pm$1.20 & \phantom{0}800\\
+    \hline
+  \end{tabular}
+  \caption{The second three channel suggestion.}
+  \label{tab:chs:3b}
+\end{table}
+
+AWS-41 is identical between the two three channel options. In this second
+option, AWS-43 is set to have the same limits as AWS-44 in the four channel
+option. AWS-42 was then allowed to fill the frequency range between the two
+other channels, but keeping a gap of 200\,MHz on each side.
+
+The resulting weighting functions are exemplified in Fig.~\ref{fig:3bch:prel}.
+As expected, there is now a somewhat poorer match to 183\,GHz, most importantly
+the weighting function of AWS-43 ends up between the ones of AWS-35 and 36. The
+weighting function of AWS-42 is slightly moved upwards compared to the first
+three channel option.
+
+\begin{figure}[!tb]
+  \centering
+  \includegraphics[height=61mm]{fascod_3bchopt_tro}\hspace{5mm}% 
+  \includegraphics[clip,trim=43 0 0 0,height=61mm]{fascod_3bchopt_mlw}
+  \caption{RH weighting functions of the second three channel option
+    (Table~\ref{tab:chs:3b}), for the Fascod tropical (left) and mid-latitude
+    winter (right) scenarios.}
+  \label{fig:3bch:prel}
+\end{figure}
 
 
 \section{Cloud correction by a simple scheme}
