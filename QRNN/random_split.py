@@ -31,7 +31,7 @@ y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AW
 TB0 = y.TB
 cases = TB0.cases.values
 
-y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_four.nc'))
+y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_four_Trec1.nc'))
 TB = y.TB_noise
 
 ic = np.arange(0, len(cases), 1)
@@ -39,8 +39,8 @@ np.random.shuffle(ic)
 
 x_test0, x_test = get_TB(TB, TB0, ic, cases)
 
-x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_four.nc'), 'w')
-x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_four.nc'), 'w')
+x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_four_Trec1.nc'), 'w')
+x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_four_Trec1.nc'), 'w')
 
 
 #=====================================================================================================
@@ -50,13 +50,13 @@ x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/test
 y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_three_a.nc'))
 TB0 = y.TB
 
-y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_three_a.nc'))
+y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_three_a_Trec1.nc'))
 TB = y.TB_noise
 
 x_test0, x_test = get_TB(TB, TB0, ic, cases)
 
-x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_three_a.nc'), 'w')
-x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_three_a.nc'), 'w')
+x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_three_a_Trec1.nc'), 'w')
+x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_three_a_Trec1.nc'), 'w')
 
 
 #=====================================================================================================
@@ -66,13 +66,13 @@ x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/test
 y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_three_b.nc'))
 TB0 = y.TB
 
-y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_three_b.nc'))
+y = xarray.open_dataset(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_noise_three_b_Trec1.nc'))
 TB = y.TB_noise
 
 x_test0, x_test = get_TB(TB, TB0, ic, cases)
 
-x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_three_b.nc'), 'w')
-x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_three_b.nc'), 'w')
+x_test.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_noise_three_b_Trec1.nc'), 'w')
+x_test0.to_netcdf(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/testing_data_three_b_Trec1.nc'), 'w')
 
 
 
