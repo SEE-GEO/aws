@@ -1123,6 +1123,7 @@ A detailed description of QRNN can be found in \citet{pfreundschuh:aneur:18}.
 
 \subsubsection{Training}
 %  
+\label{sec:qrnn:training}
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[height=85mm]{quantile_loss.png}
@@ -1171,7 +1172,7 @@ For AWS-35 (Table~\ref{tab:qrnn:C35}), the four channel option has the best perf
 	\label{fig:qrnn_C34:deviations}
 \end{figure}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 	Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1189,7 +1190,7 @@ corrected (four)   			&  0.111 & 0.620 &             -0.659 &      2.985 \\
 \end{table}
 
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 	Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1207,7 +1208,7 @@ corrected (four)    		& -0.011 & 0.878 &             -3.030 &      4.930 \\
 \end{table}
 
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 	Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1225,7 +1226,7 @@ corrected (four)            &  0.106 & 0.591 &             -1.006 &      4.212 \
 	\label{tab:qrnn:C33}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 	Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1244,7 +1245,7 @@ corrected (four)   		   &  0.042 & 0.591 &             -0.351 &      1.821 \\
 \end{table}
 
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 	Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1265,26 +1266,59 @@ corrected (four)   			&  0.056 & 0.779 &             -0.172 &      1.156 \\
 
 \subsection{Uncertainty estimation}
 %
+Quantile regression can be used to construct a probability distribution of the predictions in comparison to simple regression models, which predict only a point estimate of the target. The outputs from QRNN model are subject to uncertainty which can be modeled by the prediction intervals. 
 
-\begin{figure}[!ht]
+In our QRNN model, we estimate the conditional quantiles for  median, $\pm 1\sigma$, $\pm 2\sigma$, and $\pm 3\sigma$. The predictions for each quantile are used to construct the confidence intervals. The confidence interval for each point estimate is a way to quantify its uncertainty. For example, the predicted quantiles for $\pm 1 \sigma$ give 68\% probability that the true value will lie between the range.   
+
+If the posterior distribution from QRNN follow normal distribution, the uncertainty can be estimated as a gaussian distribution centered around the median and standard deviation equal to the estimated error. To inspect if the predictions follow a normal distribution we evaluate the length of confidence intervals with respect to the median. Figure~\ref{fig:prediction_uncertainty} shows the prediction uncertainty in AWS-34 (using four channel option). The uncertainty with respect to the median for 1000 randomly selected cases is shown. The red line represents the uncertainty in a hypothetical Gaussian distribution  of $270\pm0.62$\,K. If the underlying distribution is Gaussian, the prediction uncertainty should be symmetric around the median, and the uncertainties should be equally spaced for $1\sigma$, $2\sigma$ and so on. The predictions from our QRNN model seem to be symmetric around the median for the 95\% confidence interval ($\pm 2 \sigma$). In other words, around 95\% of the true cases lie in the confidence interval given by $\pm 2\sigma$, and only 6\% of predictions are either too low or too high than the true value. 
+
+A similar uncertainty quantification for other 183\,GHz channels also gives similar results. Thus, assuming the posterior distribution to be gaussian between $\pm 2 \sigma$, the median is the measure of mean of the gaussian distribution, and the estimated error with respect to the true-value gives the spread of the distribution. 
+\begin{figure}[!tb]
 	\centering
-	\includegraphics[height=85mm]{prediction_uncertainty.png}
+	\includegraphics[height=80mm]{prediction_uncertainty.png}
 	\caption{The prediction uncertainty in AWS-34 with respect to quantiles for randomly selected 2400 cases. The red line represents the uncertainty if underlying distribution is purely Gaussian with standard deviation 0.62\,K. }
 	\label{fig:prediction_uncertainty}
 \end{figure}
 
-\section{Sensitivity to different receiver noise temperatures}
-
-\subsection{T rec = 1800}
+\subsection{QRNN using AWS-4X}
 %
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=80mm]{Channel_C32_C4X.png}
+	\caption{ }
+	\label{fig:qrnn_C32_C4X:deviations}
+\end{figure}
+
 \begin{table}[!tb]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
 		&   [K]  &   [K] & [-] & rejected [\%]\\
 		\hline
-	Noise                      & -0.001 & 0.451 &              0.020 &      0.000 \\
-	uncorrected                & -1.342 & 5.908 &             -7.479 &      0.000 \\
+		Noise                      & -0.001 & 0.451 &              0.020 &      - \\
+		uncorrected                & -1.343 & 5.908 &             -7.484 &      - \\
+		corrected (AWS-4X)         &  0.008 & 1.514 &             -4.085 &      3.678 \\
+		corrected (four channel)   & -0.011 & 0.878 &             -3.030 &      4.930 \\
+		\hline
+	\end{tabular}
+	\caption{ AWS-32 with AWS-4X}
+	\label{tab:qrnn:C32:C4X}
+\end{table} 
+We also tested the QRNN model to predict cloud-free TBs using AWS-4X. In this case, we trained QRNN with measurements from AWS-32 and AWS-4X, to predict the clear-sky cloud free TBs for AWS-32. The model was trained as described in Section~\ref{sec:qrnn:training}, but the width of the network was chosen to be 256 neurons. Other structural and training parameters remain unchanged.
+
+Figure~\ref{fig:qrnn_C32_C4X:deviations} shows the error distributions for the differences between the predicted values and clear-sky simulations for AWS-32. The corresponding statistics are shown in Table~\ref{tab:qrnn:C32:C4X}. The results from QRNN model trained with four channel option of 325\,GHz are also shown for comparison.  
+
+\section{Sensitivity to different receiver noise temperatures}
+
+%
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+		Dataset  		  &   bias &   std &   skewness & fraction  \\
+		&   [K]  &   [K] & [-] & rejected [\%]\\
+		\hline
+	Noise                      & -0.001 & 0.451 &              0.020 &      - \\
+	uncorrected                & -1.342 & 5.908 &             -7.479 &      - \\
 	corrected (three channela) & -0.009 & 0.893 &             -3.092 &      4.990 \\
     corrected (three channelb) &  0.009 & 0.888 &             -3.197 &      4.902 \\	
 	corrected (four channel)   &  0.006 & 0.860 &             -2.943 &      4.954 \\
@@ -1294,7 +1328,7 @@ corrected (four)   			&  0.056 & 0.779 &             -0.172 &      1.156 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1311,7 +1345,7 @@ corrected (four)   			&  0.056 & 0.779 &             -0.172 &      1.156 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1328,7 +1362,7 @@ corrected (four)   			&  0.056 & 0.779 &             -0.172 &      1.156 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1345,7 +1379,7 @@ corrected (four channel)    &  0.058 & 0.617 &             -0.007 &      1.801 \
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1362,9 +1396,9 @@ corrected (four channel)   &  0.093 & 0.826 &             -0.175 &      1.120 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\subsection{T rec = 2400}
+
 %
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1381,7 +1415,7 @@ corrected (four channel)    &  0.028 & 0.876 &             -3.638 &      4.978 \
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1398,7 +1432,7 @@ corrected (four channel)   &  0.043 & 0.614 &             -0.798 &      4.232 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1415,7 +1449,7 @@ corrected (four channel)    &  0.059 & 0.643 &             -0.340 &      2.937 \
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
@@ -1432,7 +1466,7 @@ corrected (four channel)   &  0.044 & 0.632 &             -0.188 &      1.809 \\
 	\label{tab:qrnn:C36}
 \end{table}
 
-\begin{table}[!tb]
+\begin{table}[!p]
 	\centering
 	\begin{tabular}[b]{c|c|c|c|c}
 		Dataset  		  &   bias &   std &   skewness & fraction  \\
