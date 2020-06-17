@@ -1095,6 +1095,7 @@ bias from -0.54\,K to -0.07\,K.
 
 \section{Cloud correction by QRNN}
 %
+\label{sec:qrnn}
 There are two main drawbacks of the simple scheme introduced in the previous
 section. The filtering/correction only involves a single 325\,GHz channel. The
 scheme could be extended to consider a higher number of channels, but there is
@@ -1109,7 +1110,7 @@ retrievals by \citet{pfreundschuh:aneur:18}.
 %
 The neural network training is a process of learning to predict the outputs {$y_i$} from inputs {$x_i$} through a series of learnable transformations. While training, neural networks seek to minimize the model error through a loss function. The choice of the loss function depends on the predictive problem. When a neural network is trained to minimize the mean of the quantile loss function to predict the quantiles of the distribution, it is called a Quantile Regression Neural Network (QRNN). 
 
-If $X$ is a random variable with cumulative distribution function $F(X)$, and $x_{\tau}$ is its $\tau$th quantile, the quantile loss function is defined as:
+If $x_{\tau}$ is the $\tau$th quantile of a cumulative distribution function $F(X)$, the quantile loss function is defined as:
 \begin{equation}
 \mathcal{L}_\tau(y_\tau, y_{true}) =
 \begin{cases*}
@@ -1127,16 +1128,16 @@ A detailed description of QRNN can be found in \citet{pfreundschuh:aneur:18}.
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=85mm]{quantile_loss.png}
-	\caption{The mean quantile loss with different configurations of layer width and hidden layers ($n_h$).}
+	\caption{The mean quantile loss with different configurations of layer width and hidden layers ($n_h$). Here QRNN is trained to predict clear-sky values for AWS-34 using four channels option of 325\,GHz}
 	\label{fig:quantile_loss}
 \end{figure}
-In this section, QRNNs are used to correct the cloud impact in each of 183\,GHz channels using TBs from all available channels of 325\,GHz. A separate QRNN is used for each of the 183\,GHz channels. For example, to predict clear-sky TBs from AWS-34, the training data is measurements from all channels of 325\,GHz and measurements from the 183\,GHz to be predicted. We assess the performance of the scheme using both three channel and four channel options of 325\,GHz. Two suggestions for three channel option are described in Sec.~\ref{sec:channel:configurations}, and both have been used to train QRNN separately. Thus, for each channel of 183\,GHz, we have a set of three predictions: one from four channel option, and two from the old and new configurations of the three channel option. Further in the text, the old and new three channel configurations are labeled as "three-a" and "three-b".
+In this section, QRNNs are used to correct the cloud impact in each of 183\,GHz channels using TBs measurements from all available channels of 325\,GHz. A separate QRNN is used for each of the 183\,GHz channels. For example, to predict clear-sky TBs from AWS-34, the training data is measurements from all channels of 325\,GHz and measurements from the 183\,GHz to be predicted. We assess the performance of the scheme using both three channel and four channel options of 325\,GHz. Two suggestions for three channel option are described in Sec.~\ref{sec:channel:configurations}, and both have been used to train QRNN separately. Thus, for each channel of 183\,GHz, we have a set of three predictions: one from four channel option, and two from the old and new configurations of the three channel option. Further in the text, the old and new three channel configurations are labeled as "three-a" and "three-b".
 
 To develop the QRNN based correction scheme, we use the same dataset as in the simple scheme . Out of 125\,000 simulations, 90\% are used to train the model, while the rest 10\% is used to evaluate the model's performance during training. Presently we train QRNN for only nadir sensor viewing angle and the receiver noise $T_r$ = 1200\,K. In the training process, noise is added to the input according to Eqn~\ref{eq:noise}, every time the training data is exposed to the model. This ensures that the model is exposed to a new dataset on every iteration. Before training, the input data is normalized with mean and standard deviation. 
 
-The structure of the QRNN is defined by various hyper-parameters which are tuned to achieve a high-performing model. These parameters determine the structure of the neural network and how the network is trained. We performed a grid search to determine structural parameters: depth (number of hidden layers) and width (number of neurons). The quantile loss on the validation set averaged over all predicted quantiles is used to compare the performance of different hyper-parameter configurations. Figure~\ref{fig:quantile_loss} shows the mean quantile loss when QRNN is trained for predicting clear-sky values for AWS-34 using four channel option. Increasing both layer width and depth has a positive impact on performance of the network, however for four hidden layers, increasing the layer width leads to only small performance gains. On basis of these results, a neural network with four hidden layer and 128 neurons was chosen for training. For the training, we obtained the best performance when trained with a multiple learning rate schedule. We start the training process with a initial learning rate and after a certain number of epochs, the training is updated with a new initial learning rate. We chose the three training schedules with initial learning rates = 0.01, 0.001, 0.0001 respectively, updated after 20 epochs. 
+The structure of the QRNN is defined by various hyper-parameters which are tuned to achieve a high-performing model. These parameters determine the structure of the neural network and how the network is trained. We performed a grid search to determine structural parameters: depth (number of hidden layers) and width (number of neurons). The quantile loss on the validation set averaged over all predicted quantiles is used to compare the performance of different hyper-parameter configurations. Figure~\ref{fig:quantile_loss} shows the mean quantile loss when QRNN is trained for predicting clear-sky values for AWS-34 using four channel option. Increasing both layer width and depth has a positive impact on performance of the network, however for four hidden layers, increasing the layer width leads to only small performance gains. On basis of these results, a neural network with four hidden layers and 128 neurons was chosen. For the training, we obtained the best performance when trained with a multiple learning rate schedule. We start the training process with a initial learning rate and after a certain number of epochs, the training is updated with a new initial learning rate. We chose three training schedules with initial learning rates = 0.01, 0.001, 0.0001 respectively, updated after 20 epochs. 
 
-The grid search was also conducted for both three channel options, and an identical QRNN structure, as described for the four channel option, was found to have the best performance. For QRNN models presented here, we did not optimize the type of activation function and batch size. Rectified Linear Unit (ReLU) was used as the activation function  and the batch size was set to 256 samples for all QRNN models.    
+The grid search was also conducted for both three channel options, and an identical QRNN structure, as described for the four channel option, was found to have the best performance. For QRNN models presented here, we did not optimize the type of activation function and batch size. Rectified Linear Unit (ReLU) was used as the activation function  and the batch size was set to 256 samples for all QRNN models.   
 %
 \subsection{Prediction accuracy}
 %
@@ -1147,7 +1148,7 @@ The grid search was also conducted for both three channel options, and an identi
 	\includegraphics[height=60mm]{distribution_predicted_C34}\hspace{5mm}% 
 	\includegraphics[height=60mm]{distribution_predicted_C35}
 	\includegraphics[height=60mm]{distribution_predicted_C36}
-	\caption{ Probability distribution functions (PDFs) of predicted and observed noise free brightness temperatures for all 183\,GHz channels of AWS.  }
+	\caption{ Probability distribution functions (PDFs) of predicted and observed noise free brightness temperatures for all 183\,GHz channels of AWS. The results are based on QRNN trained with four channel option of 325\,GHz.}
 	\label{fig:pdf:qrnn}
 \end{figure}
 \begin{figure}[!p]
@@ -1250,25 +1251,22 @@ The grid search was also conducted for both three channel options, and an identi
 
 We train the QRNN to predict the quantiles $x_{\tau}$, for median, $\pm 1\sigma$, $\pm 2 \sigma$ and  $\pm 3 \sigma$ ($\tau$ = 0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998). The expectation value of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value. To analyse the prediction accuracy, a testing dataset is constructed by randomly drawing 25\,000 cases from the simulation dataset. Noise is added to each simulation to mimic a new measurement dataset. 
 
-The distributions of the predicted clear-sky noise-free values for each of the 183\, GHz channels are shown in Figure~\ref{fig:pdf:qrnn}. The simulated clear-sky distributions are also plotted for reference. For these results, the four channel option was used to train the QRNN. The distributions show that QRNN is overall successful in predicting the clear-sky cases. For all channels, the simulations and predictions have a good agreement for the main peak of the distribution. However, for AWS-32, AWS-33 and  AWS-34, QRNN seems to predict slightly colder TBs. These results give an indication of the behavior of QRNN, but for a detailed analysis of the prediction accuracy, we make a quantitative assessment of the errors. 
+The distributions of the predicted clear-sky noise-free values for each of the 183\, GHz channels are shown in Figure~\ref{fig:pdf:qrnn}. The simulated clear-sky distributions are also plotted for reference. These results are from four channel option. The distributions show that QRNN is overall successful in predicting the clear-sky cases. For all channels, the simulations and predictions have a good agreement for the main peak of the distribution. However, for AWS-32, AWS-33 and  AWS-34, QRNN seems to predict slightly colder TBs. These results give an indication of the behavior of QRNN, but for a detailed analysis of the prediction accuracy, we make a quantitative assessment of the errors. 
 
-In an analogy between the results from the simple correction scheme and QRNN, we perform a similar error distribution analysis as in Section~\ref{sec:simple}. Figure~\ref{fig:qrnn_C34:deviations} shows the error distributions of the measurements and predicted clear-sky TBs for AWS-34 using three (three-b) and four channel options of 325\,GHz. Measurements with cases with $Tb2 - Tb1 > -15$\,K are assumed to be too-cloudy and are filtered out. Both the three channel and four channel QRNN model are successful in predicting the clear-sky noise-free value for AWS-34, and the resulting error distribution is symmetric. The statistics corresponding to these distributions are provided in Table~\ref{tab:qrnn:C34}. . The fraction of cases rejected as "too-cloudy" is also provided under ``fraction rejected''. For AWS-34, average deviation in the predictions from all three QRNN models are comparable.  The cloud impact in the uncorrected measurements is reflected in the high negative skewness (-10.32), however with QRNN the skewness is largely reduced and the symmetry in the distributions is reflected in the low skewness values. Among the three set of predictions, option three-b has the most symmetric error distribution but with a relatively large spread. Predictions from option four have the lowest standard deviation (0.620\,K), which is interestingly smaller than the standard deviation of noise (0.641\,K). Though, all three options of 325\,GHz provide a full coverage to the hydrometer impact in AWS-34, predictions from four channel option are slightly more accurate.    
+In an analogy between the results from the simple correction scheme and QRNN, we perform a similar error distribution analysis as in Section~\ref{sec:simple}. Figure~\ref{fig:qrnn_C34:deviations} shows the error distributions of the measurements and predicted clear-sky TBs for AWS-34 using three (three-b) and four channel options of 325\,GHz. Measurements with cases with $Tb2 - Tb1 > -15$\,K are assumed to be too-cloudy and are filtered out. Here $Tb1$ denotes TBs from AWS-34 and and $Tb2$ is the paired counterpart from 325\,GHz, i.e., AWS-42.  Both the three channels and four channels QRNN models are successful in predicting the clear-sky noise-free value for AWS-34, and the resulting error distribution is symmetric. The statistics corresponding to these distributions are provided in Table~\ref{tab:qrnn:C34}. The fraction of cases rejected as "too-cloudy" is also provided under ``fraction rejected''. For AWS-34, average deviation in the predictions from all three QRNN models are comparable.  The cloud impact in the uncorrected measurements is reflected in the high negative skewness (-10.32), however the predictions have relatively symmetric error distributions as reflected by the low skewness values. Among the three set of predictions, option three-b has the most symmetric error distribution but with a relatively large spread. Predictions from option four have the lowest standard deviation (0.620\,K), which is interestingly smaller than the standard deviation of noise (0.641\,K). Though, all three options of 325\,GHz provide a full coverage to the hydrometer impact in AWS-34, predictions from four channel option have slightly better accuracy.
 
-Similar error statistics are also estimated for other 183\,GHz channels. Table~\ref{tab:qrnn:C32} provides the statistics for AWS-32. Before correction, the average bias and standard deviation with respect to noise free simulations is -1.343\,K and 5.908\,K respectively. However, after correction(four channel), the bias and standard deviation are -0.011\,K and 0.878\,K. The skewness in the error distributions is also reduced in the predictions (from -7.48 to -3.03). But a relatively high negative skewness in the predicted dataset indicates presence of uncorrected cloud impact. 
+Similar error statistics are also estimated for other 183\,GHz channels. Table~\ref{tab:qrnn:C32} provides the statistics for AWS-32. Before correction, the average bias and standard deviation with respect to noise free simulations is -1.343\,K and 5.908\,K respectively. However, after correction(four channel), the bias and standard deviation are -0.011\,K and 0.878\,K. The skewness in the error distributions is also reduced in the predictions (from -7.48 to -3.03). But a relatively high negative skewness in the predicted dataset indicates presence of uncorrected cloud impact. For AWS-32, option ``three-b'' has the lowest spread of errors, but the error distributions are more symmetric for option ``four''.
 
-Table~\ref{tab:qrnn:C33} shows the statistics for AWS-33. The standard deviation in the four channel option (0.591\,K) is slighly lower than three-b(0.612\,K), but the skewness in three-b in lower. This indicates that with four channel option, the QRNN predictions are mostly closer to the simulations, but few cases with large cloud impact are under predicted. 
+Table~\ref{tab:qrnn:C33} shows the statistics for AWS-33. The standard deviation in the four channel option (0.591\,K) is lower than ``three-b''(0.612\,K), but the skewness in three-b in lower. This indicates that with four channel option, the QRNN predictions are mostly closer to the simulations, but few cases with large cloud impact are under predicted. 
 
-For AWS-35 (Table~\ref{tab:qrnn:C35}), the four channel option has the best performance. The average bias in QRNN predictions (four) is only 0.04\,K in comparsion to -0.42\,K for the measurements. Option three-b has lower skewness than option four, but the standard deviation is higher. It is interesting to note that the standard deviation in all three predicted datasets is always lower than noise. Similar results are also seen for AWS-36 (Table~\ref{tab:qrnn:C36}). The four channel combination reduces the average bias from -0.269\,K to 0.056\,K and the standard deviation from 2.059\,K to 0.779\,K. Also for this channel, the spread of the predictions is narrower than noise.  
-
-
-
+For AWS-35 (Table~\ref{tab:qrnn:C35}), the four channels option has the best performance. The average bias in QRNN predictions (four) is only 0.04\,K in comparsion to -0.42\,K for the measurements. Option ``three-b'' has lower skewness than option four, but the standard deviation is higher. It is interesting to note that the standard deviation in all three predicted datasets is always lower than noise. Similar results are also seen for AWS-36 (Table~\ref{tab:qrnn:C36}). The four channels combination reduces the average bias from -0.269\,K to 0.056\,K and the standard deviation from 2.059\,K to 0.779\,K. Also for this channel, the spread of the predictions is narrower than noise.  
 
 \subsection{Uncertainty estimation}
 %
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=80mm]{prediction_uncertainty.png}
-	\caption{The prediction uncertainty in AWS-34 with respect to quantiles for randomly selected 2400 cases. The red line represents the uncertainty if underlying distribution is purely Gaussian with standard deviation 0.62\,K. }
+	\caption{The prediction uncertainty in AWS-34 with respect to quantiles for randomly selected 2400 cases. The red line represents the uncertainty if underlying distribution is purely Gaussian with mean 270\,K and standard deviation 0.62\,K. }
 	\label{fig:prediction_uncertainty}
 \end{figure}
 
@@ -1276,25 +1274,16 @@ Quantile regression can be used to construct a probability distribution of the p
 
 In our QRNN model, we estimate the conditional quantiles for  median, $\pm 1\sigma$, $\pm 2\sigma$, and $\pm 3\sigma$. The predictions for each quantile are used to construct the confidence intervals. The confidence interval for each point estimate is a way to quantify its uncertainty. For example, the predicted quantiles for $\pm 1 \sigma$ give 68\% probability that the true value will lie between the range.   
 
-If the posterior distribution from QRNN follow normal distribution, the uncertainty can be estimated as a gaussian distribution centered around the median and standard deviation equal to the estimated error. To inspect if the predictions follow a normal distribution we evaluate the length of confidence intervals with respect to the median. Figure~\ref{fig:prediction_uncertainty} shows the prediction uncertainty in AWS-34 (using four channel option). The uncertainty with respect to the median for 1000 randomly selected cases is shown. The red line represents the uncertainty in a hypothetical Gaussian distribution  of $270\pm0.62$\,K. If the underlying distribution is Gaussian, the prediction uncertainty should be symmetric around the median, and the uncertainties should be equally spaced for $1\sigma$, $2\sigma$ and so on. The predictions from our QRNN model seem to be symmetric around the median for the 95\% confidence interval ($\pm 2 \sigma$). In other words, around 95\% of the true cases lie in the confidence interval given by $\pm 2\sigma$, and only 6\% of predictions are either too low or too high than the true value. 
-
-
-The figure also shows that the uncertainties for all 1000 random cases are concentrated along a narrow width, thus suggesting that the case to case variability of the uncertainty is low. 
-
-\dots
-
+If the posterior distribution from QRNN follow normal distribution, the uncertainty can be estimated as a gaussian distribution centered around the median and standard deviation equal to the estimated error. To inspect if the predictions follow a normal distribution we evaluate the length of confidence intervals from the median. Figure~\ref{fig:prediction_uncertainty} shows the prediction uncertainty in AWS-34 (four channel option). The uncertainty with respect to the median for 1000 randomly selected cases is shown. The red line represents the uncertainty in a hypothetical Gaussian distribution  of $270\pm0.62$\,K. If the underlying distribution is Gaussian, the prediction uncertainty should be symmetric around the median, and the uncertainties should be equally spaced for $1\sigma$, $2\sigma$ and so on. The predictions from our QRNN model seem to be symmetric around the median for the 94\% confidence interval ($\pm 2 \sigma$). In other words, around 94\% of the true cases lie in the confidence interval given by $\pm 2\sigma$, and only 6\% of predictions are either too low or too high than the true value. The figure also shows that the uncertainties for all 1000 random cases are concentrated along a narrow width, thus suggesting that the case to case variability of the uncertainty is low. 
 
 A similar uncertainty quantification for other 183\,GHz channels also gives similar results. Thus, assuming the posterior distribution to be gaussian between $\pm 2 \sigma$, the median is the measure of mean of the gaussian distribution, and the estimated error with respect to the true-value gives the spread of the distribution. 
-
-
-
 
 \subsection{QRNN using AWS-4X}
 %
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=80mm]{Channel_C32_C4X.png}
-	\caption{ Error distributions for measured and predicted AWS-32, when QRNN  model is trained with measurements from AWS-4X. The results from QRNN model trained with four channel 325\,GHz are also shown for comparison. }
+	\caption{ Error distributions for measured and predicted AWS-32, when QRNN  model is trained with measurements from AWS-4X and AWS-32. The results from QRNN model trained with four channels 325\,GHz are also shown for comparison. }
 	\label{fig:qrnn_C32_C4X:deviations}
 \end{figure}
 
@@ -1313,18 +1302,18 @@ A similar uncertainty quantification for other 183\,GHz channels also gives simi
 	\caption{Statistics for the error distributions of AWS-32 shown in Figure~\ref{fig:qrnn_C32_C4X:deviations}. The QRNN model is trained with measurements from AWS-4X and AWS-32.}
 	\label{tab:qrnn:C32:C4X}
 \end{table} 
-We also tested the QRNN model to predict cloud-free TBs using AWS-4X. In this case, we trained QRNN with measurements from AWS-32 and AWS-4X, to predict the clear-sky cloud free TBs for AWS-32. The model was trained as described in Section~\ref{sec:qrnn:training}, but the width of the network was chosen to be 256 neurons. Other structural and training parameters remain unchanged.
+We also tested the QRNN model to predict cloud-free TBs by using measurements from AWS-4X and AWS-32 as input. In this case, we trained QRNN with measurements from AWS-32 and AWS-4X, to predict the clear-sky cloud free TBs for AWS-32. The model was trained as described in Section~\ref{sec:qrnn:training}, but slightly better training results were obtained with width as 256 neurons. Other structural and training parameters remain unchanged.
 
 Figure~\ref{fig:qrnn_C32_C4X:deviations} shows the error distributions for the differences between the predicted values and clear-sky simulations for AWS-32. The corresponding statistics are shown in Table~\ref{tab:qrnn:C32:C4X}. The results from QRNN model trained with four channel option of 325\,GHz are also shown for comparison.  
 
-The average deviation of the uncorrected measurements to noise-free clear-sky simulations is -1.343\,K and the standard deviation is 5.908\,K. When trained with AWS-4X, the predictions are not very successful in alleviating the cloud impact. Although, the error standard deviation of the predicted dataset is lower, a large negative skewness (-4.085\,K) indicates significantly high uncorrected cloud impact. On the other hand, QRNN predictions trained with 325\,GHz data are also not completely cloud free, but have a slightly better accuracy. The error standard deviation for the four channel option is 0.878\,K.  
+The average deviation of the uncorrected measurements to noise-free clear-sky simulations is -1.343\,K and the standard deviation is 5.908\,K. When trained with AWS-4X, the predictions are not very successful in alleviating the cloud impact. Although, the error standard deviation of the predicted dataset is lower, a large negative skewness (-4.085\,K) indicates significantly high uncorrected cloud impact. On the other hand, QRNN predictions trained with 325\,GHz data are also not completely cloud free, but have a slightly better accuracy. The error standard deviation for the four channels option is 0.878\,K.  
 
 Clearly, without additional information, QRNN cannot learn to predict cloud free values for AWS-32.
 As already seen in simple correction scheme, AWS-4X is not sufficient enough to characterize the effect of hydrometeors in AWS-32. 
 
 \section{Sensitivity to different $T_r$}
 %
-In the previous section, we presented the results from QRNN trained using the three suggestions of 325\,GHz proposed in section~\ref{sec:channel:configurations}. The receiver noise ($T_r$) was assumed to be 1200\,K for all cases. In this section, we explore the sensitivity of QRNN to increasing noise level. The QRNN training is repeated for all three suggestions of 325\,GHz, but with $T_r$ = 1800\,K and $T_r$ = 2400\,K. QRNN is trained with identical structural and training parameters as described earlier. Tables showing the statistics for error distributions for each channel are provided. Table~\ref{tab:qrnn:C32:Trec:1800} - Table~\ref{tab:qrnn:C36:Trec:1800} show the statistics for AWS-32, AWS-33, AWS-34, AWS-35 and AWS-36 respectively, when $T_r$ = 1800\,K.  Similarly Table~\ref{tab:qrnn:C32:Trec:2400} - Table~\ref{tab:qrnn:C36:Trec:2400} show the statistics when $T_r$ = 2400\,K. 
+In the previous section, we presented the results from QRNN trained using the three suggestions of 325\,GHz proposed in section~\ref{sec:channel:configurations}. The receiver noise ($T_r$) was assumed to be 1200\,K for all cases. In this section, we explore the sensitivity of QRNN to a higher receiver noise. The QRNN training is repeated for all three suggestions of 325\,GHz, but with $T_r$ = 1800\,K and $T_r$ = 2400\,K. QRNN is trained with identical structural and training parameters as described earlier. Tables showing the statistics for error distributions for each channel are provided. Table~\ref{tab:qrnn:C32:Trec:1800} - Table~\ref{tab:qrnn:C36:Trec:1800} show the statistics for AWS-32, AWS-33, AWS-34, AWS-35 and AWS-36 respectively, when $T_r$ = 1800\,K.  Similarly Table~\ref{tab:qrnn:C32:Trec:2400} - Table~\ref{tab:qrnn:C36:Trec:2400} show the statistics when $T_r$ = 2400\,K. 
 
 For all channels, increase in the measurement noise increases the standard deviation of the predictions. For example, for AWS-34 (four channel option), the error standard deviation is 0.620\,K, 0.630\,K and 0.643\,K for $T_r$ = 1200\,K, 1800\,K and 2400\,K respectively. It is difficult to gauge the impact of increasing noise through bias and skewness of the error distributions, as the distribution can have a large spread, but still be symmetric with low bias and skewness. It is interesting to note that even for 1800\,K, the error standard deviation for predicted values for channels AWS-34, AWS-35 and AWS-36 is smaller than noise. This is in agreement with the results seen for $T_r$ = 1200\,K. However, for $T_r$ = 2400\,K, only AWS-36 follows the trend.
 
@@ -1430,7 +1419,7 @@ corrected (three-b)  		& -0.015 & 0.882 &             -3.177 &      4.974 \\
 corrected (four channel)    &  0.028 & 0.876 &             -3.638 &      4.978 \\
 		\hline
 	\end{tabular}
-	\caption{ Error statistics for AWS-32, when the model is trained with $T_r$ = 1800\,K. The definitions of "three-a", "three-b" and "four" are same as described in Table~\ref{tab:qrnn:C34}  }
+	\caption{ Error statistics for AWS-32, when the model is trained with $T_r$ = 2400\,K. The definitions of "three-a", "three-b" and "four" are same as described in Table~\ref{tab:qrnn:C34}  }
 	\label{tab:qrnn:C32:Trec:2400}
 \end{table}
 
@@ -1565,15 +1554,11 @@ difference, while in this study a similar or better performance is obtained
 from using measurement data alone. 
 
 \subsubsection{Performance of QRNN}
-In section~\ref{} we use QRNN as a method for cloud correction based on 325\,GHz data. Measurements from all 325\,GHz channels and the the 183\,GHz channel to be predicted are used to train the QRNN model. 
+In section~\ref{sec:qrnn} we use QRNN as a method for cloud correction based on 325\,GHz data. Measurements from all 325\,GHz channels and the 183\,GHz channel to be predicted are used to train the QRNN model. 
 
-The results demonstrate that QRNN is successful in predicting the clear-sky noise free data for AWS-33, AWS-32, AWS-35 and AWS-36. The error distributions for the predictions symmetric and have low bias and standard deviation. Among the two three channel options and the one four channel option of 325\,GHz, the performance of the three QRNN models is comparable. 
+The results demonstrate that QRNN is successful in predicting the clear-sky noise free data for AWS-33, AWS-32, AWS-35 and AWS-36. The error distributions for the predictions symmetric and have low bias and standard deviation. Infact, for AWS-34, AWS-35 and AWS-36, the spread of errors is even smaller than the noise. QRNN seems to perform equally well with three configurations suggested for 325\,GHz channels. 
 
- the performance of none of the options can be considered as the best. For AWS-34
-
-
-
-QRNN is successful in learning to predcit the clear-sky noise-free values for 183\,GHz channels.
+For AWS-32, the QRNN trained with 325\,GHz is only partially successful in reducing the impact of hyderometeors. The resulting error distributions have significantly lower spread than the measurements, but are still negatively skewed. Among the three combinations of 325\,GHz, the four channel option has slightly better performance. Since 325\,GHz cannot provide a full coverage for hydrometeor impact in AWS-32, QRNN cannot learn to predict cloud free values for instances which  lie outside the area of coverage. In order to compare the 229\,GHz channel with 325\,GHz, QRNN was also trained with AWS-4X to predict cloud free AWS-32 TBs. The performance of QRNN trained with AWS-4X is worse than training with 325\,GHz. The spread of error distributions is 1.5 times more than obtained with four channels option of 325\,GHz. 
 
 \subsection{Technical implementation}
 
