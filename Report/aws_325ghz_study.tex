@@ -364,15 +364,16 @@ orientation. To apply oriented particles is much more computationally costly
 and could not be accommodated inside the study.
 
 
+\subsection{Dataset formed}
+%
+Using the simulation setup described in previous section, we simulated 125460 cases based on randomly selected CloudSat orbits during August 2015. The input data
+were restricted between $60^{\degree}$S to $60^{\degree}$N. We simulated both clear-sky and all-sky scenarios , and no differentiation was made between the observations over water and land. The simulations were generated for sensor viewing angles from $0^\circ$ to $45^\circ$, but all the results described in this report are based on nadir viewing angle.
+
+Since in this study, the cases with cloud impact are extremely important, we used ``clear-sky thinning'' to improve the representation of the cloudy cases in the dataset. Thinned dataset is a subset of the full dataset with 50\% of the clear-sky cases removed. The size of the thinned dataset is different for each channel. 
+
 \subsection{Validation of simulations}
 \label{sec:validation}
 %
-Using the simulation setup described above, around 77000 cases [* Is this the
-correct final number? *] were simulated
-based on randomly selected CloudSat orbits during August 2015. The input data
-were restricted between $60^{\degree}$S to $60^{\degree}$N. No differentiation
-was made between the observations over water and land. 
-
 \begin{figure}[p]
 	\centering
 	\includegraphics[height=60mm]{ATMS_C16_distribution}\hspace{5mm}% 
@@ -421,16 +422,8 @@ this transitional region is of high interest. For this reason, the PDF for a
 shown. This PDF gives a fair match in the intermediate region (but gives an
 even higher overrepresentation at more strong cloud impacts). This smaller
 dataset will be considered in parallel below, to ensure that no fraction of the
-``cloudy'' cases is not underrepresentated in the results.
+``cloudy'' cases is not underrepresented in the results.
 
-
-\subsection{Dataset formed}
-%
-[* Describe here briefly the final set of simulations used below. Number of
-cases, with and without thinng. Latiude range. If the full dataset was used for
-ATMS comparsion, switch place between 3.3 and 3.4. Probably easiest to say that
-all results below are for nadir. Otherwise this has to be clarified for the
-simple scehem. *]
 
 
 
@@ -853,8 +846,7 @@ to real conditions in the region matching weak cloud impacts and all the
 analyses presented further in this section are based on the thinned dataset.
 
 Figure~\ref{fig:correction:c34-42:thinned} shows the deviation of the uncorrected and
-corrected measurements to their noise-free clear-sky values for the thinned dataset. The results from
-\cite{rekha2012potential} are also shown as reference (see Sec.~\ref{sec:rekha}
+corrected measurements to their noise-free clear-sky values for the thinned dataset. The results from \cite{rekha2012potential} are also shown as reference (see Sec.~\ref{sec:rekha}
 for our assumptions). In order to allow a more direct comparison of our
 approach with \cite{rekha2012potential}, we also include the
 dataset, ``Filtered'', where all cloudy cases are rejected. Apart from the fit
@@ -918,7 +910,7 @@ Table~\ref{tab:correction:stats:34:42:thinned}.
 	filtered($1\sigma$)  	&  -0.13 &  0.68 &              -0.25 &               17.54 \\
 	corrected($1\sigma$) 	&  -0.06 &  0.76 &              -0.46 &                4.99 \\
 	corrected($2\sigma$) 	&  -0.11 &  0.75 &              -0.69 &                4.99 \\
-	sreerekha et al   		&  -0.20 &  0.78 &              -1.00 &               45.36 \\			
+	sreerekha et al         &  -0.16 &  0.71 &              -0.46 &               46.37 \\			
 		\hline
 \end{tabular}
 \caption{Bias, standard deviation (std), and measure of skewness of the error
@@ -930,9 +922,7 @@ Table~\ref{tab:correction:stats:34:42:thinned}.
 The distributions of filtered data are non-Gaussian. The right side of the
 distribution follows measurement noise while the left side is skewed. The
 skewness in the distribution is due to cloud impacts which pass through the
-clear-sky threshold. The higher skewness in ``Sreerekha et al'' is mainly
-beacuse their method only aims at removing cloud impacts above 4\,K.
-Their approach also leads to a high rejection fraction (45.36\%). The filtering
+clear-sky threshold. The skewness in ``Sreerekha et al'' is higher than our approach because their method only aims at removing cloud impacts above 4\,K. Their approach also leads to a high rejection fraction (46.37\%). The filtering
 method introduced here leads to a considerable lower rejection of data
 (17.54\%).
 
@@ -959,8 +949,8 @@ With clear/cloudy classification for $dtb_{cs} = 1\sigma$, around 85\% of the
 total measurements are classified as cloudy and are rejected in pure-filtering.
 Rejecting all the cloudy cases reduces the average bias in the measurements
 from -2.25\,K to -0.21\,K, while with the approach from
-\citet{rekha2012potential} only 45.36\% of the data is rejected and the average
-bias reduces to -0.41\,K. When all the cloudy cases, except the ``too cloudy'',
+\citet{rekha2012potential} only 46.37\% of the data is rejected and the average
+bias reduces to -0.32\,K. When all the cloudy cases, except the ``too cloudy'',
 are corrected, the total bias increases to 0.88\,K. The unusually high fraction
 of cloudy cases and an increase in bias on correction suggests
 misclassification of clear cases as cloudy. Since, the weighting functions of
@@ -989,7 +979,7 @@ uncorrected       		&  -2.25 &  8.94 &              -6.85 &                - \\
 filtered($1\sigma$)  	&  -0.21 &  0.51 &              -0.65 &               85.43 \\
 corrected($1\sigma$) 	&   0.88 &  1.76 &              -1.30 &                5.35 \\
 corrected($2\sigma$) 	&   0.76 &  1.80 &              -1.07 &                5.35 \\
-sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 \\
+sreerekha et al   		&  -0.32 &  0.78 &              -1.94 &               46.37 \\
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for
@@ -1013,7 +1003,7 @@ sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 
 		filtered($1\sigma$)  	&  -0.26 &  0.77 &             -16.33 &               72.06 \\
 		corrected($1\sigma$) 	&   0.43 &  1.70 &             -14.68 &                7.93 \\
 		corrected($2\sigma$) 	&   0.25 &  1.72 &             -13.86 &                7.93 \\
-		sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 \\
+		 sreerekha et al   		&  -0.32 &  0.78 &              -1.94 &               46.37 \\
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-32 and AWS-41.   }
@@ -1031,7 +1021,7 @@ sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 
 		filtered($1\sigma$)  	&  -0.13 &  0.49 &              -0.40 &               26.18 \\
 		corrected($1\sigma$) 	&  -0.05 &  0.59 &              -0.85 &                6.88 \\
 		corrected($2\sigma$) 	&  -0.11 &  0.57 &              -1.17 &                6.88 \\
-		sreerekha et al   		&  -0.29 &  0.78 &              -2.22 &               45.36 \\
+		sreerekha et al         &  -0.23 &  0.65 &              -1.52 &               46.37 \\
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-33 and AWS-41.   }
@@ -1044,12 +1034,12 @@ sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 
 		Dataset  		  &   bias &   std &   skewness & fraction \\
 		&   [K]  &   [K] & [-] & rejected [\%]\\
 		\hline
-		Noise           	  &  0.00 &  0.63 &               0.00 &                -\\
+		Noise           	  &  0.00  &  0.63 &               0.00 &                -\\
 		uncorrected     	  &  -0.83 &  4.50 &             -10.85 &                - \\
 		filtered($1\sigma$)	  &  -0.13 &  0.68 &              -0.46 &               21.30 \\
 		corrected($1\sigma$)  &   0.01 &  0.90 &              -1.65 &                2.86 \\
 		corrected($2\sigma$)  &  -0.09 &  0.83 &              -2.35 &                2.86 \\
-		sreerekha et al  	  &  -0.13 &  0.70 &              -0.54 &               45.36 \\
+		sreerekha et al       &  -0.11 &  0.67 &              -0.22 &               46.37 \\
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-35 and AWS-43.}
@@ -1067,7 +1057,7 @@ sreerekha et al   		&  -0.41 &  1.00 &              -2.54 &               45.36 
 		filtered($1\sigma$)  &  -0.11 &  0.92 &              -0.13 &                7.38 \\
 		corrected($1\sigma$) &  -0.07 &  0.93 &              -0.07 &                2.50 \\
 		corrected($2\sigma$) &  -0.11 &  0.94 &              -0.19 &                2.50 \\
-		sreerekha et al 	 &  -0.09 &  0.91 &              -0.10 &               45.36 \\
+		sreerekha et al      &  -0.08 &  0.90 &              -0.02 &               46.37 \\
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:correction:stats:34:42:thinned}, but for channel combination: AWS-36 and AWS-43.   }
@@ -1079,8 +1069,8 @@ The correction scheme can also be extended to other combinations of 183GHz and
 AWS-41; AWS-33 and AWS-41; AWS-35 and AWS-43; AWS-36 and AWS-43.
 
 Table~\ref{tab:correction:stats:32:41} shows the statistics when AWS-32 is
-corrected using AWS-41. The statistics of the filtered dataset are better than
-the approach by \cite{rekha2012potential}, while the corrected data have poorer
+corrected using AWS-41. The bias and standard deviation of the filtered dataset are better than
+the approach by \cite{rekha2012potential}. However, the results from ``sreerekha et al'' have lower skewness. After correction, the corrected data have poorer
 statistics. This is not surprising as the weighting function match between
 AWS-32 and AWS-41 is poor. The correction using $2\sigma$ as threshold works
 better $1\sigma$. This is an exception, the reverse is valid for AWS-34/42 (as
