@@ -7,15 +7,14 @@ Created on Fri Jun 19 21:33:30 2020
 """
 import numpy as np
 import netCDF4
-
-
  
 class TB_AWS():
     """
     CLass for the AWS test data.
 
     """
-    def __init__(self, path, inChannels, option, T_rec):
+    def __init__(self, path, inChannels, option, T_rec, all_cases = False, 
+                 cloudy = False, clear = False  ):
         """
         Read AWS data for channels in "inChannels" 
 
@@ -30,43 +29,60 @@ class TB_AWS():
 
         TB = self.file.variables["TB"][:]
         channels = self.file.variables["channels"][:]
+        channels_183 = ["C32", "C33", "C34", "C35", "C36"]
         self.channels = inChannels
         self.index = []
         
         for c in self.channels:
             self.index.append(np.argwhere(channels == c)[0,0])
+            
+        self.index_183 = []
+        
+        for c in channels_183:
+            self.index_183.append(np.argwhere(channels == c)[0,0])    
 
         C = []
-#        C_als = []
+
         
         for i in range(len(self.channels)):
             C.append(TB[self.index[i], :, :])
-#            C_als.append(TB[self.index[i], 1, :])
             
-        self.Y = np.float32(np.stack(C, axis = 1))
-        self.Y = self.Y[:, :].data
-#        self.mean = np.mean(self.Y, axis = 0)  
-        self.n = self.Y.shape[0]
-
-
-    def get_cloudy(self):
-        """
+        Y = np.float32(np.stack(C, axis = 1))
+        Y = Y[:, :].data
         
-
-        Returns
-        -------
-        None.
-
-        """
+        if all_cases:
+            # use all cases
+            self.Y = Y[1, :, :]
+            self.Y = np.transpose(self.Y)
+            self.mean = np.mean(self.Y, axis = 0)
+            self.n = self.Y.shape[0]  
         
-        cloud_imp = np.abs(self.Y[1, :, :] - self.Y[0, :, :])
-        icloud = cloud_imp > 1.0
-        icloud = np.any(icloud, axis = 0)
+        if clear:
+            # subsets the vector Y, if only clear values are to be used
+            
+            i_start = self.index_183[0]
+            i_end   = self.index_183[-1]
+            cloud_imp = np.abs(Y[1, i_start:i_end, :] - Y[0, i_start:i_end, :])
+            icloud = cloud_imp < 1.0
+            icloud = np.any(icloud, axis = 0)
         
-        self.Y = self.Y[1, :, icloud]
-        self.mean = np.mean(self.Y, axis = 0)
-        self.n = self.Y.shape[0]
-#        print (self.mean, self.Y.shape)
+            self.Y = Y[1, :, icloud]
+            self.mean = np.mean(self.Y, axis = 0)
+            self.n = self.Y.shape[0]
+            
+        if cloudy:
+            #subsets the vector Y, if only cloudy values are to be used
+            
+            i_start = self.index_183[0]
+            i_end   = self.index_183[-1]
+            cloud_imp = np.abs(Y[1, i_start:i_end, :] - Y[0, i_start:i_end, :])
+            icloud = cloud_imp >= 1.0
+            icloud = np.any(icloud, axis = 0)
+        
+            self.Y = Y[1, :, icloud]
+            self.mean = np.mean(self.Y, axis = 0)
+            self.n = self.Y.shape[0]
+            
         
         
     def add_noise(self, x):        
@@ -126,7 +142,8 @@ class TB_AWS():
 
     def cov_mat(self):
         """
-        
+        S_y = \frac{1}{n-1} * YY^T
+        where Y is the ensemble of n measurements with mean subtracted 
 
         Returns
         -------
@@ -136,7 +153,6 @@ class TB_AWS():
         
         Y = self.Y - self.mean
         Y = np.transpose(Y)
-        
         S_y = (np.dot(Y, np.transpose(Y)))/(self.n - 1)
         
         return S_y
@@ -144,18 +160,20 @@ class TB_AWS():
 
     def svd(self):
         """
-        
+        Singular value decomposition of Y, to estimate the eigenvectors
+        USVh = Y
 
         Returns
+        U, S, Vh
         -------
         None.
 
         """
         Y = self.Y - self.mean
-        print (Y)
+#        print (Y)
         Y = np.transpose(Y)
         
-        U, S, V = np.linalg.svd(Y, full_matrices = True)
+        U, S, V = np.linalg.svd(Y, full_matrices = False)
         
         return U, S, V
 
@@ -163,13 +181,13 @@ class TB_AWS():
     def get_S_lambda(self, U, noise):
         """
         
-
+        S_\Lambda = ES_\epsilonE^T
+        where, E is the eigenvector of Y, and S_\epsilon is NEDT in diagonal elements
         Returns
         -------
         None.
 
         """           
-        
         S_lambda = np.dot(U, np.dot(noise, np.transpose(U)))
         return S_lambda                 
     

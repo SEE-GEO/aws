@@ -11,15 +11,25 @@ import os
 from TB_aws import TB_AWS
 
 channels = ['C21','C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C41', 'C42', 'C43']
-Y = TB_AWS(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60.nc'),
-           inChannels = channels, option = "3a", T_rec = None)
+channels = ['C21','C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C41', 'C42', 'C43','C44']
+#channels = ['C21','C31', 'C32', 'C33', 'C34', 'C35', 'C36', 'C4X']
+Y = TB_AWS(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/TB_AWS/TB_AWS_m60_p60_four.nc'),
+           inChannels = channels, 
+           option     = "4", 
+           T_rec      = None, 
+           all_cases  = False,
+           cloudy     = False,
+           clear      = True)
 
-Y.get_cloudy()
+
 noise = Y.add_noise(Y)
+    
+#print (noise)
 U, S, V = Y.svd()
-S_l = Y.get_S_lambda( U, noise)
+S_l = Y.get_S_lambda(U, noise)
 
 S_y = Y.cov_mat()
 
 print(S_y.diagonal())
 print(S_l)
+
