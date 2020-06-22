@@ -171,6 +171,7 @@ characterised.
     Channel & Frequency   & Bandwidth \\
     name    & [GHz] &  [MHz] \\
     \hline
+    AWS-21  &  89.*** & 4000\\
     AWS-31  & 165.500 & 2800\\
     AWS-32  & 176.311 & 2000\\
     AWS-33  & 178.811 & 2000\\
@@ -1580,6 +1581,69 @@ corrected (four channel)   &  0.059 & 0.850 &             -0.140 &      1.140 \\
 	\caption{ Same as Table~\ref{tab:qrnn:C32:Trec:2400}, but for AWS-36.  }
 	\label{tab:qrnn:C36:Trec:2400}
 \end{table}
+
+\section{Degrees of freedom}
+%
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+		 325\,GHz & \multicolumn{3}{c}{DoF}   \\
+		 option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
+		\hline
+		three-a &                8 &                7 &                7 \\
+		three-b &                8 &                8 &                6 \\
+		four    &                8 &                7 &                6 \\
+		\hline
+	\end{tabular}
+	\caption{The degrees of freedom for AWS with 325\,GHz channel. Both clear and cloudy cases are considered. Results for all three options of 325\,GHz and different $T_r$ are shown.    }
+	\label{tab:DoF:all}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+	325\,GHz & \multicolumn{3}{c}{DoF}   \\
+	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
+	\hline
+	three-a &                7 &                7 &                5 \\
+	three-b &                7 &                6 &                4 \\
+	four    &                6 &                5 &                4 \\
+	\hline
+\end{tabular}
+	\caption{Same as Table~\ref{tab:DoF:all}, but only for clear cases.}
+\label{tab:DoF:clear}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c}
+	325\,GHz & \multicolumn{3}{c}{DoF}   \\
+	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
+		\hline
+		three-a &                8 &                8 &                8 \\
+		three-b &                8 &                8 &                8 \\
+		four    &                8 &                8 &                8 \\
+		\hline
+	\end{tabular}
+	\caption{Same as Table~\ref{tab:DoF:all}, but only for cloudy cases.  }
+	\label{tab:DoF:cloudy}
+\end{table}
+
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c}
+		&   DoF \\
+		\hline
+		all    &      6        \\
+		clear  &      6        \\
+		cloudy &      6        \\
+		\hline
+	\end{tabular}
+	\caption{The degrees of freedom for AWS with 229\,GHz channel. }
+	\label{tab:DoF:4X}
+\end{table}
+
 
 \section{Discussion}
 
