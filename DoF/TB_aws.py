@@ -59,6 +59,7 @@ class TB_AWS():
         
         if clear:
             # subsets the vector Y, if only clear values are to be used
+            # a case is cloudy if cloud impact is greater than 1 K in any of 183GHz channels
             
             i_start = self.index_183[0]
             i_end   = self.index_183[-1]
@@ -75,8 +76,10 @@ class TB_AWS():
             
             i_start = self.index_183[0]
             i_end   = self.index_183[-1]
-            cloud_imp = np.abs(Y[1, i_start:i_end, :] - Y[0, i_start:i_end, :])
+            cloud_imp = np.abs(Y[1, i_start:i_end+1, :] - Y[0, i_start:i_end+1, :])
+
             icloud = cloud_imp >= 1.0
+ #           print(np.sum(icloud[:, :], axis = 1))
             icloud = np.any(icloud, axis = 0)
         
             self.Y = Y[1, :, icloud]
@@ -127,6 +130,7 @@ class TB_AWS():
 
         # for the channels we need        
         T_rec_subset = T_rec[self.index]
+        print(T_rec_subset)
 
         delta_f_subset = delta_f[self.index]
     
@@ -135,9 +139,15 @@ class TB_AWS():
             T_a = 250.0
             sigma = c * (T_rec_subset[ic] + T_a)/np.sqrt(delta_f_subset[ic] * delta_t)
 
-            noise.append(sigma ** 2)            
+            noise.append(sigma ** 2)        
+            
+        n = len(noise)
+        s_epsilon = np.zeros([n , n])
+        for i in range(n):
+            s_epsilon[i, i] = noise[i]
+        return s_epsilon   
 
-        return np.asarray(noise)          
+      
         
 
     def cov_mat(self):
@@ -171,7 +181,7 @@ class TB_AWS():
         """
         Y = self.Y - self.mean
 #        print (Y)
-        Y = np.transpose(Y)
+        Y = np.transpose(Y)/np.sqrt(self.n - 1)
         
         U, S, V = np.linalg.svd(Y, full_matrices = False)
         

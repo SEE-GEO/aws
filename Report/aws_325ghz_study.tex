@@ -55,7 +55,12 @@ SE-412\,96, Gothenburg, Sweden\vspace{10mm}
 
 \section*{Summary}
 %
-To be written \dots
+The main objective of this study is to demonstrate that channels around 325\,GHz can provide a basis for cloud filtering/correction of data measured around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave Sounder (MWS) and  is used for cloud filtering of 183/,GHz. In this study, we investigate the possibility to use the 325\,GHz channels instead. The cloud impact of high altitude cirrus clouds is considerably higher in 325\,GHz. This makes it possible to estimate the low cloud impact at 183 GHz, even of the order of thermal noise and modelling uncertainties.
+
+On basis of the weighting functions of 183\,GHz, we suggest three specfications for 325\,GHz channels. The performance of all three options is evaluated. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel. The advantage of this approach is that for each 183\,GHz the cloud adjustment can be quantified simply through a polynomial fit between the the cloud impact in 183\,GHz channel of concern  and brightness temperature differences between 183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz, was also examined, but gave poor results. One drawback of the simple correction scheme is its channel specific approach, which cannot benefit from the other 325\,GHz channels available. In order to effectively use information from all 325\,GHz channels, we suggested a machine learning based approach for cloud correction. We used QRNN (Quantile Regression Neural Network ) to to correct the cloud impact in each 183\,GHz channel using measurements (noisy) from all available channels of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance was comparable. For some channels, interestingly, the spread of errors was narrower than noise. Another advantage of using QRNN is that the cloud free values are predicted at different quantile levels, which helps in quantifying the case-specific uncertainty estimate. A similar QRNN model with 229\,GHz gave poor results. Also, no critical dependency to the 325\,GHz receiver noise temperature was observed. 
+
+Ths study shows that combining measurements from 325\,GHz can provide a better cloud correction performance than 229\,GHz, and also with minimal rejection of data. The clear-sky predictions have error distributions which are symmetric with low bias and spread. Therefore, the NWP and standalone 1DVAR models that utilize the ``clear-sky'' data can greatly benefit from it. Also, in data assimilation systems, the case-specific uncertainty allows an effective selection of weights, thus significantly improving the impact of measurements. Another advantage of combining 183\,GHz and 325\,GHz for cloud correction is that NWP systems, which are not yet prepared for 325 GHz, could still benefit from the data early on.
+
 
 [* IK: Run spell check just before submitting * ]
 
@@ -86,7 +91,7 @@ Cloud Imager), another new Metop sensor, will include 325\,GHz channels.
 \subsection{Aim}
 %
 To support the selection between 229 and 325\,GHz channels, this report
-investigates the possibility to use the later range in forming 183\,GHz data of
+investigates the possibility to use the latter range in forming 183\,GHz data of
 ``clear-sky'' character. That is, following \citet{rekha2012potential}, the
 assumption, is that the 183\,GHz data will be used in an system not yet
 capable of doing ``all -sky'' assimilation.
@@ -162,7 +167,7 @@ For simplicity, the frequency variation of all channel responses is assumed to
 be rectangular. This selection shall not be interpreted as any opinion on the
 optimal shape of these responses; a significant deviation from a rectangular
 shape should be of no concern as long as the actual shape is well
-characterised.
+characterized.
 
 \begin{table}[!b]
   \begin{minipage}[b]{0.5\linewidth}
@@ -171,7 +176,7 @@ characterised.
     Channel & Frequency   & Bandwidth \\
     name    & [GHz] &  [MHz] \\
     \hline
-    AWS-21  &  89.*** & 4000\\
+    AWS-21  & \phantom{0}89.000 & 4000\\
     AWS-31  & 165.500 & 2800\\
     AWS-32  & 176.311 & 2000\\
     AWS-33  & 178.811 & 2000\\
@@ -358,7 +363,7 @@ and letting the radar reflectivity set the remaining moment.
 
 Single scattering data are taken from \citet{eriksson:agene:18}. For ice
 hydrometeors, three habits are applied: Perpendicular 3-bullet rosette, Large
-plate aggregate and Large column aggregate. In the two later cases, the
+plate aggregate and Large column aggregate. In the last two cases, the
 aggregates are complemented with single crystal data to also cover smaller
 sizes. These data describe particles assumed to have a totally random
 orientation. To apply oriented particles is much more computationally costly
@@ -368,9 +373,9 @@ and could not be accommodated inside the study.
 \subsection{Dataset formed}
 %
 Using the simulation setup described in previous section, we simulated 125460 cases based on randomly selected CloudSat orbits during August 2015. The input data
-were restricted between $60^{\degree}$S to $60^{\degree}$N. We simulated both clear-sky and all-sky scenarios , and no differentiation was made between the observations over water and land. The simulations were generated for sensor viewing angles from $0^\circ$ to $45^\circ$, but all the results described in this report are based on nadir viewing angle.
+were restricted between $60^{\degree}$S to $60^{\degree}$N, and surface is below 500\,m. Both clear-sky and all-sky scenarios were simulated, and no differentiation was made between the observations over water and land. 24 monochromatic frequencies were used so that each channel could be represented with sufficient accuracy. The simulations were generated for sensor viewing angles from $0^\circ$ to $45^\circ$, but all the results described in this report are based on nadir viewing angle.
 
-Since in this study, the cases with cloud impact are extremely important, we used ``clear-sky thinning'' to improve the representation of the cloudy cases in the dataset. Thinned dataset is a subset of the full dataset with 50\% of the clear-sky cases removed. The size of the thinned dataset is different for each channel. 
+Since in this study, the cases with cloud impact are extremely important, we used ``clear-sky thinning'' to improve the representation of the cloudy cases in the dataset. Thinned dataset is a subset of the full dataset with 50\% of the clear-sky cases removed (cloud impact $<$ 0.2\,K) The size of the thinned dataset is different for each channel. 
 
 \subsection{Validation of simulations}
 \label{sec:validation}
@@ -1556,8 +1561,8 @@ corrected (four channel)    &  0.059 & 0.643 &             -0.340 &      2.937 \
 		\hline
 Noise                      & -0.004 & 0.633 &              0.021 &      - \\
 uncorrected                & -0.420 & 2.654 &            -12.449 &      - \\
-corrected (three-a) &  0.034 & 0.646 &             -0.389 &      1.479 \\
-corrected (three-b) &  0.076 & 0.647 &             -0.148 &      1.291 \\
+corrected (three-a) 	   &  0.034 & 0.646 &             -0.389 &      1.479 \\
+corrected (three-b) 	   &  0.076 & 0.647 &             -0.148 &      1.291 \\
 corrected (four channel)   &  0.044 & 0.632 &             -0.188 &      1.809 \\
 		\hline
 	\end{tabular}
@@ -1584,6 +1589,29 @@ corrected (four channel)   &  0.059 & 0.850 &             -0.140 &      1.140 \\
 
 \section{Degrees of freedom}
 %
+The information content analysis in the AWS is made by estimating the degrees of freedom (DoF) of the simulated measurements. The analysis is similar to the one described by  \citet{eriksson:towar:20} for ICI.
+
+Let $\mathbf{Y}$ be an ensemble of noise-free measurements, and $\textbf{E}$ and $\mathbf{\Lambda}$ be the corresponding eigenvectors and eigenvalues; then in the eigenvalue space, the covariance matrix $\mathbf{S_y}$ can be written as
+
+\begin{equation}
+\mathbf{S_y = E \Lambda E^T} 
+\end{equation}
+
+Similarly, the uncertainty due to thermal noise is
+\begin{equation}
+\mathbf{S_{\Lambda} = E S_{\epsilon} E^T }
+\end{equation}
+where, $\mathbf{S_{\epsilon}}$ is a diagonal matrix with NE$\Delta$T$^2$ as diagonal elements. The DoF is the number of diagonal elements of $\mathbf{\Lambda}$ greater than the $\mathbf{S_\Lambda}$. For further details see \citet{eriksson:towar:20}.
+
+To calculate the DoF, the ensemble of simulations from 89\,GHz, 166\,GHz, 183\,GHz are used along with 229\,GHz or 325\,GHz. All three options of 325\,GHz are considered. In order to compare the DoF for cloudy and clear cases, we divide the database into three parts: ``all'', ``clear'' and ``cloudy'. All cases with cloud impact greater than 1\,K in any of the 183\,GHz channels are classfied as ``cloudy'', otherwise they are classified as ``clear''. With this criteria, out of total 125460 cases, 12905 are classified as cloudy.  
+
+Table~\ref{tab:DoF:all} shows the DoF with 325\,GHz when all cases are considered. For $T_r$ = 1200\,K, the DoF from all three options is 8, however, increase in receiver noise leads to a loss in the DoF. For $T_r$ = 2400\,K, the DoF for option three-a is 7, while for three-b and four, the DoF is 6. Table~\ref{tab:DoF:clear} and Table~\ref{tab:DoF:cloudy} show the DoF for clear-sky and cloudy cases respectively. For clear-sky situations, the DoF for option three-a and three-b is 7, while for option 4 it is 6. With increase in $T_r$, the weaker DoF are degraded. For $T_r$ = 2400\,K, we have only 5 DoF for option three-a and 4 for both option three-b and four. On the other hand, the presence of clouds increases the DoF significantly. For all three options, we have 8 DoF. Increase in noise has no effect on the DoF for cloudy cases. 
+
+The channels of 325\,GHz are highly correlated with 183\,GHz for clear-sky conditions, thus there is a high redundancy in information between these two channels. Due to redundancy with 183\,GHz channel, we observe a reduction in the DoF for clear-sky conditions. However in cloudy situations, as the impact of clouds in 325\,GHz is higher, we observe a larger DoF.
+
+Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for both clear and cloudy situations. This is consistent with the fact that 229\,GHz has no redundancy with the five 183\,GHz channels, but there exists some redundancy with the two window channels (89 and 166\,GHz). 
+
+
 
 \begin{table}[!p]
 	\centering
@@ -1732,14 +1760,14 @@ The results demonstrate that QRNN is successful in predicting the clear-sky
 noise free data for AWS-33, AWS-32, AWS-35 and AWS-36. The error distributions
 for the predictions symmetric and have low bias and standard deviation. In
 fact, for AWS-34, AWS-35 and AWS-36, the spread of errors is even smaller than
-the noise. This is the case as a low fracion of the measurements have a
+the noise. This is the case as a low fraction of the measurements have a
 significant cloud impact, and for clear sky situations the QRNN prediction can
 largely be seen as a weighted mean between the two channels. This averaging
 cancels out some of the noise in the two channels. QRNN seems to perform
 equally well with three configurations suggested for 325\,GHz channels.
 
 For AWS-32, the QRNN trained with 325\,GHz is only partially successful in
-reducing the impact of hyderometeors. The resulting error distributions have
+reducing the impact of hydrometeors. The resulting error distributions have
 significantly lower spread than the measurements, but are still negatively
 skewed. Among the three combinations of 325\,GHz, the four channel option has
 slightly better performance. Since 325\,GHz cannot provide a full coverage for
@@ -1770,8 +1798,8 @@ understood that this scales to a requirement on $T_r$ of about 2700\,K (as
 Combining the observations drawn in the two last paragraphs it seems reasonable
 to set the NE$\Delta$T requirements for AWS 325\,GHz channels to match a $T_r$
 of about 2400\,K. The resulting NE$\Delta$T values provide a sufficient basis
-for an accaptable cloud correction and they still represent a step forward
-compared to ICI. However, if the present ambition of Omnisys of $T_r=1200$\,K
+for an acceptable cloud correction and they still represent a step forward
+compared to IS However, if the present ambition of Omnisys of $T_r=1200$\,K
 will be reached, AWS should provide much less noisy 325\,GHz observations than
 ICI.
 
@@ -1792,7 +1820,7 @@ could have a cons
 
 
 
-The simulations have assumed rectangularly shaped response functions. This was
+The simulations have assumed rectangular shaped response functions. This was
 done for simplicity and shall in no way be taken as an indication on that this
 shape is required.
 
@@ -1803,17 +1831,17 @@ any problem in increasing the gaps, beside that the bandwidth decreases and the
 NE$\Delta$T of the channel will somewhat increase.
 
 
-\subsubsection{Polarisation response}
+\subsubsection{Polarization response}
 %
-Polarisation aspects have not been considered in full detail. Some polarisation
+Polarization aspects have not been considered in full detail. Some polarization
 is induced by the surface in the simulations, but hydrometeors are assumed to
-be totally randomly oriented and do not cause polarisation. To involve oriented
+be totally randomly oriented and do not cause polarization. To involve oriented
 particles was not possible due to the limited time allocated for the study.
 
-The basic recommendation would be to use the same polarisation response as far
+The basic recommendation would be to use the same polarization response as far
 as possible. If both quasi-horizontal and quasi-vertical bands must be applied,
-the recommendation prioritise to use the polarisation option for 183 and
-325\,GHz, to maintain a similar influence of polarisation between the bands.
+the recommendation prioritize to use the polarization option for 183 and
+325\,GHz, to maintain a similar influence of polarization between the bands.
 
 
 \section{Conclusion}
