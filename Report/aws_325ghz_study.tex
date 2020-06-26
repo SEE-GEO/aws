@@ -57,7 +57,7 @@ SE-412\,96, Gothenburg, Sweden\vspace{10mm}
 %
 The main objective of this study is to demonstrate that channels around 325\,GHz can provide a basis for cloud filtering/correction of data measured around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave Sounder (MWS) and  is used for cloud filtering of 183/,GHz. In this study, we investigate the possibility to use the 325\,GHz channels instead. The cloud impact of high altitude cirrus clouds is considerably higher in 325\,GHz. This makes it possible to estimate the low cloud impact at 183 GHz, even of the order of thermal noise and modelling uncertainties.
 
-On basis of the weighting functions of 183\,GHz, we suggest three specfications for 325\,GHz channels. The performance of all three options is evaluated. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel. The advantage of this approach is that for each 183\,GHz the cloud adjustment can be quantified simply through a polynomial fit between the the cloud impact in 183\,GHz channel of concern  and brightness temperature differences between 183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz, was also examined, but gave poor results. One drawback of the simple correction scheme is its channel specific approach, which cannot benefit from the other 325\,GHz channels available. In order to effectively use information from all 325\,GHz channels, we suggested a machine learning based approach for cloud correction. We used QRNN (Quantile Regression Neural Network ) to to correct the cloud impact in each 183\,GHz channel using measurements (noisy) from all available channels of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance was comparable. For some channels, interestingly, the spread of errors was narrower than noise. Another advantage of using QRNN is that the cloud free values are predicted at different quantile levels, which helps in quantifying the case-specific uncertainty estimate. A similar QRNN model with 229\,GHz gave poor results. Also, no critical dependency to the 325\,GHz receiver noise temperature was observed. 
+On basis of the weighting functions of 183\,GHz, we suggest three specfications for 325\,GHz channels. The performance of all three options is evaluated. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel. The advantage of this approach is that for each 183\,GHz the cloud adjustment can be quantified simply through a polynomial fit between the the cloud impact in 183\,GHz channel of concern  and brightness temperature differences between 183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz, was also examined, but gave poor results. One drawback of the simple correction scheme is that channel specific approach limits the use of information from other 325\,GHz channels. In order to effectively use information from all 325\,GHz channels, we suggested a machine learning based approach for cloud correction. We used QRNN (Quantile Regression Neural Network ) to to correct the cloud impact in each 183\,GHz channel using measurements (noisy) from all available channels of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance was comparable. For some channels, interestingly, the spread of errors was narrower than noise. Another advantage of using QRNN is that the cloud free values are predicted at different quantile levels, which helps in quantifying the case-specific uncertainty estimate. A similar QRNN model with 229\,GHz gave poor results. Also, no critical dependency to the 325\,GHz receiver noise temperature was observed. 
 
 Ths study shows that combining measurements from 325\,GHz can provide a better cloud correction performance than 229\,GHz, and also with minimal rejection of data. The clear-sky predictions have error distributions which are symmetric with low bias and spread. Therefore, the NWP and standalone 1DVAR models that utilize the ``clear-sky'' data can greatly benefit from it. Also, in data assimilation systems, the case-specific uncertainty allows an effective selection of weights, thus significantly improving the impact of measurements. Another advantage of combining 183\,GHz and 325\,GHz for cloud correction is that NWP systems, which are not yet prepared for 325 GHz, could still benefit from the data early on.
 
@@ -1601,17 +1601,29 @@ Similarly, the uncertainty due to thermal noise is
 \begin{equation}
 \mathbf{S_{\Lambda} = E S_{\epsilon} E^T }
 \end{equation}
+
 where, $\mathbf{S_{\epsilon}}$ is a diagonal matrix with NE$\Delta$T$^2$ as diagonal elements. The DoF is the number of diagonal elements of $\mathbf{\Lambda}$ greater than the $\mathbf{S_\Lambda}$. For further details see \citet{eriksson:towar:20}.
 
-To calculate the DoF, the ensemble of simulations from 89\,GHz, 166\,GHz, 183\,GHz are used along with 229\,GHz or 325\,GHz. All three options of 325\,GHz are considered. In order to compare the DoF for cloudy and clear cases, we divide the database into three parts: ``all'', ``clear'' and ``cloudy'. All cases with cloud impact greater than 1\,K in any of the 183\,GHz channels are classfied as ``cloudy'', otherwise they are classified as ``clear''. With this criteria, out of total 125460 cases, 12905 are classified as cloudy.  
+To calculate the DoF, the ensemble of simulations from 89\,GHz, 166\,GHz, 183\,GHz are used along with 229\,GHz or 325\,GHz. All three options of 325\,GHz are considered. In this section, a new suggestion of option-3b is considered. The new option is mentioned in Table~\ref{tab:option3b:new}.
 
-Table~\ref{tab:DoF:all} shows the DoF with 325\,GHz when all cases are considered. For $T_r$ = 1200\,K, the DoF from all three options is 8, however, increase in receiver noise leads to a loss in the DoF. For $T_r$ = 2400\,K, the DoF for option three-a is 7, while for three-b and four, the DoF is 6. Table~\ref{tab:DoF:clear} and Table~\ref{tab:DoF:cloudy} show the DoF for clear-sky and cloudy cases respectively. For clear-sky situations, the DoF for option three-a and three-b is 7, while for option 4 it is 6. With increase in $T_r$, the weaker DoF are degraded. For $T_r$ = 2400\,K, we have only 5 DoF for option three-a and 4 for both option three-b and four. On the other hand, the presence of clouds increases the DoF significantly. For all three options, we have 8 DoF. Increase in noise has no effect on the DoF for cloudy cases. 
+In order to compare the DoF for cloudy and clear cases, we divide the database into three parts: ``all'', ``clear'' and ``cloudy'. All cases with cloud impact greater than 1\,K in any of the 183\,GHz channels are classfied as ``cloudy'', otherwise they are classified as ``clear''. With this criteria, out of total 125460 cases, 12905 are classified as cloudy.  
+
+Fig~\ref{fig:DoF:clear:1200K} shows the ratio of $\Lambda/S_\Lambda$ with respect to the eigenvalue index for clear-sky cases. 
+
+
+ 
+Table~\ref{tab:DoF:all} shows the DoF with 325\,GHz when all cases are considered. For $T_r$ = 1200\,K, the DoF from all three options is around 8, however, increase in receiver noise leads to a loss in the DoF. For $T_r$ = 2400\,K, the DoF for option three-a is 7.8, while for three-b and four, the DoF is 7.7 and 6.2 respectively. Table~\ref{tab:DoF:clear} and Table~\ref{tab:DoF:cloudy} show the DoF for clear-sky and cloudy cases respectively. For clear-sky situations, the DoF for option three-a and three-b is 7.3 and 7 respectively, while for option 4 it is 7. With increase in $T_r$, the weaker DoF are degraded. For $T_r$ = 2400\,K, we have only 5 DoF for option three-a and 4.8 for both option three-b and 4.9 for option four. On the other hand, the presence of clouds increases the DoF significantly. For all three options, we have DoF around 8. Increase in noise has no significant effect on the DoF for cloudy cases. 
 
 The channels of 325\,GHz are highly correlated with 183\,GHz for clear-sky conditions, thus there is a high redundancy in information between these two channels. Due to redundancy with 183\,GHz channel, we observe a reduction in the DoF for clear-sky conditions. However in cloudy situations, as the impact of clouds in 325\,GHz is higher, we observe a larger DoF.
 
-Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for both clear and cloudy situations. This is consistent with the fact that 229\,GHz has no redundancy with the five 183\,GHz channels, but there exists some redundancy with the two window channels (89 and 166\,GHz). 
+Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6.8 for both clear and cloudy situations. This is consistent with the fact that 229\,GHz has no redundancy with the five 183\,GHz channels, but there exists some redundancy with the two window channels (89 and 166\,GHz). 
 
-
+\begin{figure}[!tb]
+	\centering
+	\includegraphics[height=80mm]{DoF.png}
+	\caption{ The ratio of $\Lambda/S_\Lambda$ with respect to the eigenvalue index for clear-sky cases. The black dotted line represents the level where the ratio is unity. }
+	\label{fig:DoF:clear:1200K}
+\end{figure}
 
 \begin{table}[!p]
 	\centering
@@ -1619,9 +1631,10 @@ Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for bo
 		 325\,GHz & \multicolumn{3}{c}{DoF}   \\
 		 option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
 		\hline
-		three-a &                8 &                7 &                7 \\
-		three-b &                8 &                8 &                6 \\
-		four    &                8 &                7 &                6 \\
+		three-a &              8.3 &              7.9 &              7.8 \\		
+		three-b &              8.5 &              8.2 &              7.7 \\		
+		four    &              8.2 &              7.8 &              6.2 \\
+
 		\hline
 	\end{tabular}
 	\caption{The degrees of freedom for AWS with 325\,GHz channel. Both clear and cloudy cases are considered. Results for all three options of 325\,GHz and different $T_r$ are shown.    }
@@ -1634,9 +1647,10 @@ Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for bo
 	325\,GHz & \multicolumn{3}{c}{DoF}   \\
 	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
 	\hline
-	three-a &                7 &                7 &                5 \\
-	three-b &                7 &                6 &                4 \\
-	four    &                6 &                5 &                4 \\
+		three-a &              7.3 &              7.1 &              5.0 \\		
+		three-b &              7.0 &              6.6 &              4.8 \\		
+		four    &              7.0 &              6.0 &              4.9 \\
+
 	\hline
 \end{tabular}
 	\caption{Same as Table~\ref{tab:DoF:all}, but only for clear cases.}
@@ -1649,9 +1663,10 @@ Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for bo
 	325\,GHz & \multicolumn{3}{c}{DoF}   \\
 	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
 		\hline
-		three-a &                8 &                8 &                8 \\
-		three-b &                8 &                8 &                8 \\
-		four    &                8 &                8 &                8 \\
+		three-a &              8.9 &              8.7 &              8.5 \\		
+		three-b &              8.9 &              8.8 &              8.7 \\		
+		four    &              8.7 &              8.5 &              8.3 \\
+
 		\hline
 	\end{tabular}
 	\caption{Same as Table~\ref{tab:DoF:all}, but only for cloudy cases.  }
@@ -1663,16 +1678,36 @@ Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6 for bo
 	\begin{tabular}[b]{c|c}
 		&   DoF \\
 		\hline
-		all    &      6        \\
-		clear  &      6        \\
-		cloudy &      6        \\
+		all    &      6.8        \\
+		clear  &      6.8        \\
+		cloudy &      6.8        \\
 		\hline
 	\end{tabular}
 	\caption{The degrees of freedom for AWS with 229\,GHz channel. }
 	\label{tab:DoF:4X}
 \end{table}
 
+\begin{table}[!p]
+	\centering
+	\begin{tabular}[b]{c|c|c|c|c}
+&	325\,GHz & \multicolumn{3}{c}{DoF}   \\
+&	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
+\hline
+			all &	four   &              8.2 &              7.8 &              6.2 \\
+				& four-a   &              8.3 &              8.0   &              6.1 \\
 
+\hline
+		clear  &	four  &                7.0 &              6.0 &              4.9 \\
+			   &   four-a &                7.0 &              6.4 &              4.9 \\
+	
+\hline	
+		cloudy &	four  &              8.7 &              8.5 &              8.3 \\
+			   &   four-a &              8.8 &              8.6 &              8.4 \\
+\hline
+\end{tabular}
+\caption{The degrees of freedom for AWS with a 325GHz, new version .... }
+\label{tab:DoF:4X}
+\end{table}
 \section{Discussion}
 
 \subsection{229 vs.\ 325\,GHz}
@@ -1851,7 +1886,9 @@ around 325\,GHz from a single perspective, cloud filtering/correction of
 183\,GHz data. There could be other important reasons to consider for the
 selection.
 
-\dots
+It is demonstrated that the 325\,GHz channels are capable of providing accurate cloud correction for 183\,GHz than the 229 \,GHz channel. The simple regression based approach is channel specific and involves only one of the 325\,GHz channel.
+
+In the second correction approach based on machine learning, QRNN is used to predict the clear-sky noise free values. The results show that QRNN are able to predict the clear-sky values with high accuracy. Another advantge of using QRNN is its ability to provide case-specific uncertainty estimates of predictions. In our study, the 
 
 
 {\footnotesize
