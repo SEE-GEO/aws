@@ -66,18 +66,16 @@ Sounder (MWS) and will be used for cloud filtering of 183\,GHz inside that
 mission. In this study, we investigate the possibility to use some 325\,GHz
 channels instead.
 
-On basis of the weighting functions of 183\,GHz, three specifications for
-325\,GHz channels were suggested. A channel specific simple regression was
-tested to estimate and correct the impact of hydrometeors in 183\,GHz channel.
+On basis of the relative humidity (RH) weighting functions of 183\,GHz, three specifications for 325\,GHz channels were suggested. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel.
 The advantage of this approach is that for each 183\,GHz the cloud adjustment
 can be quantified simply through a polynomial fit between the the cloud impact
 in 183\,GHz channel of concern and brightness temperature differences between
 183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz was also
 examined, but gave poor results. One drawback of the simple correction scheme
-is its channel specific approach, which cannot benefit from the other 325\,GHz
+is it's channel specific approach, which cannot benefit from the other 325\,GHz
 channels available. In order to effectively use information from all 325\,GHz
 channels, we suggested a machine learning based approach for cloud correction.
-We used QRNN (Quantile Regression Neural Network) to to correct the cloud
+We used QRNN (Quantile Regression Neural Network) to correct the cloud
 impact in each 183\,GHz channel using measurements from all available channels
 of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance
 was comparable. For some channels, interestingly, the spread of errors was
@@ -103,7 +101,7 @@ of the suggested channel options and also the measurements' degree of freedom
 (DoF) was assessed based on the performed simulations. The DoF can be seen as a
 measure of the effective number of channels. The DoF analysis gave further
 support for selecting 325\,GHz in favour of 229\,GHz. The DoF of the 325\,GHz
-options is higher or equal to the 229\,GHz one already in clear-sky conditions,
+options is higher or equal to the 229\,GHz one, already in clear-sky conditions,
 while for cloud conditions 325\,GHz consistently gives two additional degrees
 of freedom. Some additional 325\,GHz channel versions were considered in the DoF
 analysis.
@@ -112,11 +110,11 @@ With 325\,GHz as a better option confirmed, the next step is to establish
 requirements for these channels. The study considered this question to some
 extent. The cloud correction simulations gave no clear constraints on the
 requirements, while the DoF analysis at least gave some indications. By
-comparison to the NE$\Delta$D requirements for ICI and DoF values derived, it
+comparison to the NE$\Delta$T requirements for ICI and DoF values derived, it
 is suggested to set threshold, target and breakthrough for the 325\,GHz
 receiver noise temperature to 2400, 1800 and 1200\,K, respectively. Regarding
 number, position and widths of channels, the differences between considered
-options are relatively small and at this point it seems reasonable to let
+options are relatively small and at this point, it seems reasonable to let
 technical considerations guide the basic selection between having three or four
 channels. Later, when the technical constraints (such as the IF range
 available) are better known an updated assessment should be performed to set
@@ -328,7 +326,7 @@ polarisation, respectively, and $\theta$ is the viewing angle (from nadir).
 The Fascod dataset \citep{anderson1986afgl} was used to represent different
 climate zones in overview calculations. The dataset consists of profiles of
 pressure, temperature and volume mixing ratio profiles of various atmospheric
-gases. Five climatoligies were used: tropical (TRO), mid-latitude summer (MLS),
+gases. Five climatologies were used: tropical (TRO), mid-latitude summer (MLS),
 mid-latitude winter (MLW), sub-arctic summer (SAS), and sub-arctic winter
 (SAW). No hydrometeors were included in simulations involving Fascod.
 
@@ -435,7 +433,7 @@ and could not be accommodated inside the study.
 Using the simulation setup described in previous section, we simulated 125460 cases based on randomly selected CloudSat orbits during August 2015. The input data
 were restricted between $60^{\degree}$S to $60^{\degree}$N, and surface is below 500\,m. Both clear-sky and all-sky scenarios were simulated, and no differentiation was made between the observations over water and land. 24 monochromatic frequencies were used so that each channel could be represented with sufficient accuracy. The simulations were generated for sensor viewing angles from $0^\circ$ to $45^\circ$, but all the results described in this report are based on nadir viewing angle.
 
-Since in this study, the cases with cloud impact are extremely important, we used ``clear-sky thinning'' to improve the representation of the cloudy cases in the dataset. Thinned dataset is a subset of the full dataset with 50\% of the clear-sky cases removed (cloud impact $<$ 0.2\,K) The size of the thinned dataset is different for each channel. 
+Since in this study, the cases with cloud impact are extremely important, we used ``clear-sky thinning'' to improve the representation of the cloudy cases in the dataset. Thinned dataset is a subset of the full dataset with 50\% of the clear-sky cases removed (cloud impact $<$ 0.2\,K). The size of the thinned dataset is different for each channel. 
 
 \subsection{Validation of simulations}
 \label{sec:validation}
@@ -464,7 +462,7 @@ Fig.~\ref{fig:pdf:c16-22}. For the comparison, the daytime ATMS observations
 were selected as CloudSat operates only during the day part of the orbit since
 2011. For the channels around 183\,GHz, the ATMS characteristics are not fully
 simulated. The ATMS channel widths are considered, but as AWS is only covering
-the lower wing of the 183\,GHz transition the upper sideband of ATMS is not
+the lower wing of the 183\,GHz transition the upper side-band of ATMS is not
 included.
 
 The overall agreement is good for all channels. For 183 GHz channels (Channels
@@ -478,7 +476,7 @@ is due to the fact that the antenna pattern is not considered in the
 simulations.
 
 In the intermediate region, the simulations have a lower occurrence rate. The
-impact of hydrometeors should be somewhat higher in the upper sideband of ATMS,
+impact of hydrometeors should be somewhat higher in the upper side-band of ATMS,
 which is not reflected in the simulations, but this is not sufficient to
 explain the deviation. As this region is well covered in the simulations
 reported in Fig.~7 of \citet{eriksson:towar:20}, the deviation of concern is
@@ -488,7 +486,7 @@ this transitional region is of high interest. For this reason, the PDF for a
 shown. This PDF gives a fair match in the intermediate region (but gives an
 even higher over-representation at more strong cloud impacts). This smaller
 dataset will be considered in parallel below, to ensure that no fraction of the
-``cloudy'' cases is not underrepresented in the results.
+``cloudy'' cases is not under-represented in the results.
 
 
 
@@ -1214,10 +1212,10 @@ Sec.~\ref{sec:channel:configurations}, and both have been used to train QRNN
 separately. Thus, for each channel of 183\,GHz, we have a set of three
 predictions: one from four channel option, and two from the old and new
 configurations of the three channel option. Further in the text, the old and
-new three channel configurations are labelled as "three-a" and "three-b".
+new three channel configurations are labelled as ``three-a'' and ``three-b''.
 
 To develop the QRNN scheme, we use the same dataset as in the
-simple scheme . Out of 125\,000 simulations, 90\% are used to train the model,
+simple scheme . Out of 125\,460 simulations, 90\% are used to train the model,
 while the rest 10\% is used to evaluate the model's performance during
 training. Presently we train QRNN for only nadir sensor viewing angle and the
 receiver noise $T_r$ = 1200\,K. In the training process, noise is added to the
@@ -1250,7 +1248,7 @@ The grid search was also conducted for both three channel options, and an identi
 
 \subsection{Prediction accuracy}
 %
-We train the QRNN to predict the quantiles $x_{\tau}$, for median, $\pm 1\sigma$, $\pm 2 \sigma$ and  $\pm 3 \sigma$ ($\tau$ = 0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998). The expectation value of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value. To analyse the prediction accuracy, a testing dataset is constructed by randomly drawing 25\,000 cases from the simulation dataset. Noise is added to each simulation to mimic a new measurement dataset. 
+We train the QRNN to predict the quantiles $x_{\tau}$, for median, $\pm 1\sigma$, $\pm 2 \sigma$ and  $\pm 3 \sigma$ ($\tau$ = 0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998). The expectation value of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value. To analyse the prediction accuracy, a testing dataset was constructed by randomly drawing 25\,000 cases from the simulation dataset. Noise was added to each simulation to mimic a new measurement dataset. 
 
 The distributions of the predicted clear-sky noise-free values for each of the
 183\, GHz channels are shown in Figure~\ref{fig:pdf:qrnn}. The simulated
@@ -1294,7 +1292,7 @@ of the errors.
 		corrected (four)   			&  0.111 & 0.620 &             -0.659 &      2.985 \\
 		\hline
 	\end{tabular}
-	\caption{ Bias, standard deviation and measure of skewness for the error distributions of the dataset (AWS-34) shown in Figure~\ref{fig:qrnn_C34:deviations}. The labels "three-a", "three-b" correspond to the old and new suggestions of three channels options of 325\,GHz, and the label "four" represents the four channels option.}
+	\caption{ Bias, standard deviation and measure of skewness for the error distributions of the dataset (AWS-34) shown in Figure~\ref{fig:qrnn_C34:deviations}. The labels ``three-a'', ``three-b'' correspond to the old and new suggestions of three channels options of 325\,GHz, and the label ``four'' represents the four channels option.}
 	\label{tab:qrnn:C34}
 \end{table}
 
@@ -1372,7 +1370,7 @@ of the errors.
 \end{table}
 
 
-In an analogy between the results from the simple correction scheme and QRNN, we perform a similar error distribution analysis as in Section~\ref{sec:simple}. Figure~\ref{fig:qrnn_C34:deviations} shows the error distributions of the measurements and predicted clear-sky TBs for AWS-34 using three (three-b) and four channel options of 325\,GHz. Measurements with cases with $Tb2 - Tb1 > -15$\,K are assumed to be too-cloudy and are filtered out. Here $Tb1$ denotes TBs from AWS-34 and and $Tb2$ is the paired counterpart from 325\,GHz, i.e., AWS-42.  Both the three channels and four channels QRNN models are successful in predicting the clear-sky noise-free value for AWS-34, and the resulting error distribution is symmetric. The statistics corresponding to these distributions are provided in Table~\ref{tab:qrnn:C34}. The fraction of cases rejected as "too-cloudy" is also provided under ``fraction rejected''. For AWS-34, average deviation in the predictions from all three QRNN models are comparable.  The cloud impact in the uncorrected measurements is reflected in the high negative skewness (-10.32), however the predictions have relatively symmetric error distributions as reflected by the low skewness values. Among the three set of predictions, option three-b has the most symmetric error distribution but with a relatively large spread. Predictions from option four have the lowest standard deviation (0.620\,K), which is interestingly smaller than the standard deviation of noise (0.641\,K). Though, all three options of 325\,GHz provide a full coverage to the hydrometer impact in AWS-34, predictions from four channel option have slightly better accuracy.
+In an analogy between the results from the simple correction scheme and QRNN, we perform a similar error distribution analysis as in Sec.~\ref{sec:simple}. Figure~\ref{fig:qrnn_C34:deviations} shows the error distributions of the measurements and predicted clear-sky TBs for AWS-34 using three (three-b) and four channel options of 325\,GHz. Measurements with cases with $Tb2 - Tb1 > -15$\,K are assumed to be too-cloudy and are filtered out. Here $Tb1$ denotes TBs from AWS-34 and and $Tb2$ is the paired counterpart from 325\,GHz, i.e., AWS-42.  Both the three channels and four channels QRNN models are successful in predicting the clear-sky noise-free value for AWS-34, and the resulting error distribution is symmetric. The statistics corresponding to these distributions are provided in Table~\ref{tab:qrnn:C34}. The fraction of cases rejected as ``too-cloudy'' is also provided under ``fraction rejected''. For AWS-34, average deviation in the predictions from all three QRNN models are comparable.  The cloud impact in the uncorrected measurements is reflected in the high negative skewness (-10.32), however the predictions have relatively symmetric error distributions as reflected by the low skewness values. Among the three set of predictions, option three-b has the most symmetric error distribution but with a relatively large spread. Predictions from option four have the lowest standard deviation (0.620\,K), which is interestingly smaller than the standard deviation of noise (0.641\,K). Though, all three options of 325\,GHz provide a full coverage to the hydrometer impact in AWS-34, predictions from four channel option have slightly better accuracy.
 
 Similar error statistics are also estimated for other 183\,GHz channels.
 Table~\ref{tab:qrnn:C32} provides the statistics for AWS-32. Before correction,
@@ -1411,7 +1409,7 @@ The confidence interval for each point estimate is a way to quantify its
 uncertainty. For example, the predicted quantiles for $\pm 1 \sigma$ give 68\%
 probability that the true value will lie between the range.
 
-To inspect if the predictions follow a normal distribution we evaluate the
+To inspect if the predictions follow a normal distribution, we evaluate the
 length of confidence intervals from the median.
 Figure~\ref{fig:prediction_uncertainty} shows the prediction uncertainty in
 AWS-34 (four channel option). The uncertainty with respect to the median for
@@ -1454,7 +1452,7 @@ We also tested the QRNN model to predict cloud-free TBs by using measurements
 from AWS-4X and AWS-32 as input. In this case, we trained QRNN with
 measurements from AWS-32 and AWS-4X, to predict the clear-sky cloud free TBs
 for AWS-32. The model was trained as described in
-Section~\ref{sec:qrnn:training}, but slightly better training results were
+Sec.~\ref{sec:qrnn:training}, but slightly better training results were
 obtained with width as 256 neurons. Other structural and training parameters
 remain unchanged.
 
@@ -1480,7 +1478,7 @@ not sufficient enough to characterise the effect of hydrometeors in AWS-32.
 %
 In the previous section, we presented the results from QRNN trained using the
 three suggestions of 325\,GHz proposed in
-section~\ref{sec:channel:configurations}. The receiver noise ($T_r$) was
+Sec.~\ref{sec:channel:configurations}. The receiver noise ($T_r$) was
 assumed to be 1200\,K for all cases. In this section, we explore the
 sensitivity of QRNN to a higher receiver noise. The QRNN training is repeated
 for all three suggestions of 325\,GHz, but with $T_r$ = 1800\,K and $T_r$ =
@@ -1518,7 +1516,7 @@ Overall, the results show that an increase in the measurement noise does not hav
 	corrected (four channel)   &  0.006 & 0.860 &             -2.943 &      4.954 \\
 		\hline
 	\end{tabular}
-	\caption{Error statistics for AWS-32, when the model is trained with $T_r$ = 1800\,K. The definitions of "three-a", "three-b" and "four" are same as described in Table~\ref{tab:qrnn:C34} }
+	\caption{Error statistics for AWS-32, when the model is trained with $T_r$ = 1800\,K. The definitions of ``three-a'', ``three-b'' and ``four'' are same as described in Table~\ref{tab:qrnn:C34} }
 	\label{tab:qrnn:C32:Trec:1800}
 \end{table}
 
@@ -1605,7 +1603,7 @@ corrected (three-b)  		& -0.015 & 0.882 &             -3.177 &      4.974 \\
 corrected (four channel)    &  0.028 & 0.876 &             -3.638 &      4.978 \\
 		\hline
 	\end{tabular}
-	\caption{ Error statistics for AWS-32, when the model is trained with $T_r$ = 2400\,K. The definitions of "three-a", "three-b" and "four" are same as described in Table~\ref{tab:qrnn:C34}  }
+	\caption{ Error statistics for AWS-32, when the model is trained with $T_r$ = 2400\,K. The definitions of ``three-a'', ``three-b'' and ``four'' are same as described in Table~\ref{tab:qrnn:C34}  }
 	\label{tab:qrnn:C32:Trec:2400}
 \end{table}
 
@@ -1707,9 +1705,9 @@ of the 183\,GHz channels are classified as ``cloudy'', otherwise they are
 classified as ``clear''. With this criteria, out of total 125460 cases, 12905
 are classified as cloudy.
 
-As example, Fig~\ref{fig:DoF:clear:1200K} shows the ratio of
+As an example, Fig~\ref{fig:DoF:clear:1200K} shows the ratio of
 $\Lambda/S_\Lambda$ with respect to the eigenvalue index for clear-sky cases.
-The DoF below is an interpolation between the last index having a ratio above
+The DoF in the section below, is an interpolation between the last index having a ratio above
 one and next index.
 
 \begin{figure}[!tb]
@@ -1724,12 +1722,12 @@ one and next index.
 
 \subsection{DoFs for nominal IF range}
 
-At this point we got feedback from Omnisys that also channel option 3b is
+At this point we got a feedback from Omnisys that also channel option three-b is
 technically challenging. In short, it is significantly more difficult to
 implement a 3\,GHz wide channel at an IF of 3.3\,GHz (AWS-42) than compared to
 at 6.5\,GHz (AWS-41). To decrease the ratio between channel widths and centre
 IF, a third three channel option was formulated (Table~\ref{tab:chs:3c}) that
-is below denoted as three c. This option uses the same IF range as the
+is below denoted as three-c. This option uses the same IF range as the
 previously suggested ones.
 
 \begin{table}[!p]
@@ -1844,18 +1842,15 @@ some redundancy with the two window channels (89 and 166\,GHz).
 As a basic investigation of the impact of changing the width of the IF range, a
 version of the four channel option was considered, denoted as four-b. It was
 modified to cover 0.7 to 9.0 GHz (instead of 0.7 to 8.0 GHz). To focus on the
-extension, only the edge channels were changed. That is, the revised AWS-41 and AWS-43
+extension, only the edge channels were changed. That is, the revised AWS-41 and AWS-44
 have bandwidth of 3.8 and 0.9\,GHz, respectively. The DoFs obtained for four-b
 are found in Table~\ref{tab:DoF:4b}.
 
 As expected a slight improvement of the DoF can be seen for four-b. The
-exception ``all'' and $T_r=2400$\,K, again likely an indication on some noise
+exception ``all'' and $T_r=2400$\,K, again is likely an indication on some noise
 in the DoFs coming out of the analysis.
 
-That is, a broader IF range should give slightly better performance. If a
-broader IF range is feasible, the position and width of all channels should be
-revised, but this is out of the scope of this study and anyhow hardly motivated
-before it is known more exactly to what extent the IF range can be extended.
+The results indicate that a broader IF range should give slightly better performance. If a broader IF range is feasible, the position and width of all channels should be revised, but this is out of the scope of this study, and anyhow hardly motivated before it is known more exactly to what extent the IF range can be extended.
 
 
 \begin{table}[!bt]
@@ -1865,15 +1860,15 @@ before it is known more exactly to what extent the IF range can be extended.
       &	option &  $T_r = 1200 $\,K &   $T_r = 1800 $\,K &   $T_r = 2400$\,K \\
       \hline
       all &	four   &              8.2 &              7.8 &              6.2 \\
-      & four-a   &              8.3 &              8.0   &              6.1 \\
+      & four-b   &              8.3 &              8.0   &              6.1 \\
 
       \hline
       clear  &	four  &                7.0 &              6.0 &              4.9 \\
-      &   four-a &                7.0 &              6.4 &              4.9 \\
+      &   four-b &                7.0 &              6.4 &              4.9 \\
 	
       \hline	
       cloudy &	four  &              8.7 &              8.5 &              8.3 \\
-      &   four-a &              8.8 &              8.6 &              8.4 \\
+      &   four-b &              8.8 &              8.6 &              8.4 \\
       \hline
 \end{tabular}
 \caption{The degrees of freedom for channel option four-b. Values for option
@@ -1959,7 +1954,7 @@ difference, while in this study a similar or better performance is obtained
 from using measurement data alone. 
 
 \subsubsection{Performance of QRNN}
-In section~\ref{sec:qrnn} we use QRNN as a method for cloud correction based on
+In Sec.~\ref{sec:qrnn} we use QRNN as a method for cloud correction based on
 325\,GHz data. Measurements from all 325\,GHz channels and the 183\,GHz channel
 to be predicted are used to train the QRNN model.
 
@@ -1981,7 +1976,7 @@ slightly better performance. Since 325\,GHz cannot provide a full coverage for
 hydrometeor impact in AWS-32, QRNN cannot learn to predict cloud free values
 for instances which lie outside the area of coverage. In order to compare the
 229\,GHz channel with 325\,GHz, QRNN was also trained with AWS-4X to predict
-cloud free AWS-32 TBs. The performance of QRNN trained with AWS-4X is worse
+cloud free AWS-32. The performance of QRNN trained with AWS-4X is worse
 than training with 325\,GHz. The spread of error distributions is 1.5 times
 more than obtained with four channels option of 325\,GHz.
 
@@ -1990,9 +1985,9 @@ more than obtained with four channels option of 325\,GHz.
 \subsection{Technical recommendations}
 %
 The cloud correction and filtering results gave no clear indications on the
-requirements of the channels, and as a complement also the measurements' degree
-of freedom (DoF) was assessed. The later analysis gave a bit clearer
-indications and the discussion in this section is mainly based on the DoF results.
+requirements of the channels, and as a complement, the measurements' degree
+of freedom (DoF) was also assessed. The latter analysis gave a bit clearer
+indication and the discussion in this section is mainly based on the DoF results.
 
 
 \subsubsection{NE$\Delta$T requirement}
@@ -2012,7 +2007,7 @@ understood that this scales to a requirement on $T_r$ of about 2700\,K (as
 Combining the observations drawn in the two last paragraphs it seems reasonable
 to set the threshold, target and breakthrough for NE$\Delta$T of AWS 325\,GHz
 channels to match a $T_r$ of 2400, 1800 and 1200\,K, respectively. The
-threshold value provide a sufficient basis for an acceptable cloud correction
+threshold value provides a sufficient basis for an acceptable cloud correction
 and still represents a step forward compared to ICI. However, if the present
 ambition of Omnisys of $T_r=1200$\,K will be reached, AWS will provide much
 less noisy 325\,GHz observations than ICI, representing a breakthrough.
@@ -2032,23 +2027,17 @@ Some further channel options were included on the DoF analysis. Staying inside
 0.8\,-\,8.0\,GHz in terms of IF, the option three-c was found to have the
 highest overall DoF, but the differences to three-b and four are relatively
 small. However, it could be challenging to implement any of the three channel
-options. Option three-a risks to be affected by interference of the downlink
-and in options three-b and c there is a high ratio between bandwidth and centre
-IF of AWS-42. The later aspect also makes it hard to extend options three-b and c if
-it would turn out that the IF range can be extended. A brief analysis showed
-that a broader IF range gives some increase in DoF, that potentially could
-improve the merit of the four channel option.
+options. The option three-a risks to be affected by interference of the downlink
+and in the options three-b and c there is a high ratio between bandwidth and centre IF of AWS-42. The latter aspect also makes it hard to extend options three-b and c, if it would turn out that the IF range can be extended. A brief analysis showed that a broader IF range gives some increase in DoF, that potentially could improve the merit of the four channel option.
 
 We don't see how these results can be boiled down to threshold, target and
-breakthrough requirements. Option 3c came out best here, but no full
-optimisation of the options was made, and a modified or extended four channel
+breakthrough requirements. Option three-c came out best here, but no full
+optimization of the options was made, and a modified or extended four channel
 version could possibly reach the same performance. In any case, the differences
-between the options are small and it seems reasonable to allow that the
+between the options are small, and it seems reasonable to allow that the
 technically most simple option is selected (that in fact can be the four
 channel one). When this selection is done and the technical constraints are
-better known (IF range available, needed frequent gaps between channels etc.), an
-iteration of DoF analysis should be made to see if some ``optimisation'' of the
-channel specifications can be achieved.
+better known (IF range available, needed frequent gaps between channels etc.), an iteration of DoF analysis should be made to see if some ``optimization'' of the channel specifications can be achieved.
 
 Further, the simulations have assumed rectangular shaped response functions.
 This was done for simplicity and shall in no way be taken as an indication on
@@ -2068,7 +2057,7 @@ particles was not possible due to the limited time allocated for the study.
 
 The basic recommendation would be to use the same polarisation response as far
 as possible. If both quasi-horizontal and quasi-vertical bands must be applied,
-the recommendation prioritise to use the polarisation option for 183 and
+the recommendation prioritises to use the polarisation option for 183 and
 325\,GHz, to maintain a similar influence of polarisation between the bands.
 
 \newpage
@@ -2081,12 +2070,12 @@ selection.
 
 It is demonstrated that the 325\,GHz channels are capable of providing a more
 accurate cloud correction for 183\,GHz than the 229 \,GHz channel. The simple
-regression based approach evaluated is channel specific and involves the
-325\,GHz channel one at the time. In the second correction approach based on
+regression based approach evaluated is channel specific, and involves the
+325\,GHz channel one at a time. In the second correction approach based on
 machine learning, QRNN is used to predict the clear-sky noise-free values
 throughout using all 325\,GHz in parallel. This seems to be a very useful
 approach. The QRNN predictions result in error distributions with low skewness
-and widths. In some case the prediction uncertainty is even lower than the
+and widths. In some cases, the prediction uncertainty is even lower than the
 noise of the 183\,GHz channel targeted. This approach should be ideal for
 making use of AWS in assimilation systems of clear-sky type.
 
