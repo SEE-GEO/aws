@@ -55,14 +55,58 @@ SE-412\,96, Gothenburg, Sweden\vspace{10mm}
 
 \section*{Summary}
 %
-The main objective of this study is to demonstrate that channels around 325\,GHz can provide a basis for cloud filtering/correction of data measured around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave Sounder (MWS) and  is used for cloud filtering of 183/,GHz. In this study, we investigate the possibility to use the 325\,GHz channels instead. The cloud impact of high altitude cirrus clouds is considerably higher in 325\,GHz. This makes it possible to estimate the low cloud impact at 183 GHz, even of the order of thermal noise and modelling uncertainties.
+The main objective of this study is to demonstrate that channels around
+325\,GHz can provide a basis for cloud filtering/correction of data measured
+around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be
+used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave
+Sounder (MWS) and will be used for cloud filtering of 183\,GHz insde that
+mission. In this study, we investigate the possibility to use the 325\,GHz
+channels instead. The cloud impact of high altitude cirrus clouds is
+considerably higher in 325\,GHz and this makes it possible to estimate the weak
+cloud impact at 183 GHz with relatively good accuracy.
 
-On basis of the weighting functions of 183\,GHz, we suggest three specfications for 325\,GHz channels. The performance of all three options is evaluated. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel. The advantage of this approach is that for each 183\,GHz the cloud adjustment can be quantified simply through a polynomial fit between the the cloud impact in 183\,GHz channel of concern  and brightness temperature differences between 183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz, was also examined, but gave poor results. One drawback of the simple correction scheme is that channel specific approach limits the use of information from other 325\,GHz channels. In order to effectively use information from all 325\,GHz channels, we suggested a machine learning based approach for cloud correction. We used QRNN (Quantile Regression Neural Network ) to to correct the cloud impact in each 183\,GHz channel using measurements (noisy) from all available channels of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance was comparable. For some channels, interestingly, the spread of errors was narrower than noise. Another advantage of using QRNN is that the cloud free values are predicted at different quantile levels, which helps in quantifying the case-specific uncertainty estimate. A similar QRNN model with 229\,GHz gave poor results. Also, no critical dependency to the 325\,GHz receiver noise temperature was observed. 
+On basis of the weighting functions of 183\,GHz, three specfications for
+325\,GHz channels were suggested. A channel specific simple regression was
+tested to estimate and correct the impact of hydrometeors in 183\,GHz channel.
+The advantage of this approach is that for each 183\,GHz the cloud adjustment
+can be quantified simply through a polynomial fit between the the cloud impact
+in 183\,GHz channel of concern and brightness temperature differences between
+183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz was also
+examined, but gave poor results. One drawback of the simple correction scheme
+is its channel specific approach, which cannot benefit from the other 325\,GHz
+channels available. In order to effectively use information from all 325\,GHz
+channels, we suggested a machine learning based approach for cloud correction.
+We used QRNN (Quantile Regression Neural Network) to to correct the cloud
+impact in each 183\,GHz channel using measurements from all available channels
+of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance
+was comparable. For some channels, interestingly, the spread of errors was
+narrower than the noise of the target 183\,GHz channel. Another advantage of
+using QRNN is that the cloud free values are predicted at different quantile
+levels, which helps in quantifying the case-specific uncertainty estimate. A
+similar QRNN model with 229\,GHz gave poor results. No critical dependency to
+the 325\,GHz receiver noise temperature was observed.
 
-Ths study shows that combining measurements from 325\,GHz can provide a better cloud correction performance than 229\,GHz, and also with minimal rejection of data. The clear-sky predictions have error distributions which are symmetric with low bias and spread. Therefore, the NWP and standalone 1DVAR models that utilize the ``clear-sky'' data can greatly benefit from it. Also, in data assimilation systems, the case-specific uncertainty allows an effective selection of weights, thus significantly improving the impact of measurements. Another advantage of combining 183\,GHz and 325\,GHz for cloud correction is that NWP systems, which are not yet prepared for 325 GHz, could still benefit from the data early on.
+This study shows that combining measurements from 325\,GHz can provide a better
+cloud correction performance than 229\,GHz, and also with minimal rejection of
+data. The clear-sky predictions have error distributions which are symmetric
+with low bias and spread. Therefore, the NWP and standalone 1DVAR models that
+utilize the ``clear-sky'' data can greatly benefit from it. Also, in data
+assimilation systems, the case-specific uncertainty allows an effective
+selection of weights, thus significantly improving the impact of measurements.
+Another advantage of combining 183\,GHz and 325\,GHz for cloud correction is
+that NWP systems, which are not yet prepared for 325 GHz, could still benefit
+from the data early on. 
 
+The cloud correction analysis did not give a clear value on the relative merit
+of the suggested channel options and also the measurements' degree of freedom
+(DOF) was assessed based on the performed simulations. The DoF can be seen as a
+measure of the effective number of channels. The DOF analysis gave further
+support for selecting 325\,GHz in favour of 229\,GHz. The DOF of the 325\,GHz
+options is higher or equal to the 229\,Ghz one already in clear-sky
+conditions, while  for cloud conditions 325\,GHz consistently gives two
+additional degrees of freedom. That is, 325\,GHz clearly gives more rich
+informaion in cloudy conditions than 229\,GHz. 
 
-[* IK: Run spell check just before submitting * ]
 
 
 \setcounter{tocdepth}{1} 
