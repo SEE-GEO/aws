@@ -96,7 +96,7 @@ class TB_AWS():
         
         Returns:
             
-            
+        S_epsilon, diagonal array with NEDT **2 as diagonal elements    
         """
         c = 1.2
         delta_t = 0.003
@@ -122,9 +122,19 @@ class TB_AWS():
             
         if self.option == "3b":
             bandwidth_325 = np.array([3000, 3000, 800])* 1e6    
-            
+
+        if self.option == "3c":
+            bandwidth_325 = np.array([3500, 2500, 800])* 1e6    
+
+        if self.option == "3d":
+            bandwidth_325 = np.array([4000, 3000, 900])* 1e6                
+
         if self.option == "4":
             bandwidth_325 = np.array([2800, 1800, 1200, 800])*1e6
+            
+        if self.option == "4a":
+            bandwidth_325 = np.array([3800, 1800, 1200, 900])*1e6     
+            
         delta_f = np.concatenate([bandwidth_89, bandwidth_165, bandwidth_183,
                                   bandwidth_229, bandwidth_325])
 
