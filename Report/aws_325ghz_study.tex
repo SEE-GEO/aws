@@ -63,10 +63,8 @@ The main objective of this study is to demonstrate that channels around
 around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be
 used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave
 Sounder (MWS) and will be used for cloud filtering of 183\,GHz inside that
-mission. In this study, we investigate the possibility to use the 325\,GHz
-channels instead. The cloud impact of high altitude cirrus clouds is
-considerably higher in 325\,GHz and this makes it possible to estimate the weak
-cloud impact at 183 GHz with relatively good accuracy.
+mission. In this study, we investigate the possibility to use some 325\,GHz
+channels instead.
 
 On basis of the weighting functions of 183\,GHz, three specifications for
 325\,GHz channels were suggested. A channel specific simple regression was
@@ -1754,9 +1752,9 @@ previously suggested ones.
 Table~\ref{tab:DoF:all} shows the DoF with 325\,GHz when all cases are
 considered. For $T_r$ = 1200\,K, the DoF from all four options is around 8,
 however, increase in receiver noise leads to a loss in the DoF.
-Table~\ref{tab:DoF:clear} and Table~\ref{tab:DoF:cloudy} show the DoF for
+Tables~\ref{tab:DoF:clear} and \ref{tab:DoF:cloudy} show the DoF for
 clear-sky and cloudy cases respectively. For clear-sky situations, the DoFs are
-about 77. With increase in $T_r$, the DoF are degraded. For $T_r$ = 2400\,K, we
+about 7. With increase in $T_r$, the DoF are degraded. For $T_r$ = 2400\,K, we
 have only 5 DoF for option three-a and 4.8 for both option three-b/c and 4.9
 for option four. On the other hand, the presence of clouds increases the DoF
 significantly. For all three options, we have DoF close to 9. Increase in noise
@@ -1846,7 +1844,7 @@ some redundancy with the two window channels (89 and 166\,GHz).
 As a basic investigation of the impact of changing the width of the IF range, a
 version of the four channel option was considered, denoted as four-b. It was
 modified to cover 0.7 to 9.0 GHz (instead of 0.7 to 8.0 GHz). To focus on the
-extension, only the edge channels were changed. That is, the revised AWS-41 and
+extension, only the edge channels were changed. That is, the revised AWS-41 and AWS-43
 have bandwidth of 3.8 and 0.9\,GHz, respectively. The DoFs obtained for four-b
 are found in Table~\ref{tab:DoF:4b}.
 
@@ -1856,7 +1854,7 @@ in the DoFs coming out of the analysis.
 
 That is, a broader IF range should give slightly better performance. If a
 broader IF range is feasible, the position and width of all channels should be
-revised, bit this is out of the scope of this study and anyhow hardly motivated
+revised, but this is out of the scope of this study and anyhow hardly motivated
 before it is known more exactly to what extent the IF range can be extended.
 
 
@@ -1993,7 +1991,7 @@ more than obtained with four channels option of 325\,GHz.
 %
 The cloud correction and filtering results gave no clear indications on the
 requirements of the channels, and as a complement also the measurements' degree
-of freedom (DoF) were assessed. The later analysis gave a bit clearer
+of freedom (DoF) was assessed. The later analysis gave a bit clearer
 indications and the discussion in this section is mainly based on the DoF results.
 
 
@@ -2023,8 +2021,8 @@ less noisy 325\,GHz observations than ICI, representing a breakthrough.
 
 \subsubsection{Channel specifications}
 %
-We formed three first 325\,GHz channel options. All three options were
-considered only in the QRNN part as it is difficult to maintain the full
+We formed three 325\,GHz channel options. All three options were
+considered first in the QRNN part as it is difficult to maintain the full
 information of all channels in a simple regression based scheme. None of the
 three options gave consistently best results, and it is not possible to give a
 clear recommendation. For this reason we did not see any value in testing
@@ -2036,27 +2034,29 @@ highest overall DoF, but the differences to three-b and four are relatively
 small. However, it could be challenging to implement any of the three channel
 options. Option three-a risks to be affected by interference of the downlink
 and in options three-b and c there is a high ratio between bandwidth and centre
-IF of AWS-42. This aspect also makes it hard to extend options three-b and c if
+IF of AWS-42. The later aspect also makes it hard to extend options three-b and c if
 it would turn out that the IF range can be extended. A brief analysis showed
 that a broader IF range gives some increase in DoF, that potentially could
 improve the merit of the four channel option.
 
 We don't see how these results can be boiled down to threshold, target and
-breakthrough requirements. Option 3c came out best here, but the full
-optimisation of the options was made and a modified or extended four channel
-version could reach the same performance. In any case, the differences between
-the options are small and it seems reasonable to allow that  the technically
-most simple option is selected (that in fact can be the four channel one).
-When this selection is done and the technical constraints are better known (IF
-range available, needed frequent gaps between channels), an iteration of DoF
-analysis should be made to see if some ``optimisation'' of the channel
-specifications can be achieved.
+breakthrough requirements. Option 3c came out best here, but no full
+optimisation of the options was made, and a modified or extended four channel
+version could possibly reach the same performance. In any case, the differences
+between the options are small and it seems reasonable to allow that the
+technically most simple option is selected (that in fact can be the four
+channel one). When this selection is done and the technical constraints are
+better known (IF range available, needed frequent gaps between channels etc.), an
+iteration of DoF analysis should be made to see if some ``optimisation'' of the
+channel specifications can be achieved.
 
 Further, the simulations have assumed rectangular shaped response functions.
 This was done for simplicity and shall in no way be taken as an indication on
 that this shape is required. We have left some frequency gaps between the
 channels to simplify the technical implementation, i.e.\ to decrease the demand
-on very sharp transitions from high to low response. 
+on very sharp transitions from high to low response, but if gaps of 200\,MHz
+actually are required or if some overlap of the responses can be tolerated is
+not known to us.
 
 
 \subsubsection{Polarisation response}
@@ -2071,7 +2071,7 @@ as possible. If both quasi-horizontal and quasi-vertical bands must be applied,
 the recommendation prioritise to use the polarisation option for 183 and
 325\,GHz, to maintain a similar influence of polarisation between the bands.
 
-
+\newpage
 \section{Conclusion}
 %
 This study compares the options of having a channel at 229\,GHz or having some
