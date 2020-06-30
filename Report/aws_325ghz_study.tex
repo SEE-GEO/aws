@@ -58,40 +58,39 @@ SE-412\,96, Gothenburg, Sweden\vspace{10mm}
 
 \section*{Summary}
 %
-The main objective of this study was to demonstrate that channels around
+The main objective of this study is to demonstrate that channels around
 325\,GHz can provide a basis for cloud filtering/correction of data measured
-around 183\,GHz. Previously, it had been shown that a channel at 229\,GHz can
-be used for this cloud filtering and a 229\,GHz channel forms a part of the
-MicroWave Sounder (MWS). In this study, we investigate the possibility to use
-some 325\,GHz channels instead, more in line with the Ice Cloud Imager (ICI).
+around 183\,GHz. Previously, it was suggested that a channel at 229\,GHz to be
+used for cloud filtering. The 229\,GHz channel forms a part of the MicroWave
+Sounder (MWS) and will be used for cloud filtering of 183\,GHz inside that
+mission. In this study, we investigate the possibility to use some 325\,GHz
+channels instead.
 
 On basis of the relative humidity (RH) weighting functions of 183\,GHz, three
-reference specifications for 325\,GHz channels were suggested. A channel
-specific simple regression was tested to estimate and correct the impact of
-hydrometeors in 183\,GHz channel. The advantage of this approach is that for
-each 183\,GHz the cloud adjustment can be quantified simply through a
-polynomial fit between the the cloud impact in 183\,GHz channel of concern and
-brightness temperature differences between 183\,GHz and 325\,GHz. A similar
-regression scheme based on 229\,GHz was also examined, but gave poor results.
-One drawback of the simple correction scheme is it's channel specific approach,
-which cannot benefit from the other 325\,GHz channels available. In order to
-effectively use information from all 325\,GHz channels, we suggested a machine
-learning based approach for cloud correction. We used QRNN (Quantile Regression
-Neural Network) to correct the cloud impact in each 183\,GHz channel using
-measurements from all available channels of 325\,GHz. All three options of
-325\,GHz were evaluated, and the performance was comparable. For some channels,
-interestingly, the spread of errors was narrower than the noise of the target
-183\,GHz channel. Another advantage of using QRNN is that the cloud free values
-are predicted at different quantile levels, which helps in quantifying the
-case-specific uncertainty estimate. A similar QRNN model with 229\,GHz gave
-poor results. No critical dependency to the 325\,GHz receiver noise temperature
-was observed.
+ specifications for 325\,GHz channels were suggested. A channel specific simple regression was tested to estimate and correct the impact of hydrometeors in 183\,GHz channel.
+The advantage of this approach is that for each 183\,GHz the cloud adjustment
+can be quantified simply through a polynomial fit between the the cloud impact
+in 183\,GHz channel of concern and brightness temperature differences between
+183\,GHz and 325\,GHz. A similar regression scheme based on 229\,GHz was also
+examined, but gave poor results. One drawback of the simple correction scheme
+is it's channel specific approach, which cannot benefit from the other 325\,GHz
+channels available. In order to effectively use information from all 325\,GHz
+channels, we suggested a machine learning based approach for cloud correction.
+We used QRNN (Quantile Regression Neural Network) to correct the cloud
+impact in each 183\,GHz channel using measurements from all available channels
+of 325\,GHz. All three options of 325\,GHz were evaluated, and the performance
+was comparable. For some channels, interestingly, the spread of errors was
+narrower than the noise of the target 183\,GHz channel. Another advantage of
+using QRNN is that the cloud free values are predicted at different quantile
+levels, which helps in quantifying the case-specific uncertainty estimate. A
+similar QRNN model with 229\,GHz gave poor results. No critical dependency to
+the 325\,GHz receiver noise temperature was observed.
 
 This study shows that combining measurements from 325\,GHz can provide a better
 cloud correction performance than 229\,GHz, and also with minimal rejection of
 data. The clear-sky predictions have error distributions which are symmetric
 with low bias and spread. Therefore, the NWP and standalone 1DVAR models that
-utilise ``clear-sky'' data can greatly benefit from it. Also, in data
+utilise the ``clear-sky'' data can greatly benefit from it. Also, in data
 assimilation systems, the case-specific uncertainty allows an effective
 selection of weights, thus significantly improving the impact of measurements.
 Another advantage of combining 183\,GHz and 325\,GHz for cloud correction is
@@ -111,7 +110,7 @@ analysis.
 With 325\,GHz as a better option confirmed, the next step is to establish
 requirements for these channels. The study considered this question to some
 extent. The cloud correction simulations gave no clear constraints on the
-requirements, while the DoF analysis gave some indications. By
+requirements, while the DoF analysis at least gave some indications. By
 comparison to the NE$\Delta$T requirements for ICI and DoF values derived, it
 is suggested to set threshold, target and breakthrough for the 325\,GHz
 receiver noise temperature to 2400, 1800 and 1200\,K, respectively. Regarding
@@ -122,7 +121,7 @@ channels. Later, when the technical constraints (such as the IF range
 available) are better known an updated assessment should be performed to set
 the final channel values.
 
-\vspace{20mm}
+\vspace{10mm}
 \setcounter{tocdepth}{1} 
 \tableofcontents
 
@@ -616,7 +615,7 @@ percent unit over 1\,km. RH with respect liquid/ice is applied above/below
 0$^\circ$C.
 
 The basic shape of the Jacobian is similar for all 183 and 325\,GHz channels,
-but the peak altitude varies. Again the edge 183\,GHz channels brackets the
+but the peak altitude varies. Again the edge 183\,GHz channels bracket the
 325\,GHz ICI ones, as for transmissivity. These Jacobians are negative, meaning
 that a change towards higher humidity results in decreased brightness
 temperatures. The 229\,GHz Jacobian is positive close to the surface, as this
@@ -981,7 +980,7 @@ Table~\ref{tab:correction:stats:34:42:thinned}.
 		\hline
 \end{tabular}
 \caption{Bias, standard deviation (std), and measure of skewness of the error
-  distributions of datasets shown in
+  distributions of datasets (AWS-34) shown in
   Figure~\ref{fig:correction:c34-42:thinned}.}
 \label{tab:correction:stats:34:42:thinned}
 \end{table}
@@ -1713,10 +1712,11 @@ one and next index.
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[height=80mm]{DoF.png}
-	\caption{ The ratio of the diagonal elements of $\Lambda/S_\Lambda$ with
-      respect to the eigenvalue index for clear-sky cases. The black dashed
-      line represents the level where the ratio is unity. The crossing between
-      the coloured lines and the dashed line gives the DoF value reported.}
+	\caption{ The ratio of $\Lambda/S_\Lambda$ with
+ respect to the eigenvalue
+      index for clear-sky cases. The black dotted line represents the level
+      where the ratio is unity. 
+}
 	\label{fig:DoF:clear:1200K}
 \end{figure}
 
@@ -1764,8 +1764,8 @@ The DoF values should not be interpreted to strongly. There appears to be some
 Table~\ref{tab:DoF:all} all the options have fairly similar DoF for
 $T_r=1800$\,K while for $T_r=2400$\,K there are considerable differences. This
 shift when going $T_r=2400$\,K is not observed in the two other tables. Having
-this in mind, it seems that options three b and c give in overall similar DoF. If
-something, option three-c appears slightly better. The four channel option
+this in mind, it seems that options three b and c give very similar DoF. If
+something, option three-c seems slightly better. The four channel option
 obtains somewhat lower DoF than the three channel ones.
 
 Table~\ref{tab:DoF:4X} gives the DoF, with 229\,GHz channel. The DoF is 6.8 for
@@ -1851,14 +1851,7 @@ As expected a slight improvement of the DoF can be seen for four-b. The
 exception ``all'' and $T_r=2400$\,K, again is likely an indication on some noise
 in the DoFs coming out of the analysis.
 
-The results indicate that a broader IF range should give slightly better
-performance. If a broader IF range is feasible, the position and width of all
-channels should be revised, but this is out of the scope of this study, and
-anyhow hardly motivated before it is known more exactly to what extent the IF
-range can be extended. Anyhow, as the three channel options already has a high
-ratio between bandwidth and centre IF for AWS-42, it seems difficult to make
-full use of an increased IF range for a those options and this is why this test
-was made using the four channel option.
+The results indicate that a broader IF range should give slightly better performance. If a broader IF range is feasible, the position and width of all channels should be revised, but this is out of the scope of this study, and anyhow hardly motivated before it is known more exactly to what extent the IF range can be extended.
 
 
 \begin{table}[!bt]
@@ -2024,7 +2017,7 @@ less noisy 325\,GHz observations than ICI, representing a breakthrough.
 
 \subsubsection{Channel specifications}
 %
-We formed three reference 325\,GHz channel options. All three options were
+We formed three 325\,GHz channel options. All three options were
 considered first in the QRNN part as it is difficult to maintain the full
 information of all channels in a simple regression based scheme. None of the
 three options gave consistently best results, and it is not possible to give a
@@ -2035,11 +2028,8 @@ Some further channel options were included on the DoF analysis. Staying inside
 0.8\,-\,8.0\,GHz in terms of IF, the option three-c was found to have the
 highest overall DoF, but the differences to three-b and four are relatively
 small. However, it could be challenging to implement any of the three channel
-options. The option three-a risks to be affected by interference of the
-downlink and in the options three-b and c there is a high ratio between
-bandwidth and centre IF of AWS-42. .A brief analysis showed that a broader IF
-range gives some increase in DoF, that at least could improve the merit of the
-four channel option.
+options. The option three-a risks to be affected by interference of the downlink
+and in the options three-b and c there is a high ratio between bandwidth and centre IF of AWS-42. The latter aspect also makes it hard to extend options three-b and c, if it would turn out that the IF range can be extended. A brief analysis showed that a broader IF range gives some increase in DoF, that potentiallyacould improve the merit of the four channel option.
 
 We don't see how these results can be boiled down to threshold, target and
 breakthrough requirements. Option three-c came out best here, but no full
@@ -2048,9 +2038,7 @@ version could possibly reach the same performance. In any case, the differences
 between the options are small, and it seems reasonable to allow that the
 technically most simple option is selected (that in fact can be the four
 channel one). When this selection is done and the technical constraints are
-better known (IF range available, needed frequent gaps between channels etc.),
-an iteration of DoF analysis should be made to see if some ``optimization'' of
-the channel specifications can be achieved.
+better known (IF range available, needed frequent gaps between channels etc.), an iteration of DoF analysis should be made to see if some ``optimization'' of the channel specifications can be achieved.
 
 Further, the simulations have assumed rectangular shaped response functions.
 This was done for simplicity and shall in no way be taken as an indication on
@@ -2082,7 +2070,7 @@ around 325\,GHz from a single perspective, cloud filtering/correction of
 selection.
 
 It is demonstrated that the 325\,GHz channels are capable of providing a more
-accurate overall cloud correction for 183\,GHz than a 229 \,GHz channel. The simple
+accurate cloud correction for 183\,GHz than the 229 \,GHz channel. The simple
 regression based approach evaluated is channel specific, and involves the
 325\,GHz channel one at a time. In the second correction approach based on
 machine learning, QRNN is used to predict the clear-sky noise-free values
@@ -2090,7 +2078,7 @@ throughout using all 325\,GHz in parallel. This seems to be a very useful
 approach. The QRNN predictions result in error distributions with low skewness
 and widths. In some cases, the prediction uncertainty is even lower than the
 noise of the 183\,GHz channel targeted. This approach should be ideal for
-making use of AWS in assimilation and retrieval systems of clear-sky type.
+making use of AWS in assimilation systems of clear-sky type.
 
 No results gave strong constraints for defining threshold, target and
 breakthrough requirements, but a suggestion is still given with respect to
