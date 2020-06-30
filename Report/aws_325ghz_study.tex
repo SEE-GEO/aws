@@ -137,13 +137,13 @@ radiometer package. This instrument is an across-track scanning microwave
 radiometer. The exact channel configuration of AWS is not yet set. The main
 issue for this study is that AWS will have channels at 183\,GHz, but also one
 or several channels a higher frequencies. A number of channels around 325\,GHz
-was considered as the main option before AWS became an ESA/EUMETSAT mission,
+was considered as the main option before AWS became an ESA prototype mission,
 but it has now also been suggested to have a single channel at 229\,GHz. This
 suggestion is based on MWS (MicroWave Sounder), one of the instruments onboard
 the next generation of Metop satellites. The 229\,GHz was added to MWS as an
 help for performing cloud screening of 183\,GHz data
 \citep{rekha2012potential}. For comparison, it can be mentioned that ICI (Ice
-Cloud Imager), another new Metop sensor, will include 325\,GHz channels.
+Cloud Imager), another new EPS-SG (EUMETSAT Polar System - Second Generation) sensor, will include 325\,GHz channels.
 
 \subsection{Aim}
 %
@@ -333,8 +333,8 @@ mid-latitude winter (MLW), sub-arctic summer (SAS), and sub-arctic winter
 
 \subsubsection{Bulk profile database}
 %
-A database of atmospheric cases was created based on data from CloudSat and
-ERA-Interim. The core idea of the approach is to use CloudSat reflectivities to
+A database of atmospheric cases was created based on data from CloudSat \citep{stephens2002bams} and
+ERA-Interim \citep{dee2011qjrms}. The core idea of the approach is to use CloudSat reflectivities to
 obtain as realistic vertical profiles of ice hydrometeors and rain as
 possible. No external CloudSat retrievals are involved. Instead the CloudSat
 reflectivities are mapped to properties for the passive simulations by assuming
@@ -412,7 +412,7 @@ above 0$^\circ$C are assumed to be rain, and all below 0$^\circ$C are assumed
 to be ice hydrometeors.
 
 For RWC the particle size distribution of \citet{abel2012improved} is applied.
-The PSD of IWC follows the basic formulation applied in DARDAR, using latest
+The PSD of IWC follows the basic formulation applied in DARDAR (\verb http://www.icare.univ-lille1.fr/projects/dardar), using latest
 parameter values (i.e.\ $\alpha$ and $\beta$) as given by
 \citet{amt-12-2819-2019}. This PSD can be considered as a ``two moment''
 scheme, but is here applied in a one moment manner by setting $N_0^*$ (as a
@@ -438,21 +438,23 @@ Since in this study, the cases with cloud impact are extremely important, we use
 \subsection{Validation of simulations}
 \label{sec:validation}
 %
+
 \begin{figure}[p]
 	\centering
-	\includegraphics[height=60mm]{ATMS_C16_distribution}\hspace{5mm}% 
-	\includegraphics[height=60mm]{ATMS_C17_distribution}
-	\includegraphics[height=60mm]{ATMS_C18_distribution}\hspace{5mm}% 
-	\includegraphics[height=60mm]{ATMS_C19_distribution}
-	\includegraphics[height=60mm]{ATMS_C20_distribution}\hspace{5mm}% 
-	\includegraphics[height=60mm]{ATMS_C21_distribution}
-	\includegraphics[height=60mm]{ATMS_C22_distribution}
+	\includegraphics[height=57mm]{ATMS_C16_distribution}\hspace{5mm}% 
+	\includegraphics[height=57mm]{ATMS_C17_distribution}
+	\includegraphics[height=57mm]{ATMS_C18_distribution}\hspace{5mm}% 
+	\includegraphics[height=57mm]{ATMS_C19_distribution}
+	\includegraphics[height=57mm]{ATMS_C20_distribution}\hspace{5mm}% 
+	\includegraphics[height=57mm]{ATMS_C21_distribution}
+	\includegraphics[height=57mm]{ATMS_C22_distribution}
 	\caption{Probability distribution functions (PDFs) of simulated and
       observed ATMS channels brightness temperatures for channels 16 - 22 and
       nadir viewing angle. The data covers latitude range $60^{\degree}$S to
       $60^{\degree}$N. Both land and ocean measurements are considered and only
       daytime ATMS data are included. See further the text.}
 	\label{fig:pdf:c16-22}
+
 \end{figure}
 
 
@@ -471,7 +473,7 @@ the PDFs matching clear-sky conditions (the main peak of the distribution),
 albeit the simulations have a more sharp peak. This could either be caused by a
 different geographical sampling of ATMS and CloudSat or to shortcomings in the
 ERA-Interim input data. The fraction of cloudy observations is lower in ATMS in
-comparison to simulations, for brightness temperatures below about 240\.K. This
+comparison to simulations, for brightness temperatures below about 240\,K. This
 is due to the fact that the antenna pattern is not considered in the
 simulations.
 
@@ -592,7 +594,7 @@ depend on surface reflectivity.
 The altitude variation of transmissivity exhibits same basic shape between all
 the 183 and 325\,GHz channels, but the altitude of optical thickness of 1
 (transmissivity of $e^{-1}\approx0.37$) varies. The curves of the edge 183\,GHz
-channels (AWS-32 and 36) brackets the ones corresponding to the ICI 325\,GHZ
+channels (AWS-32 and 36) bracket the ones corresponding to the ICI 325\,GHZ
 channels. The later channels show a higher deviation from 1 at 150\,hPa, due to
 some (weak) ozone attenuation in the stratosphere. The 229\,GHz has the highest
 transmissivities.
@@ -693,7 +695,7 @@ example weighting functions are displayed in Fig.~\ref {fig:3ch:prel}. This
 option has a IF range of 1.0 to 8.0\,GHz, and leaves a 100\,MHz space between
 AWS-42 and AWS-43, and 200\,MHz space between AWS-41 and AWS-42. That is, the
 suggestion uses the complete IF bandwidth as far as possible, that is
-technically possible.
+technically possible. Further in the text, this channel option is denoted as ``three-a''. 
 
 \subsection{A four channel option}
 %
@@ -701,7 +703,7 @@ The tentative four channel option in Table~\ref{tab:chs:prel4} gives a broader
 altitude coverage, towards higher altitudes, and offers weighting functions
 roughly equally spaced in altitude (Fig.~\ref {fig:4ch:prel}). This option has
 a IF range of 0.7 to 8.0\,GHz, and leaves 200\,MHz space between all the
-325\,GHz channels. Also this suggestion uses the complete IF bandwidth.
+325\,GHz channels. Also this suggestion uses the complete IF bandwidth. We will denote this channel option as ``four''.
 
 \begin{table}[!p]
   \centering  
@@ -773,8 +775,7 @@ Relatively late in the study Omnisys informed us about that an IF of 1.7\,GHz
 should be avoided, as this frequency likely will be used for downlink of data.
 The four channel option needed just a marginal change to adopt to this
 constrain, while 1.7\,GHz is more or less at the centre of the three channel
-option. It was then decided to formulate second three channel option avoiding 
-1.7\,GHz, and the suggestion is found in Table~\ref{tab:chs:3b}.
+option. It was then decided to formulate a second three channel option, denoted as ``three-b'', avoiding 1.7\,GHz, and the suggestion is found in Table~\ref{tab:chs:3b}.
 
 AWS-41 is identical between the two three channel options. In this second
 option, AWS-43 is set to have the same limits as AWS-44 in the four channel
@@ -792,7 +793,7 @@ three channel option.
 \section{Cloud correction by a simple scheme}
 \label{sec:simple}
 %
-In this section, the (first) 325\,GHz three channel option is evaluated for detection
+In this section, the (first) 325\,GHz three channel option (three-a) is evaluated for detection
 and correction of cloud interference in 183\,GHz channels. Combinations of
 brightness temperature (TB) differences between 183\,GHz and 325\,GHz are used
 as a measure of the cloud impact. A regression based approach is used to
@@ -866,7 +867,7 @@ $x_m\leq x_{cs}$, the measurement is rejected if a pure filtering is made, or
 it is adjusted if the correction scheme is applied. We will largely set
 $dtb_{cs}$ based on the noise level of the 183\,GHz channel involved, to be
 1$\sigma$ or 2$\sigma$ where $\sigma$ refers to the magnitude of measurement
-noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T). We will use $1\sigma$ for
+noise (Eq.~\ref{eq:noise}, often called NE$\Delta$T (Noise Equivalent Delta Temperature)). We will use $1\sigma$ for
 the development of the scheme, however, the sensitivity of the scheme to
 a 1$\sigma$ or 2$\sigma$ threshold is also provided later in the text.
 
@@ -986,9 +987,8 @@ Table~\ref{tab:correction:stats:34:42:thinned}.
 The distributions of filtered data are non-Gaussian. The right side of the
 distribution follows measurement noise while the left side is skewed. The
 skewness in the distribution is due to cloud impacts which pass through the
-clear-sky threshold. The skewness in ``Sreerekha et al'' is higher than our approach because their method only aims at removing cloud impacts above 4\,K. Their approach also leads to a high rejection fraction (46.37\%). The filtering
-method introduced here leads to a considerable lower rejection of data
-(17.54\%).
+clear-sky threshold. The skewness in ``Sreerekha et al'' is higher than our approach because their method only aims at removing cloud impacts above 4\,K. Their approach also leads to a high rejection fraction (46.37\%). The filtering 
+method introduced here, rejects only 17.54\% of the data.
 
 If the correction part for $1\sigma$ is added, the rejection is decreased even further (4.99\%)
 and the bias is also improved (from -1.27 to -0.06\,K). On the other hand, the
@@ -1210,9 +1210,7 @@ assess the performance of the scheme using both three channel and four channel
 options of 325\,GHz. Two suggestions for three channel option are described in
 Sec.~\ref{sec:channel:configurations}, and both have been used to train QRNN
 separately. Thus, for each channel of 183\,GHz, we have a set of three
-predictions: one from four channel option, and two from the old and new
-configurations of the three channel option. Further in the text, the old and
-new three channel configurations are labelled as ``three-a'' and ``three-b''.
+predictions: one from four channel option, and two from the options ``three-a'' and ``three-b''.
 
 To develop the QRNN scheme, we use the same dataset as in the
 simple scheme . Out of 125\,460 simulations, 90\% are used to train the model,
@@ -1727,7 +1725,7 @@ technically challenging. In short, it is significantly more difficult to
 implement a 3\,GHz wide channel at an IF of 3.3\,GHz (AWS-42) than compared to
 at 6.5\,GHz (AWS-41). To decrease the ratio between channel widths and centre
 IF, a third three channel option was formulated (Table~\ref{tab:chs:3c}) that
-is below denoted as three-c. This option uses the same IF range as the
+is below denoted as ``three-c''. This option uses the same IF range as the
 previously suggested ones.
 
 \begin{table}[!p]
@@ -1840,7 +1838,7 @@ some redundancy with the two window channels (89 and 166\,GHz).
 \subsection{Impact of extending the IF range}
 %
 As a basic investigation of the impact of changing the width of the IF range, a
-version of the four channel option was considered, denoted as four-b. It was
+version of the four channel option was considered, denoted as ``four-b''. It was
 modified to cover 0.7 to 9.0 GHz (instead of 0.7 to 8.0 GHz). To focus on the
 extension, only the edge channels were changed. That is, the revised AWS-41 and AWS-44
 have bandwidth of 3.8 and 0.9\,GHz, respectively. The DoFs obtained for four-b
