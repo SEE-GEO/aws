@@ -103,7 +103,12 @@ isocorr      = 1/.997317;
 
 % Set defualt for lines to include?
 %
-if isempty( i_lines ), i_lines = 1 : length(L); end
+if isempty( i_lines ), 
+  i_lines = 1 : length(L); 
+  filtered = false;
+else
+  filtered = true;
+end
 
 
 % Start of output file
@@ -161,9 +166,17 @@ fclose(fid);
 % Define lineshape etc, and convert to abs_lines XML file
 %
 if do_rttov
-  filename = 'abs_lines_h2o_rttov.xml';
+  if filtered
+    filename = 'abs_lines_h2o_rttov_filtered.xml';
+  else
+    filename = 'abs_lines_h2o_rttov.xml';
+  end
 else
-  filename = 'abs_lines_h2o_mpm89.xml';
+  if filtered
+    filename = 'abs_lines_h2o_mpm89_filtered.xml';  
+  else
+    filename = 'abs_lines_h2o_mpm89.xml';  
+  end
 end
 %
 !arts -r000 artscat2xml.arts
