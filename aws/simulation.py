@@ -35,7 +35,9 @@ class Simulation(ArtsSimulation):
         atmosphere = Atmosphere1D(absorbers=absorbers,
                                   scatterers=scatterers,
                                   surface=surface,
+#                                  catalog=LineCatalog("abs_lines_h2o_rttov_below340ghz.xml"))
                                   catalog=LineCatalog("abs_lines_h2o_rttov.xml"))
+
 
         super().__init__(atmosphere=atmosphere,
                          data_provider=data_provider,

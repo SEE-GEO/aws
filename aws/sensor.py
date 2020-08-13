@@ -36,6 +36,37 @@ class CloudSat(ActiveSensor):
         self.sensor_line_of_sight = np.array([[180.0]])
         self.nedt = 1.0
 
+class ICI(PassiveSensor):
+    def __init__(self):
+#        f_grid = np.array([1.749100000000000e+11,
+#                         1.799100000000000e+11,
+#                         1.813100000000000e+11,
+#                         2.407000000000000e+11,
+#                         3.156500000000000e+11,
+#                         3.216500000000000e+11,
+#                         3.236500000000000e+11,
+#                         4.408000000000000e+11,
+#                         4.450000000000000e+11,
+#                         4.466000000000000e+11,
+#                         6.598000000000000e+11])
+
+        f_grid = np.concatenate([183.31 + np.array([-7.0, -3.4, -2.0, 2.0, 3.4, 7.0]),
+                                243.20 + np.array([-2.5, 2.5]),
+                                325.15 + np.array([-9.5, -3.5, -1.5, 1.5, 3.5, 9.5]),
+                                448.00 + np.array([-7.2, -3.0, -1.4, 1.4, 3.0, 7.2]),
+                                664.00 + np.array([-4.2, 4.2])])
+        f_grid *= 1e9
+        nedt = np.array([0.8, 0.8, 0.8,   # 183 GHz
+                     0.7 * np.sqrt(0.5),  # 243 GHz
+                     1.2, 1.3, 1.5,       # 325 GHz
+                     1.4, 1.6, 2.0,       # 448 GHz
+                     1.6 * np.sqrt(0.5)]) # 664 GHz
+        
+        super().__init__("ici", f_grid, stokes_dimension = 2)
+        self.sensor_position = np.array([[832e3]])
+        self.sensor_line_of_sight = np.array([[135.2]])
+
+
 #-----24 frequencies---------
 band_89 = np.array([89.0000])
 band_166 = np.array([165.5000])
