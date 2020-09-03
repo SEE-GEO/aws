@@ -26,7 +26,8 @@ class iciData(Dataset):
 
         TB = self.file.variables["TB"][:]
         channels = self.file.variables["channels"][:]
-
+        
+        self.surface = self.file.variables["cases"][:]
         self.channels = inChannels       
         idx = []
         
@@ -122,6 +123,7 @@ class iciData(Dataset):
                           1.4, 1.6, 2.0, #448Ghz
                           1.6, 1.6])     #664Ghz
 
+        
         nedt_subset = nedt[index]
         size_TB = int(x.size/len(nedt_subset))
         x_noise = x.copy()

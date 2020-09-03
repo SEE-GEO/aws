@@ -15,9 +15,12 @@ from read_ARTS_output import read_all_files
 import xarray
 from add_gaussian_noise import add_gaussian_noise
 from read_clear_allsky_pairs import read_clear_allsky_pairs, read_clear_allsky_pairs_MWI
-
+from get_IWP import get_IWP
+from ICI_channel_TB import ICI_channel_TB
+import random
 theta = 135.2
 
+#%%
 def calculate_histogram(TB, bins, channels):
         hist_arts = []
         for ic in range(channels):
@@ -26,36 +29,6 @@ def calculate_histogram(TB, bins, channels):
 
     
         return hist_arts
-#%%
-def ICI_channel_TB(TB, nchannels):
-    """
-    
-
-    Parameters
-    ----------
-    TB : TYPE
-        DESCRIPTION.
-    nchannels : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    TB_ICI : TYPE
-        DESCRIPTION.
-
-    """
-    n = int(nchannels/2)
-    TB_ICI = TB.copy(deep = True, data= None)[:, :,  0:n, :]
-
-    for ic in range(n):
-        print ('total_channels', ic, nchannels-ic-1)
-        ic1 = ic
-        ic2 = nchannels-ic-1
-        TB_ICI[:, :, ic, :]= (TB[:, :, ic1, :] + TB[:, :,  ic2, :])/2
-    return TB_ICI
-
-#%% 
-
 
 #%%  concatenate all ARTS simulations together         
 f_grid = np.concatenate([183.31 + np.array([-7.0, -3.4, -2.0, 2.0, 3.4, 7.0]),
@@ -64,35 +37,28 @@ f_grid = np.concatenate([183.31 + np.array([-7.0, -3.4, -2.0, 2.0, 3.4, 7.0]),
                                 448.00 + np.array([-7.2, -3.0, -1.4, 1.4, 3.0, 7.2]),
                                 664.00 + np.array([-4.2, 4.2])])
 
-f_grid_mwi = np.concatenate([183.31 + np.array([-7.0, -3.4, -2.0, 2.0, 3.4, 7.0]),
-                                243.20 + np.array([-2.5, 2.5]),
-                                325.15 + np.array([-9.5, -3.5, -1.5, 1.5, 3.5, 9.5]),
-                                448.00 + np.array([-7.2, -3.0, -1.4, 1.4, 3.0, 7.2]),
-                                664.00 + np.array([-4.2, 4.2]),
-                                183.31 + np.array([-6.1, -4.9, 4.9, 6.1])]) # added two MWI channels
-
 nchannels = len(f_grid)
 nedt  = np.array([0.8, 0.8, 0.8, #183Ghz
                   0.7, 0.7,      #243Ghz
                   1.2, 1.3, 1.5, #325Ghz
                   1.4, 1.6, 2.0, #448Ghz
-                  1.6, 1.6])      #664Ghz
+                  1.6, 1.6
+                  ])      #664Ghz
 #                  1.2, 1.2])     #183Ghz, MWI
 
 
 
-files = glob.glob(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/ICI_m60_p60/c_of_*clearsky.nc'))
-#files = glob.glob(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/ICI_m60_p60/c_of_??.nc'))
-
-#TB = read_all_files(files)
-
-#TB_cs, TB_as  = read_clear_allsky_pairs_MWI(files)
+files = glob.glob(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/ICI_m60_p60/c_**clearsky.nc'))
+#%%
+#IWP = get_IWP(files[:])
+#np.save('dBZ.npy', IWP)
+#%%
 TB_cs, TB_as  = read_clear_allsky_pairs(files)
 TB_cs  = calculate_polarisation(TB_cs, nchannels, theta)
 TB_as  = calculate_polarisation(TB_as, nchannels, theta)
 
 TB = xarray.concat([TB_cs, TB_as], dim = 'sky' )
-
+#i_surface = get_IWP(files)
 #%% extract indicies of all ICI channels
 
 index_183 = np.where(f_grid < 200)[0]
@@ -108,7 +74,6 @@ TB_243 = ICI_channel_TB(TB[:, :, index_243, :], len(index_243))
 TB_325 = ICI_channel_TB(TB[:, :, index_325, :], len(index_325))
 TB_448 = ICI_channel_TB(TB[:, :, index_448, :], len(index_448))
 TB_664 = ICI_channel_TB(TB[:, :, index_664, :], len(index_664))
-#TB_183_MWI = ICI_channel_TB(TB[:, :, index_183, :], len(index_183[6:]))
 
 #%%
 TB_ICI = xarray.concat([TB_183[:, :, :, 1],
@@ -127,15 +92,25 @@ TB_ICI["channels"] = ['I1V', 'I2V', 'I3V', 'I4V', 'I4H', 'I5V', 'I6V', 'I7V',
 TB_ICI["sky"] = ["clear", "all"]
 
 #TB_ICI.to_netcdf('TB_ICI.nc', 'w')
-
+#TB_ICI['cases'] = np.concatenate(list(IWP))
 #%% save 75% data as training data and rest as test data
-itrain = int(TB_ICI.shape[1] * 0.85)
+randomList = random.sample(range(0, 195000), 195000)
+#print(randomList)
+#TB_ICI[:, randomList[:150000], :].to_netcdf('TB_ICI_train.nc', 'w')
+#TB_ICI[:, randomList[150000:], :].to_netcdf('TB_ICI_test.nc', 'w')
 
-TB_ICI[:, :itrain, :].to_netcdf('TB_ICI_train.nc', 'w')
-TB_ICI[:, itrain:, :].to_netcdf('TB_ICI_test.nc', 'w')
+#%%save dBZ
 
-#%% add noise
+#dBZ = np.asarray(IWP)
 
+#np.save('dbz_train.npy', dBZ[randomList[:150000]])
+#np.save('dbz_test.npy', dBZ[randomList[150000:]])
+
+
+
+
+
+#%%
 TB_ICI_noise = TB_ICI.copy()
 TB_ICI_noise[0, :, :] = add_gaussian_noise(TB_ICI[0, :, :], nedt)
 TB_ICI_noise[1, :, :] = add_gaussian_noise(TB_ICI[1, :, :], nedt)
