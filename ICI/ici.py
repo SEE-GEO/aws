@@ -1,7 +1,6 @@
 import numpy as np
 import netCDF4
 import torch
-from add_gaussian_noise import add_gaussian_noise
 from torch.utils.data import Dataset
 
 class iciData(Dataset):

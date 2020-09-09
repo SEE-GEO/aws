@@ -8,13 +8,10 @@ Created on Thu Aug 13 11:50:28 2020
 
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 import glob
 from polarisation import calculate_polarisation
-from read_ARTS_output import read_all_files
 import xarray
-from add_gaussian_noise import add_gaussian_noise
-from read_clear_allsky_pairs import read_clear_allsky_pairs, read_clear_allsky_pairs_MWI
+from read_clear_allsky_pairs import read_clear_allsky_pairs
 from get_IWP import get_altitude, get_y_cloudsat
 from ICI_channel_TB import ICI_channel_TB
 import random
