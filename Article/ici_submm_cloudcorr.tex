@@ -28,40 +28,32 @@
 %\usepackage{subfig}
 %\usepackage{rotating}
 
+\newcommand{\todo}[1]{{\color{red} #1}}
 
 \begin{document}
 
-\title{TEXT}
+\title{An approach for cloud correction of operational humidity channels}
 
 
-% \Author[affil]{given_name}{surname}
+\Author[1]{Inderpreet}{Kaur}
+\Author[1]{Patrick}{Eriksson}
+\Author[1]{Simon}{Pfreundschuh}
 
-\Author[]{}{}
-\Author[]{}{}
-\Author[]{}{}
-
-\affil[]{ADDRESS}
-\affil[]{ADDRESS}
-
-%% The [] brackets identify the author with the corresponding affiliation. 1, 2, 3, etc. should be inserted.
-
-%% If an author is deceased, please mark the respective author name(s) with a dagger, e.g. "\Author[2,$\dag$]{Anton}{Aman}", and add a further "\affil[$\dag$]{deceased, 1 July 2019}".
+\affil[1]{Department of Space, Earth and Environment, Chalmers University of
+  Technology, Gothenburg, Sweden} 
 
 %% If authors contributed equally, please mark the respective author names with an asterisk, e.g. "\Author[2,*]{Anton}{Aman}" and "\Author[3,*]{Bradley}{Bman}" and add a further affiliation: "\affil[*]{These authors contributed equally to this work.}".
 
 
-\correspondence{NAME (EMAIL)}
+\correspondence{Inderpreet Kaur <kauri@chalmers.se>}
 
-\runningtitle{TEXT}
+\runningtitle{A cloud correction approach}
 
-\runningauthor{TEXT}
-
-
+\runningauthor{Kaur et al.}
 
 \firstpage{1}
 
 \maketitle
-
 
 
 \begin{abstract}
@@ -72,7 +64,55 @@ TEXT
 \copyrightstatement{TEXT}
 
 
-\introduction  %% \introduction[modified heading if necessary]
+\introduction
+%
+\todo{Add references and do a literature search on cloud filtering}
+
+Satellite observations of humidity inside the troposphere are mainly performed
+by downward-looking sensors. Among this class of observations, the frequency
+range around 183\,GHz has a special role. Water vapour has a noticeable
+transition at 22\,GHz, but it is relatively weak and only column values can be
+derived \citep[e.g.][]{schluessel1990atmospheric} for the observation geometry
+of concern. The first transition in the microwave region that can be used to
+derive altitude information, i.e.\ can be used for ``sounding'', is the one at
+183.31\,GHz \citep[e.g.][]{kakar1983retrieval}. On the other hand, at
+infrared wavelengths a high number of water vapour transitions are found,
+including some of high strength. As a consequence, infrared sounders can
+provide humidity profiles with high precision and good vertical resolution, but
+with strong limitions imposed by clouds. To be able to also sense humidity
+inside and below clouds weather satellites are since some time equipped with
+channels around 183\,GHz. Today such channels are part several sensors, such as
+MHS (Microwave Humidity Sounder) and ATMS (Advanced Technology Microwave
+Sounder ).
+
+Precipiation and most dense clouds, particularly if found at high altitude, can
+still afffect measured radiances around 183\,GHz. As the impact from the
+hydrometeors is then dominated by scattering, the complexity of the analysis of
+the data increases dramatically and there exists a need to identify such cases.
+This is normally denoted as cloud filtering, to obtain data of ``clear sky''
+character. Such filtering has been applied to derive climate records, and is
+also essentail in studies of the agreement between observations and
+simulations. Examples on cloud filtering methods used for these applicatons are
+\todo{(refs)}. These methods arebased on the 183\,GHz data alone and rules on
+the brightness temperatures of different channels, including the difference
+between channels, are applied to remove cloud affected data.
+
+The main motivation for introducing 183\,GHz channels in operational sensors is
+numerical weather prediction (NWP). Usage of microwave data in NWP by
+``all-sky'' assimilation is growing, but 183\,GHz data are still mainly used in
+a clear sky fashion. The later is particularly true in NWP of regional scope,
+all-sky assimilation of 183\,GHz at many national weather agencies will likely
+not be reached in many years. The cloud filtering in NWP differs between
+centres, but normally \dots
+
+
+
+
+
+All above filtering ...
+
+
+
 
 \section{Data and methods}
 
@@ -125,23 +165,37 @@ In addition to ICI, the EPS-SG satellite will also have Microwave Imager (MWI) o
 
 The satellite observations for all ICI channels are simulated with the Atmospheric Radiative Transfer Simulator (ARTS, (ARTS, \citet{eriksson:arts2:11,buehler:artst:18})version. The simulations include TB from five ICI channels around 183\,GHz, 243\,GHz, 325\,GHz, 448\,GHz and 664\,GHz. 
 
-The absorption model takes into account the effect from nitrogen \citep{pwr:93}, oxygen \citep{pwr:93} and water vapour \citep{ellison2007permittivity}. LWC is taken from ERA-Interim and is assumed to be totally absorbing. In the
-mapping of CloudSat reflectivities to RWC and IWC a total separation between
-liquid and ice phase is assumed. All scattering hydrometeors at temperatures
-above 0$^\circ$C are assumed to be rain, and all below 0$^\circ$C are assumed
-to be ice hydrometeors. For RWC the particle size distribution of \citet{abel2012improved} is applied. The PSD of IWC follows the basic formulation applied in DARDAR (\verb http://www.icare.univ-lille1.fr/projects/dardar), using latest parameter values (i.e.\ $\alpha$ and $\beta$) as given by
-\citet{amt-12-2819-2019}. This PSD can be considered as a ``two moment''
-scheme, but is here applied in a one moment manner by setting $N_0^*$ (as a
-function of temperature) following Table~5 of \citet{delanoe2014normalized},
-and letting the radar reflectivity set the remaining moment.
-Single scattering data are taken from \citet{eriksson:agene:18}. For ice
-hydrometeors, three habits are applied: Perpendicular 3-bullet rosette, Large
-plate aggregate and Large column aggregate. In the last two cases, the
-aggregates are complemented with single crystal data to also cover smaller
-sizes. These data describe particles assumed to have a totally random
-orientation. To apply oriented particles is much more computationally costly
-and could not be accommodated inside the study. The land emissivity was taken from TELSEM \citep{aires2011tool} and the Ocean/water from TESSEM \citep{prigent2017sea}. For each atmopsheric case, both ''clear-sky'' and ``all-sky'' calculations were performed. In the former, all impact of all hydrometeors were set to zero, while in the latter, IWC and RWC derived from CloudSat reflectivities and LWC from ERA-Interim were taken into account. Both sets of calculations were made by ARTS's interface to the RT4 solver \citep{evans1995microwavec}. To avoid a possible bias between clear-sky and all-sky for insignificant hydrometeor contents, the same ``scattering solver'' was used for both calculations. The first two elements of the
-Stokes vector were calculated.
+The absorption model takes into account the effect from nitrogen
+\citep{pwr:93}, oxygen \citep{pwr:93} and water vapour
+\citep{ellison2007permittivity}. LWC is taken from ERA-Interim and is assumed
+to be totally absorbing. In the mapping of CloudSat reflectivities to RWC and
+IWC a total separation between liquid and ice phase is assumed. All scattering
+hydrometeors at temperatures above 0$^\circ$C are assumed to be rain, and all
+below 0$^\circ$C are assumed to be ice hydrometeors. For RWC the particle size
+distribution of \citet{abel2012improved} is applied. The PSD of IWC follows the
+basic formulation applied in DARDAR (\verb
+ http://www.icare.univ-lille1.fr/projects/dardar), using latest parameter
+ values (i.e.\ $\alpha$ and $\beta$) as given by \citet{cazenave2019evolution}.
+ This PSD can be considered as a ``two moment'' scheme, but is here applied in
+ a one moment manner by setting $N_0^*$ (as a function of temperature)
+ following Table~5 of \citet{delanoe2014normalized}, and letting the radar
+ reflectivity set the remaining moment. Single scattering data are taken from
+ \citet{eriksson:agene:18}. For ice hydrometeors, three habits are applied:
+ Perpendicular 3-bullet rosette, Large plate aggregate and Large column
+ aggregate. In the last two cases, the aggregates are complemented with single
+ crystal data to also cover smaller sizes. These data describe particles
+ assumed to have a totally random orientation. To apply oriented particles is
+ much more computationally costly and could not be accommodated inside the
+ study. The land emissivity was taken from TELSEM \citep{aires2011tool} and the
+ Ocean/water from TESSEM \citep{prigent2017sea}. For each atmopsheric case,
+ both ''clear-sky'' and ``all-sky'' calculations were performed. In the former,
+ all impact of all hydrometeors were set to zero, while in the latter, IWC and
+ RWC derived from CloudSat reflectivities and LWC from ERA-Interim were taken
+ into account. Both sets of calculations were made by ARTS's interface to the
+ RT4 solver \citep{evans1995microwavec}. To avoid a possible bias between
+ clear-sky and all-sky for insignificant hydrometeor contents, the same
+ ``scattering solver'' was used for both calculations. The first two elements
+ of the Stokes vector were calculated.
 
 \subsection{Simulation dataset}
 %
@@ -321,17 +375,39 @@ To test if the uncertainty estimates given by QRNN are representative of predict
 
 Figure~\ref{fig:calibration_I2V} shows the calibration of prediction intervals on the test dataset for channel I2V. Results from both QRNN-simple and QRNN-all are shown. The calibration of predictions with correction greater than 5\,K is also shown. For the entire test dataset, the calibration curves for QRNN-simple and QRNN-all are quite identical. If cases with cloud correction greater than 5\,K are considered, the calibration curve for QRNN-simple lies  below y=x line, implying that the prediction intervals are overly narrow. A similar behaviour is observed for channel I3V (figure not shown). However, for channel I1V, both QRNN-all and QRNN-simple fail to provide well calibrated predictions for cases associated with high cloud impact. 
 
-These results show that both QRNN-simple and QRNN-all are successful in providing well calibrated probabilistic predictions of the posterior distributions except for few cases associated with high cloud impact. This is not unexpected, as such cases form a small subset of the training set and their priori distribution could be different from the the entire dataset. 
-Since such cases form only a fraction of the training dataset, it can be hard to train the model to predict them accurately. A larger training dataset is needed to increase the representation of such cases in QRNN.    
+These results show that both QRNN-simple and QRNN-all are successful in
+providing well calibrated probabilistic predictions of the posterior
+distributions except for few cases associated with high cloud impact. This is
+not unexpected, as such cases form a small subset of the training set and their
+priori distribution could be different from the the entire dataset. Since such
+cases form only a fraction of the training dataset, it can be hard to train the
+model to predict them accurately. A larger training dataset is needed to
+increase the representation of such cases in QRNN.
+
+
 \subsection{Discussion}
 
 \section{Special case of using only 325\,GHz for cloud correction}
-In this section, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilising only 325\,GHz channel can be relevant for smaller satellite missions like Artic Weather Satellite (AWS) where higher sub-mm channels are not available. 
+In this section, we investigate the possibility of using only channels around
+325\,GHz for cloud correction at 183\,GHz. This special case of utilising only
+325\,GHz channel can be relevant for smaller satellite missions like Artic
+Weather Satellite (AWS) where higher sub-mm channels are not available.
 
 \subsection{Data}
 \subsubsection{Artic Weather Satellite}
-The Arctic Weather Satellite (AWS) is a small satellite mission approved as ESA Earth Watch 
-Programme Element. It is a small platform carrying a single across-track scanning microwave radiometer. The main objective of AWS will be to improve representation of Artic and sub-Arctic weather in NWP models and improve the global weather forecasts. AWS will will have channels receiving frequencies around 89\,GHz, 165.5\,GHz, 183\,GHz, 229\,GHz and 325\,GHz. For a detailed description of the AWS channels see \citep{eriksson-etal_AWS_2020}, while a brief summary of AWS channels relevant to this study are provided in Table~\ref{tab:specifications_AWS}
+The Arctic Weather Satellite (AWS) is a small satellite mission approved as ESA
+Earth Watch Programme Element. It is a small platform carrying a single
+across-track scanning microwave radiometer. The main objective of AWS will be
+to improve representation of Artic and sub-Arctic weather in NWP models and
+improve the global weather forecasts. AWS will will have channels receiving
+frequencies around 89\,GHz, 165.5\,GHz, 183\,GHz, 229\,GHz and 325\,GHz. For a
+detailed description of the AWS channels see \citep{eriksson2020study}, while a
+brief summary of AWS channels relevant to this study are provided in
+Table~\ref{tab:specifications_AWS}.
+
+% Let's try avoid citing the AWS report. If we do, we must put it on
+% research.chalmers.se
+
 \begin{table*}[t]
 	\label{tab:ICI_MWI_channels}	
 	\caption{Specifications of AWS channels around 183\,GHz and 325\,GHz.}
