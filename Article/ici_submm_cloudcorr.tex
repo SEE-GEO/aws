@@ -70,42 +70,51 @@ TEXT
 
 Satellite observations of humidity inside the troposphere are mainly performed
 by downward-looking sensors. Among this class of observations, the frequency
-range around 183\,GHz has a special role. Water vapour has a noticeable
+range around 183\,GHz has a special position. Water vapour has a noticeable
 transition at 22\,GHz, but it is relatively weak and only column values can be
 derived \citep[e.g.][]{schluessel1990atmospheric} for the observation geometry
 of concern. The first transition in the microwave region that can be used to
 derive altitude information, i.e.\ can be used for ``sounding'', is the one at
-183.31\,GHz \citep[e.g.][]{kakar1983retrieval}. On the other hand, at
+183.31\,GHz \citep{kakar1983retrieval,wang1983profiling}. On the other hand, at
 infrared wavelengths a high number of water vapour transitions are found,
 including some of high strength. As a consequence, infrared sounders can
 provide humidity profiles with high precision and good vertical resolution, but
 with strong limitions imposed by clouds. To be able to also sense humidity
 inside and below clouds weather satellites are since some time equipped with
-channels around 183\,GHz. Today such channels are part several sensors, such as
-MHS (Microwave Humidity Sounder) and ATMS (Advanced Technology Microwave
-Sounder ).
+channels around 183\,GHz. Today such channels are part of several sensors, such
+as ATMS (Advanced Technology Microwave Sounder, \citet{weng2012introduction}).
 
 Precipiation and most dense clouds, particularly if found at high altitude, can
-still afffect measured radiances around 183\,GHz. As the impact from the
-hydrometeors is then dominated by scattering, the complexity of the analysis of
-the data increases dramatically and there exists a need to identify such cases.
-This is normally denoted as cloud filtering, to obtain data of ``clear sky''
-character. Such filtering has been applied to derive climate records, and is
-also essentail in studies of the agreement between observations and
-simulations. Examples on cloud filtering methods used for these applicatons are
-\todo{(refs)}. These methods arebased on the 183\,GHz data alone and rules on
-the brightness temperatures of different channels, including the difference
-between channels, are applied to remove cloud affected data.
+still afffect measured radiances around 183\,GHz
+\citep[e.g.][]{bennartz2003sensitivity}. As the impact from the hydrometeors
+then is dominated by scattering, the complexity of the analysis of the data
+increases dramatically and there exists a need to identify the problematic
+cases. This is normally denoted as cloud filtering, to obtain data of ``clear
+sky'' character. Such filtering has been applied to derive climate records
+\citep{lang2020new} and is essentail in studies of the agreement between
+observations and simulations \citep{brogniez2016review} as well as 
+comparing observations of different instruments to validate their calibration
+\citep{john2013assessment,moradi:retri:15,berg2016intercalibration}. A commonly
+used cloud filtering methods for these applicatons is the one of
+\citet{buehler:aclou:07}. This method is based on the 183\,GHz data alone,
+involving rules on the brightness temperatures differences between channels. An
+older version is \citet{burns1997effects}.
 
 The main motivation for introducing 183\,GHz channels in operational sensors is
-numerical weather prediction (NWP). Usage of microwave data in NWP by
-``all-sky'' assimilation is growing, but 183\,GHz data are still mainly used in
-a clear sky fashion. The later is particularly true in NWP of regional scope,
-all-sky assimilation of 183\,GHz at many national weather agencies will likely
-not be reached in many years. The cloud filtering in NWP differs between
-centres, but normally \dots
+numerical weather prediction (NWP). Usage of microwave data by ``all-sky''
+assimilation is growing \citep{geer2017growing}, but 183\,GHz data are still
+mainly used in a clear sky fashion \citep{geer2018all}. The later is
+particularly true in NWP of regional scope, all-sky assimilation of 183\,GHz at
+many national weather agencies will likely not be reached in many years. The
+cloud filtering in NWP differs between centres. One approach is to make use of
+a ``scattering index'' \citep{bennartz2002precipitation}, based on the
+observations alone. Today likely more common is to use ``observation minus
+background'' (O-B), where the forecast model is used to obtain an estimate of
+the expected clear-sky value and the observation is rejected if the deviation
+exceeds some threshold (???). In both cases, the filtering typically involving
+observations around 89 and/or 150\,GHz.
 
-
+% favrichon2019detecting?
 
 
 
