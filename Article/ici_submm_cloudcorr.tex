@@ -9,7 +9,7 @@
 %% Please use the following documentclass and journal abbreviations for preprints and final revised papers.
 
 %% 2-column papers and preprints
-\documentclass[amt, manuscript]{copernicus}
+\documentclass[amt]{copernicus}
 
 
 
@@ -32,8 +32,8 @@
 
 \begin{document}
 
-\title{An emerging approach for cloud correction and filtering of operational
-  microwave humidity radiances}
+\title{Cloud correction and filtering of operational microwave humidity
+  radiances with case specific uncertainty estimation}
 
 
 \Author[1]{Inderpreet}{Kaur}
@@ -48,7 +48,7 @@
 
 \correspondence{Inderpreet Kaur <kauri@chalmers.se>}
 
-\runningtitle{A cloud correction approach}
+\runningtitle{Cloud correction with case specific uncertainty estimation}
 
 \runningauthor{Kaur et al.}
 
@@ -78,23 +78,23 @@ derive altitude information, i.e.\ can be used for ``sounding'', is the one at
 infrared wavelengths a high number of water vapour transitions are found,
 including some of high strength. As a consequence, infrared sounders can
 provide humidity profiles with high precision and good vertical resolution, but
-with strong limitions imposed by clouds. To be able to also sense humidity
+with strong limitations imposed by clouds. To be able to also sense humidity
 inside and below clouds weather satellites are since some time equipped with
 channels around 183\,GHz. Today such channels are part of several sensors, such
 as ATMS (Advanced Technology Microwave Sounder, \citet{weng2012introduction}).
 
-Precipiation and most dense clouds, particularly if found at high altitude, can
-still afffect measured radiances around 183\,GHz
+Precipitation and most dense clouds, particularly if found at high altitude, can
+still affect measured radiances around 183\,GHz
 \citep[e.g.][]{bennartz2003sensitivity}. As the impact from the hydrometeors
 then is dominated by scattering, the complexity of the analysis of the data
 increases dramatically and there exists a need to identify the problematic
 cases. This is normally denoted as cloud filtering, to obtain data of ``clear
 sky'' character. Such filtering has been applied to derive climate records
-\citep{lang2020new} and is essentail in studies of the agreement between
+\citep{lang2020new} and is essential in studies of the agreement between
 observations and simulations \citep{brogniez2016review} as well as 
 comparing observations of different instruments to validate their calibration
 \citep{john2013assessment,moradi:retri:15,berg2016intercalibration}. A commonly
-used cloud filtering methods for these applicatons is the one of
+used cloud filtering methods for these applications is the one of
 \citet{buehler:aclou:07}. This method is based on the 183\,GHz data alone,
 involving rules on the brightness temperatures differences between channels. An
 older version is \citet{burns1997effects}.
@@ -110,24 +110,78 @@ a ``scattering index'' \citep{bennartz2002precipitation}, based on the
 observations alone. Today, likely more common is to use ``observation minus
 background'' (O-B), where the forecast model is used to obtain an estimate of
 the expected clear-sky value and the observation is rejected if the deviation
-exceeds some threshold (???). In both cases, the filtering typically involving
+exceeds some threshold (???). In both cases, the filtering typically involves
 observations around 89 and/or 150\,GHz.
 
 Despite the broad usage these filtering methods have some drawbacks. For
-183\,GHz, the impact of hydrometeors systematically cause a decrease in the
+183\,GHz, the impact of hydrometeors systematically causes a decrease in the
 observed radiance (maybe with exceptions at extremely dry conditions), see
 e.g.\ \citet{barlakas:three:20} and below. This means that if any cloud
-contaminated is missed by the filtering this will cause a negative bias in mean
-radiance, compared to the true clear-sky mean. This bias will translate to
+contamination is missed by the filtering this will cause a negative bias in
+mean radiance, compared to the true clear-sky mean. This bias will translate to
 a bias in humidity after the retrieval or assimilation. The alternative is to
 apply a very strict filtering, but this will result in that a high fraction of
 actually clear-sky values will be rejected \todo{(Reka or better reference)},
-i.e.\ an important loss of useful data. One for all. Same or lower frequency ...
+i.e.\ an important loss of useful data.
 
+The filtering is normally done in a ``one for all'' manner, i.e.\ all 183\,GHz
+channels are either kept or rejected, while, as the channels differ in their
+altitude coverage, there could be cloud impact in some channels and still the
+others can be considered as clear-sky. To allow a channel specific filtering,
+data likely need to be combined in a more complex manner than simple
+differences, but it is unclear what type of regression that would be best. This
+points towards applying machine learning, as used by e.g.\
+\citet{favrichon2019detecting}.
 
-% favrichon2019detecting?
+A maybe less obvious problem is the uncertainty to assign to the filtered
+values. To our best knowledge, in best case estimates of mean and worst case
+errors are provided. Some cases with relatively high cloud impact will likely be
+missed, while most cases are clear sky from start. As the remaining cloudy
+cases can cause significant biases, the likely solution is to apply a quite
+conservative (high) error estimate. However, this will unnecessary downgrade
+the value of the truly clear sky cases and the observations are used in a
+non-optimal manner.
 
+We are here approaching cloud filtering task from a new angle. The basic idea
+is to derive an estimate of the corresponding noise-free clear-sky (NFCS) value
+(i.e.\ the radiance that would have been measured in absence of noise and
+hydrometeors). This is done for each channel separately, only using
+measurements (no ``background'' data involved). Not only a best estimate is
+provided, but also a case specific uncertainty.
 
+This information can be used as a pure filter, by rejecting data where the
+correction exceeds some threshold value. This threshold value should be
+relatively low, to not introduce a bias in filtered dataset. However, even
+better is to replace the original value with the predicted NFSC value when
+forming the clear-sky dataset. This approach we denote as cloud correction. It
+is shown below that a basically bias free cloud correction can be obtained.
+This feature removes the need of threshold value, as long as the retrieval or
+assimilation system can incorporate the uncertainty of the corrected value. As
+also will be shown, the uncertainty for originally clear sky data is determined
+by noise, but the uncertainty increases with magnitude of correction.
+Accordingly, the cloud correction approach allows that the full weight of
+clear-sky data can be preserved.
+
+The estimation of NFSC values makes use of a special type of machine learning,
+denoted as Quantile Regression Neural Network (QRNN,
+\citet{pfreundschuh:aneur:18}). Unlike standard usage of machine learning where
+only some kind of best estimate is provided, QRNN works in a Bayesian fashion
+and instead gives a description of the posterior uncertainty. More precisely,
+QRNN outputs an user specified set of percentiles that gives a discrete
+description posterior distribution, that can be process to derive e.g.\ the
+expectation value.
+
+The approach is demonstrated on a combination of 183\,GHz channels (following
+\citet{buehler:aclou:07}), but we mainly explore the cloud correction (of
+183\,GHz data) that will be possible when sub-millimetre data will be at hand
+in some years. This wavelength region will be introduced by the Ice Cloud
+Imager (ICI, \citet{eriksson:towar:20}), but likely also be included in several
+smaller missions (such as AWS presented below). The focus on ICI is motivated
+by several reasons. The true potentail of the QRNN cloud correction approach is
+likely not revealed if tested on existing data and applying ICI data for cloud
+filtering has not earlier been discussed. It is also argued that the cloud
+correction makes it possible to make good use of ICI data already in clear-sky
+assimilation, a fact that should speed up the use of this novel data source.
 
 
 
