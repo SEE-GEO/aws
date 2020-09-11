@@ -10,7 +10,7 @@
 
 %% 2-column papers and preprints
 \documentclass[amt, manuscript]{copernicus}
-
+%\documentclass[amt]{copernicus}
 
 
 %% Journal abbreviations (please use the same for preprints and final revised papers)
@@ -236,15 +236,67 @@ As in present version
 		MWI-16&	183.31$\pm$2.00    & 1.5 			& 1.3 		& V\\	
 		\bottomhline
 	\end{tabular}
+
 	\belowtable{} % Table Footnotes
 \end{table*}
+
 Ice Cloud Imager (ICI) is a new EPS-SG (EUMETSAT Polar System - Second Generation) sensor that will observe  Earth using submillimeter-wave (sub-mm) frequency range. The main objective of ICI is measure ice cloud properties and improve the representation of clouds in regional and global models. ICI is a conically scanning millimetre/sub-millimetre radiometer which will measure 13 frequencies from 183 GHz up to 664 GHz. Channels with centre frequencies 183.31, 325.15 and 448.0\,GHz are centered on water vapor absorption lines, and measure vertical polarization. While other channels around 243.0 and 664.0\,GHz are ``window channels'' and receive both vertical and horizontal polarization. 
+
+\subsection{MicroWave Imager}
+%
 In addition to ICI, the EPS-SG satellite will also have Microwave Imager (MWI) onboard. MWI will measure frequencies from 18.7 GHz up to 183\,GHz and provide data continuity to the existing microwave imager measurements. The common 183\,GHz channels among the two instruments shall allow cross-calibration between the two instruments. The channel configurations for ICI and MWI (only 183\,GHz) are provided in Table~\ref{tab:ICI_MWI_channels}.
 
-\subsection{ICI simulations}
+\subsection{Artic Weather Satellite}
+%
+\begin{table}[t]
+	\caption{Specifications of AWS channels around 183\,GHz and 325\,GHz.}
+	\label{tab:specifications_AWS}	
+	\begin{tabular}{lrr}
+		\tophline
+		Channel & Frequency 	& Bandwidth  \\
+		& [GHz]			& [MHz]		\\
+		\middlehline
+		AWS-32	&	176.311    & 2000 		\\
+		AWS-33	&	178.811    & 2000 		\\
+		AWS-34	&	180.311    & 1000 		\\
+		AWS-35	&	181.511    & 1000 		 \\
+		AWS-36	&	182.311    & \phantom{0}500 	 \\
+		AWS-41    & 325.15$\pm$6.60    & 2800 \\
+		AWS-42    & 325.15$\pm$4.10    & 1800  \\
+		AWS-43    & 325.15$\pm$2.40    & 1200 \\
+		AWS-44    & 325.15$\pm$1.20    & \phantom{0}800  \\
+		\bottomhline
+	\end{tabular}
+	\belowtable{} % Table Footnotes
+\end{table}
+
+The Arctic Weather Satellite (AWS) is a small satellite mission approved as ESA
+Earth Watch Programme Element. It is a small platform carrying a single
+across-track scanning microwave radiometer. The main objective of AWS will be
+to improve representation of Artic and sub-Arctic weather in NWP models and
+improve the global weather forecasts. AWS will will have channels receiving
+frequencies around 89\,GHz, 165.5\,GHz, 183\,GHz, 229\,GHz and 325\,GHz. For a
+detailed description of the AWS channels see \citet{eriksson2020study}, while a
+brief summary of AWS channels relevant to this study are provided in
+Table~\ref{tab:specifications_AWS}.
+
+\subsection{QRNN}
+%
+The neural network training is a process of learning to predict the outputs {$y_i$} from inputs {$x_i$} through a series of learnable transformations. While training, neural networks seek to minimise the model error through a loss function. The choice of the loss function depends on the predictive problem. When a neural network is trained to minimise the mean of the quantile loss function to predict the quantiles of the distribution, it is called a Quantile Regression Neural Network (QRNN). 
+\subsubsection{Theory}
+
+\subsubsection{Evaluation metrics}
+
+Quantile loss function
+
+CRPS
+
+\subsection{Simulations}
 \label{sec:arts_simulations}
 %
-
+\subsubsection{Input data}
+\subsubsection{Simulation setup}
+\subsubsection{Produced dataset}
 **** Some parts copied directly from AWS report *****
 
 The satellite observations for all ICI channels are simulated with the Atmospheric Radiative Transfer Simulator (ARTS, (ARTS, \citet{eriksson:arts2:11,buehler:artst:18})version. The simulations include TB from five ICI channels around 183\,GHz, 243\,GHz, 325\,GHz, 448\,GHz and 664\,GHz. 
@@ -281,80 +333,83 @@ basic formulation applied in DARDAR (\verb
  ``scattering solver'' was used for both calculations. The first two elements
  of the Stokes vector were calculated.
 
+The satellite observations for AWS channels were simulated with ARTS. An similar ARTS set-up, as described for ICI (Sect.~\ref{sec:arts_simulations}) was followed, except that 24 monochromatic frequencies were used so that each channel could be represented with sufficient accuracy. All AWS sensor viewing angles (from $0^\circ$ to $45^\circ$) were simulated, but the results described in this section are based on nadir viewing angle. 125\,000 cases based on randomly selected CloudSat orbits were simulated.
+
 \subsection{Simulation dataset}
 %
 Using the simulation setup described in previous section, Cloudsat profiles during August 2015 were randomly selected to generate 200\,000 cases for each ICI frequency. The input data were restricted between $60^{\degree}$S to $60^{\degree}$N, and surface is below 500\,m. Both clear-sky and all-sky scenarios were simulated, and no differentiation was made between the observations over ocean/sea and land. It is also assumed that all simulations are remapped to a common foorprint. 
 
-**** show any comparsion to ATMS? or AWS channels ? ****
+\section{Results}
 
-\subsection{QRNN}
-%
-The neural network training is a process of learning to predict the outputs {$y_i$} from inputs {$x_i$} through a series of learnable transformations. While training, neural networks seek to minimise the model error through a loss function. The choice of the loss function depends on the predictive problem. When a neural network is trained to minimise the mean of the quantile loss function to predict the quantiles of the distribution, it is called a Quantile Regression Neural Network (QRNN). 
+\begin{table}[t]
+	\caption{Summary of the different QRNN models used in the study.}
+	\label{tab:QRNN_models}
+	\begin{tabular}{lll}
+		\tophline
+		QRNN model & Training inputs & Target \\
+		\middlehline
+		QRNN-simple & I1V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I1V\\
+		& I2V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I2V\\
+		& I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I3V\\
+		& MWI-15, I5V, I6V, I7V, I8V, I9V, I10V, I11V 		 & MWI-15\\	
+		& MWI-16, I5V, I6V, I7V, I8V, I9V, I10V, I11V 		 & MWI-16\\
+		QRNN-all    & I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I1V\\	
+		& I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I2V\\	
+		& I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I3V\\
+		
+		\bottomhline
+	\end{tabular}
+	\belowtable{} % Table Footnotes
+\end{table}
 
  
-\subsubsection{Model selection}
+\subsection{QRNN network configuration and training}
 %
 \label{model_selection}
 A high performing QRNN model requires tuning of multiple hyper-parameters. These parameters determine the structure and the training set-up of the neural network. Several of these hyper-parameters are non-learnable, and must be defined before beginning of every training. Grid search is one of the most often employed techniques for hyper-paramter tuning. In grid search, different combinations of hyperparamters are selected and for each, the model performance is evaluated. The model architecture with the best performance is selected. The model evaluation metrics employed in this article are described in the next section. 
 
 For the structural parameters, the grid search is performed to determine the number of neurons (width) and hidden layers (depth). The model is trained for multiple values of layer widths and hidden layers, and the best configuration is selected by evaluating the predictions over the validation set. Similarly, the training process is optimized by performing a grid search different training parameters such as : batch size, learning rate, number of epochs, decay. The best performing hyperparameter configurations for a particular training set need not be same for other datasets. Therefore for each QRNN model used in this article, the hyperparameters were tuned distinctly. 
 
-\subsubsection{Evaluation metrics}
-
-Quantile loss function
-
-CRPS
-
-
-\section{Cloud correction in  183 GHz channels}
-%
-\subsection{Training data}
-%
-Out of the 200\,000 ICI and MWI channel simulations, 150\,000 cases are randomly picked to form the training set. The rest are used for testing. In the training set, 90\% of the data is randomly selected to form the training set, while the other 10\% form the \textit{testing-during-training} database. ARTS simulations are noise free, so to incorporate the satellite measurement uncertainties, gaussian noise is added to the input training data according to the channel NE$\Delta$T. The target training data is kept noise free. In order to build a robust learning network, random noise is added to the inputs at each training iteration. This exposes the model to a different datasets during the entire training process and avoids the memorisation of training samples. The input data is also normalized with mean and standard deviation.
-It is assumed for the simulations that the ICI and MWI channels are mapped to a common footprint and resolution. In such case, remapping reduces the noise in MWI channels from 1.2\,K at 10\,Km resolution to 0.8\,K at 15\,Km resolution.
-\subsection{Training}
-\label{sec:ici_trainin}
-%t
-\begin{table}[t]
-\caption{Summary of the different QRNN models used in the study.}
-\label{tab:QRNN_models}
-\begin{tabular}{lll}
-\tophline
-QRNN model & Training inputs & Target \\
-\middlehline
-QRNN-simple & I1V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I1V\\
-			& I2V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I2V\\
-			& I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V 			 & I3V\\
-			& MWI-15, I5V, I6V, I7V, I8V, I9V, I10V, I11V 		 & MWI-15\\	
-			& MWI-16, I5V, I6V, I7V, I8V, I9V, I10V, I11V 		 & MWI-16\\
-QRNN-all    & I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I1V\\	
-			& I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I2V\\	
-			& I1V, I2V, I3V, I5V, I6V, I7V, I8V, I9V, I10V, I11V & I3V\\
-			
-\bottomhline
-\end{tabular}
-\belowtable{} % Table Footnotes
-\end{table}
 To investigate the performance of training inputs, two QRNN models with different set of training inputs are analysed. In both models, the training set combines data from 183\,GHz, 325 GHz, 448\,GHz and 664\,GHz to predict cloud corrected observations for the target 183\,GHz channel.
 
 In the first model, the training set includes the target 183\,GHz channel and the sub-mm channels. For example, to train for channel I1V, the input channels are I1V, I5V , I6V, I7V, I8V, I9V, I10V, I11V. A separate QRNN model is trained for each of the 183\,GHz channels. We shall refer this QRNN model as ``QRNN-simple''. In the second QRNN model, we suggest to use all three 183\,GHz channels (from ICI) concurrently, along with sub-mm channels. In this case, although the input training parameters are identical for all channels, the target channel is different and QRNN has to be trained separately for each. Further in text, we refer this model as ``QRNN-all''. Table~\ref{tab:QRNN_models} summarises the two QRNN models. 
-   
+
 Apart from these two models, we also extend QRNN-simple to predict the clear-sky values for MWI channels. In this case, we combine the measurements from MWI-15(MWI-16) and the sub-mm channels to predict MWI-15(MWI-16). Since we assume that all channels are remapped to a common footprint, channels MWI-14, MWI-17 and MWI-18 are virtually identical to I1V, I2V and I3V, and thus results for them are not shown separately. 
+
+For each 183\,GHz channel from AWS, a training scheme similar to QRNN-simple is used. For example, to
+predict clear-sky TBs from AWS-34, the training data includes measurements AWS-34 and channels AWS-41, AWS-42, AWS-43, AWS-44. A grid search over the hyper-parameters was performed (results not shown) and the best performance over the validation set was obtained for 4 hidden layers with 128 neurons and batch size of 128 samples. Rectified Linear Unit (ReLU) was used as the activation function
 
 As described in section \ref{model_selection}, a grid search was implemented to select the best performing hyperparamters. The mean quantile loss and CRPS for different layer width and hidden layer configurations are shown in Fig\ref{fig:model_selection}. The results are for QRNN-simple with I3V as target channel. Increasing the complexity of the network by increasing the layer-width and depth has a positive impact on performance. However for four hidden layers, increasing the number of neurons beyond 128 has no significant impact on the performance. On basis of these results, a neural network with four hidden layers and 128 neurons in each layer was selected for QRNN-simple. For the optimising the training paramters, a customised  learning rate scheduler was implemented. The initial learning rate was reset after a certain number of epochs.  We started the training process with a initial learning rate of 0.1, and decreased it by a factor of 10 after 100 epochs. The best neural network performance was obtained when the network was trained three times with a new initial learning rate. For each training  if the validation loss remained unchanged till 6 training epochs, the learning rate was reduced by a factor of 2. We did not optimise the type of activation function and batch size. Rectified Linear Unit (ReLU) was used as the activation function  and the batch size was set to 128 samples for all QRNN models. 
 
 For QRNN-all a grid search (results not shown) over width and depth and learning rates resulted in similar performance, and an identical neural network was selected.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 	\centering
 	\includegraphics[height=60mm]{Figures/CRPS.pdf} 
 	\caption{CRPS(left) and mean quantile loss(right) for different combinations of layer width and hidden layers ($n_h$). The results are from QRNN-simple for channel I2V.}
 	\label{fig:}	
+\end{figure*}
+
+
+\subsection{ICI}
+\subsubsection{Example results}
+%
+QRNN predictions are estimates of the posterior distribution over different quantiles. For this study we chose quantiles, $x_{\tau}$: median, $\pm 1\sigma$, $\pm 2 \sigma$ and  $\pm 3 \sigma$ ($\tau$ = 0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998). The quantiles are interpreted as probabilitic predictions and can be used to construct a probability distribution of the predictions. This is in sharp contrast to other correction approaches which give out only point estimates. Also, the probability distribution can be used to interpret the confidence intervals. For a given case, if two quantiles $\tau_1$ and $\tau_2$ are chosen, then there is $\tau_2 - \tau_1$ chance that the true value ($y_o$) shall lie in in range $[y_{\tau_2}, y_{\tau_1}]$. For example, in a 94\% confidence interval where, $\tau_1 = -2\sigma$ and $\tau_1 = +2\sigma$, there is 0.3\% probability that $y_\circ > y_{\tau_2}$, and 97\% probability that $y_\circ$ > $y_{\tau_1}$. 
+
+
+As an example, Fig.~\ref{fig:posterior_distribution_I2V} shows the posterior distribution obtained from QRNN for three different cases. These results are from QRNN-single for channel I2V. The three cases shown in the figure have almost a similar median value but very different spread for other quantile levels. The spread of the distributions can also be expressed as the prediction interval. If $y_{\tau_2}, y_{\tau_1}$ are the predictions at two quantile levels $\tau_1$ and $\tau_2$ respectively, the interval $[y_{\tau_2}, y_{\tau_1}]$ is called the prediction interval. It is gives the range where the prediction could be located and its length is used as a measure of the reliability. The blue curve has shortest prediction interval indicating a sharp probabilistic prediction or more reliability. While the other two cases have longer intervals implying higher fluctuations, or low reliability. Thus, even if two point estimates are highly accurate, or have identical confidence level they could have different uncertainties. The uncertainty quantification is discussed in more detail in Sect.~\ref{sec:prediction_uncertainty}.
+
+%f
+\begin{figure}[t]
+	\centering
+	\includegraphics[height=60mm]{Figures/posterior_distribution_I2V.pdf} 
+	\caption{Posterior distribution obtained from QRNN-single (channel I2V) for three different cases. }
+	\label{fig:posterior_distribution_I2V}	
 \end{figure}
 
-\subsection{Results}
+\subsubsection{Error of best estimate}
 %
-%f 
+%f
 \begin{figure}[t]
 	\includegraphics[width=\textwidth]{Figures/PDF_predictions_ICI.pdf} 
 	\caption{Distributions of predicted clear-sky values from QRNN-simple for channels I1V, I2V and I3V. }
@@ -426,10 +481,9 @@ Channel I3V &Bias     &   0.00  &         -0.63 &    0.02 &      0.02(2.18\%)&0.
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table}
-QRNN predictions are estimates of the posterior distribution over different quantiles: $x_{\tau}$, for median, $\pm 1\sigma$, $\pm 2 \sigma$ and  $\pm 3 \sigma$ ($\tau$ = 0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998). To assess the accuracy of the predictions, the median of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value. The prediction errors are calculated as the deviation of the predictions to their corresponding noise-free clear-sky values. We calculate the mean bias, mean absolute error and standard deviation of the errors. The asymmetry of error distributions around their mean is also calculated through the measure of skewness. In the next sections, we describe the performance of the two QRNN models for ICI and MWI channels.
 
-\subsection{Prediction accuracy}
-%
+To assess the accuracy of the predictions, the median of the posterior distribution is assumed to be the best estimate for the predicted clear-sky value. The prediction errors are calculated as the deviation of the predictions to their corresponding noise-free clear-sky values. We calculate the mean bias, mean absolute error and standard deviation of the errors. The asymmetry of error distributions around their mean is also calculated through the measure of skewness. In the next sections, we describe the performance of the two QRNN models for ICI and MWI channels.
+
 The distributions of median value of clear-sky predictions from QRNN-single are shown in Fig~\ref{fig:PDF_predictions}. The distributions of corresponding clear-sky simulations are also plotted as reference. The three figures correspond to channels: I1V, I2V and I3V. These results show that the clear-sky values predicted by QRNN-single have a very good match for the peak of the distributions, but a slight mismatch is evident towards the tails, where QRNN seems to predict slightly colder/warmer TBs. 
 
 For a quantitative evaluation of how accurate the predictions are, the  deviations of the median values to the clear-sky simulations are computed. Fig~\ref{fig:error_distributions} shows the error distributions of predictions for all three channels. The distribution of noise is also plotted for reference. The error metrics corresponding to these results are provided in Table~\ref{tab:error_statistics_ici}. Without any cloud impact, the error distributions should follow a Gaussian distribution, however the presence of clouds leads to a TB reduction, and introduces a high negative bias among the deviations. Among the three channels, the highest cloud impact is seen in channel I1V. The average bias in channel I1V measurements is -1.89\,K, however the QRNN-single predictions successfully reduces the average deviation to -0.03\,K. The predictions and the observations have a good agreement for the main peak of the distribution, albeit the prediction errors have a sharper peak and a larger spread.  The large spread is representative of the few cases which are either under/over predicted. If all the cases with correction greater than 5\,K are excluded, only a fraction of the total cases (6.42\%) are removed but the variability in predictions errors reduces significantly. This indicates that few cases with high cloud impact could be difficult to train and predict.    
@@ -440,8 +494,8 @@ The results QRNN-all are also shown in Table~\ref{tab:error_statistics_ici}. Usi
 
 Table~\ref{tab:statistics_mwi} shows the metrics from error distributions for MWI-15 and MWI-16 predictions. Results from only QRNN-simple are shown. As shown above for ICI channels, the performance of QRNN-simple for the two MWI channels is consistent. 
  
-\subsection{Uncertainty quantification}
-%
+\subsubsection{Uncertainty quantification}
+\label{sec:prediction_uncertainty}
 %f 
 \begin{figure}[t]
 	\includegraphics[width=\textwidth]{Figures/PDF_uncertainty_bins_QRNN-single.pdf}	
@@ -453,7 +507,12 @@ Table~\ref{tab:statistics_mwi} shows the metrics from error distributions for MW
 	\caption{Calibration of the prediction intervals obtained from QRNN-simple and QRNN-all for channel I2V. }
 	\label{fig:calibration_I2V}	
 \end{figure}
-The biggest advantage of using QRNN is estimation of case-specific uncertainties. The quantiles can be used to construct a probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. The predictions for each quantile can be used to construct the confidence intervals. The confidence interval for each point estimate quantifies it's uncertainty. For example, if $\tau_1$ and $\tau_2$ are two quantiles then there is $\tau_2-\tau_1$ probability that the true value will lie in between the range.
+The biggest advantage of using QRNN is estimation of case-specific uncertainties. The quantiles can be used to construct a probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. The different quantiles provide the measure of possible fluctuations in the prediction, also known as confidence interval. 
+The
+predictions for each quantile are used to construct the confidence intervals.
+The confidence interval for each point estimate is a way to quantify its
+uncertainty. For example, the predicted quantiles for $\pm 1 \sigma$ give 68\%
+probability that the true value will lie between the range.
 
 To test if the uncertainty estimates given by QRNN are representative of prediction errors, we divided the $\pm2\sigma$ confidence interval into three bins and estimated the prediction error distribution for each. Fig.~\ref{fig:error_distribution_uncertainty_bins_I1V} shows the prediction error distributions binned according to $2\sigma$ confidence interval for I1V, I2V and I3V. These results are from QRNN-simple. Similar results were also obtained for QRNN-all (figure not shown). Among the three channels the uncertainty in predictions for I1V and I2V are higher than I3V and an increase in the spread of errors with increasing uncertainty is evident in all three. As the errors increase, the spread is mostly symmetric around x-axis but among predictions associated with large uncertainties, high errors occur frequently. In other words, too-low/too-high QRNN predictions tend to be associated with high uncertainty. 
 
@@ -463,60 +522,21 @@ These results show that both QRNN-simple and QRNN-all are successful in providin
 priori distribution could be different from the the entire dataset. Since such cases form only a fraction of the training dataset, it can be hard to train the model to predict them accurately. A larger training dataset would be required to increase the representation of such cases in QRNN.
 
 
-\section{Special case of using only 325\,GHz for cloud correction}
+\subsection{MWI}
+\subsubsection{MWI alone}
+\subsubsection{MWI and ICI}
+
+\subsection{AWS}
 In this section, we investigate the possibility of using only channels around
 325\,GHz for cloud correction at 183\,GHz. This special case of utilising only
 325\,GHz channel can be relevant for smaller satellite missions like Artic
 Weather Satellite (AWS) where higher sub-mm channels are not available.
 
-\subsection{Data}
-\subsubsection{Artic Weather Satellite}
-%t
-\begin{table}[t]
-	\caption{Specifications of AWS channels around 183\,GHz and 325\,GHz.}
-	\label{tab:specifications_AWS}	
-	\begin{tabular}{lrr}
-		\tophline
-		Channel & Frequency 	& Bandwidth  \\
-		& [GHz]			& [MHz]		\\
-		\middlehline
-		AWS-32	&	176.311    & 2000 		\\
-		AWS-33	&	178.811    & 2000 		\\
-		AWS-34	&	180.311    & 1000 		\\
-		AWS-35	&	181.511    & 1000 		 \\
-		AWS-36	&	182.311    & \phantom{0}500 	 \\
-		AWS-41    & 325.15$\pm$6.60    & 2800 \\
-		AWS-42    & 325.15$\pm$4.10    & 1800  \\
-		AWS-43    & 325.15$\pm$2.40    & 1200 \\
-		AWS-44    & 325.15$\pm$1.20    & \phantom{0}800  \\
-		\bottomhline
-	\end{tabular}
-	\belowtable{} % Table Footnotes
-\end{table}
-
-The Arctic Weather Satellite (AWS) is a small satellite mission approved as ESA
-Earth Watch Programme Element. It is a small platform carrying a single
-across-track scanning microwave radiometer. The main objective of AWS will be
-to improve representation of Artic and sub-Arctic weather in NWP models and
-improve the global weather forecasts. AWS will will have channels receiving
-frequencies around 89\,GHz, 165.5\,GHz, 183\,GHz, 229\,GHz and 325\,GHz. For a
-detailed description of the AWS channels see \citet{eriksson2020study}, while a
-brief summary of AWS channels relevant to this study are provided in
-Table~\ref{tab:specifications_AWS}.
-
-% Let's try avoid citing the AWS report. If we do, we must put it on
-% research.chalmers.se
-
-
-\subsubsection{AWS simulations}
-The satellite observations for AWS channels were simulated with ARTS. An similar ARTS set-up, as described for ICI (Sect.~\ref{sec:arts_simulations}) was followed, except that 24 monochromatic frequencies were used so that each channel could be represented with sufficient accuracy. All AWS sensor viewing angles (from $0^\circ$ to $45^\circ$) were simulated, but the results described in this section are based on nadir viewing angle. 125\,000 cases based on randomly selected CloudSat orbits were simulated.
-\subsection{Training}
-%
 Out of the 125\,000 AWS simulations, 75\,000 cases are randomly picked to form the training set. The rest are used for testing. In the training set, 90\% of the data is randomly selected to form the training set, while the other 10\% form the \textit{testing-during-training} database. A similar data augmentation technique as described for ICI (Sec~\ref{sec:ici_training}) was followed to build a robust database and avoid memorisation of the samples. 
 
-For each 183\,GHz channel from AWS, a training scheme similar to QRNN-simple is used. For example, to
-predict clear-sky TBs from AWS-34, the training data includes measurements AWS-34 and channels AWS-41, AWS-42, AWS-43, AWS-44. A grid search over the hyper-parameters was performed (results not shown) and the best performance over the validation set was obtained for 4 hidden layers with 128 neurons and batch size of 128 samples. Rectified Linear Unit (ReLU) was used as the activation function
+
 \subsection{Prediction accuracy}
+
 %f
 \begin{figure}[t]
 	\includegraphics[width = 80mm]{Figures/AWS-34_single.pdf}	
@@ -568,7 +588,6 @@ AWS-36   &Bias     &    0.00 &         -0.27 &            0.02 &                
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table}
-\subsubsection{Uncertainty quantification}
 %f
 \begin{figure}[t]
 	\includegraphics[width = 80mm]{Figures/prediction_uncertainty_aws-34.pdf}	
@@ -581,10 +600,11 @@ AWS-36   &Bias     &    0.00 &         -0.27 &            0.02 &                
 	\label{fig:uncertainty_cloud_impact}	
 \end{figure}
 
-In this section, we analyse the uncertainty estimates obtained from QRNN.  Fig.~\ref{fig:prediction_uncertainty_aws-34} displays the prediction uncertainty in AWS-34 for different quantiles. The prediction uncertainty has been plotted as the deviation from the median value.  The different lines represent 1500 randomly chosen cases.  The red line represents the uncertainty in a hypothetical Gaussian distribution of $270\pm0.62$\,K, which is of the order of standard deviation of predictions for AWS-34 (see Table~\ref{tab:statistics_aws}). The high variability in the uncertainty estimates indicates that QRNN can successfully represent uncertainties for each case individually, rather than expressing them as a single measure for all cases. In the latter case, the uncertainty estimates would be concentrated along a narrow interval. Also, for majority of the cases, the prediction uncertainties are symmetric around the median, specially around  the 68\% ($\pm 1 \sigma$) and 94\% confidence interval ($\pm 2 \sigma$), suggesting that the posterior distribution follows a Gaussian distribution. 
+We analyse the uncertainty estimates obtained from QRNN.  Fig.~\ref{fig:prediction_uncertainty_aws-34} displays the prediction uncertainty in AWS-34 for different quantiles. The prediction uncertainty has been plotted as the deviation from the median value.  The different lines represent 1500 randomly chosen cases.  The red line represents the uncertainty in a hypothetical Gaussian distribution of $270\pm0.62$\,K, which is of the order of standard deviation of predictions for AWS-34 (see Table~\ref{tab:statistics_aws}). The high variability in the uncertainty estimates indicates that QRNN can successfully represent uncertainties for each case individually, rather than expressing them as a single measure for all cases. In the latter case, the uncertainty estimates would be concentrated along a narrow interval. Also, for majority of the cases, the prediction uncertainties are symmetric around the median, specially around  the 68\% ($\pm 1 \sigma$) and 94\% confidence interval ($\pm 2 \sigma$), suggesting that the posterior distribution follows a Gaussian distribution. 
 
 In order to analyse the performance of QRNN with task difficulty, the interrelation between the uncertainty estimates and cloud impact was investigated. Here we assume that cloud impact is representative of task difficulty. Fig~\ref{fig:uncertainty_cloud_impact} displays the plot between mean uncertainty estimates for $2\sigma$ confidence interval and the cloud impact. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. However, this does not imply that the prediction accuracy is low. 
 
+\section{Discussion}
 \section{Outlook and Conclusions}  %% \conclusions[modified heading if necessary]
 
 
