@@ -32,7 +32,8 @@
 
 \begin{document}
 
-\title{An approach for cloud correction of operational humidity channels}
+\title{An emerging approach for cloud correction and filtering of operational
+  microwave humidity radiances}
 
 
 \Author[1]{Inderpreet}{Kaur}
@@ -66,8 +67,6 @@ TEXT
 
 \introduction
 %
-\todo{Add references and do a literature search on cloud filtering}
-
 Satellite observations of humidity inside the troposphere are mainly performed
 by downward-looking sensors. Among this class of observations, the frequency
 range around 183\,GHz has a special position. Water vapour has a noticeable
@@ -108,22 +107,98 @@ particularly true in NWP of regional scope, all-sky assimilation of 183\,GHz at
 many national weather agencies will likely not be reached in many years. The
 cloud filtering in NWP differs between centres. One approach is to make use of
 a ``scattering index'' \citep{bennartz2002precipitation}, based on the
-observations alone. Today likely more common is to use ``observation minus
+observations alone. Today, likely more common is to use ``observation minus
 background'' (O-B), where the forecast model is used to obtain an estimate of
 the expected clear-sky value and the observation is rejected if the deviation
 exceeds some threshold (???). In both cases, the filtering typically involving
 observations around 89 and/or 150\,GHz.
 
+Despite the broad usage these filtering methods have some drawbacks. For
+183\,GHz, the impact of hydrometeors systematically cause a decrease in the
+observed radiance (maybe with exceptions at extremely dry conditions), see
+e.g.\ \citet{barlakas:three:20} and below. This means that if any cloud
+contaminated is missed by the filtering this will cause a negative bias in mean
+radiance, compared to the true clear-sky mean. This bias will translate to
+a bias in humidity after the retrieval or assimilation. The alternative is to
+apply a very strict filtering, but this will result in that a high fraction of
+actually clear-sky values will be rejected \todo{(Reka or better reference)},
+i.e.\ an important loss of useful data. One for all. Same or lower frequency ...
+
+
 % favrichon2019detecting?
 
 
 
-All above filtering ...
 
 
+\newpage
+
+\section*{Outline of sectioning}
+
+2 Data and methods
+
+2.1 Satellite sensors
+
+2.1.1 Ice Cloud Imager (ICI)
+
+2.1.2 Microwave Imager (MWI)
+
+2.1.3 Arctic Weather Satellite (AWS)
+
+2.2 Quantile Regression Neural Network (QRNN)
+
+2.2.1 Theory
+
+2.2.2 Evaluation metrics
+
+2.3 Simulations
+
+2.3.1 Input data
+
+2.3.2 Simulation setup
+
+2.3.3 Produced dataset
+(If diifers between ICI, MWI and AWS, clarify this)
+
+\noindent 3 Results
+
+Short recap of aim of correction. We also use the correction as a filter, using
+a threshold on the correction. We use 5K (?) threshold as example.
+
+3.1 QRNN network configurations and training
+
+3.2 ICI
+
+3.2.1 Example results
+
+Show a few estimated posterior distributions (one figure) and distribution of
+predicted values (Fig 2)
+
+3.2.2 Error of best estimate
+
+3.2.3 Predicted uncertainty
+
+3.3 MWI
+
+3.3.1 MWI alone
+
+Just 183 GHz channels, original noise
+
+3.3.2 MWI and ICI
+
+As in present version
+
+3.4 AWS
+
+\noindent 4 Discussion
+
+\noindent 5 Conclusion
 
 
+\newpage
 \section{Data and methods}
+
+
 
 \subsection{Ice Cloud Imager}
 %
