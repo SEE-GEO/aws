@@ -84,7 +84,7 @@ infrared wavelengths a high number of water vapour transitions are found,
 including some of high strength. As a consequence, infrared sounders can
 provide humidity profiles with high precision and good vertical resolution, but
 with strong limitations imposed by clouds. To be able to also sense humidity
-inside and below clouds weather satellites are since some time equipped with
+inside and below clouds, weather satellites are since some time equipped with
 channels around 183\,GHz. Today such channels are part of several sensors, such
 as ATMS (Advanced Technology Microwave Sounder, \citet{weng2012introduction}).
 
@@ -105,13 +105,14 @@ involving rules on the brightness temperatures differences between channels. An
 older version is \citet{burns1997effects}.
 
 The main motivation for introducing 183\,GHz channels in operational sensors is
-numerical weather prediction (NWP). Usage of microwave data by ``all-sky''
-assimilation is growing \citep{geer2017growing}, but 183\,GHz data are still
-mainly used in a clear sky fashion \citep{geer2018all}. The later is
-particularly true in NWP of regional scope, all-sky assimilation of 183\,GHz at
-many national weather agencies will likely not be reached in many years. The
-cloud filtering in NWP differs between centres. One approach is to make use of
-a ``scattering index'' \citep{bennartz2002precipitation}, based on the
+numerical weather prediction (NWP). Usage of passive microwave data by
+``all-sky'' assimilation in global NWP is growing in \citep{geer2017growing},
+but 183\,GHz data are still mainly used in a clear sky fashion
+\citep{geer2018all}. The later is particularly true in NWP of regional scope
+\citep{gustafsson2018survey}, all-sky assimilation of 183\,GHz at many national
+weather agencies will likely not be reached in many years. Anyhow, the cloud
+filtering applied differs between NWP centres. One approach is to make use of a
+``scattering index'' \citep{bennartz2002precipitation}, based on the
 observations alone. Today, likely more common is to use ``observation minus
 background'' (O-B), where the forecast model is used to obtain an estimate of
 the expected clear-sky value and the observation is rejected if the deviation
@@ -126,8 +127,8 @@ contamination is missed by the filtering this will cause a negative bias in
 mean radiance, compared to the true clear-sky mean. This bias will translate to
 a bias in humidity after the retrieval or assimilation. The alternative is to
 apply a very strict filtering, but this will result in that a high fraction of
-actually clear-sky values will be rejected \todo{(Reka or better reference)},
-i.e.\ an important loss of useful data.
+actually clear-sky values will be rejected, i.e.\ an important loss of useful
+data.
 
 The filtering is normally done in a ``one for all'' manner, i.e.\ all 183\,GHz
 channels are either kept or rejected, while, as the channels differ in their
@@ -139,13 +140,13 @@ points towards applying machine learning, as used by e.g.\
 \citet{favrichon2019detecting}.
 
 A maybe less obvious problem is the uncertainty to assign to the filtered
-values. To our best knowledge, in best case estimates of mean and worst case
-errors are provided. Some cases with relatively high cloud impact will likely be
-missed, while most cases are clear sky from start. As the remaining cloudy
-cases can cause significant biases, the likely solution is to apply a quite
-conservative (high) error estimate. However, this will unnecessary downgrade
-the value of the truly clear sky cases and the observations are used in a
-non-optimal manner.
+values. To our best knowledge, so far only estimates of mean and worst case
+errors have been provided. Some cases with relatively high cloud impact will
+likely be missed, while most cases are clear sky from start. As the remaining
+cloudy cases can cause significant biases, the likely solution is to apply a
+quite conservative (high) error estimate. However, this will unnecessary
+downgrade the value of the truly clear sky cases and the observations are used
+in a non-optimal manner.
 
 We are here approaching cloud filtering task from a new angle. The basic idea
 is to derive an estimate of the corresponding noise-free clear-sky (NFCS) value
@@ -167,7 +168,7 @@ by noise, but the uncertainty increases with magnitude of correction.
 Accordingly, the cloud correction approach allows that the full weight of
 clear-sky data can be preserved.
 
-The estimation of NFSC values makes use of a special type of machine learning,
+The estimation of NFCS values makes use of a special type of machine learning,
 denoted as Quantile Regression Neural Network (QRNN,
 \citet{pfreundschuh:aneur:18}). Unlike standard usage of machine learning where
 only some kind of best estimate is provided, QRNN works in a Bayesian fashion
