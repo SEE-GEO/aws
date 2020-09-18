@@ -182,12 +182,17 @@ The approach is demonstrated on a combination of 183\,GHz channels (following
 183\,GHz data) that will be possible when sub-millimetre data will be at hand
 in some years. This wavelength region will be introduced by the Ice Cloud
 Imager (ICI, \citet{eriksson:towar:20}), but likely also be included in several
-smaller missions (such as AWS presented below). The focus on ICI is motivated
-by several reasons. The true potentail of the QRNN cloud correction approach is
-likely not revealed if tested on existing data and applying ICI data for cloud
-filtering has not earlier been discussed. It is also argued that the cloud
-correction makes it possible to make good use of ICI data already in clear-sky
-assimilation, a fact that should speed up the use of this novel data source.
+smaller missions (such as AWS, presented below). \todo{Explain what sub-mm can
+  do}.}
+
+The focus on ICI is motivated by several reasons. The true potentail of the
+QRNN cloud correction approach is likely not revealed if tested on existing
+data and applying ICI data for cloud filtering has not earlier been discussed.
+It is also argued that the cloud correction makes it possible to make good use
+of ICI data already in clear-sky assimilation, a fact that should speed up the
+use of this novel data source.
+
+
 
 \section{Data and methods}
 %
@@ -697,75 +702,11 @@ Overall the results demonstrate that QRNN is successful in predicting the NFCS d
 In order to analyse the performance of QRNN with respect to uncertainty, the interrelation between the uncertainty estimates and cloud impact was investigated. Fig~\ref{fig:uncertainty_cloud_impact} displays the plot between mean uncertainty estimates for $2\sigma$ confidence interval and the cloud impact. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. However, this does not imply that the prediction accuracy is low. 
 
 
-\section{Outlook and Conclusions}  %% \conclusions[modified heading if necessary]
+\section{Conclusion and outlook}  %% \conclusions[modified heading if necessary]
+%
+To be written \dots
 
 
-
-\newpage
-
-\section*{Outline of sectioning}
-
-2 Data and methods
-
-2.1 Satellite sensors
-
-2.1.1 Ice Cloud Imager (ICI)
-
-2.1.2 Microwave Imager (MWI)
-
-2.1.3 Arctic Weather Satellite (AWS)
-
-2.2 Quantile Regression Neural Network (QRNN)
-
-2.2.1 Theory
-
-2.2.2 Evaluation metrics
-
-2.3 Simulations
-
-2.3.1 Input data
-
-2.3.2 Simulation setup
-
-2.3.3 Produced dataset
-(If diifers between ICI, MWI and AWS, clarify this)
-
-\noindent 3 Results
-
-Short recap of aim of correction. We also use the correction as a filter, using
-a threshold on the correction. We use 5K (?) threshold as example.
-
-3.1 QRNN network configurations and training
-
-3.2 ICI
-
-3.2.1 Example results
-
-Show a few estimated posterior distributions (one figure) and distribution of
-predicted values (Fig 2)
-
-3.2.2 Error of best estimate
-
-3.2.3 Predicted uncertainty
-
-3.3 MWI
-
-3.3.1 MWI alone
-
-Just 183 GHz channels, original noise
-
-3.3.2 MWI and ICI
-
-As in present version
-
-3.4 AWS
-
-\noindent 4 Discussion
-
-\noindent 5 Conclusion
-
-
-\newpage
 
 
 %% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
