@@ -532,7 +532,7 @@ The results show that both QRNN-single and QRNN-all are successful in predicting
 %f 
 \begin{figure}[t]
 	\includegraphics[width = 70mm]{Figures/prediction_uncertainty_I2V.pdf}	
-	\caption{The prediction uncertainty  for I2V  with respect to quantiles for randomly selected 1500 cases. The black line represents a hypothetical Gaussian distribution of $270\pm0.60$\,K, which is of the order of standard deviation for I2V predictions (see Table~\ref{tab:error_statistics_ici}). The results are from QRNN-single.}
+	\caption{The prediction uncertainty  for QRNN-single(I2V) with respect to quantiles for randomly selected 1500 cases. The quantiles have been plotted at equidistant points. The black line represents a hypothetical Gaussian distribution of $270\pm0.60$\,K, which is of the order of standard deviation for I2V predictions (see Table~\ref{tab:error_statistics_ici}).}
 	\label{fig:prediction_uncertainty_I2V}	
 \end{figure}
 \begin{figure}[t]
@@ -561,47 +561,60 @@ These three different types of analysis show that both QRNN-single and QRNN-all 
 %
 In this section, we present results from QRNN when applied to MWI channels. Firstly, we discuss results when all 183\,GHz MWI channels are used for ``self'' cloud filtering/correction (QRNN-mwi). We also describe the performance of QRNN when sub-mm channels from ICI are used to train MWI channels.
 \subsubsection{MWI alone}
+\todo {Incomplete}
+
 %
 %t
 \begin{table*}[t]
-	\caption{Error statistics for predictions from QRNN-mwi. The labels Filtered(5\,K), Predicted(All) and Predicted(5\,K) are same as described in Table~\ref{tab:error_statistics_ici}}
+	\caption{Error statistics for predictions from QRNN-mwi. The labels Filtered(7.5\,K), Predicted(All) and Predicted(7.5\,K) are same as described in Table~\ref{tab:error_statistics_ici}}
 	\label{tab:statistics_mwi-alone}
 	\begin{tabular}{llrr|rrr}
 		\tophline
 		&&\multicolumn{2}{c|}{Simulations}& \multicolumn{3}{c}{QRNN-single} \\
 		\cline{3-7}
 		%		\hline
-		&&   Clear-sky &   All-sky &  Filtered(5\,K) & Predicted & Predicted(5\,K) \\
+		&&   Clear-sky &   All-sky &  Filtered(5\,K) & Predicted & Predicted(7.5\,K) \\
 		\middlehline
-		MWI-14 		&bias     & 0.00 & -1.87 & -0.45 & -0.18 & -0.15 \\
-					&mae      & 0.64 &  2.31 &  0.91 &  0.96 &  0.80 \\
-					&std      & 0.81 &  8.97 &  1.54 &  1.73 &  1.29 \\
-					&skewness & 0.03 & -8.32 & -4.02 & -1.09 & -3.06 \\
+		MWI-14 		&bias     & -0.00 & -1.86 & -0.50(4.06\%) & -0.14 & -0.12 \\
+					&mae      &  0.96 &  2.58 &  1.25 &  1.12 &  1.00 \\
+					&std      &  1.20 &  9.00 &  1.94 &  1.86 &  1.52 \\
+					&skewness &  0.01 & -8.20 & -3.03 & -0.88 & -2.15 \\ 
 		\middlehline
-		MWI-15 		&Bias     & -0.01 & -1.23 & -0.36 & -0.16 & -0.13 \\
-					&MAE      &  0.64 &  1.70 &  0.85 &  0.62 &  0.53 \\
-					&STD      &  0.80 &  6.48 &  1.33 &  1.23 &  0.97 \\
-					&skewness &  0.01 & -9.96 & -3.32 & -3.06 & -4.17 \\
+		MWI-15 		&bias     & 0.01 & -1.23 & -0.40(2.84\%) & -0.13 & -0.11 \\
+					&mae      & 0.95 &  1.99 &  1.18 &  0.74 &  0.66 \\
+					&std      & 1.20 &  6.55 &  1.73 &  1.32 &  1.11 \\
+					&skewness & 0.01 & -9.67 & -2.34 & -2.44 & -2.89 \\
 		\middlehline	
-		MWI-16 		&Bias     & -0.00 &  -0.84 & -0.26 & -0.15 & -0.12 \\
-					&MAE      &  0.64 &   1.35 &  0.78 &  0.53 &  0.47 \\
-					&STD      &  0.80 &   5.31 &  1.15 &  1.03 &  0.80 \\
-					&skewness & -0.01 & -12.08 & -3.05 & -5.09 & -4.94 \\	
+		MWI-16 		&bias     & 0.00 &  -0.85 & -0.29(1.94\%) & -0.12 & -0.10 \\
+					&mae      & 0.96 &   1.64 &  1.10 &  0.68 &  0.63 \\
+					&std      & 1.20 &   5.39 &  1.54 &  1.15 &  0.96 \\
+					&skewness & 0.00 & -11.62 & -1.97 & -3.71 & -3.22 \\	
 		\middlehline			
-		MWI-17 		&Bias     & -0.00 &  -1.06 & -0.31 & -0.16 & -0.12 \\
-					&mae      &  0.64 &   1.54 &  0.80 &  0.62 &  0.54 \\
-					&std      &  0.80 &   6.22 &  1.22 &  1.12 &  0.90 \\
-					&skewness &  0.01 & -11.06 & -3.31 & -4.35 & -4.33 \\	
+		MWI-17 		&bias     & -0.00 &  -1.04 & -0.32(2.41\%) & -0.13 & -0.11 \\
+					&mae      &  0.96 &   1.83 &  1.12 &  0.73 &  0.67 \\
+					&std      &  1.20 &   6.29 &  1.59 &  1.21 &  1.02 \\
+					&skewness & -0.01 & -10.69 & -2.13 & -3.45 & -3.23 \\	
 		\middlehline			
-		MWI-18 		&Bias     & -0.00 &  -0.66 & -0.23 & -0.11 & -0.08 \\
-					&mae      &  0.64 &   1.17 &  0.76 &  0.62 &  0.57 \\
-					&std      &  0.80 &   4.57 &  1.13 &  1.08 &  0.88 \\
-					&skewness &  0.01 & -13.56 & -3.28 & -4.67 & -3.80 \\	
+		MWI-18 		&bias     &  0.01 &  -0.66 & -0.26(1.37\%) & -0.12 & -0.10 \\
+					&mae      &  0.96 &   1.47 &  1.08 &  0.80 &  0.76 \\
+					&std      &  1.20 &   4.66 &  1.51 &  1.23 &  1.08 \\
+					&skewness & -0.00 & -12.80 & -2.03 & -2.99 & -2.25 \\	
 		\bottomhline				
 	\end{tabular}	
 	\belowtable{} % Table Footnotes
 \end{table*}
-QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, which lack the higher frequency channels. Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. For MWI-14, the predictions from QRNN-mwi are only partially successful in removing the cloudy impact. The prediction errors for the complete testing dataset are highly symmetric but with a large spread. The average error bias of measurements from NFCS values is -1.87\,K, and after correction, it reduces to -0.18\,K. The corresponding standard deviation values are 9.01\,K and 1.87\,K. When cases with 5\,K correction are filtered out from the predicted dataset, the bias reduced further to -0.16\,K and MAE from 1.13\,K to 0.97\,K. Though there is a small increase in the accuracy, the high errors indicate residual cloud impact. For MWI-15, a slightly better accuracy than MWI-14 is observed. For this channel, the average error bias in the measurements is -1.23\,K, which  reduces -0.15 after correction.  
+QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, which lack the higher frequency channels. Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. 
+
+MWI channels have a higher measurement uncertainty than ICI, so a higher filtering threshold is selected. All cases with cloud correction greater than 7.5\,K are considered as cloudy and filtered out. With pure-filtering, only 4\% of the cases are filtered out for MWI-14, but the bias reduces from -1.86\,K to -0.50\,K. For the predictions, the average bias is -0.14\,K. For both filtering and correction, a significant reduction in the errors is observed but the resulting values are still high and indicate only partial success of the method. For other channels also, a similar performance is observed.  For MWI-15, cloud correction reduces the average erros from -1.23\,K to -0.13\,K  and the corresponding decrease in standard deviation is 6.55\,K to 1.32\,K. Filtering the predicted cases improves the bias and standard deviation further by 15\%. Interestingly, even with partial correction, the standard deviation is lower than the measurement noise. For MWI-16, the bias for predictions is -0.12\,K compared to -0.85\,K for the measurements. The corresponding standard deviation is  1.15\, which is again smaller than the measurement noise(1.20\,K). MWI-17 also has a similar performance. MWI-18 is least affected by cloud impact among the five channels. The average deviation of the measurement data to NFCS values is only -0.66\,K which reduces to -0.12\,K with QRNN. After filtering 1.37\% cases with high cloud impact, only a slight improvement in the accuracy is observed but the variability of errors decreases from 1.23\,K to 1.08\,K. 
+
+
+
+The results from QRNN-mwi show that using 183\,GHz channels for self correction is only partially successful in removing the cloudy cases. Though most of the cases with high cloud impact can be removed, the high errors are mostly due to partially corrected and uncorrected cases with low cloud impact. Using a low threshold filter on the predicted data can improve the accuracy, but at the cost of excessive removal of clear-sky cases. The five channels are sensitive to different regions of the troposhere. The brightness temperature of same cloud measured at different frequencies can vary. This can be quite valuable information to train QRNN. However cloud impact from regions where the weighting functions match poorly cannot be represented adequately in QRNN. The partial correction is a consequence of cases which for which QRNN cannot train. 
+
+In contrast to this, the noise reduction for the clear-sky cases is quite significant. The accurate prediction of NFCS values for noisy clear-sky values dominate sthe 
+
+
+ 
 \subsubsection{MWI and ICI}
 %t
 \todo{Incomplete}
@@ -629,7 +642,7 @@ QRNN-mwi is designed to provide basis for a cloud correction approach applicable
 	\end{tabular}	
 	\belowtable{} % Table Footnotes
 \end{table*}
-In this section, we combine the measurements from MWI-15(MWI-16) and the ICI sub-mm channels to predict MWI-15(MWI-16). Since we assume that all channels are remapped to a common footprint, channels MWI-14, MWI-17 and MWI-18 are virtually identical to I1V, I2V and I3V, and thus results for them are not shown separately.
+In this section, we combine the measurements from MWI-15(MWI-16) and the ICI sub-mm channels to predict MWI-15(MWI-16). Since we assume that all channels are remapped to a common footprint, channels MWI-14, MWI-17 and MWI-18 are virtually identical to I1V, I2V and I3V, and results for them are not shown separately.
 
 Table~\ref{tab:statistics_mwi} shows the error metrics of NFCS predictions from simulations. For MWI-15, the average deviations of measurements from NFCS values is -1.23\,K, and the MAE is 1.70\,K. When all cases are corrected, the resulting average bias is -0.04\,K and the MAE reduces to 0.56\,K. If only pure-filtering is made, the average bias is -0.26\,K and MAE is 0.76\,K, suggesting that a significant number of cases with non-zero cloud impact pass through. As seen for ICI, best results are obtained  when filtering is made on the corrected dataset. Similar accuracy is seen for MWI-16, although it has slightly lower cloud impact. 
 
@@ -650,31 +663,31 @@ These results show that even though ICI and MWI are two different instruments, t
 		%		\hline
 		&&   Clear-sky &   All-sky &  Filtered(5\,K) & Predicted & Predicted(5\,K) \\
 		\middlehline
-		AWS-32  &Bias     & -0.00 & -1.34 & -0.29 & -0.04 & -0.03 \\
-		&MAE       &  0.36 &  1.58 &  0.54 &  0.62 &  0.53 \\
-		&STD      &  0.45 &  5.91 &  0.92 &  0.98 &  0.73 \\
-		&skewness & -0.03 & -7.48 & -3.80 & -1.49 & -1.59 \\
+		AWS-32  &bias     & 0.00 & -1.32 & -0.26 & -0.03 & -0.02 \\
+				&mae      & 0.36 &  1.57 &  0.52 &  0.54 &  0.43 \\
+				&std      & 0.46 &  6.42 &  0.85 &  1.02 &  0.61 \\
+				&skewness & 0.01 & -8.43 & -3.65 & -0.07 & -1.98 \\
 		\middlehline
 		AWS-33	&Bias     & -0.01 & -0.98 & -0.25 & 0.02 &  0.01 \\
-		&MAE      &  0.36 &  1.23 &  0.51 & 0.49 &  0.42 \\
-		&STD      &  0.45 &  4.70 &  0.80 & 0.76 &  0.56 \\
-		&skewness & -0.00 & -8.78 & -2.92 & 0.04 & -0.79 \\
+				&MAE      &  0.36 &  1.23 &  0.51 & 0.49 &  0.42 \\
+				&STD      &  0.45 &  4.70 &  0.80 & 0.76 &  0.56 \\
+				&skewness & -0.00 & -8.78 & -2.92 & 0.04 & -0.79 \\
 		
 		\middlehline
 		AWS-34	&Bias     &  0.00 &  -0.68 & -0.20 &  0.02 &  0.01 \\
-		&MAE      &  0.51 &   1.07 &  0.61 &  0.51 &  0.46 \\
-		&STD      &  0.64 &   3.67 &  0.84 &  0.75 &  0.60 \\
-		&skewness & -0.00 & -10.32 & -1.70 & -0.55 & -0.59 \\
+				&MAE      &  0.51 &   1.07 &  0.61 &  0.51 &  0.46 \\
+				&STD      &  0.64 &   3.67 &  0.84 &  0.75 &  0.60 \\
+				&skewness & -0.00 & -10.32 & -1.70 & -0.55 & -0.59 \\
 		\middlehline
 		AWS-35	&Bias     &  0.00 &  -0.43 & -0.15 & 0.01 &  0.00 \\
-		&MAE      &  0.50 &   0.84 &  0.57 & 0.48 &  0.44 \\
-		&STD      &  0.63 &   2.65 &  0.77 & 0.71 &  0.57 \\
-		&skewness & -0.01 & -12.49 & -1.34 & 0.40 & -0.29 \\
+				&MAE      &  0.50 &   0.84 &  0.57 & 0.48 &  0.44 \\
+				&STD      &  0.63 &   2.65 &  0.77 & 0.71 &  0.57 \\
+				&skewness & -0.01 & -12.49 & -1.34 & 0.40 & -0.29 \\
 		\middlehline
 		AWS-36  &Bias     & 0.00 &  -0.28 & -0.11 &  0.03 &  0.03 \\
-		&MAE      & 0.70 &   0.90 &  0.74 &  0.63 &  0.60 \\
-		&STD      & 0.88 &   2.06 &  0.96 &  0.86 &  0.76 \\
-		&skewness & 0.01 & -11.80 & -0.53 & -0.35 & -0.20 \\
+				&MAE      & 0.70 &   0.90 &  0.74 &  0.63 &  0.60 \\
+				&STD      & 0.88 &   2.06 &  0.96 &  0.86 &  0.76 \\
+				&skewness & 0.01 & -11.80 & -0.53 & -0.35 & -0.20 \\
 		\bottomhline				
 	\end{tabular}
 	\belowtable{} % Table Footnotes
