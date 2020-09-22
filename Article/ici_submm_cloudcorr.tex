@@ -34,7 +34,7 @@
 %\usepackage{rotating}
 
 \newcommand{\todo}[1]{{\color{red} #1}}
-\newcommand{\ynfcs}{$y_\text{NFCS}}
+\newcommand{\ynfcs}{y_\text{NFCS}}
 \newcommand{\y}{\vec{y}}
 
 \begin{document}
@@ -187,7 +187,7 @@ Imager (ICI, \citet{eriksson:towar:20}), but likely also be included in several
 smaller missions (such as AWS, presented below). \todo{Explain what sub-mm can
   do}.
 
-The focus on ICI is motivated by several reasons. The true potentail of the
+The focus on ICI is motivated by several reasons. The true potential of the
 QRNN cloud correction approach is likely not revealed if tested on existing
 data and applying ICI data for cloud filtering has not earlier been discussed.
 It is also argued that the cloud correction makes it possible to make good use
@@ -199,7 +199,6 @@ use of this novel data source.
 \section{Data and methods}
 %
 \subsection{Satellite Instruments}
-In this section, the different satellite instruments used in this study are described.
 \subsubsection{Ice Cloud Imager}
 %
 %t
@@ -240,7 +239,7 @@ In this section, the different satellite instruments used in this study are desc
 	\belowtable{} % Table Footnotes
 \end{table*}
 
-Ice Cloud Imager (ICI) is a new instrument on board EPS-SG(EUMETSAT Polar System - Second Generation) satellite Metop-SG. Metop-SG is scheduled for launch in 2023, and will make ICI the first operational sensor observing Earth using sub-millimeter(sub-mm) wavelengths. ICI is a conically scanning radiometer that will measure 13 frequencies from 183 GHz up to 664 GHz. The main objective of ICI is to use high frequency channels for measuring ice cloud properties and improve the representation of ice clouds in regional and global Numerical Weather Prediction(NWP) models. ICI consists of channels receiving frequencies around 183.31\,GHz, 325.15\,GHz and 448.00\,GHz, measuring vertical polarization. While other channels around frequencies 243.20\,GHz and 664.00\,GHz are ``window channels'' and measure both vertical and horizontal polarization. The instrument will observe earth from a mean altitude of 832\,Km with sensor viewing angle 44.767$^\circ$(measured from nadir). For all the channels, the mean footprint size is about 15\,Km, but the exact geo-location of samples differs. Therefore a simultaneous utilization of data from different channels requires remapping to a common footprint \citep{eriksson:towar:20}.
+Ice Cloud Imager (ICI) is a new instrument on board EPS-SG(EUMETSAT Polar System - Second Generation) satellite Metop-SG. Metop-SG is scheduled for launch in 2023, and it will make ICI the first operational sensor observing Earth using sub-millimeter(sub-mm) wavelengths. ICI is a conically scanning radiometer that will measure 13 frequencies from 183 GHz up to 664 GHz. The main objective of ICI is to use high frequency channels for measuring ice cloud properties and improve the representation of ice clouds in regional and global Numerical Weather Prediction(NWP) models. ICI consists of channels receiving frequencies around 183.31\,GHz, 325.15\,GHz and 448.00\,GHz, measuring vertical polarization. While other channels around frequencies 243.20\,GHz and 664.00\,GHz are ``window channels'' and measure both vertical and horizontal polarization. The instrument will observe earth from a mean altitude of 832\,Km with sensor viewing angle 44.767$^\circ$(measured from nadir). For all the channels, the mean footprint size is about 15\,Km, but the exact geo-location of samples differs. Therefore a simultaneous utilization of data from different channels requires remapping to a common footprint \citep{eriksson:towar:20}.
 
 For this study, we conducted the forward simulations at frequencies: 183.31\,GHz, 325.15\,GHz, 448.00\,GHz and 664.00\,GHz(See Table~\ref{tab:ICI_MWI_channels}). For brevity, we assumed that all simulations were mapped to a common footprint.
 
@@ -296,8 +295,6 @@ Cloudsat profiles during August 2015 were randomly selected for forward simulati
 %
 **** Some parts copied directly from AWS report *****
 
-The satellite observations for all ICI channels are simulated with the Atmospheric Radiative Transfer Simulator (ARTS, (ARTS, \citet{eriksson:arts2:11,buehler:artst:18})version. The simulations include TB from five ICI channels around 183\,GHz, 243\,GHz, 325\,GHz, 448\,GHz and 664\,GHz. 
-
 The absorption model takes into account the effect from nitrogen
 \citep{pwr:93}, oxygen \citep{pwr:93} and water vapour
 \citep{ellison2007permittivity}. LWC is taken from ERA-Interim and is assumed
@@ -333,13 +330,11 @@ of the Stokes vector were calculated.
 \subsubsection{Produced dataset}
 %
 Using the simulation setup described in previous section,  
-220\,000 cases for each ICI and MWI frequency were simulated, using randomly selected CloudSat profiles. For both instruments, the channel frequencies were simulated directly.  
-For AWS, 140\,000 cases were simulated. 21 monochromatic frequencies were used and interpolated to a finer grid to get the channel brightness temperatures. All AWS sensor viewing angles (from $0^\circ$ to $45^\circ$) were simulated, but the results described in this study are based on nadir viewing angle. 
+220\,000 cases for each ICI and MWI frequency were simulated. For both instruments, the channel frequencies were simulated directly. For AWS, 140\,000 cases were simulated. Forward simulations were performed for 21 monochromatic frequencies. These frequencies were interpolated to a finer grid to get the AWS channel brightness temperatures. All AWS sensor viewing angles (from $0^\circ$ to $45^\circ$) were simulated, but the results described in this study are based on nadir viewing angle. 
 
-ARTS simulations are noise free, so to incorporate the measurement uncertainties, whenever needed, gaussian noise was added to according to the channel NE$\Delta$T (Table~\ref{tab:ICI_MWI_channels}, Table~\ref{tab:specifications_AWS}). For cases where MWI and ICI simulations were assumed to be remapped to a common footprint, the NE$\Delta$T for corresponding to ICI channels was used (See Sect.~\ref{mwi_channels}).
+ARTS simulations are noise free, so to incorporate the measurement uncertainties, whenever needed, gaussian noise was added to according to the channel NE$\Delta$T (Table~\ref{tab:ICI_MWI_channels},Table~\ref{tab:specifications_AWS}). For cases where MWI and ICI simulations were assumed to be remapped to a common footprint, the NE$\Delta$T for corresponding to ICI channels was used (See Sect.~\ref{mwi_channels}).
 
-The noise free simulations were divided into training and testing datasets. Out of the 220\,000 simulations for ICI and MWI each, 175\,000 cases were randomly picked to form the training set. The rest were used for testing. A smaller database was selected for AWS. 120\,000 simulations were used for training and the 
-remaining were used for testing.
+The noise free simulations were divided into training and testing datasets. Out of the 220\,000 simulations for ICI and MWI each, 175\,000 cases were randomly picked to form the training set. The rest were used for testing. A smaller database was selected for AWS. 120\,000 simulations were used for training and the remaining were used for testing.
 
 \subsection{Quantile regression neural networks}
 %
@@ -367,21 +362,8 @@ approximately corresponds to $\mu -3\sigma, \mu-2\sigma, \mu-\sigma
 estimating the $\pm 1, \pm 2$ and $\pm 3\sigma$ confidence intervals.
 The median is used as point estimate for the corrected $\ynfcs$.
 
-Fig.~\ref{fig:posterior_distribution_I2V} presents examples of the predicted
-quantiles for three different corrected observations of the ICI I1V channel. The
-three cases have a similar median value but very different spread of the
-remaining quantiles. These examples illustrate the case of very similar
-corrected observation values (the estimated median) but with different estimated
-observation errors.
+%Fig.~\ref{fig:posterior_distribution_I2V} presents examples of the predicted quantiles for three different corrected observations of the ICI I1V channel. The three cases have a similar median value but very different spread of the remaining quantiles. These examples illustrate the case of very similar corrected observation values (the estimated median) but with different estimated observation errors.
 
-\begin{figure}[t]
-	\centering
-	\includegraphics[height=60mm]{Figures/posterior_distribution_I2V.pdf} 
-	\caption{Predicted quantiles of the conditional distribution of $\ynfcs$ for
-    the ICI I1C channel.}
-	\label{fig:posterior_distribution_I2V}	
-\end{figure}
-%
 \subsubsection{ QRNN model configurations}
 %
 \label{QRNN_models}
@@ -411,16 +393,15 @@ observation errors.
 	\belowtable{} % Table Footnotes
 \end{table*}						
 
-In the study, three different QRNN cloud-correction models with different selections of input observations are
-investigated. All models ype, the target is always one of the available 183\,GHz channels, and this target channel is always included in the training set. The choice of other channels in the training set depends on the type of QRNN model chosen. A summary of the three QRNN models described in this study is provided in Table~\ref{tab:QRNN_models}.
+In the study, three different QRNN cloud-correction models are formulated. The basic construction of all three models is to train for one of the available 183\,GHz channels, using certain input channels. The selection of input channels is categorized by the type of QRNN model chosen.
 
-
-In the first model, ``QRNN-single'', the training inputs always contain data from the target 183\,GHz channel, and one or more available sub-mm channels. Other 183\,GHz channels are not included in the training. For ICI and MWI, 325\,GHz, 448\,GHz and 664\,GHz channels are used in the training, while for AWS only 325\,GHz is used.
+In the first model, ``QRNN-single'', the training inputs always contain data from the target 183\,GHz channel, and one or more available sub-mm channels. Other 183\,GHz channels are not included in the training. For ICI and MWI, 325\,GHz, 448\,GHz and 664\,GHz are used in the training, while for AWS only 325\,GHz is used. 
  
-The second model, ``QRNN-all'', is defined to investigate the  impact of using all 183\,GHz channels concurrently. In this model, the training set includes data from all available 183\,GHz channels, along with other sub-mm channels. This model is applied only to ICI. It should be noted that although the training set is identical for I1V, I2V and I3V, a separate training is needed for each channel as target.
+The second model, ``QRNN-all'', is defined to investigate the  impact of using all 183\,GHz channels concurrently. In this model, the training set includes data from all available 183\,GHz channels, along with other sub-mm channels. This model is applied only to ICI.
 
-The third model, ``QRNN-mwi'' is used only for MWI channels. In this case, all 183\,GHz channels are used concurrently in the training set. No other data from sub-mm channels is used. 
+The third model, ``QRNN-mwi'' is used only for MWI channels. In this case, all 183\,GHz channels are used concurrently in the training set. No other data from sub-mm channels is used.
 
+For each model, multiple configurations are defined according to the satellite instrument. A summary of the three QRNN models and their different configurations used in this study is provided in Table~\ref{tab:QRNN_models}.
 
 \subsubsection{QRNN implementation}
 \label{sec:qrnn-implementation}
@@ -457,13 +438,22 @@ Though these set of hyper-parameters were selected for QRNN-single applied to I2
 \subsubsection{Example results}
 %
 %f
+\begin{figure}[t]
+	\centering
+	\includegraphics[height=60mm]{Figures/posterior_distribution_I1V.pdf} 
+	\caption{Predicted quantiles of the conditional distribution of $\ynfcs$ for
+		the ICI I1V channel.}
+	\label{fig:posterior_distribution_I1V}	
+\end{figure}
+%f
 \begin{figure*}[t]
 	\includegraphics[width=\textwidth]{Figures/PDF_predictions_ICI.pdf} 
 	\caption{Distributions of point estimate NFCS from QRNN-single for channels I1V, I2V and I3V. The corresponding distributions for NFCS simulations are also shown.}
 	\label{fig:PDF_predictions}	
 \end{figure*}
 
-For an analysis of QRNN predictions, a point estimate of the posterior distribution is required. Usually for Bayesian analysis, the posterior mean or posterior median are selected as point estimates. In this study, we assume the posterior median to be the best estimate for the predicted NFCS value. The distribution of point estimates is shown in Fig.~\ref{fig:PDF_predictions}. For clear-sky conditions, I1V has the warmest brightness temperatures and I3V has the coldest. For all three channels, an excellent agreement between the predictions and simulations is observed, indicating that QRNN is successful in predicting NFCS values for majority of the cases. At lower brightness temperatures, the frequency of predictions is slightly smaller than simulations. This could be due to few QRNN predictions ending up with partially corrected cloud impact. 
+Fig.~\ref{fig:posterior_distribution_I2V} presents examples of the predicted quantiles for three different corrected observations of the ICI I1V channel. The three cases have a similar median value but very different spread of the remaining quantiles. These examples illustrate the case of very similar corrected observation values (the estimated median) but with different estimated observation errors.
+For an analysis of QRNN predictions, a point estimate of the posterior distribution is required. Usually for Bayesian analysis, the posterior mean or posterior median are selected as point estimates. In this study, we assume the posterior median to be the best estimate for the predicted NFCS value. The distribution of point estimates is shown in Fig.~\ref{fig:PDF_predictions}. For all three channels, an excellent agreement between the predictions and simulations is observed. This indicates that QRNN is successful in predicting NFCS values for majority of the cases. At lower brightness temperatures, the frequency of predictions is slightly smaller than simulations. This could be due to few QRNN predictions ending up with partially corrected cloud impact. 
  
 \subsubsection{Analysis of cloud filtering}
 %
@@ -567,6 +557,11 @@ The results show that both QRNN-single and QRNN-all are successful in predicting
 	\caption{The prediction uncertainty  for QRNN-single(I2V) with respect to quantiles for randomly selected 1500 cases. The quantiles have been plotted at equidistant points. The black line represents a hypothetical Gaussian distribution of $270\pm0.60$\,K, which is of the order of standard deviation for I2V predictions (see Table~\ref{tab:error_statistics_ici}).}
 	\label{fig:prediction_uncertainty_I2V}	
 \end{figure}
+\begin{figure*}[t]
+	\includegraphics[width=150mm]{Figures/deviation_posterior_samples_I2V.pdf}	
+	\caption{The distribution of predicted errors and observed errors for I2V as obtained from QRNN-single and QRNN-all for the test dataset. The predicted errors are estimated as deviation of random samples from posteriori distribution to corresponding median values.}
+	\label{fig:predicted_errors}	
+\end{figure*}
 \begin{figure}[t]
 	\includegraphics[height = 70mm]{Figures/calibration_QRNN_I1V.pdf}	
 	\caption{Calibration of the prediction intervals obtained from QRNN-single and QRNN-all for I1V. }
@@ -578,9 +573,11 @@ The results show that both QRNN-single and QRNN-all are successful in predicting
 	\label{fig:error_distribution_uncertainty_bins}	
 \end{figure*}
 
-The biggest advantage of using QRNN is estimation of case-specific uncertainties. The quantiles can be used to construct a probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. If median is chosen as the point estimate, the predictions at other quantiles provide a measure of the possible fluctuations in the point estimate. 
+The biggest advantage of using QRNN is estimation of case-specific uncertainties. The quantiles can be used to construct a probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. 
 
-In order to understand how QRNN predicted uncertainties behave, we calculated the deviations of predictions at different quantiles from the median value (Fig.~\ref{fig:prediction_uncertainty_I2V}). The large spread in the uncertainty estimates indicates that QRNN can successfully represent uncertainties for each case individually, rather than expressing them as a single measure for all cases. In the latter case, the uncertainty estimates for all cases would be concentrated along a narrow interval. Among the cases associated with low uncertainty, the distribution is quite symmetric along the median value. These cases are concentrated along a narrow interval and lie close to the black curve. For such cases, the uncertainties are also equally spaced for $1\sigma$, $2\sigma$ and $3\sigma$, suggesting that a Gaussian distribution model could be used to express their underlying uncertainty. However, the cases with high uncertainty are unequally spaced and have a larger spread over positive quantiles than negative quantiles.  
+In order to analyse the prediction uncertainty, the deviations of predicted quantiles from its median value are estimated. Fig.~\ref{fig:prediction_uncertainty_I2V} shows the spread of prediction uncertainties over different quantiles for randomly chosen 1500 cases. The large spread in the predicted errors indicates that QRNN is successful in representing uncertainties for each case individually, rather than expressing them as a single measure for all cases. In the latter case, the uncertainty estimates would be concentrated along a narrow interval. Among the cases associated with low uncertainty, the distribution is quite symmetric along the median value. These cases are concentrated along a narrow interval and lie close to the black curve. On the contrast, cases with high uncertainty are unequally spaced and have a larger spread over positive quantiles than negative quantiles.
+
+Fig.~\ref{fig:predicted_errors} shows the comparison of observed errors (prediction accuarcy) to predicted errors. The predicted dataset is constructed by drawing random samples from the posteriori distribution. We do derive any sample from outside $\pm3\sigma$. The predicted error is deviation of random sample to its median. For QRNN-single, the predicted and observed errors have good agreement for the peak of the distribution, but the predicted errors are spread out asymmetrically. For QRNN-all, the predicted and observed errors have a better agreement and their spread is symmetric. The results show that both QRNN-single and QRNN-all is not able to represent the left wings of the distribution. This could also be a sampling issue, as the high errors we try to predict form a very small fraction of the complete dataset.  
 
 For further analysis, we compared the distribution of predictions from QRNN with the a priori distribution. In a model with high performance, the posterior distribution of the predictions should be similar to the a priori distribution of training dataset. A straightforward way to compare the two distribution is to plot the frequency of predictions and frequency of the true value in different prediction intervals. This is also commonly known as calibration plot. Fig.~\ref{fig:calibration_I1V} shows the calibration of the prediction intervals on the test dataset for I1V. For both QRNN models, the predictions for the complete test dataset are well calibrated and follow the y=x line. This shows that the training and test datasets come from the same a priori distribution. On the other hand, when only the cases with  cloud correction greater than 10\,K are considered, for both models, the predictions in all the intervals are poorly calibrated. In this case the calibration curve lies below the y=x line, indicating that the predicted intervals are too narrow, or the uncertainty is underestimated. In the test and training datasets, the clear-sky cases and cases with low cloud impact dominate the a priori distribution. The a priori distribution of cloudy cases is significantly different to the clear-sky cases, thus leading to poorly calibrated predictions for former. We also plotted the calibration curves for I2V and I3V (figure not shown). For both these channels, predictions over complete dataset were well calibrated for both QRNN-single and QRNN-all, but for subset with threshold 10\,K, the slightly poor calibrations were observed in QRNN-single. This is in contrast with I1V, where both models had poor calibrations for cases with high cloud impact. 
 
@@ -591,10 +588,8 @@ These three different types of analysis show that both QRNN-single and QRNN-all 
 
 \subsection{MWI}
 %
-In this section, we present results from QRNN when applied to MWI channels. Firstly, we discuss results when all 183\,GHz MWI channels are used for ``self'' cloud filtering/correction (QRNN-mwi). We also describe the performance of QRNN when sub-mm channels from ICI are used to train MWI channels.
+In this section, we discuss results when all 183\,GHz MWI channels are used for ``self'' cloud filtering/correction (QRNN-mwi). We also describe the performance of QRNN when sub-mm channels from ICI are used to train MWI channels.
 \subsubsection{MWI alone}
-\todo {Incomplete}
-
 %
 %t
 \begin{table*}[t]
@@ -605,7 +600,7 @@ In this section, we present results from QRNN when applied to MWI channels. Firs
 		&&\multicolumn{2}{c|}{Simulations}& \multicolumn{3}{c}{QRNN-single} \\
 		\cline{3-7}
 		%		\hline
-		&&   Clear-sky &   All-sky &  Filtered(5\,K) & Predicted & Predicted(7.5\,K) \\
+		&&   Clear-sky &   All-sky &  Filtered(7.5\,K) & Predicted & Predicted(7.5\,K) \\
 		\middlehline
 		MWI-14 		&bias     & -0.00 & -1.86 & -0.50(4.06\%) & -0.14 & -0.12 \\
 					&mae      &  0.96 &  2.58 &  1.25 &  1.12 &  1.00 \\
@@ -635,22 +630,21 @@ In this section, we present results from QRNN when applied to MWI channels. Firs
 	\end{tabular}	
 	\belowtable{} % Table Footnotes
 \end{table*}
-QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, which lack the higher frequency channels. Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. 
+\begin{figure}[t]
+	\includegraphics[width = 70mm]{Figures/cloud_impact_uncertainty_MWI.pdf}	
+	\caption{The average confidence intervals (2$\sigma$) plotted against the magnitude of cloud impact for all MWI channels.}
+	\label{fig:uncertainty_cloud_impact}	
+\end{figure}
+QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, which lack the higher frequency channels. 
 
-MWI channels have a higher measurement uncertainty than ICI, so a higher filtering threshold is selected. All cases with cloud correction greater than 7.5\,K are considered as cloudy and filtered out. With pure-filtering, only 4\% of the cases are filtered out for MWI-14, but the bias reduces from -1.86\,K to -0.50\,K. For the predictions, the average bias is -0.14\,K. For both filtering and correction, a significant reduction in the errors is observed but the resulting values are still high and indicate only partial success of the method. For other channels also, a similar performance is observed.  For MWI-15, cloud correction reduces the average erros from -1.23\,K to -0.13\,K  and the corresponding decrease in standard deviation is 6.55\,K to 1.32\,K. Filtering the predicted cases improves the bias and standard deviation further by 15\%. Interestingly, even with partial correction, the standard deviation is lower than the measurement noise. For MWI-16, the bias for predictions is -0.12\,K compared to -0.85\,K for the measurements. The corresponding standard deviation is  1.15\, which is again smaller than the measurement noise(1.20\,K). MWI-17 also has a similar performance. MWI-18 is least affected by cloud impact among the five channels. The average deviation of the measurement data to NFCS values is only -0.66\,K which reduces to -0.12\,K with QRNN. After filtering 1.37\% cases with high cloud impact, only a slight improvement in the accuracy is observed but the variability of errors decreases from 1.23\,K to 1.08\,K. 
+Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. MWI channels have a higher measurement uncertainty than ICI, so a higher filtering threshold is selected. All cases with cloud correction greater than 7.5\,K are considered as cloudy and filtered out. With pure-filtering, only 4\% of the cases are filtered out for MWI-14, but the bias reduces from -1.86\,K to -0.50\,K. For the predictions, the average bias is -0.14\,K. For both filtering and correction, a significant reduction in the errors is observed but the resulting values are still high and indicate only partial success of the method. For other channels also, a similar performance is observed.  For MWI-15, cloud correction reduces the average error from -1.23\,K to -0.13\,K  and the corresponding decrease in standard deviation is 6.55\,K to 1.32\,K. Filtering the predicted cases improves the bias and standard deviation further by 15\%. Interestingly, even with partial correction, the standard deviation is lower than the measurement noise. For MWI-16, the bias for predictions is -0.12\,K compared to -0.85\,K for the measurements. The corresponding standard deviation is  1.15\,K, which is again smaller than the measurement noise(1.20\,K). MWI-17 also has a similar performance. MWI-18 is least affected by cloud impact among the five channels. The average deviation of the measurement data to NFCS values is only -0.66\,K which reduces to -0.12\,K with QRNN. After filtering 1.37\% cases with high cloud impact, only a slight improvement in the accuracy is observed but the variability of errors decreases from 1.23\,K to 1.08\,K. The results show that QRNN-mwi is partially successful in removing the cloud impact. A significant reduction in the deviation to NFCS values indicates that though most cases with high cloud impact can be removed/corrected, the cases with residual cloud impact and uncorrected cases deteriorate the performance. Using a low threshold filter can improve the accuracy, but at the cost of excessive removal of clear-sky cases.
 
+The five channels are sensitive to different regions of the troposphere so not all clouds get equal representation in each. The cloud impact from regions where the weighting functions match poorly cannot be represented adequately in QRNN. However,the brightness temperature of same cloud measured at different frequencies can be valuable to train QRNN.  Similarly, the clear-sky measurements from different channels can effectively cancel out the noise. QRNN predictions can be interpreted as a weighted average between the multiple channels. As clear-sky cases occur more frequently, the averaging can cancel out noise. 
 
+Finally, we investigate if uncertainty estimates from QRNN-mwi are representative of prediction errors. Fig.~\ref{fig:uncertainty_cloud_impact} displays the average prediction uncertainty in 97\% confidence interval for different cloud impacts. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. Most uncertain predictions occur for the outermost channels (MWI-14, MWI-15). These channels also have the lowest prediction accuracy.
 
-The results from QRNN-mwi show that using 183\,GHz channels for self correction is only partially successful in removing the cloudy cases. Though most of the cases with high cloud impact can be removed, the high errors are mostly due to partially corrected and uncorrected cases with low cloud impact. Using a low threshold filter on the predicted data can improve the accuracy, but at the cost of excessive removal of clear-sky cases. The five channels are sensitive to different regions of the troposhere. The brightness temperature of same cloud measured at different frequencies can vary. This can be quite valuable information to train QRNN. However cloud impact from regions where the weighting functions match poorly cannot be represented adequately in QRNN. The partial correction is a consequence of cases which for which QRNN cannot train. 
-
-In contrast to this, the noise reduction for the clear-sky cases is quite significant. The accurate prediction of NFCS values for noisy clear-sky values dominate sthe 
-
-
- 
 \subsubsection{MWI and ICI}
 %t
-\todo{Incomplete}
-
 \begin{table*}[t]
 	\caption{Same as Table~\ref{tab:error_statistics_ici}, but for channels MWI-15 and MWI-16. Results are from QRNN-single.}
 	\label{tab:statistics_mwi}
@@ -677,8 +671,6 @@ In contrast to this, the noise reduction for the clear-sky cases is quite signif
 In this section, we combine the measurements from MWI-15(MWI-16) and the ICI sub-mm channels to predict MWI-15(MWI-16). Since we assume that all channels are remapped to a common footprint, channels MWI-14, MWI-17 and MWI-18 are virtually identical to I1V, I2V and I3V, and results for them are not shown separately.
 
 Table~\ref{tab:statistics_mwi} shows the error metrics of NFCS predictions from simulations. For MWI-15, the average deviations of measurements from NFCS values is -1.23\,K, and the MAE is 1.70\,K. When all cases are corrected, the resulting average bias is -0.04\,K and the MAE reduces to 0.56\,K. If only pure-filtering is made, the average bias is -0.26\,K and MAE is 0.76\,K, suggesting that a significant number of cases with non-zero cloud impact pass through. As seen for ICI, best results are obtained  when filtering is made on the corrected dataset. Similar accuracy is seen for MWI-16, although it has slightly lower cloud impact. 
-
-The uncertainty 
 
 These results show that even though ICI and MWI are two different instruments, their channels can benefit from each other. Although re-mapping to a common footprint would slighly compromise the data quality, a high accuracy achieved with simulations suggests that the QRNN would work well even when actual measurements are available.
 
@@ -725,11 +717,11 @@ These results show that even though ICI and MWI are two different instruments, t
 	\belowtable{} % Table Footnotes
 \end{table*}
 %f
-\begin{figure}[t]
-	\includegraphics[width = 80mm]{Figures/cloud_impact_uncertainty_AWS.pdf}	
-	\caption{The average confidence intervals (2$\sigma$) plotted against the magnitude of cloud impact for all AWS channels.}
-	\label{fig:uncertainty_cloud_impact}	
-\end{figure}
+%\begin{figure}[t]
+%	\includegraphics[width = 80mm]{Figures/cloud_impact_uncertainty_AWS.pdf}	
+%	\caption{The average confidence intervals (2$\sigma$) plotted against the magnitude of cloud impact for all AWS channels.}
+%	\label{fig:uncertainty_cloud_impact}	
+%\end{figure}
 
 In this section, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilising only 325\,GHz channel can be relevant for smaller satellite missions like AWS where higher sub-mm channels are not available. 
 
@@ -738,7 +730,7 @@ and the results are displayed in Table~\ref{tab:statistics_qrnn_aws}. For channe
 
 Overall the results demonstrate that QRNN is successful in predicting the NFCS data for AWS-33, AWS-34, AWS-35 and AWS-36 and partially for AWS-32. The prediction error distributions are symmetric with low bias and standard deviation. The cases with high error are mostly associated with high cloud impact and constitute only a small fraction of the total dataset. Excluding such cases decreases the variability in the predictions and in fact the spread of errors for AWS-34, AWS-35 and AWS-36 is smaller than noise. Removal of cases with high cloud impact, increases the representation of cases in cloud-free conditions, and for such cases, QRNN predictions can be seen as a weighted mean between the two channels. Since the noise in the two channels are stationary and uncorrelated, the predictions benefit from the additional information, but the noise component tends to cancel out. For AWS-32, QRNN is only partially successful in reducing the impact of hydrometeors. The prediction errors have significantly lower spread than the measurements, but cases with partially corrected cloud impact deteriorates the overall accuracy. Since 325\,GHz cannot provide a full coverage for hydrometeor impact in AWS-32, the testing data will inevitably contain cases for which QRNN has not trained for. Prediction for such cases would be inaccurate and highly uncertain. In such cases, the predictions should be used with caution. 
 
-In order to analyse the performance of QRNN with respect to uncertainty, the interrelation between the uncertainty estimates and cloud impact was investigated. Fig~\ref{fig:uncertainty_cloud_impact} displays the plot between mean uncertainty estimates for $2\sigma$ confidence interval and the cloud impact. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. However, this does not imply that the prediction accuracy is low. 
+%In order to analyse the performance of QRNN with respect to uncertainty, the interrelation between the uncertainty estimates and cloud impact was investigated. Fig~\ref{fig:uncertainty_cloud_impact} displays the plot between mean uncertainty estimates for $2\sigma$ confidence interval and the cloud impact. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. However, this does not imply that the prediction accuracy is low. 
 
 
 \section{Conclusion and outlook}  %% \conclusions[modified heading if necessary]
