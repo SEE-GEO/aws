@@ -51,8 +51,9 @@ def calculate_all_histogram(y, y0, y_pre, y_prior, iq, bins, im, i183):
     
 
     hist_pos_mean_5  = calculate_pdf(y_pre[:, iq], y0, bins, im)
+    hist_filter  = calculate_pdf(y_prior[:, i183], y0, bins, im)
     
-    return hist_noise, hist_pre, hist_prior, hist_pos_mean, hist_pos_mean_5    
+    return hist_noise, hist_pre, hist_prior, hist_pos_mean, hist_pos_mean_5, hist_filter    
 
 def calculate_pdf(y, y0, bins, im = None):
 
@@ -69,28 +70,32 @@ def calculate_bias(y_prior, y0, y, y_pos_mean, im, itarget):
     b1  = np.mean(y_prior[:, itarget] - y0)
     b2a = np.mean(y_pos_mean - y0) 
     b2b = np.mean(y_pos_mean[im] - y0[im])
-    return b0, b1, b2a, b2b
+    b1_filter = np.mean(y_prior[im, itarget] - y0[im])
+    return b0, b1, b2a, b2b, b1_filter
 
 def calculate_std(y_prior, y0, y, y_pos_mean, im, itarget):  
     std0  = np.std(y - y0)
     std1  = np.std(y_prior[:, itarget] - y0)
     std2a = np.std(y_pos_mean - y0)
     std2b = np.std(y_pos_mean[im] - y0[im])
-    return std0, std1, std2a, std2b
+    std1_filter  = np.std(y_prior[im, itarget] - y0[im])
+    return std0, std1, std2a, std2b, std1_filter
 
 def calculate_mae(y_prior, y0, y, y_pos_mean, im, itarget): 
     mae0  = np.mean(np.abs(y - y0))
     mae1  = np.mean(np.abs(y_prior[:, itarget] - y0))
     mae2a = np.mean(np.abs(y_pos_mean - y0)) 
     mae2b = np.mean(np.abs(y_pos_mean[im] - y0[im]))
-    return mae0, mae1, mae2a, mae2b
+    mae1_filter  = np.mean(np.abs(y_prior[im, itarget] - y0[im]))
+    return mae0, mae1, mae2a, mae2b, mae1_filter
 
 def calculate_skew(y_prior, y0, y, y_pos_mean, im, itarget):
     skew0  = skew(y - y0)
     skew1  = skew(y_prior[:, itarget] - y0)
     skew2a = skew(y_pos_mean - y0)
     skew2b = skew(y_pos_mean[im] - y0[im])
-    return skew0, skew1, skew2a, skew2b
+    skew1_filter  = skew(y_prior[im, itarget] - y0[im])
+    return skew0, skew1, skew2a, skew2b, skew1_filter
 
 # Calculate the point density
 def density (x, y):

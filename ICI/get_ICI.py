@@ -4,6 +4,9 @@
 Created on Thu Aug 13 11:50:28 2020
 
 @author: inderpreet
+
+Combines data from ARTS simulatons and writes the training and testing datasets
+for ICI 
 """
 
 import os
@@ -43,12 +46,11 @@ nedt  = np.array([0.8, 0.8, 0.8, #183Ghz
                   ])      #664Ghz
 #                  1.2, 1.2])     #183Ghz, MWI
 
-files = glob.glob(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/\
-                                     ICI_m60_p60/c_**clearsky.nc'))
+files = glob.glob(os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/ICI_m60_p60/c_**clearsky.nc'))
 #%% get dBZ and altitude 
 
-dBZ      = get_y_cloudsat(files[:])
-altitude = get_altitude(files[:])
+# dBZ      = get_y_cloudsat(files[:])
+# altitude = get_altitude(files[:])
 
 #%%
 TB_cs, TB_as  = read_clear_allsky_pairs(files)
@@ -96,13 +98,13 @@ TB_ICI[:, randomList[175000:], :].to_netcdf('TB_ICI_test.nc', 'w')
 
 #%%save dBZ
 
-dBZ      = np.asarray(dBZ)
-altitude = np.asarray(altitude)
-np.save('dbz_train.npy', dBZ[randomList[:175000]])
-np.save('dbz_test.npy', dBZ[randomList[175000:]])
+# dBZ      = np.asarray(dBZ)
+# altitude = np.asarray(altitude)
+# np.save('dbz_train.npy', dBZ[randomList[:175000]])
+# np.save('dbz_test.npy', dBZ[randomList[175000:]])
 
-np.save('alt_train.npy', altitude[randomList[:175000]])
-np.save('alt_test.npy', altitude[randomList[175000:]])
+# np.save('alt_train.npy', altitude[randomList[:175000]])
+# np.save('alt_test.npy', altitude[randomList[175000:]])
 
 
 

@@ -9,8 +9,21 @@ import os
 import xarray
 
 def read_clear_allsky_pairs(files_clearsky):
+    """
+    find the pairs of clearsky and allsky cases from ARTS simulations 
+
+    Parameters
+    ----------
+    files_clearsky : list containing clearsky files
+
+    Returns
+    -------
+    y_ici_cs : TB for clearsky cases
+    y_ici_as : TB for all sky cases
+    """
 
     first_iteration = True
+    
     for file_clearsky in files_clearsky[:]:
         file_allsky = file_clearsky.replace('_clearsky.nc', '.nc')
         

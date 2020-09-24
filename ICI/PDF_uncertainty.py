@@ -36,14 +36,16 @@ def PDF_uncertainty_bins(y_pre, y0, ulim):
     
     im = np.logical_and((uncertain < ulim[1]), ( uncertain >= ulim[0]) )
     hist1 = np.histogram(dtb[im], bins, density = True)
-    
+ 
+#    im = np.logical_and((uncertain < ulim[2]), ( uncertain >= ulim[1]) )
+#    hist2 = np.histogram(dtb[im], bins, density = True)
 
     
     im = uncertain >=ulim[1]
     hist2 = np.histogram(dtb[im], bins, density = True)
     
     
-    return hist0[0], hist1[0], hist2[0], bins
+    return hist0[0], hist1[0],  hist2[0], bins
 #%%
 
 #%% input parameters
@@ -82,6 +84,7 @@ for i,target in enumerate(targets):
     ax[i].plot(center, hist0, 'k', linewidth = 2.5)
     ax[i].plot(center, hist1, 'r', linewidth = 2.5)
     ax[i].plot(center, hist2, 'b', linewidth = 2.5)
+#    ax[i].plot(center, hist3, 'g', linewidth = 2.5)
     ax[i].xaxis.set_minor_locator(MultipleLocator(5))
     ax[i].grid(which = 'both', alpha = 0.4)
     
@@ -94,9 +97,11 @@ ax[2].set_yticklabels([])
 ax[1].legend([  '0 - ' + str(ulim[0]) + ' K',
             str(ulim[0]) +' - ' + str(ulim[1]) + ' K',
              '> ' + str(ulim[1]) + ' K' ], title = "uncertainty bins (2$\sigma$)", prop={'size': 24}, \
-             frameon = False, bbox_to_anchor=(1, 1.0), ncol=4)
+             frameon = False, bbox_to_anchor=(0.85, 1.0), ncol=2)
 
 
 
-fig.savefig('Figures/PDF_uncertainty_bins_QRNN-single.pdf')                               
+fig.savefig('Figures/PDF_uncertainty_bins_QRNN-single.pdf')    
+
+                           
                                 
