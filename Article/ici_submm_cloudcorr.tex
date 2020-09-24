@@ -741,10 +741,26 @@ Overall the results demonstrate that QRNN is successful in predicting the NFCS d
 
 \section{Conclusion and outlook}  %% \conclusions[modified heading if necessary]
 %
-To be written \dots
+
+
+In this study, quantile regression neural network is used for filtering and correction of cloud contamination in 183\,GHz channels. QRNN is a neural network which estimates the posterior distribution of target variable through quantiles. It is demonstrated that QRNN can combine data from 183\,GHz channels and the available sub-mm frequencies to provide channel specific NFCS predictions. Application of QRNN to data from three different satellite instruments is presented. 
+ 
+
+QRNN based filtering is only partially successful in removing the cloudy data. The cloudy cases falsely classified as clear introduce a negative bias in the filtered data. This is not optimal solution, but in agreement with what can be achieved with the present instruments. 
+
+Since the present sensors lack any sub-mm channels, to investigate the applicaibility to present sensors and also emphasize the benefit of high frequency channels, a QRNN model using only 183\,GHz data is also investigated. This allows us to 
+
+
+The 183\,GHz channels and the sub-mm channels are sensitive to different parts of the troposphere. When all of them are considered together, the weighting functions of sub-mm channels can provide only a partially complete coverage to the hydrometeor impact. For the outermost 183\,GHz channels, there always exists a part of troposphere where hydrometeor impact cannot be covered.  
+
+A slightly lower accuracy was observed for cases with high cloud impact. In few of such cases, the predicted NFCS values were not completely cloud free. This is expected as not all cases can be represented by the a priori distribution QRNN trains on. Predictions for \textit{out-of-distribution} cases is always a challenging task for deep learning algorithms and  shall always limit the performance. Improving the representation of such cases in the a priori distribution can help alleviate this problem. However since such cases are few, filtering them out results in highly accurate NFCS predictions with minimal reduction in data. 
+ 
+
+The robustness of QRNN was also demonstrated by application to a smaller satellite missions AWS, where only one of the higher frequencies is available. The same approach was applicable in this case, and the results proved that only one sub-mm channel is also sufficient enough for cloud correction at 183\,GHz.   
 
 
 
+The method is applied to channels from three different instruments : ICI, MWI and AWS.
 
 %% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
 %% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
