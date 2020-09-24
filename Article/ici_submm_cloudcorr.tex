@@ -344,7 +344,7 @@ The noise free simulations were divided into training and testing datasets. Out 
 \subsection{Quantile regression neural networks}
 %
 The task that we aim to solve in this study is to predict the NFCS brightness
-temperatures $\ynfcs$ at a given $187\unit{GHz}$ channel from a vector of
+temperature $\ynfcs$ at a given $187\unit{GHz}$ channel from a vector of
 cloud-contaminated observations $\y$. Since the information-content of the
 cloud-contaminated observations is certainly too low to solve this problem
 exactly, a probabilistic formulation is appropriate here. The aim thus becomes
@@ -366,6 +366,34 @@ approximately corresponds to $\mu -3\sigma, \mu-2\sigma, \mu-\sigma
 , \mu, \mu + \sigma, \mu + 2\sigma, \mu + 3\sigma$ and thus allows
 estimating the $\pm 1, \pm 2$ and $\pm 3\sigma$ confidence intervals.
 The median is used as point estimate for the corrected $\ynfcs$.
+
+QRNN's are trained to minimize the mean of the quantile loss functions
+%
+\begin{align}
+  \mathcal{L}_\tau(y_\tau, y) &=
+  \begin{cases}
+    \tau|y - y_\tau|, & y_\tau < y \\ (1 - \tau)|y_\tau - y|, & \text{otherwise}
+    \\
+  \end{cases}
+\end{align}
+%
+for all predicted quantile fractions $\tau$, where $\y_\tau$ is the predicted
+quantile and $y$ the reference value from the training set. The quantile loss is
+used in this study as a performance criterion for the tuning of the hyper
+parameters of the QRNN. In addition to the quantile loss, also the Continuously
+Ranked Probability Score (CRPS) is considered. Given a predicted cumulative
+distribution function (CDF) $F$ and the reference value $y$, the CRPS is defined as
+%
+\begin{align}
+  \text{CRPS}(F, y) = \int_{-\infty}^{\infty} \left (F(y') - y\right )^2\: dy'.
+\end{align}
+%
+To compute the CRPS for a predictions from a QRNN, the predicted quantiles are
+used to derive a piece-wise linear approximation of the CDF of the predicted
+distribution and evaluate the above integral.
+
+
+
 
 %Fig.~\ref{fig:posterior_distribution_I2V} presents examples of the predicted quantiles for three different corrected observations of the ICI I1V channel. The three cases have a similar median value but very different spread of the remaining quantiles. These examples illustrate the case of very similar corrected observation values (the estimated median) but with different estimated observation errors.
 
@@ -411,7 +439,10 @@ For each model, multiple configurations are defined according to the satellite i
 \subsubsection{QRNN implementation}
 \label{sec:qrnn-implementation}
 
-The implementation of QRNN is based on PyTorch, an open source machine learning library \citep{paszke2017automatic}. It is developed and available as a part of \textit{typhon:tools for atmospheric research} software package [\todo{developer's version??}].
+The implementation of QRNN is based on PyTorch, an open source machine learning
+library \citep{paszke2017automatic}. It is developed and available as a part of
+\textit{typhon:tools for atmospheric research} software package
+       [\todo{developer's version??}].
 
 For this study, we initialize the quantile loss function with quantile fractions $\tau$ = [0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998] to train the neural network to predict the corresponding quantiles $x_{\tau}$ = [$-3\sigma, -2\sigma, -1\sigma, median, 1\sigma, 2\sigma, 3\sigma $]. QRNN is trained with simulated brightness temperatures from different channels, no other data is included. The input channels are variable and are determined by the type of QRNN model used. The different QRNN models are described in Sect.~\ref{QRNN_models}. 
 
