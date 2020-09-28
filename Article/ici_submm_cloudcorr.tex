@@ -66,7 +66,7 @@
 
 \begin{abstract}
 
-This study presents a cloud filtering and correction method for microwave humidity radiances. The method is based on the postulation that sub-millimeter(sub-mm) frequencies can provide a basis for cloud filtering/correction of data measured around 183\,GHz. A quantile regression(QRNN) based approach is formulated to estimate the posterior distributions of noise free clear sky (NFCS) radiances. QRNNs are trained to correct the cloud impact for each 183\,GHz channel using measurements from the target channel and available sub-mm channels. The approach is demonstrated by application to Ice Cloud Imager(ICI) and MicroWave Imager (MWI). As a special case, applicability to smaller satellite missions like Arctic Weather Satellite (AWS), with fewer sub-mm channels, is also evaluated. The performance of QRNN based cloud filtering is also investigated. The results are compared against the NFCS simulations.
+This study presents a cloud filtering and correction method for microwave humidity radiances. The method is based on the postulation that sub-millimeter(sub-mm) frequencies can provide a basis for cloud filtering/correction of data measured around 183\,GHz. A quantile regression(QRNN) based approach is formulated to estimate the posterior distributions of noise free clear sky (NFCS) radiances. QRNNs are trained to correct the cloud impact for each 183\,GHz channel using measurements from the target channel and available sub-mm channels. The approach is demonstrated by application to Ice Cloud Imager(ICI) and MicroWave Imager (MWI). As a special case, applicability to smaller satellite missions like Arctic Weather Satellite (AWS), with fewer sub-mm channels, is also evaluated. The performance of QRNN based cloud filtering is also investigated. The results are compared against the NFCS simulations. 
 
 Pure-filtering approach is only partially successful in removing the cloud contamination. Though most of the cases with high cloud impact are drawn out, cases with low cloud impact are falsely classified as cloudy. This shortcoming is unacceptable in retrieval and assimilation applications and reinforces the necessity for cloud correction. The results from cloud correction show that QRNN is successful in alleviating the cloud contamination to a large extent. Few cases with residual cloud impact deteriorate the performance but filtering out such cases results in error distributions which are symmetric and have low bias and standard deviation. In some cases, the combination of 183\,GHz and sub-mm channels also results in a lower variability than noise. Another advantage of using QRNN is that predicted quantiles can be employed to quantify the case-specific uncertainty estimates.  The results show that QRNN is successful in representing the uncertainty for most of scenes individually. Despite individual variations for each channel, it is observed that uncertainty consistently increases with the error in the performance. 
 
@@ -632,37 +632,39 @@ In this section, we discuss results when all 183\,GHz MWI channels are used for 
 \begin{table*}[t]
 	\caption{Error statistics for predictions from QRNN-mwi. The labels Filtered(7.5\,K), Predicted(All) and Predicted(7.5\,K) are same as described in Table~\ref{tab:error_statistics_ici}}
 	\label{tab:statistics_mwi-alone}
-	\begin{tabular}{llrr|rrr}
+	\begin{tabular}{llrr|rr|rr}
 		\tophline
-		&&\multicolumn{2}{c|}{Simulations}& \multicolumn{3}{c}{QRNN-single} \\
-		\cline{3-7}
+		&&\multicolumn{2}{c|}{Simulations}& &\multicolumn{3}{c}{QRNN-single} \\
+		\cline{3-4}
+		\cline{6-8}
 		%		\hline
-		&&   Clear-sky &   All-sky &  Filtered(7.5\,K) & Predicted & Predicted(7.5\,K) \\
+		&&   Clear-sky &   All-sky & \multicolumn{2}{c}{Filtered} & \multicolumn{2}{c}{Predicted} \\
+		&&&&						(B183) & (7.5\,K)& (All) & (7.5\,K)\\
 		\middlehline
-		MWI-14 		&bias     & -0.00 & -1.86 & -0.50(4.06\%) & -0.14 & -0.12 \\
-					&mae      &  0.96 &  2.58 &  1.25 &  1.12 &  1.00 \\
-					&std      &  1.20 &  9.00 &  1.94 &  1.86 &  1.52 \\
-					&skewness &  0.01 & -8.20 & -3.03 & -0.88 & -2.15 \\ 
+		MWI-14 		&Bias     & 0.01 & -1.86 & -0.84(1.95\%) & -0.50(4.04\%) & -0.14 & -0.12 \\
+					&MAE      & 0.96 &  2.59 &  1.58 &  1.26 &  1.13 &  1.00 \\
+					&STD      & 1.20 &  9.02 &  3.27 &  1.96 &  1.87 &  1.53 \\
+					&Skewness & 0.00 & -8.21 & -5.13 & -3.00 & -0.74 & -2.14 \\
 		\middlehline
-		MWI-15 		&bias     & 0.01 & -1.23 & -0.40(2.84\%) & -0.13 & -0.11 \\
-					&mae      & 0.95 &  1.99 &  1.18 &  0.74 &  0.66 \\
-					&std      & 1.20 &  6.55 &  1.73 &  1.32 &  1.11 \\
-					&skewness & 0.01 & -9.67 & -2.34 & -2.44 & -2.89 \\
+		MWI-15 		&Bias     &  0.00 & -1.24 & -0.53(1.95\%) & -0.41(2.81\%) & -0.14 & -0.12 \\
+					&MAE      &  0.96 &  1.99 &  1.30 &  1.19 &  0.74 &  0.66 \\
+					&STD      &  1.20 &  6.55 &  2.15 &  1.74 &  1.32 &  1.12 \\
+					&Skewness & -0.01 & -9.68 & -3.67 & -2.41 & -2.42 & -2.94 \\
 		\middlehline	
-		MWI-16 		&bias     & 0.00 &  -0.85 & -0.29(1.94\%) & -0.12 & -0.10 \\
-					&mae      & 0.96 &   1.64 &  1.10 &  0.68 &  0.63 \\
-					&std      & 1.20 &   5.39 &  1.54 &  1.15 &  0.96 \\
-					&skewness & 0.00 & -11.62 & -1.97 & -3.71 & -3.22 \\	
+		MWI-16 		&Bias     &  0.00 &  -0.84 & -0.30(1.95\%) & -0.29(1.90\%) & -0.13 & -0.10 \\
+					&MAE      &  0.95 &   1.63 &  1.11 &  1.10 &  0.68 &  0.62 \\
+					&STD      &  1.20 &   5.39 &  1.60 &  1.54 &  1.15 &  0.96 \\
+					&Skewness & -0.02 & -11.62 & -2.55 & -2.00 & -3.87 & -3.35 \\	
 		\middlehline			
-		MWI-17 		&bias     & -0.00 &  -1.04 & -0.32(2.41\%) & -0.13 & -0.11 \\
-					&mae      &  0.96 &   1.83 &  1.12 &  0.73 &  0.67 \\
-					&std      &  1.20 &   6.29 &  1.59 &  1.21 &  1.02 \\
-					&skewness & -0.01 & -10.69 & -2.13 & -3.45 & -3.23 \\	
+		MWI-17 		&Bias     &  0.01 &  -1.06 & -0.40(1.95\%) & -0.34(2.36\%) & -0.13 & -0.11 \\
+					&MAE      &  0.95 &   1.83 &  1.18 &  1.13 &  0.73 &  0.67 \\
+					&STD      &  1.20 &   6.29 &  1.83 &  1.61 &  1.22 &  1.03 \\
+					&Skewness & -0.01 & -10.72 & -3.27 & -2.20 & -3.48 & -3.17 \\
 		\middlehline			
-		MWI-18 		&bias     &  0.01 &  -0.66 & -0.26(1.37\%) & -0.12 & -0.10 \\
-					&mae      &  0.96 &   1.47 &  1.08 &  0.80 &  0.76 \\
-					&std      &  1.20 &   4.66 &  1.51 &  1.23 &  1.08 \\
-					&skewness & -0.00 & -12.80 & -2.03 & -2.99 & -2.25 \\	
+		MWI-18 		&Bias     &  0.00 &  -0.65 & -0.22(1.95\%) & -0.25(1.39\%) & -0.11 & -0.09 \\
+					&MAE      &  0.96 &   1.47 &  1.06 &  1.08 &  0.80 &  0.75 \\
+					&STD      &  1.20 &   4.65 &  1.45 &  1.51 &  1.23 &  1.08 \\
+					&Skewness & -0.01 & -12.84 & -1.87 & -2.09 & -2.88 & -2.40 	\\
 		\bottomhline				
 	\end{tabular}	
 	\belowtable{} % Table Footnotes
@@ -672,11 +674,9 @@ In this section, we discuss results when all 183\,GHz MWI channels are used for 
 	\caption{The average confidence intervals (2$\sigma$) plotted against the magnitude of cloud impact for all MWI channels.}
 	\label{fig:uncertainty_cloud_impact}	
 \end{figure}
-QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, which lack the higher frequency channels. 
+QRNN-mwi is designed to provide basis for a cloud correction approach applicable to current satellites, that lack the higher frequency channels. Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. MWI channels have a higher measurement uncertainty than ICI, so a higher filtering threshold is selected. All cases with cloud correction greater than 7.5\,K are considered as cloudy and filtered out. With pure-filtering, only 4\% of the cases are filtered out for MWI-14, but the bias reduces from -1.86\,K to -0.50\,K. For the predictions, the average bias is -0.14\,K. For both filtering and correction, a significant reduction in the errors is observed but the resulting values are still high and indicate only partial success of the method. For other channels also, a similar performance is observed.  For MWI-15, cloud correction reduces the average error from -1.23\,K to -0.13\,K  and the corresponding decrease in standard deviation is 6.55\,K to 1.32\,K. Filtering the predicted cases improves the bias and standard deviation further by 15\%. Interestingly, even with partial correction, the standard deviation is lower than the measurement noise. For MWI-16, the bias for predictions is -0.12\,K compared to -0.85\,K for the measurements. The corresponding standard deviation is  1.15\,K, which is again smaller than the measurement noise(1.20\,K). MWI-17 also has a similar performance. MWI-18 is least affected by cloud impact among the five channels. The average deviation of the measurement data to NFCS values is only -0.66\,K which reduces to -0.12\,K with QRNN. After filtering 1.37\% cases with high cloud impact, only a slight improvement in the accuracy is observed but the variability of errors decreases from 1.23\,K to 1.08\,K. The results show that QRNN-mwi is partially successful in removing the cloud impact. A significant reduction in the deviation to NFCS values indicates that though most cases with high cloud impact can be removed/corrected, the cases with residual cloud impact and uncorrected cases deteriorate the performance. Using a low threshold filter can improve the accuracy, but at the cost of excessive removal of clear-sky cases. 
 
-Table~\ref{tab:statistics_mwi-alone} shows the results for all 183\,GHz channels of MWI. MWI channels have a higher measurement uncertainty than ICI, so a higher filtering threshold is selected. All cases with cloud correction greater than 7.5\,K are considered as cloudy and filtered out. With pure-filtering, only 4\% of the cases are filtered out for MWI-14, but the bias reduces from -1.86\,K to -0.50\,K. For the predictions, the average bias is -0.14\,K. For both filtering and correction, a significant reduction in the errors is observed but the resulting values are still high and indicate only partial success of the method. For other channels also, a similar performance is observed.  For MWI-15, cloud correction reduces the average error from -1.23\,K to -0.13\,K  and the corresponding decrease in standard deviation is 6.55\,K to 1.32\,K. Filtering the predicted cases improves the bias and standard deviation further by 15\%. Interestingly, even with partial correction, the standard deviation is lower than the measurement noise. For MWI-16, the bias for predictions is -0.12\,K compared to -0.85\,K for the measurements. The corresponding standard deviation is  1.15\,K, which is again smaller than the measurement noise(1.20\,K). MWI-17 also has a similar performance. MWI-18 is least affected by cloud impact among the five channels. The average deviation of the measurement data to NFCS values is only -0.66\,K which reduces to -0.12\,K with QRNN. After filtering 1.37\% cases with high cloud impact, only a slight improvement in the accuracy is observed but the variability of errors decreases from 1.23\,K to 1.08\,K. The results show that QRNN-mwi is partially successful in removing the cloud impact. A significant reduction in the deviation to NFCS values indicates that though most cases with high cloud impact can be removed/corrected, the cases with residual cloud impact and uncorrected cases deteriorate the performance. Using a low threshold filter can improve the accuracy, but at the cost of excessive removal of clear-sky cases. 
-
-The five frequencies are sensitive to different regions of the troposphere so not all clouds are equally represented in all. The brightness temperature of same cloud measured at different frequencies can be valuable to train QRNN. However the hydrometeor impact from regions where the weighting functions match poorly cannot be represented adequately in QRNN. As a consequence, the predictions are poor. In constrast, the clear-sky measurements of the same scene from multiple channels, reinforces the QRNN predictions. The measurement noise in all channels is stationary and uncorrelated, thus the predictions benefit from the additional information, and averaging cancels out the noise component. As clear-sky cases occur more frequently, the effect is quite prominent.
+The five frequencies are sensitive to different regions of the troposphere so not all clouds are equally represented in all. The brightness temperature of same cloud measured at different frequencies can be valuable to train QRNN. However the hydrometeor impact from regions where the weighting functions match poorly cannot be represented adequately in QRNN. As a consequence, the predictions are poor. In contrast, the clear-sky measurements of the same scene from multiple channels, reinforces the QRNN predictions. The measurement noise in all channels is stationary and uncorrelated, thus the predictions benefit from the additional information, and averaging cancels out the noise component. As clear-sky cases occur more frequently, the effect is quite prominent.
 
 Further, we investigate if uncertainty estimates from QRNN-mwi are representative of prediction errors. Fig.~\ref{fig:uncertainty_cloud_impact} displays the average predicted errors in 94\% confidence interval, for different cloud impacts. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. Most uncertain predictions occur for the outermost channels (MWI-14, MWI-15). These channels also have the lowest prediction accuracy.  Thus, the QRNN predictions possess a multivariate representation of uncertainty. The uncertainty of cases with varying cloud impacts can be expressed individually.
 
@@ -724,9 +724,9 @@ These results show that even though ICI and MWI are two different instruments, t
 		%		\hline
 		&&   Clear-sky &   All-sky &  Filtered(5\,K) & Predicted & Predicted(5\,K) \\
 		\middlehline
-		AWS-32  &bias     & 0.00 & -1.32 & -0.26 & -0.03 & -0.02 \\
-				&mae      & 0.36 &  1.57 &  0.52 &  0.54 &  0.43 \\
-				&std      & 0.46 &  6.42 &  0.85 &  1.02 &  0.61 \\
+		AWS-32  &Bias     & 0.00 & -1.32 & -0.26 & -0.03 & -0.02 \\
+				&MAE      & 0.36 &  1.57 &  0.52 &  0.54 &  0.43 \\
+				&STD      & 0.46 &  6.42 &  0.85 &  1.02 &  0.61 \\
 				&skewness & 0.01 & -8.43 & -3.65 & -0.07 & -1.98 \\
 		\middlehline
 		AWS-33	&Bias     & -0.01 & -0.98 & -0.25 & 0.02 &  0.01 \\
@@ -773,25 +773,19 @@ Overall the results demonstrate that QRNN is successful in predicting the NFCS d
 \section{Conclusion and outlook}  %% \conclusions[modified heading if necessary]
 %
 
+\todo{incomplete}
+
 
 In this study, quantile regression neural network is used for filtering and correction of cloud contamination in 183\,GHz channels. QRNN is a neural network which estimates the posterior distribution of target variable through quantiles. It is demonstrated that QRNN can combine data from 183\,GHz channels and the available sub-mm frequencies to provide channel specific NFCS predictions. Application of QRNN to data from three different satellite instruments is presented. 
  
 
-QRNN based filtering is only partially successful in removing the cloudy data. The cloudy cases falsely classified as clear introduce a negative bias in the filtered data. This is not optimal solution, but in agreement with what can be achieved with the present instruments. 
+QRNN based filtering is only partially successful in removing the cloudy data. The cloudy cases falsely classified as clear introduce a negative bias in the filtered data. This is not optimal solution, but in agreement with what can be achieved with the present instruments. The robustness of QRNN was also demonstrated by application to a smaller satellite missions AWS, where only one of the higher frequencies is available. The same approach was applicable in this case, and the results proved that even one sub-mm channel is sufficient enough for cloud correction at 183\,GHz. Since the present sensors lack any sub-mm channels, to investigate the applicability to present sensors and also emphasize the benefit of high frequency channels, a QRNN model using only 183\,GHz data is also investigated.  
 
-Since the present sensors lack any sub-mm channels, to investigate the applicaibility to present sensors and also emphasize the benefit of high frequency channels, a QRNN model using only 183\,GHz data is also investigated. This allows us to 
+The 183\,GHz channels and the sub-mm channels are sensitive to different parts of the troposphere. When all of them are considered together, the weighting functions of sub-mm channels can provide only a partially complete coverage to the hydrometeor impact. For the outermost 183\,GHz channels, there always exists a part of troposphere where hydrometeor impact cannot be covered.  A slightly lower accuracy was observed for cases with high cloud impact. In few of such cases, the predicted NFCS values were not completely cloud free. This is expected as not all cases can be represented by the a priori distribution QRNN trains on. Predictions for \textit{out-of-distribution} cases is always a challenging task for deep learning algorithms and  shall always limit the performance. Improving the representation of such cases in the a priori distribution can help alleviate this problem. However since such cases are few, filtering them out results in highly accurate NFCS predictions with minimal reduction in data.
 
-
-The 183\,GHz channels and the sub-mm channels are sensitive to different parts of the troposphere. When all of them are considered together, the weighting functions of sub-mm channels can provide only a partially complete coverage to the hydrometeor impact. For the outermost 183\,GHz channels, there always exists a part of troposphere where hydrometeor impact cannot be covered.  
-
-A slightly lower accuracy was observed for cases with high cloud impact. In few of such cases, the predicted NFCS values were not completely cloud free. This is expected as not all cases can be represented by the a priori distribution QRNN trains on. Predictions for \textit{out-of-distribution} cases is always a challenging task for deep learning algorithms and  shall always limit the performance. Improving the representation of such cases in the a priori distribution can help alleviate this problem. However since such cases are few, filtering them out results in highly accurate NFCS predictions with minimal reduction in data. 
  
 
-The robustness of QRNN was also demonstrated by application to a smaller satellite missions AWS, where only one of the higher frequencies is available. The same approach was applicable in this case, and the results proved that only one sub-mm channel is also sufficient enough for cloud correction at 183\,GHz.   
 
-
-
-The method is applied to channels from three different instruments : ICI, MWI and AWS.
 
 %% The following commands are for the statements about the availability of data sets and/or software code corresponding to the manuscript.
 %% It is strongly recommended to make use of these sections in case data sets and/or software code have been part of your research the article is based on.
