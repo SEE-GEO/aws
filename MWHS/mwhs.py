@@ -8,7 +8,9 @@ class mwhsData(Dataset):
     Pytorch dataset for the MWHS training data.
 
     """
-    def __init__(self, path, inChannels, target, batch_size = None, ocean = True):
+    def __init__(self, path, inChannels, target, batch_size = None,
+                 ocean = True,
+                 test_data = False):
         """
         Create instance of the dataset from a given file path.
 
@@ -42,8 +44,8 @@ class mwhsData(Dataset):
         self.index = idx         
         self.itarget = np.argwhere(np.array(channels) == target)[0]
                                                                     
-                                
-       
+                                    
+        self.ocean = ocean
         C = []
         
         for ic in self.index:
@@ -56,14 +58,15 @@ class mwhsData(Dataset):
             for j in range(2):
                 im.append(TB.mask[j, i, :])
         im = np.stack(im, axis = 1)
-        print (im.shape, np.sum(im))
+#        print (im.shape, np.sum(im))
         im = np.logical_or.reduce(im, axis = 1)	
 	#store mean and std to normalise data
-        if ocean:
+        if self.ocean:
            il = self.lsm == 0
            im = np.logical_and(~im, il) 
         else:
             im = ~im
+            
         x_noise = self.add_noise(self.x[im, :], self.index)
   
         self.std = np.std(x_noise, axis = 0)
@@ -72,11 +75,33 @@ class mwhsData(Dataset):
         self.y = np.float32(TB[0, self.itarget[0], :])
    
         self.y_noise = self.add_noise(self.y, self.itarget) 
-        print ('y_noise', self.itarget)
+
         self.x = self.x.data[im, :]
         self.y = self.y.data[im]
-        self.y_noise = self.y_noise.data[im] - self.y
-        print (self.y.shape, self.x.shape)
+        self.y_noise = self.y_noise.data[im]
+        self.lsm = np.float32(self.lsm[im])
+        self.lsm = np.expand_dims(self.lsm, axis = 1)
+        self.im  = im
+        if test_data:
+            test_file_path = path.replace("test", "test_noisy_allsky")
+            test_file = netCDF4.Dataset(test_file_path, mode = "r")
+            TB_var = test_file.variables["TB_noise"]
+            TB_noise = TB_var[:]
+                                                                     
+            C = []
+            
+            for ic in self.index:
+                C.append(TB_noise[1, ic, :])
+    
+            self.x = np.float32(np.stack(C, axis = 1))
+            self.std = np.std(self.x[im, :], axis = 0)
+            self.mean = np.mean(self.x[im, :], axis = 0)   
+       
+            self.y_noise =  np.float32(TB_noise[0, self.itarget[0], :])
+
+            self.x = self.x.data[im, :]
+            self.y_noise = self.y_noise.data[im]
+            
 
 
     def __len__(self):
@@ -116,6 +141,8 @@ class mwhsData(Dataset):
             x  = self.x[i_start : i_end, :].copy()
             x_noise = np.float32(self.add_noise(x, self.index))
             x_norm = np.float32(self.normalise(x_noise))
+            if not self.ocean:
+                x_norm = np.concatenate((x_norm, self.lsm[i_start : i_end, :]), axis = 1)
             return (torch.tensor(x_norm),
                     torch.tensor(self.y[i_start : i_end]))
         
@@ -163,4 +190,13 @@ class mwhsData(Dataset):
             
         return x_norm 
 
+    def test_data(self):
+        """
+        
 
+        Returns
+        -------
+        None.
+
+        """
+        
