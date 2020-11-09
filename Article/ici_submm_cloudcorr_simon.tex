@@ -286,7 +286,7 @@ MWHS-2 simulated radiances are routinely calculated at ECMWF for their use in th
 ICI and AWS frequencies are simulated with Atmospheric Radiative Transfer
 Simulator (ARTS, \citet{buehler:artst:18}). CloudSat
 \citep{Stephens2002cloudsat} profiles from August 2015 are randomly selected for
-forward simulations. The input data are restricted between $60\unit{^{\degree}}S$ to
+forward simulations. The input data are restricted between $60\unit{^{\degree}S}$ to
 $60\unit{^{\degree}N}$, and surface is below 500\,m. Both clear-sky and all-sky
 scenarios are simulated. The complete simulation setup is described in Appendix
 \ref{appendix:ARTS_setup}. For ICI and AWS, 220\,000 and 140\,000 cases are
@@ -394,7 +394,7 @@ of results, examples of QRNN outputs are shown in
 Fig.~\ref{fig:posterior_distribution_I1V}. This example illustrates the
 predicted quantiles for three different cases. This is in contrast with other
 conventional correction/filtering methods, which give out only point estimates.
-However, for most application only a single point estimate is required. In
+However, for most applications only a single point estimate is required. In
 Bayesian analysis, usually the posterior mean or posterior median are selected
 as point estimates. In this study, we chose the posterior median as the point
 estimate for the predicted NFCS value ($\ynfcs$). To analyse the ability of QRNN
@@ -427,7 +427,7 @@ distribution to its median. In this study, we analyse both the calibration plot
 and the predicted errors to assess the correctness of predicted uncertainties.
 
 All evaluation results described in the study have been made on the test dataset.
-\todo{Is this true for the hyper parameter tuning? Because if this is the
+\todo{Comment: Is this true for the hyper parameter tuning? Because if this is the
   case, the evaluation should be redone on independent data.}
 
 
@@ -437,6 +437,9 @@ All evaluation results described in the study have been made on the test dataset
 In this section, we introduce the QRNN based cloud correction in the context of current operational sensors.  We use MWHS-2 to demonstrate the results. The choice is motivated by the fact that MWHS-2 has five complementary 183\,GHz channels, along with additional 118\,GHz channel. In order to formulate and test the correction approach, multiple QRNN experiments are performed for MWHS-2 channel 14. Later the methodology is extended to other 183\,GHz channels. A brief comparison of the results is also made against existing cloud filtering methods. Further, the estimates of case-specific uncertainties obtained from QRNN are also evaluated.
 
 \subsection{Experiments}
+\todo{Comment: I find the structure here confusing. You start with results from channel 14 but then have
+  an extra section on the accuracy for channel 14 and then another section considering the other
+  channel.}
 %
 \label{sec:QRNN_expt_MWHS}
 For MWHS-2, multiple experiments using both QRNN configurations are performed. With these we aim to delve into the sensitivity of the method to different input channels:
@@ -513,9 +516,40 @@ correctly, but the overall consequence is not exceptionally different from
 89+150\,GHz. Similar is the case with using only 150\,GHz. In the latter,
 predictions have the most symmetric error distributions, but the highest spread.
 
-Further we investigated that if filtering the predictions with low accuracy could help in improving the error distributions. For filtering such cases, we assume that predictions with cloud correction greater than 5\,K are cases associated with large deviations. In all three experiments, removing the cases with correction greater than 5\,K removes around 3\% of the data, but only a marginal positive impact on the accuracy is observed. With 5\,K threshold though the cases with high errors are removed, the persistent negative skewness indicates presence of cases with residual cloud impact. Choosing a lower threshold can help in removing more partially corrected cases but at the cost of rejecting clear-sky cases. Since QRNN gives out NFCS values, choosing an unusually low correction threshold can also classify noisy clear-sky cases as cloudy. For example, for 89+150\,GHz, a threshold of 1.5\,K rejects almost 10\% of data, but the negative skewness is still not completely removed. 
+Further we investigated whether filtering the predictions with low accuracy
+could help in improving the error distributions. For filtering such cases, we
+assume that predictions with cloud correction greater than 5\,K are cases
+associated with large deviations. In all three experiments, removing the cases
+with correction greater than 5\,K removes around 3\% of the data, but only a
+marginal positive impact on the accuracy is observed. With 5\,K threshold though
+the cases with high errors are removed, the persistent negative skewness
+indicates presence of cases with residual cloud impact. Choosing a lower
+threshold can help in removing more partially corrected cases but at the cost of
+rejecting clear-sky cases. Since QRNN gives out NFCS values, choosing an
+unusually low correction threshold can also classify noisy clear-sky cases as
+cloudy. For example, for 89+150\,GHz, a threshold of 1.5\,K rejects almost 10\%
+of data, but the negative skewness is still not completely removed.
+\todo{Comment: Did you try filtering based on predicted uncertainty?}
 
-In spite of the fact that QRNN only provides a partial cloud correction, the results for  MWHS-2 channel 14 are comparable to what we achieve with existing cloud filtering techniques like scattering index (SI) and the filtering scheme by \citet{buehler:aclou:07}. SI uses the differences of brightness temperatures between 89 and 150\,GHz to identify cloud affected data, whilst in the study by \citet{buehler:aclou:07}, they use brightness temperature based threshold to filter out cloudy cases. They recommend a viewing angle dependent brightness temperature threshold at $183.31\pm1.00$ \,GHz and brightness temperature difference between $183.31\pm3.00$ and $183.31\pm 1.00$ as a measure of cloud impact. Further in the text we refer this filter as ``B183''. The results obtained with SI and B183 are displayed in Table~\ref{tab:SI_statistics}. With SI threshold = 5\,K, almost 30\% of the data is rejected, yet the resulting error distributions are poorer as compared to QRNN. The low bias and skewness values indicate that most of the high negative departures are removed, but cases with low cloud impact pass the filter as clear. Similar is the case with B183. Here only 3\% of the data is filtered out but the overall statistics are worse than both QRNN and SI. The results from the two filters are not surprising as both aim at removing only cases with high ice content. The thin cirrus clouds and other low hydrometeor impact cases remain unaltered.
+In spite of the fact that QRNN only provides a partial cloud correction, the
+results for MWHS-2 channel 14 are comparable to what we achieve with existing
+cloud filtering techniques like scattering index (SI) and the filtering scheme
+by \citet{buehler:aclou:07}. SI uses the differences of brightness temperatures
+between 89 and 150\,GHz to identify cloud affected data, whilst in the study by
+\citet{buehler:aclou:07}, they use brightness temperature based threshold to
+filter out cloudy cases. They recommend a viewing angle dependent brightness
+temperature threshold at $183.31\pm1.00$ \,GHz and brightness temperature
+difference between $183.31\pm3.00$ and $183.31\pm 1.00$ as a measure of cloud
+impact. Further in the text we refer this filter as ``B183''. The results
+obtained with SI and B183 are displayed in Table~\ref{tab:SI_statistics}. With
+SI threshold = 5\,K, almost 30\% of the data is rejected, yet the resulting
+error distributions are poorer as compared to QRNN. The low bias and skewness
+values indicate that most of the high negative departures are removed, but cases
+with low cloud impact pass the filter as clear. Similar is the case with B183.
+Here only 3\% of the data is filtered out but the overall statistics are worse
+than both QRNN and SI. The results from the two filters are not surprising as
+both aim at removing only cases with high ice content. The thin cirrus clouds
+and other low hydrometeor impact cases remain unaltered.
 
 The three experiments were also performed for other four 183\,GHz channels, and a similar performance was obtained (Table not shown). The positive effect of 118\,GHz was slightly higher for MWHS-2 channel 15, but for others, no notable effect was observed. The results from combination 89+150\,GHz for these channels are provided in Sect.~\ref{sec:mwhs_others} 
 
@@ -568,7 +602,7 @@ Even though QRNN-all gives slightly better prediction accuracy, its inherent con
 	\end{tabular}
 \end{table*}
 \begin{table*}[t]
-	\caption{Channel wise error statistics obtained after filtering MWHS-2 humidity observations  according to scattering index (SI) and filtering described by \citet{buehler:aclou:07}. The latter is denoted as  B183. }
+	\caption{Channel wise error statistics obtained after filtering MWHS-2 humidity observations  according to scattering index (SI) and filtering described by \citet{buehler:aclou:07}. The latter is denoted as  B183. \todo{Comment: Did you consider combining this with Tab. 5? If combined might be worth highlighting the best performing filtering method. Fraction of filtered cases should have its own column.}}
 	\label{tab:SI_statistics}
 	\begin{tabular}{lrr|rr|rr|rr|rr}
 		\tophline
@@ -587,13 +621,13 @@ In this section, we extend QRNN-single to predict NFCS values for MWHS-2 channel
 
 For channel 11, the error bias after correction is only -0.03\,K in comparison to 0.16\,K before correction. The strong negative tail also diminishes after correction, but a non-zero negative skewness indicates presence of cases with residual cloud impact in the corrected dataset. Filtering the cases with high cloud impact has only a marginal positive effect. A similar performance is evident for channel 12. Correction reduces the bias to -0.05\,K and standard deviation to 1.07\,K. The MAE is approximately 17\% lower after correction, but still the negative skewness is not removed completely. For channel 13 and 15 also, a similar performance is seen. But in the latter, error distributions are most symmetric but with largest spread as compared to other four channels.
 
-A comparison with SI based filtering and B183 is displayed in  Table~\ref{tab:SI_statistics}. For channel 11 the performance of QRNN is comparable to both SI and B183. Similar is the case with channel 12, though the results from B183 are slightly poor. Both these channels are mostly transparent to hydrometeor impact, and the filtering schemes work well. The major caveat is the rejection of clear cases. With comparable accuracy, the fraction of rejection in SI is approx. 30\% in comparison to approx. 3\% in B183. For channels 13 and 15 the error statistics obtained with SI are slightly inferior in comparison to QRNN. The results with B183 are even worse. For all channels, the two filters succeed in removing the high ice cloud cases, but for lower peaking channels, the high negative skewness values indicate presence of cases with low cloud impact. Clearly the ``one for all'' approach of both filters is not adequate to cater for channel specific hydrometeor impact.  
+A comparison with SI based filtering and B183 is displayed in  Table~\ref{tab:SI_statistics}. For channel 11 the performance of QRNN is comparable to both SI and B183. Similar is the case with channel 12, though the results from B183 are slightly poorer. Both these channels are mostly transparent to hydrometeor impact, and the filtering schemes work well. The major caveat is the rejection of clear cases. With comparable accuracy, the fraction of rejection in SI is approx. 30\% in comparison to approx. 3\% in B183. For channels 13 and 15 the error statistics obtained with SI are slightly inferior in comparison to QRNN. The results with B183 are even worse. For all channels, the two filters succeed in removing the high ice cloud cases, but for lower peaking channels, the high negative skewness values indicate presence of cases with low cloud impact. Clearly the ``one for all'' approach of both filters is not adequate to cater for channel specific hydrometeor impact.  
 
 \subsection{Prediction uncertainty}
 \label{sec:uncertainty_mwhs}
 \begin{figure}[t]
 	\includegraphics[width = 70mm]{Figures/prediction_uncertainty_MWHS_14.pdf}	
-	\caption{Examples of prediction uncertainties obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. 1500 randomly selected cases are shown. The quantiles have been plotted at equidistant points. The red line represents a hypothetical Gaussian distribution of $270\pm1.0$\,K.}
+	\caption{Examples of prediction uncertainties obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. 1500 randomly selected cases are shown. The quantiles have been plotted at equidistant points. The red line represents a hypothetical Gaussian distribution of $270\pm1.0$\,K. \todo{Comment: I suggest adding boxes for each quantile to increase the amount of quantitative information in the plot.}}
 	\label{fig:prediction_uncertainty_mwhs}	
 \end{figure}
 \begin{figure}[t]
@@ -603,7 +637,7 @@ A comparison with SI based filtering and B183 is displayed in  Table~\ref{tab:SI
 \end{figure}
 \begin{figure}[t]
 	\includegraphics[width=70mm]{Figures/deviation_posterior_mwhs_samples_14.pdf}	
-	\caption{The distribution of predicted errors and observed errors  obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. The predicted errors are estimated as deviation of random samples from posteriori distribution to corresponding median values.}
+	\caption{The distribution of predicted errors and observed errors  obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. The predicted errors are estimated as deviation of random samples from posteriori distribution to corresponding median values. \todo{Comment: I suggest different color for predicted}}
 	\label{fig:predicted_errors_mwhs}	
 \end{figure}
 
@@ -624,10 +658,12 @@ The curve lies below the y=x line indicating that the prediction intervals are
 too narrow. This is in agreement with the wide spread of predictions over the
 higher quantiles (Fig.~\ref{fig:prediction_uncertainty_mwhs}). However such
 cases are few and filtering them results in well calibrated QRNN predictions.
-\todo{This cannot be true. Filtering them, i.e. looking only at values with
+\todo{Comment: This cannot be true. Filtering them, i.e. looking only at values with
   correction < 5k will give predictions with too wide uncertainties, so that the
-  calibration will be above the diagonal. I don't think this information is particularly
-useful, so I'd suggest removing it.}
+  calibration will be above the diagonal. This is because the two sets are complementary
+  and the cases must add up to give the good overall calibration shown above.
+  Although, It of course could be that this effect is less evident because the
+  number of cases < 5k is so much higher.}
 
 Further, we analyse if the  predicted errors obtained from QRNN are representative of observed errors. Fig.~\ref{fig:predicted_errors_mwhs} illustrates the predicted and observed errors for MWHS-2 channel 14. Both error distributions are asymmetric, and this is in fact covered by the percentile distribution  in Fig.~\ref{fig:prediction_uncertainty_mwhs}. The predicted errors are slightly overestimated for negative values, but overall the predicted errors from the QRNN posterior distribution and the observed errors have a good match. This is in agreement with the perfect calibration seen in Fig.~\ref{fig:calibration_mwhs}. It should be noted that the density plot is curtailed at $10^{-4}$. With a test dataset of 70\,000 samples, we cannot represent the far wings of the distribution accurately. The high errors which we try to estimate are rare, and cannot be fully represented by QRNN. 
 
@@ -653,7 +689,10 @@ Two QRNN experiments are performed to investigate the efficacy of sub-mm channel
 %
 \begin{figure*}[t]
 	\includegraphics[width=\textwidth]{Figures/error_distribution_QRNN-single.pdf} 
-	\caption{Same as Fig.~\ref{fig:error_distribution_mwhs14}, but from QRNN-single experiment for ICI channels I1V, I2V and I3V.}
+	\caption{Same as Fig.~\ref{fig:error_distribution_mwhs14}, but from QRNN-single experiment for ICI channels I1V, I2V and I3V.
+    \todo{Comment: I might be worth adding  the calibration of error estimates based of B183 or SI with
+      a Gaussian error model. I don't think that the blue curve is so bad, actually, and adding these
+    values as reference might help to put the results into context.}}
 	\label{fig:error_distributions}	
 \end{figure*}
 \begin{table*}[t]
@@ -783,11 +822,19 @@ To conclude the results, we assessed if the uncertainty estimates given by QRNN 
 
 \subsection{Cloud correction with existing sensors}
 %
-The results from MWHS-2 show that QRNN based cloud correction is partially successful in correcting the cloud impact with existing sensors. The methodology can correctly address the large negative depatures owing to cloud impact, but few cloudy cases end up with inadequate correction. The resulting error distributions are not completely symmetric but have a low bias and spread. Among several input channel combinations described for QRNN-single, the performance of combination 89+150\,GHz is observed to be optimal. The positive performance with 150\,GHz is not unexpected, as 150\,GHz is highly sensitive to ice hydrometeors and cloud water; but using 89\,GHz along with 150\,GHz gives a slightly better performance. The channel 89\,GHz is affected by surface emissivity and is relatively less sensitive to cloud water content, however its sensitivity to warm clouds in the lower troposphere could be important. We also investigate the impact of two temperature sounding channels (MWHS-2 channel 6 and 7). These channels provide complementary information to humidity channels in the lower troposphere. Including both these channels in the training process had no additional effect on the prediction accuracy and almost similar performance as with the combination 89+150\,GHz is obtained. 
+The results from MWHS-2 show that QRNN based cloud correction is partially successful in correcting the cloud impact with existing sensors. The methodology can correctly address the large negative depatures owing to cloud impact, but few cloudy cases end up with inadequate correction. The resulting error distributions are not completely symmetric but have a low bias and spread. Among several input channel combinations described for QRNN-single, the performance of combination 89+150\,GHz is observed to be optimal. The positive performance with 150\,GHz is not unexpected, as 150\,GHz is highly sensitive to ice hydrometeors and cloud water; but using 89\,GHz along with 150\,GHz gives a slightly better performance. The channel 89\,GHz is affected by surface emissivity and is less sensitive to cloud water content, however its sensitivity to warm clouds in the lower troposphere could be important. We also investigate the impact of two temperature sounding channels (MWHS-2 channel 6 and 7). These channels provide complementary information to humidity channels in the lower troposphere. Including both these channels in the training process had no additional effect on the prediction accuracy and almost similar performance as with the combination 89+150\,GHz is obtained. 
 
 Even though the cloud correction is partial, the performance is comparable or better to existing cloud filtering techniques like SI and scheme by \cite{buehler:aclou:07}. Note that both these techniques are a one for all approach for each 183\,Ghz channel; thus if one observation is classified as cloudy by the filter, it is removed in all humidity channels. This increases the probability of erroneously removing clear observations. For high peaking channels of MWHS-2, both SI and QRNN give almost similar results, but with almost 30\% rejection rate. On the other hand, for low peaking channels, SI gives less accurate results than QRNN, as these channels have a stronger hydrometeor impact. This clearly indicates, that a channel specific approach like QRNN is more appropriate, and gives better performance. 
 
-The partial performance of QRNN is due to incomplete orthogonal information to 183\,GHz channels. The weighting functions of window channels 89 and 150\,GHz, and the two 118\,GHz channels peak in the lower troposphere. Among these four channels, 150\,GHz has the highest peaking function around 4\,km \citep{chen2020mwhs}. These channels can only provide coverage to the humidity channels in lower and mid troposphere; nonetheless, the 183\,GHz channels are sensitive to hydrometeor content upto 2\,km. Due to missing complementary information from other channels in the upper troposphere, QRNN fails at predicting these cases accurately. Such cases are mostly associated with thin cirrus clouds, which have very small influence at 89 and 150\,GHz. Without additional information from other channels we cannot expect QRNN train better. Among the other available channels, the overlapping weighting functions of 183\,GHz can provide auxiliary information to train QRNN. Results show that these channels indeed help in improving the training, yet the non-orthogonal information introduces highly correlated observational errors. The correlations for cloudy observations are not surprising as the cloud amount for different channels depends upon each other in a systematic way. However for clear-sky observations, the correlations should preferably be close to zero. This is observed to be true with QRNN-single, but QRNN-all fails at preserving the noise stochasticity. In the absence of hydrometeor impact, all 183\,GHz channels provide same information to the learning model, introducing redundancy. Redundant patterns in machine learning models often have undesirable effect on the predictive performance. In our application, redundant information does not affect the prediction accuracy, but introduces highly correlated noise between channels. Correlated errors are also undesirable for DA systems, but in future if the operational centres progress with approaches dealing with correlated observation errors, concurrent use of 89, 150 and 183\,GHz channels would give the best cloud correction performance.
+The partial performance of QRNN is due to incomplete orthogonal information to 183\,GHz channels. The weighting functions of window channels 89 and 150\,GHz, and the two 118\,GHz channels peak in the lower troposphere. Among these four channels, 150\,GHz has the highest peaking function around 4\,km \citep{chen2020mwhs}. These channels can only provide coverage to the humidity channels in lower and mid troposphere; nonetheless, the 183\,GHz channels are sensitive to hydrometeor content upto 2\,km. Due to missing complementary information from other channels in the upper troposphere, QRNN fails at predicting these cases accurately. Such cases are mostly associated with thin cirrus clouds, which have very small influence at 89 and 150\,GHz. Without additional information from other channels we cannot expect QRNN to perform better. Among the other available channels, the overlapping weighting functions of 183\,GHz can provide auxiliary information to train QRNN. Results show that these channels indeed help in improving the training, yet the non-orthogonal information introduces highly correlated observational errors. The correlations for cloudy observations are not surprising as the cloud amount for different channels depends upon each other in a systematic way. However for clear-sky observations, the correlations should preferably be close to zero. This is observed to be true with QRNN-single, but QRNN-all fails at preserving the noise stochasticity. In the absence of hydrometeor impact, all 183\,GHz channels provide same information to the learning model, introducing redundancy. Redundant patterns in machine learning models often have undesirable effect on the predictive performance. In our application, redundant information does not affect the prediction accuracy, but introduces highly correlated noise between channels. Correlated errors are also undesirable for DA systems, but in future if the operational centres progress with approaches dealing with correlated observation errors, concurrent use of 89, 150 and 183\,GHz channels would give the best cloud correction performance.
+
+
+\todo{
+    The problem that QRNN faces is more than just incomplete orthogonal information. Even when the information
+    in 89 and 150 would be orthogonal it would still not be sufficient to do perfect cloud correction. The reason
+    is rather that the problem in general is ill-posed and thus at least under- but probably also over constrained
+    (the latter due to measurement noise). 
+  }
 
 \subsection{Cloud correction with sub-mm frequencies }
 %
@@ -801,7 +848,7 @@ With ICI and AWS, for some channels the variability of errors smaller than measu
 \subsection{Prediction uncertainty and implications for DA}
 
 Another advantage of QRNN is estimation of case-specific uncertainties. The predictions over chosen quantiles quantify the underlying uncertainty. The analysis of QRNN predicted errors and calibration plots show that QRNN is successful in providing well calibrated probabilistic predictions of the posterior distributions except for few cases associated with high error. The poorly calibrated predictions are a consequence of cases with different underlying a priori distribution. Predictions with high error originate from cases with high cloud impact or cloudy cases with no orthogonal information. Such cases have a significantly distinct a priori distribution as compared to clear cases, which dominate the training dataset and influence the a priori information. Additional information in form of more observational data or additional training inputs is required to improve QRNN prediction accuracy for such cases. However the cases with low accuracy are associated with high uncertainty, and can be used with caution.  
-\todo{I could not follow the last sentence.}
+
 
 The symmetric and low spread error distribution with uncertainty estimates is an important result from the DA perspective. Most of the existing cloud filtering schemes work well only at removing cases with high cloud impact, and as a consequence, the error distributions are highly skewed. To use these observations correctly data assimilation schemes often inflate their asymmetric error distributions at the cost of artificially suppressing the observational impact. This is not the optimal solution but the best which can be achieved with present sensors. However, the symmetric error distributions obtained from QRNN allow us to effectively utilize more than 95\% of the data without the need for error inflation. 
 
@@ -812,7 +859,7 @@ The symmetric and low spread error distribution with uncertainty estimates is an
 
 In this study, a methodology based on quantile regression neural network (QRNN) is used for identifying and correcting the cloud contamination in operational humidity channels. QRNN is a neural network which trains on all-sky brightness temperatures from  channels containing orthogonal information to humidity channels, to estimate the noise free clear-sky (NFCS) radiances. The output is the posterior distribution of predictions over different quantiles. QRNN is a channel specific approach, or in other words, QRNN is trained separately for each channel, and the cloud correction for each is independent of other channels. 
  
-The applicability of QRNN based correction to current sensors is demonstrated with MHWS-2 and it is shown that QRNN is partially successful in removing the cloud impact. This is not  an optimal solution, but it is in agreement with what can be achieved with the present instruments. In comparison to existing clear-filtering approaches, QRNN gives comparable or better performance and with minimal rejection of data. The accuracy of QRNN is affected by one single limitation, that is the prediction of ``out of distribution'' cases. Out of distribution cases are those which belong to a different a priori distribution than the one QRNN is trained on. Such cases can be the ones which occur infrequently, or those which lack any orthogonal information. The representation of the former can be improved with larger training datasets. However for the latter, improving their a priori distribution is not trivial. Correcting hydrometeor impact for cases without complete complementary information is a challenge for QRNN and always limit its performance. \todo{Cases without orthogonal information are note what I understand as out-of-distribution samples. Moreover, rare cases are rather a matter of training set size. Nonetheless, it is of course essential that
+The applicability of QRNN based correction to current sensors is demonstrated with MHWS-2 and it is shown that QRNN is partially successful in removing the cloud impact. This is not  an optimal solution, but it is in agreement with what can be achieved with the present instruments. In comparison to existing clear-filtering approaches, QRNN gives comparable or better performance and with minimal rejection of data. The accuracy of QRNN is affected by one single limitation, that is the prediction of ``out of distribution'' cases. Out of distribution cases are those which belong to a different a priori distribution than the one QRNN is trained on. Such cases can be the ones which occur infrequently, or those which lack any orthogonal information. The representation of the former can be improved with larger training datasets. However for the latter, improving their a priori distribution is not trivial. Correcting hydrometeor impact for cases without complete complementary information is a challenge for QRNN and always limit its performance. \todo{Cases without orthogonal information are not what I understand as out-of-distribution samples. Moreover, rare cases are rather a matter of training set size. Nonetheless, it is of course essential that
   the training set distribution reflects reality.}
 
 Based on the promising results from MWHS-2, and with future scope, we extend the study to include data from sub-millimeter (sub-mm) channels. The results show that with  sub-mm channels, QRNN is able to correctly predict most of the cloudy cases and can provide high quality cloud corrected radiances. The predicted radiances have symmetric and narrow error distributions and for some channels the spread is smaller than the measurement noise. This makes it highly suitable for application to data assimilation (DA) systems. The robustness of sub-mm channels in cloud correction is also demonstrated with use of only 325\,GHz for cloud correction. This is applicable to smaller satellite missions like AWS, where only one of the higher frequencies is available. The results indicate that utilisation of only 325\,GHz can also be beneficial when other channels are absent. In future when ICI would be available, the ICI sub-mm channels could also be used to cloud correct MWI (MicroWave Imager) humidity radiances. Although re-mapping to a common footprint would slighly compromise the data quality, the high accuracy achieved with ICI simulations suggests that the QRNN would work well even when actual measurements are available.
@@ -887,7 +934,7 @@ of the Stokes vector were calculated. For AWS, forward simulations were performe
 	\caption{CRPS(left) and mean quantile loss(right) averaged over all predicted quantiles for different combinations of layer width and hidden layers ($n_h$). The results are from QRNN-single applied to I2V.}
 	\label{fig:grid_search}	
 \end{figure*}
-A high performing QRNN model also requires tuning of multiple hyper-parameters. These parameters determine the structure and the training set-up of the neural network. Several of these hyper-parameters are non-learnable, and must be defined before beginning of every training. Grid search is one of the most often employed techniques for hyper-parameter tuning. In grid search, different combinations of hyper-parameters are selected and for each, the model performance is evaluated. The model architecture with the best performance is selected. For the structural parameters, usually a grid search over the number of neurons (width) and hidden layers (depth) is performed. The model is trained for multiple values of layer widths and hidden layers, and the best configuration is selected by evaluating the predictions over validation dataset. Similarly, the training process is optimized by performing a grid search different training parameters such as : batch size, learning rate, number of epochs etc. We use quantile loss and CRPS for evaluation of the model performance.
+A high performing QRNN model also requires tuning of multiple hyper-parameters. These parameters determine the structure and the training set-up of the neural network. Several of these hyper-parameters are non-learnable, and must be defined before beginning of every training. Grid search is one of the most often employed techniques for hyper-parameter tuning. In grid search, different combinations of hyper-parameters are selected and for each, the model performance is evaluated. The model architecture with the best performance is selected. For the structural parameters, usually a grid search over the number of neurons (width) and hidden layers (depth) is performed. The model is trained for multiple values of layer widths and hidden layers, and the best configuration is selected by evaluating the predictions over validation dataset. \todo{Comment: If I remember correctly you do not mention the validation set in Sect. 2} Similarly, the training process is optimized by performing a grid search different training parameters such as : batch size, learning rate, number of epochs etc. We use quantile loss and CRPS for evaluation of the model performance.
 
 In this study, we investigated the performance of QRNN only to certain hyper-parameters like number of neurons, hidden layers, learning rate, convergence epochs and batch size. The optimization of other hyper-parameters was not performed and were chosen empirically. Firstly, we performed a grid search to define the structure of the neural network. We evaluated the performance for three sizes of hiddden layers($n_h$ = 2, 3, 4), and layer widths of sizes in the set [8, 16, 32, 64, 128, 256, 512]. The mean quantile loss and CRPS over all predicted quantiles was computed for each configuration (Fig.~\ref{fig:grid_search}). Increasing the complexity of the network by increasing the layer width and depth has a positive impact on performance. However for four hidden layers, increasing the number of neurons beyond 128 has no significant impact on the performance. On basis of these results, a neural network with four hidden layers and 128 neurons in each layer is selected. For optimising the training parameters, a customised  learning rate scheduler was implemented. The initial learning rate was reset after a certain number of epochs.  We started the training process with a initial learning rate of 0.1, and decreased it by a factor of 10 after 100 epochs. The best neural network performance was obtained when the network was trained three times. Each time with a new initial learning rate. For each training, if the validation loss remained unchanged till 6 training epochs, the learning rate was reduced by a factor of 2. 
 In order to select the batch size, we simply compared the performance for two batch sizes: 128 and 256, and the former gave better results. Concerning number of epochs, we obtained best results when the network was trained longer. Choosing a lower value of epochs (e.g. 50), did not affect the accuracy of the median value, yet deteriorated the prediction uncertainty. We did not optimise the type of activation function and Rectified Linear Unit (ReLu) was used in all layers. 
