@@ -144,14 +144,6 @@ by noise, but the uncertainty increases with magnitude of correction.
 Accordingly, the cloud correction approach allows that the full weight of
 clear-sky data can be preserved.
 
-The estimation of NFCS values makes use of a special type of machine learning,
-denoted as Quantile Regression Neural Network (QRNN,
-\citet{pfreundschuh:aneur:18}). Unlike standard usage of machine learning where
-only some kind of best estimate is provided, QRNN works in a Bayesian fashion
-and instead gives a description of the posterior uncertainty. More precisely,
-QRNN outputs an user specified set of quantiles that gives a discrete
-description posterior distribution, that can be processed to derive e.g.\ the
-expectation value.
 
 The proposed cloud correction scheme makes use of a Quantile Regression Neural
 Network (QRNN) to obtain a probabilistic prediction of the NFCS value. Unlike
