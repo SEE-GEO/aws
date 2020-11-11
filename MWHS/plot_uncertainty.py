@@ -18,6 +18,10 @@ from typhon.retrieval.qrnn import set_backend, QRNN
 set_backend("pytorch")
 import random
 plt.rcParams.update({'font.size': 26})
+from matplotlib import colors as mcolors
+
+
+colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
 
 
 #%% input parameters
@@ -60,17 +64,31 @@ y_pre, y_prior, y0, y, y_pos_mean = read_qrnn(qrnn_file, test_file, inChannels, 
 fig, ax = plt.subplots(1, 1, figsize = [8, 8])
 x = np.arange(-3, 4, 1)
 ii = 0
-
-randomList = random.sample(range(0, 50000), 1500)
+y_all = []
+randomList = random.sample(range(0, 65000), 1500)
 for i in randomList:
     ii +=1
 #for i in ind:
     y1 = y_pre[i,  :] - y_pre[i, 3]
-    
-    ax.plot(x, y1,'b', alpha = 0.3)
+    y_all.append(y1)    
+    ax.plot(x, y1, color = colors["grey"], alpha = 0.4)
+
+
+#%% add box
+
+y_all = np.stack(y_all)
+box1 = ax.boxplot(y_all, positions = x, showfliers=False,  widths = 0.9)
+for item in ['boxes', 'whiskers', 'fliers', 'medians', 'caps']:
+        plt.setp(box1[item], color="darkred")
+
+#%%
+y_normal = np.random.normal(270, 1.0, 24000)
+q_normal = np.quantile(y_normal, quantiles , axis = 0)
+ax.plot( x, q_normal - q_normal[3], 'b', linewidth =2)
+ax.tick_params(axis='x', which='major', pad=10)
 
 ax.xaxis.set_minor_locator(MultipleLocator(5))
-ax.yaxis.set_minor_locator(MultipleLocator(5))
+ax.yaxis.set_minor_locator(MultipleLocator(2))
 ax.grid(which = 'both', alpha = 0.4)
 
 ax.set_xlabel("Quantiles")
@@ -85,14 +103,10 @@ q_prior = np.quantile(y_prior, quantiles, axis = 0)
 q0 = np.quantile(y0, quantiles, axis = 0)
 #ax.plot(x, q0 - q0[3])
 
-y_normal = np.random.normal(270, 1.0, 24000)
-q_normal = np.quantile(y_normal, quantiles , axis = 0)
-ax.plot(x, q_normal - q_normal[3], 'r', linewidth = 3)
-ax.tick_params(axis='x', which='major', pad=10)
 
-#ax2 = ax.twinx()
-#ax.set_xticks(x)
-#ax.set_xticklabels(quantiles)
+
+
+
 ax.tick_params(axis='x', which='major', pad=20)
 ax.set_title("MWHS-2 channel %s"%str(target), fontsize = 24)
 fig.savefig('Figures/prediction_uncertainty_MWHS_%s.pdf'%(target), bbox_inches = 'tight')

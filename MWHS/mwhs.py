@@ -85,7 +85,9 @@ class mwhsData(Dataset):
         if test_data:
             test_file_path = path.replace("test", "test_noisy_allsky")
             test_file = netCDF4.Dataset(test_file_path, mode = "r")
-            TB_var = test_file.variables["TB_noise"]
+            print (test_file_path)
+            print (path)
+            TB_var = test_file.variables["TB"]
             TB_noise = TB_var[:]
                                                                      
             C = []

@@ -112,7 +112,7 @@ if __name__ == "__main__":
         fig, ax = plt.subplots(1, 1, figsize = [10, 10])
         print(qrnn_dir, channels)
         
-        qrnn_path = os.path.expanduser("~/Dendrite/Projects/AWS-325GHz/MWHS/qrnn_output/all_with_flag/%s/"%(qrnn_dir))
+        qrnn_path = os.path.expanduser("~/Dendrite/Projects/AWS-325GHz/MWHS/qrnn_output/new_data/%s/"%(qrnn_dir))
         
 
         inChannels = np.concatenate([[target], channels])
@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
         ax.plot(center, hist_pre[0],'b', linewidth = 2.5)
     
-        ax.plot(center, hist_sample[0], 'b--', linewidth = 2.5)
+        ax.plot(center, hist_sample[0], 'r--', linewidth = 2.5)
 
         ax.xaxis.set_minor_locator(MultipleLocator(5))
         ax.yaxis.set_minor_locator(MultipleLocator(5))
@@ -159,7 +159,7 @@ if __name__ == "__main__":
         ax.set_ylabel('Occurence frequency [#/K]')
         ax.set_xlabel('Deviation to NFCS [K]')
 
-#        ax.set_ylim(0.0001, 1)                            
+        ax.set_ylim(0.0001, 1)                            
     #     ax.set_ylim(0.0001, 1)
         ax.legend([ "Observed", "Predicted", ],
                      prop={'size': 28}, frameon = False, )                                

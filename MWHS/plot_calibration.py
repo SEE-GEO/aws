@@ -8,20 +8,12 @@ This code plots the calibration curves for both QRNN-single and QRNN-all
 """
 import matplotlib.pyplot as plt
 import numpy as np
-import netCDF4
-import os
-import ICI.stats as stats
 from matplotlib.ticker import (MultipleLocator, FormatStrFormatter,
                                AutoMinorLocator)
-from typhon.retrieval.qrnn import set_backend, QRNN
-set_backend("pytorch")
-import ICI.stats as S
-
 from ICI.calibration import calibration
 from read_qrnn import read_qrnn
-import random
 plt.rcParams.update({'font.size': 26})
-
+import os
 
 #%% input parameters
 depth     = 3
@@ -42,7 +34,8 @@ if qrnn_dir == "C89+150":
     channels = [ 1, 10]
   
 target = 14 
-
+path = os.path.expanduser('~/Dendrite/Projects/AWS-325GHz/MWHS/data/')
+allChannels = np.arange(1, 16, 1)
 #%% read input data
         
 print(qrnn_dir, channels)
@@ -72,7 +65,7 @@ a1, a2, a3, a4, a5, a6, intervals  = calibration(y_pre, y0, im, quantiles)
                            a4/len(y0[:]), a5/len(y0[:]),
                           ], 'r.-', ms = 15, linewidth = 2.5))
 
-im = np.where(np.abs(y_pre[:, iq] - y_prior[:, i183]) >= 5)[0]
+im = np.where(np.abs(y_pre[:, iq] - y_prior[:, i183]) > 5)[0]
 a1, a2, a3, a4, a5, a6, intervals  = calibration(y_pre, y0, im, quantiles)     
 
 (ax.plot(intervals[:], [ a1/len(y0[im]), a2/len(y0[im]), a3/len(y0[im]), 
@@ -94,7 +87,7 @@ ax.xaxis.set_minor_locator(MultipleLocator(0.2))
 ax.grid(which = 'both', alpha = 0.2)
 fig.savefig('Figures/calibration_plot_%s'%target)
 
-(ax.legend(["All data", "correction > 10K"],
+(ax.legend(["All data", "correction > 5K"],
             prop={'size': 22}, frameon = False))  
 
 fig.savefig("Figures/calibration_QRNN_MWHS_%s.pdf"%target, bbox_inches = 'tight')
@@ -105,16 +98,18 @@ bin_center = (bins[:-1] + bins[1:]) / 2
 hist_prior = np.histogram(y_prior[:, i183], bins, density = True)              
 ax.plot(bin_center, hist_prior[0], 'r', linewidth = 2.5)
 
-hist_pre = np.histogram(y_pre[:, 3], bins, density = True)
-
-ax.plot(bin_center, hist_pre[0], 'b', linewidth = 2.5)
-                                    
 hist0 = np.histogram(y0, bins, density = True)              
 ax.plot(bin_center, hist0[0], 'g' ,linewidth = 2.5)
+
+hist_pre = np.histogram(y_pre[:, 3], bins, density = True)
+ax.plot(bin_center, hist_pre[0], 'b', linewidth = 2.5)
+                                    
+
 ax.set_yscale('log')
 ax.set_xlabel('Brightness temperature [K]')
 ax.set_ylabel('Occurence frequency [#/K]')
-ax.legend(["Uncorrected", "Predicted", "Simulated"],  prop={'size': 24}) 
+ax.legend(["All-sky ",  "Clear-sky ", "Predicted"],\
+          prop={'size': 24}, frameon = False, loc = 2) 
 ax.set_title('MWHS-2 channel %s'%str(target))
 ax.xaxis.set_minor_locator(MultipleLocator(2))
 
