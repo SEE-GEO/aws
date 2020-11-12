@@ -17,23 +17,35 @@ from scipy.stats import gaussian_kde
 
 quantiles = np.array([0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998])
 
-def predict(test_data, qrnn, add_noise = False):
+def predict(test_data, qrnn, add_noise = False, aws = False):
     """
     predict the posterior mean and median
     """
-    if add_noise:
-        x_noise = test_data.add_noise(test_data.x, test_data.index)
-        x = (x_noise - test_data.mean)/test_data.std
-        y_prior = x_noise
-        y = test_data.y_noise
-        
-        y0 = test_data.y
-    else:
+    
+    if aws:
         x = (test_data.x - test_data.mean)/test_data.std
         y_prior = test_data.x
         y = test_data.y
         y0 = test_data.y0
-
+                 
+    else:
+        
+        if add_noise:
+            x_noise = test_data.add_noise(test_data.x, test_data.index)
+            x = (x_noise - test_data.mean)/test_data.std
+            y_prior = x_noise
+            y = test_data.y_noise
+            
+            y0 = test_data.y
+        else:
+            x = (test_data.x - test_data.mean)/test_data.std
+            y_prior = test_data.x
+            y = test_data.y_noise
+            y0 = test_data.y
+            
+            if not test_data.ocean :
+        
+                x = np.concatenate((x, test_data.lsm ), axis = 1)
 
     y_pre = qrnn.predict(x.data)
     y_pos_mean = qrnn.posterior_mean(x.data)

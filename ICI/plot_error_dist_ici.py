@@ -52,24 +52,26 @@ for i,target in enumerate(targets):
     print (file)
     qrnn = QRNN.load(file)
     y_pre, y_prior, y0, y, y_pos_mean = S.predict(data, qrnn, add_noise = True)
-    im = np.abs(y_pre[:, iq] - y_prior[:, i183]) < 5
+    im = np.abs(y_pre[:, iq] - y_prior[:, i183]) < 5.0
+#   im = (np.abs(y_pre[:, 0] - y_pre[:, 6] )<= 10.2) 
+    print ('rejected obs', (1 - np.sum(im)/im.size)* 100)
     hist_noise, hist_pre, hist_prior, hist_pos_mean, hist_pos_mean_5, hist_filter  = \
         S.calculate_all_histogram(y, y0, y_pre, y_prior, iq, bins, im, i183)
                                 
                                 
     center = (bins[:-1] + bins[1:]) / 2
 
-    ax[i].plot(center, hist_noise[0], 'k', linewidth = 2.5)
-    ax[i].plot(center, hist_prior[0], 'g', linewidth = 2.5)
-    ax[i].plot(center, hist_pre[0],'b', linewidth = 2.5)
+    ax[i].plot(center, hist_noise[0], 'k', linewidth = 2.5, label = "Noise")
+    ax[i].plot(center, hist_prior[0], 'g', linewidth = 2.5, label = "All-sky")
+    ax[i].plot(center, hist_pre[0],'b', linewidth = 2.5, label = "Predicted (All)")
 
-    ax[i].plot(center, hist_pos_mean_5[0], 'y', linewidth = 2.5)
-    ax[i].plot(center, hist_filter[0], 'r', linewidth = 2.5)
+    ax[i].plot(center, hist_pos_mean_5[0], 'r', linewidth = 2.5, label = "Predicted(5K)")
+ #   ax[i].plot(center, hist_filter[0], 'r', linewidth = 2.5)
     ax[i].set_yscale('log')
 #    ax[i].set_yticklabels([])
 #    ax[i].set_xticklabels([]) 
     ax[i].xaxis.set_minor_locator(MultipleLocator(1))
-    ax[i].yaxis.set_minor_locator(MultipleLocator(5))
+
     ax[i].grid(which = 'both', alpha = 0.2)
     ax[i].set_title('Channel:%s'%target, fontsize = 28)
 
@@ -80,10 +82,8 @@ ax[1].set_xlabel('Deviation to noise free clear-sky [K]')
 ax[1].set_yticklabels([])
 ax[2].set_yticklabels([])
                             
-(ax[2].legend(["Noise", "Uncorrected", "Predicted (all)", "Predicted (5K)", \
-               "Filtered(5K)"],
-            prop={'size': 32}, frameon = False, bbox_to_anchor=(0.55, -0.12),ncol=3))                                
+(ax[2].legend( prop={'size': 32}, frameon = False, bbox_to_anchor=(0.25, -0.12),ncol=2))                                
                                 
                                 
-#fig.savefig(output_file, (bbox_inches = 'tight'))                               
+fig.savefig(output_file, bbox_inches = 'tight')                               
                                 

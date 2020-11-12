@@ -137,5 +137,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(1, 1)
 #    ax.scatter(y_prior[:, i183] - y0, y_pre[:, iq] - y0)
 
-    ax.hist(y_pre[im, 3] - y0[im], np.arange(-20, 20, 0.5))
+    ax.hist(y_prior[:, i183] - y0[:], np.arange(-200, 20, 0.5))
+    
+    ax.hist(y_prior[~im_b, i183] - y0[~im_b], np.arange(-200, 20, 0.5))
     ax.set_yscale('log')

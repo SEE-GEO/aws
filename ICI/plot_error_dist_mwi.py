@@ -27,6 +27,7 @@ quantiles = np.array([0.002, 0.03, 0.16, 0.5, 0.84, 0.97, 0.998])
 batchSize = 128
 
 targets = [ 'I1V', 'MWI-15', 'MWI-16', 'I2V', 'I3V',]
+
 targets_mwi = ['MWI-14', 'MWI-15', 'MWI-16', 'MWI-17', 'MWI-18'] 
 test_file = "TB_ICI_mwi_test.nc"
 output_file = 'Figures/error_distribution_MWI-alone.pdf'
@@ -54,7 +55,7 @@ for i,target in enumerate(targets):
     print (file_single)
     qrnn = QRNN.load(file_single)
     y_pre, y_prior, y0, y, y_pos_mean = S.predict(data, qrnn, add_noise = True)
-    im = np.abs(y_pre[:, iq] - y_prior[:, i183]) <= 2.5
+    im = np.abs(y_pre[:, iq] - y_prior[:, i183]) <= 7.5
 #    im = np.abs(y_prior[:, i183] - y0) > 33.5
     hist_noise, hist_pre, hist_prior, hist_pos_mean, hist_pos_mean_5, hist_filter  = \
         S.calculate_all_histogram(y, y0, y_pre, y_prior, iq, bins, im, i183)

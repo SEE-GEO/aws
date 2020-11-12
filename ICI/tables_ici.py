@@ -25,11 +25,6 @@ def read_qrnn(file, inChannels, target):
                    inChannels, target, 
                    batch_size = batchSize)  
 
-
-
-# read QRNN    
-#    file = 'qrnn_ici_%s_%s_%s_single.nc'%(depth, width, target)
-#    print (file)
     qrnn = QRNN.load(file)
     y_pre, y_prior, y0, y, y_pos_mean = S.predict(data, qrnn, add_noise = True)
     
@@ -60,6 +55,8 @@ iq = np.argwhere(quantiles == 0.5)[0,0]
 
 color = ['k', 'r', 'b']
 
+Y_pre     = []
+Y_pre_all = []
 
 #%%
 fig, ax = plt.subplots(1,1)
@@ -79,7 +76,7 @@ for i,target in enumerate(targets):
     ske      = stats.calculate_skew(y_prior, y0, y, y_pre[:, 3], im, i183)
     mae      = stats.calculate_mae(y_prior, y0, y, y_pre[:, 3], im, i183)
     
-    
+    Y_pre.append(y_pre[:, 3])
     
     inChannels_all = np.array(['I1V', 'I2V', 'I3V', 'I5V' , 'I6V', 'I7V', 'I8V', 'I9V', 'I10V', 'I11V'])
     file_all = 'qrnn_ici_%s_%s_%s.nc'%(depth, width, target)
@@ -92,7 +89,8 @@ for i,target in enumerate(targets):
     std_A      = stats.calculate_std(y_prior1, y0, y, y_pre[:, 3], im, i183)
     ske_A      = stats.calculate_skew(y_prior1, y0, y, y_pre[:, 3], im, i183)
     mae_A      = stats.calculate_mae(y_prior1, y0, y, y_pre[:, 3], im, i183)
-    
+
+    Y_pre_all.append(y_pre[:, 3])
 #%%
     bia = list(bia + bia_A)
     mae = list(mae + mae_A)
@@ -100,7 +98,8 @@ for i,target in enumerate(targets):
     std = list(std + std_A)
 #%%    
     sets = []
-    for j in [0, 1, 4, 2, 3, 9, 7, 8]:
+#    for j in [0, 1, 4, 2, 3, 9, 7, 8]:
+    for j in [0, 1, 2, 3, 7, 8]:
         
         l = [bia[j], mae[j], std[j], ske[j]]  
         sets.append(l)
@@ -114,8 +113,8 @@ for i,target in enumerate(targets):
                                sets[3][ii],
                                sets[4][ii],
                                sets[5][ii],
-                               sets[6][ii],
-                               sets[7][ii],
+#                               sets[6][ii],
+#                               sets[7][ii],
            ] for ii in range(4)]
 
     print(tabulate(table
@@ -129,9 +128,21 @@ for i,target in enumerate(targets):
     ax.set_yscale('log')  
     
 #%%
-    #ax.set_yscale('log')
+
 fig, ax = plt.subplots(1, 1)
 ax.scatter( y_prior[:, i183]-y_pre[:, iq], y_prior[:, i183] - y0)
 x = np.arange(-150, 0, 1)
 y = x
 ax.plot(x, y)
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -4,7 +4,11 @@
 Created on Thu Aug 13 11:50:28 2020
 
 @author: inderpreet
+
+Combines data from all ARTS simulations and writes the training and testing datasets
+for MWI channels
 """
+
 
 import os
 import numpy as np
@@ -15,7 +19,7 @@ from read_ARTS_output import read_all_files
 import xarray
 from add_gaussian_noise import add_gaussian_noise
 from read_clear_allsky_pairs import read_clear_allsky_pairs, read_clear_allsky_pairs_MWI
-from get_IWP import get_IWP
+#from get_IWP import get_IWP
 from ICI_channel_TB import ICI_channel_TB
 import random
 
@@ -92,7 +96,7 @@ TB_ICI["sky"] = ["clear", "all"]
 #TB_ICI.to_netcdf('TB_ICI.nc', 'w')
 
 #%% save 75% data as training data and rest as test data
-randomList = random.sample(range(0, 220000), 220000)
+randomList = random.sample(range(0, 218856), 218856)
 
 TB_ICI[:, randomList[:175000], :].to_netcdf('TB_ICI_mwi_train.nc', 'w')
 TB_ICI[:, randomList[175000:], :].to_netcdf('TB_ICI_mwi_test.nc', 'w')

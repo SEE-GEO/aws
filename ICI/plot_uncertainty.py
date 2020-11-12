@@ -20,6 +20,8 @@ from ici import iciData
 from calibration import calibration
 import random
 plt.rcParams.update({'font.size': 26})
+from matplotlib import colors as mcolors
+colors = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
 
 
 #%% input parameters
@@ -56,15 +58,21 @@ y_pre, y_prior, y0, y, y_pos_mean = S.predict(data, qrnn, add_noise = True)
 fig, ax = plt.subplots(1, 1, figsize = [8, 8])
 x = np.arange(-3, 4, 1)
 ii = 0
-
+y_all = []
 randomList = random.sample(range(0, 24000), 1500)
 for i in randomList:
     ii +=1
 #for i in ind:
     y1 = y_pre[i,  :] - y_pre[i, 3]
-    
-    ax.plot(x, y1,'b', alpha = 0.3)
-
+    y_all.append(y1)
+    ax.plot(x, y1, color = colors["grey"], alpha = 0.4)
+#%%
+y_all = np.stack(y_all)
+box1 = ax.boxplot(y_all, positions = x, showfliers=False,  widths = 0.9)
+for item in ['boxes', 'whiskers', 'fliers', 'medians', 'caps']:
+        plt.setp(box1[item], color="darkred")
+        
+#%%        
 ax.xaxis.set_minor_locator(MultipleLocator(5))
 ax.yaxis.set_minor_locator(MultipleLocator(5))
 ax.grid(which = 'both', alpha = 0.4)
@@ -83,9 +91,9 @@ q0 = np.quantile(y0, quantiles, axis = 0)
 
 y_normal = np.random.normal(270, 0.60, 24000)
 q_normal = np.quantile(y_normal, quantiles , axis = 0)
-ax.plot(x, q_normal - q_normal[3], 'r', linewidth = 3)
+ax.plot(x, q_normal - q_normal[3], 'b', linewidth = 2)
 ax.tick_params(axis='x', which='major', pad=10)
-
+ax.set_title('Channel:%s'%str(target), fontsize = 24)
 #ax2 = ax.twinx()
 #ax.set_xticks(x)
 #ax.set_xticklabels(quantiles)
