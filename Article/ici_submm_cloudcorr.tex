@@ -73,7 +73,7 @@
 
 \begin{abstract}
 
-A methodology based on quantile regression neural networks (QRNN) is presented that identifies and corrects the cloud impact on microwave humidity sounder radiances at 183GHz. This approach estimates the posterior distributions of noise free clear-sky (NFCS) radiances, providing nearly bias-free estimates of clear-sky radiances with a full posterior error distribution. It is first demonstrated by application to a present sensor, the MicroWave Humidity Sounder-2 (MWHS-2), then the applicability to sub-millimeter (sub-mm) sensors is also analysed. The QRNN results improve upon what operational cloud filtering techniques like a scattering index can achieve, but are ultimately imperfect due to limited information content on cirrus impact from traditional microwave channels---the negative departures associated with high cloud impact are successfully corrected, but thin cirrus clouds cannot be fully corrected. In contrast, when sub-mm observations are used, QRNN successfully corrects most cases with cloud impact, with only 2-6\% of cases left partially corrected. The methodology works well even if only one sub-mm channel (325\,GHz) is available. When using sub-mm observations, cloud correction usually results in error distributions with standard deviation less than typical channel noise values. Furthermore, QRNN outputs predicted quantiles for case-specific uncertainty estimates, successfully representing the uncertainty of cloud correction for each observation individually. In comparison to deterministic correction or filtering approaches, the corrected radiances and attendant uncertainty estimates have great potential to be used efficiently in assimilation systems due to being largely unbiased and adding little further uncertainty to the measurements. 
+A methodology based on quantile regression neural networks (QRNN) is presented that identifies and corrects the cloud impact on microwave humidity sounder radiances at 183\,GHz. This approach estimates the posterior distributions of noise free clear-sky (NFCS) radiances, providing nearly bias-free estimates of clear-sky radiances with a full posterior error distribution. It is first demonstrated by application to a present sensor, the MicroWave Humidity Sounder-2 (MWHS-2), then the applicability to sub-millimeter (sub-mm) sensors is also analysed. The QRNN results improve upon what operational cloud filtering techniques like a scattering index can achieve, but are ultimately imperfect due to limited information content on cirrus impact from traditional microwave channels---the negative departures associated with high cloud impact are successfully corrected, but thin cirrus clouds cannot be fully corrected. In contrast, when sub-mm observations are used, QRNN successfully corrects most cases with cloud impact, with only 2-6\% of cases left partially corrected. The methodology works well even if only one sub-mm channel (325\,GHz) is available. When using sub-mm observations, cloud correction usually results in error distributions with standard deviation less than typical channel noise values. Furthermore, QRNN outputs predicted quantiles for case-specific uncertainty estimates, successfully representing the uncertainty of cloud correction for each observation individually. In comparison to deterministic correction or filtering approaches, the corrected radiances and attendant uncertainty estimates have great potential to be used efficiently in assimilation systems due to being largely unbiased and adding little further uncertainty to the measurements. 
 
 
 \end{abstract}
@@ -278,7 +278,7 @@ The simulations are split into training and testing datasets. The training datas
 \label{sec:QRNN}
 %
 The task that we aim to solve in this study is to predict the NFCS brightness
-temperature \todo{$\ynfcs$} at a given $183\unit{GHz}$ channel from a vector of
+temperature \todo{$\ynfcs$} at a given 183\,GHz channel from a vector of
 all-sky observations $\y$. Since the information-content of the
 cloud-contaminated observations is certainly too low to solve this problem
 exactly, a probabilistic formulation is appropriate here. The aim thus becomes
@@ -385,13 +385,13 @@ The predicted error is the deviation of a random sample drawn from the posterior
 distribution to its median. In this study, we analyse both the calibration plot
 and the predicted errors to assess the correctness of predicted uncertainties.  
 
-All evaluation results except hyper-parameter tuning, described in the study, have been made on the test dataset. Hyper-parameter tuning is made on the validation dataset (see Appendix~\ref{appendix:hyperparamter}). Validation dataset is part of the training dataset which is held back during the training process.
+All evaluation results except hyper-parameter tuning, described in the study, have been made on the test dataset. The hyper-parameter tuning is made on the validation dataset (see Appendix~\ref{appendix:hyperparamter}). The validation dataset is part of the training dataset which is held back during the training process.
 
 
 \section{Correcting cloud affected data in MWHS-2}
 \label{qrnn_mwhs}
 %
-In this section, we introduce the QRNN based cloud correction in the context of current operational sensors.  We use MWHS-2 to demonstrate the results. The choice is motivated by the fact that MWHS-2 has five complementary 183\,GHz channels, along with additional 118\,GHz channels. In order to formulate and test the correction approach, multiple QRNN experiments are performed for MWHS-2. However, for brevity we compare the comprehensive results only for channel 14. Later the optimal experiment is extended to other 183\,GHz channels. A brief comparison of the results is also made against existing cloud filtering methods. Further, the estimates of case-specific uncertainties obtained from QRNN are also evaluated.
+In this section, we introduce the QRNN based cloud correction in the context of current operational sensors.  We use MWHS-2 to demonstrate the results. The choice is motivated by the fact that MWHS-2 has five complementary 183\,GHz channels, along with additional 118\,GHz channels. In order to formulate and test the correction approach, multiple QRNN experiments are performed for MWHS-2. However, for brevity we show the comparison of the comprehensive results only for channel 14. Later the optimal experiment is extended to other 183\,GHz channels. A brief comparison of the results is also made against existing cloud filtering methods. Further, the estimates of case-specific uncertainties obtained from QRNN are also evaluated.
 
 \subsection{Experiments}
 %
@@ -409,7 +409,6 @@ For MWHS-2, multiple experiments using both QRNN configurations are performed. W
 	\item The fourth experiment is based on the configuration QRNN-all. In this experiment, we use 89 and 150\,GHz channels along with all 183\,GHz channels to train QRNN. The use of 183\,GHz channels for ``self'' cloud filtering has been studied by  \citet{buehler:aclou:07}. They show that brightness temperatures between outer and inner humidity channels can be used as a criterion for cloud filtering. With QRNN-all, we investigate if additional humidity channels in the training process can improve the performance. Note that though the training inputs are same for each 183\,GHz channel, the output is the target 183\,GHz channel; thus each channel still needs to be trained separately. Land/sea mask is also included in the training. This combination is denoted as 89+150+183\,GHz
 \end{enumerate}
 
-  
 
 \subsection{Prediction accuracy}
 
@@ -427,7 +426,7 @@ For MWHS-2, multiple experiments using both QRNN configurations are performed. W
 	\label{fig:error_distribution_mwhs14}	
 \end{figure}
 \begin{table*}[t]
-	\caption{The error statistics for deviations of point estimates to NFCS simulations. Results are for different QRNN experiments for MWHS-2 channel 14 (see Sect.~\ref{sec:QRNN_expt_MWHS}). The statistics for all-sky and clear-sky simulations are also provided. The label ``All'' denotes the entire dataset of predicted point estimates, while ``Pred.(5\,K)'' refers to the predicted point estimates but where cases with cloud correction greater than 5\,K are excluded. The last two columns show the statistics obtained after filtering cloudy cases according to scattering index (SI) and scheme by \citet{buehler:aclou:07} (B183). Bias, MAE, STD are in K, skewness in dimensionless.}
+	\caption{The error statistics for deviations of point estimates to NFCS simulations. Results are for different QRNN experiments for MWHS-2 channel 14 (see Sect.~\ref{sec:QRNN_expt_MWHS}). The statistics for all-sky and clear-sky simulations are also provided. The label ``All'' denotes the entire dataset of predicted point estimates, while ``Pred.(5\,K)'' refers to the predicted point estimates but where cases with cloud correction greater than 5\,K are excluded. The last two columns show the statistics obtained after filtering cloudy cases according to scattering index (SI) and scheme by \citet{buehler:aclou:07} (B183). Bias, MAE, STD are in K, skewness is dimensionless.}
 	\label{tab:error_statistics_mwhs_14}
 	\setlength{\tabcolsep}{4pt}
 	\begin{tabular}{lrr|rr|rr|rr|rr|rr}
@@ -438,20 +437,20 @@ For MWHS-2, multiple experiments using both QRNN configurations are performed. W
 		&   Clear-sky &   All-sky &  \multicolumn{2}{c|}{89+150\,GHz} & \multicolumn{2}{c|}{89+150+118\,GHz} & \multicolumn{2}{c|}{150\,GHz} & \multicolumn{2}{c|}{89+150+183\,GHz}& SI & B183\\		
 		&			   &			& All & Pred.(5\,K) & All & Pred.(5\,K) & All & Pred.(5\,K)  & All & Pred.(5\,K)&&\\
 		\middlehline
-Bias     & -0.00 &  -0.83 & -0.09 & -0.08 & -0.04 & -0.03 & -0.09 & -0.09 & -0.09 & -0.08 & -0.24 & -0.51\\
-MAE      &  0.80 &   1.44 &  0.88 &  0.86 &  0.89 &  0.87 &  0.89 &  0.87 &  0.62 &  0.59 &  0.92 &  1.14\\
-STD      &  1.00 &   3.89 &  1.19 &  1.14 &  1.19 &  1.15 &  1.21 &  1.16 &  0.90 &  0.83 &  1.26 &  1.83\\
-Skewness &  0.01 & -14.40 & -1.11 & -0.96 & -1.02 & -0.86 & -0.89 & -1.02 & -1.61 & -1.58 & -1.79 & -3.45\\
-Rejection&  -	 & - 	  & - 	  & 3.3\% & - 	  & 3.4\% & -     & 3.2\% & -     & 3.3\% & 28.1\%& 3.5\%\\
+Bias     &  0.00 &  -0.84 & -0.10 & -0.09 & -0.05 & -0.04 & -0.11 & -0.10 & -0.10 & -0.09 & 0.24  & -0.52\\
+MAE      &  0.80 &   1.45 &  0.89 &  0.87 &  0.90 &  0.88 &  0.90 &  0.88 &  0.62 &  0.60 & 0.92  & 1.15\\
+STD      &  1.00 &   3.73 &  1.20 &  1.16 &  1.21 &  1.16 &  1.22 &  1.18 &  0.91 &  0.85 & 1.26  & 1.86\\
+Skewness & -0.02 & -12.72 & -1.17 & -1.00 & -1.06 & -0.90 & -1.16 & -1.04 & -1.78 & -1.71 &-1.95  & -3.45\\
+Rejection&  -	 & - 	  & - 	  & 3.3\% & - 	  & 3.4\% & -     & 3.2\% & -     & 3.3\% & 28.8\%& 3.5\%\\
 \bottomhline
 	\end{tabular}
 \end{table*}
 
-The posterior distribution of $\ynfcs$ obtained from experiment 89+150\,GHz is similar to the one shown in Fig.~\ref{fig:posterior_distribution_I1V}. The median value is chosen as the point estimate (see Sect.~\ref{sec:validation}). The distribution of point estimates is displayed in Fig.~\ref{fig:distribution_predicted_mwhs14}. The predicted values are able to correct most of the low brightness temperature cases, and overall a good match with the NFCS simulations is observed. However, QRNN is unable to predict the lowest clear-sky brightness temperatures, and cases with brightness temperatures around 260\,K occur frequently. The deviations of point estimates to NFCS simulations are shown in Fig.~\ref{fig:error_distribution_mwhs14}. The large negative deviations are corrected successfully with QRNN (blue curve), but residual cloud impact is evident in the negative tail. Most of these residual cases have departures less than 10\,K. The corresponding error statistics(see Sect.~\ref{sec:validation}) are provided in  Table~\ref{tab:error_statistics_mwhs_14}. In the uncorrected all-sky simulations, the negative departures due to cloud impact lead to a large negative skewness(-14.34) and high bias (-0.84\,K). QRNN trained with 89 and 150\,GHz successfully corrects a major portion of the cloud affected cases, and the bias is reduced to -0.09\,K. However, high skewness values indicate a negative tail or uncorrected departures. Including 118\,GHz in the training gives comparable results as 89+150\,GHz. With 118\,GHz, the error distribution has lower bias and are more symmetric, but the MAE and STD remain unaltered. This indicates that the information from 118\,GHz channels can be beneficial in predicting few cases correctly, but the overall consequence is not exceptionally different from 89+150\,GHz. Similar is the case with using only 150\,GHz. In the latter, predictions have the most symmetric error distributions, but the highest spread. 
+The posterior distribution of $\ynfcs$ obtained from experiment 89+150\,GHz is similar to the one shown in Fig.~\ref{fig:posterior_distribution_I1V}. The median value is chosen as the point estimate (see Sect.~\ref{sec:validation}). The distribution of point estimates is displayed in Fig.~\ref{fig:distribution_predicted_mwhs14}. The predicted values are able to correct most of the low brightness temperature cases, and overall a good match with the NFCS simulations is observed. However, QRNN is unable to predict the lowest clear-sky brightness temperatures, and cases with brightness temperatures around 260\,K occur frequently. The deviations of point estimates to NFCS simulations are shown in Fig.~\ref{fig:error_distribution_mwhs14}. The large negative deviations are corrected successfully with QRNN (blue curve), but residual cloud impact is evident in the negative tail. Most of these residual cases have departures less than 10\,K. The corresponding error statistics(see Sect.~\ref{sec:validation}) are provided in  Table~\ref{tab:error_statistics_mwhs_14}. In the uncorrected all-sky simulations, the negative departures due to cloud impact lead to a large negative skewness(-12.72) and high bias (-0.84\,K). QRNN trained with 89 and 150\,GHz successfully corrects a major portion of the cloud affected cases, and the bias is reduced to -0.10\,K. However, high skewness values indicate a negative tail or uncorrected departures. Including 118\,GHz in the training gives comparable results as 89+150\,GHz. With 118\,GHz, the error distribution has lower bias and are more symmetric, but the MAE and STD remain unaltered. This indicates that the information from 118\,GHz channels can be beneficial in predicting few cases correctly, but the overall consequence is not exceptionally different from 89+150\,GHz. Similar is the case with using only 150\,GHz.  
 
 Further, we investigated whether filtering the predictions with low accuracy could help in improving the error distributions. For filtering such cases, we assume that predictions with cloud correction greater than 5\,K are associated with large deviations. In all three experiments, removing the cases with correction greater than 5\,K removes around 3\% of the data, but only a marginal positive impact on the accuracy is observed. With 5\,K threshold, though the cases with high errors are removed, the persistent negative skewness indicates presence of cases with residual cloud impact. Choosing a lower threshold can help in removing more partially corrected cases but at the cost of rejecting clear-sky cases. Since QRNN gives out NFCS values, choosing an unusually low correction threshold can also classify noisy clear-sky cases as cloudy. For example, for 89+150\,GHz, a threshold of 1.5\,K rejects almost 10\% of data, but the negative skewness is still not completely removed. 
 
-In spite of the fact that QRNN only provides a partial cloud correction, the results for  MWHS-2 channel 14 are comparable to what we achieve with existing cloud filtering techniques like scattering index (SI) and the filtering scheme by \citet{buehler:aclou:07}. SI uses the differences of brightness temperatures between 89 and 150\,GHz to identify cloud affected data, whilst in the study by \citet{buehler:aclou:07}, they use brightness temperature based threshold to filter out cloudy cases. They recommend a viewing angle dependent brightness temperature threshold at $183.31\pm1.00$ \,GHz and brightness temperature difference between $183.31\pm3.00$ and $183.31\pm 1.00$ as a measure of cloud impact. Further in the text we refer this filter as ``B183''. The results obtained with SI and B183 are displayed in last two columns of Table~\ref{tab:error_statistics_mwhs_14}. With SI threshold = 5\,K, almost 28\% of the data is rejected, yet the resulting error distributions are poorer as compared to QRNN. The low bias and skewness values indicate that most of the high negative departures are removed, but cases with low cloud impact pass the filter as clear. Similar is the case with B183. Here only 3\% of the data is filtered out but the overall statistics are worse than both QRNN and SI. The results from the two filters are not surprising as both aim at removing only cases with high ice content. The thin cirrus clouds and other low hydrometeor impact cases remain unaltered.
+In spite of the fact that QRNN only provides a partial cloud correction, the results for  MWHS-2 channel 14 are comparable to what we achieve with existing cloud filtering techniques like scattering index (SI) and the filtering scheme by \citet{buehler:aclou:07}. SI uses the differences of brightness temperatures between 89 and 150\,GHz to identify cloud affected data, whilst in the study by \citet{buehler:aclou:07}, they use brightness temperature based threshold to filter out cloudy cases. They recommend a viewing angle dependent brightness temperature threshold at $183.31\pm1.00$ \,GHz and brightness temperature difference between $183.31\pm3.00$ \,GHz and $183.31\pm 1.00$ \,GHz as a measure of cloud impact. Further in the text we refer this filter as ``B183''. The results obtained with SI and B183 are displayed in last two columns of Table~\ref{tab:error_statistics_mwhs_14}. With SI threshold = 5\,K, almost 28\% of the data is rejected, yet the resulting error distributions are poorer as compared to QRNN. The low bias and skewness values indicate that most of the high negative departures are removed, but cases with low cloud impact pass the filter as clear. Similar is the case with B183. Here only 3\% of the data is filtered out but the overall statistics are worse than both QRNN and SI. The results from the two filters are not surprising as both aim at removing only cases with high ice content. The thin cirrus clouds and other low hydrometeor impact cases remain unaltered.
 
 The three experiments were also performed for other four 183\,GHz channels, and a similar performance was obtained (Table not shown). The positive effect of 118\,GHz was slightly higher for MWHS-2 channel 15, but for others, no notable effect was observed. The results for these channels with combination 89+150\,GHz are provided in Sect.~\ref{sec:mwhs_others} 
 
@@ -464,9 +463,9 @@ The three experiments were also performed for other four 183\,GHz channels, and 
 	\caption{ The triangular error correlation matrix obtained from QRNN-single and QRNN-all for MWHS-2. The label ``Clear'' represents cases with cloud impact less than 2\,K.}
 	\label{fig:correlations_mwhs}	
 \end{figure}
-To assess the differences between the capabilities of QRNN-all against QRNN-single, we  compare the error statistics obtained for 89+150\,GHz and 89+150+183\,GHz for channel 14.  Table~\ref{tab:error_statistics_mwhs_14} shows the error statistics for the experiment QRNN-all. In comparison to QRNN-single, we obtain marginally lower error bias with QRNN-all, and the MAE and standard deviation reduce by almost 30\% and 25\% respectively. However, the negative tail becomes more prominent. The low standard deviation, but strong negative tail indicates that the narrow spread is a consequence of correction of noise in clear-sky cases. Since a majority of the cases are clear-sky, their impact dominates the whole statistics. In order to probe the positive effect of QRNN-all, we also estimate the errors for all cases with cloud correction greater than 5\,K. In comparison with QRNN-single, QRNN-all has slightly better accuracy. This suggests that concurrent use of all 183\,GHz channels can provide additional information on cloud structures to QRNN. 
+To assess the differences between the capabilities of QRNN-all against QRNN-single, we  compare the error statistics obtained for 89+150\,GHz and 89+150+183\,GHz for channel 14.  Table~\ref{tab:error_statistics_mwhs_14} shows the error statistics for the experiment QRNN-all. In comparison to QRNN-single, we obtain almost similar error bias with QRNN-all, but the MAE and standard deviation reduce by almost 30\% and 24\% respectively. However, the negative tail becomes more prominent. The low standard deviation, but strong negative tail indicates that the narrow spread is a consequence of correction of noise in clear-sky cases. Since a majority of the cases are clear-sky, their impact dominates the whole statistics. In order to probe the positive effect of QRNN-all, we also estimate the errors for all cases with cloud correction greater than 5\,K. In comparison with QRNN-single, QRNN-all has slightly better accuracy. This suggests that concurrent use of all 183\,GHz channels can provide additional information on cloud structures to QRNN. 
 
-Even though QRNN-all gives slightly better prediction accuracy, its inherent construction makes it crucial to examine the correlation between observed errors. Fig.~\ref{fig:correlations_mwhs} illustrates the correlation matrix for both QRNN-all and QRNN-single. For clear cases, the observed errors (noise) in QRNN-single are uncorrelated between the five channels. However QRNN-all gives out highly correlated errors. The correlations are highest between adjacent channels, and drop out as the spacing between the channels increases. For cloudy cases, the observed errors obtained from QRNN-single are slightly correlated, but with QRNN-all a very strong correlation is observed (not shown). 
+Even though QRNN-all gives slightly better prediction accuracy, its inherent construction makes it crucial to examine the correlation between observed errors. Figure~\ref{fig:correlations_mwhs} illustrates the correlation matrix for both QRNN-all and QRNN-single. For clear cases, the observed errors (noise) in QRNN-single are uncorrelated between the five channels. However QRNN-all gives out highly correlated errors. The correlations are highest between adjacent channels, and drop out as the spacing between the channels increases. For cloudy cases, the observed errors obtained from QRNN-single are slightly correlated, but with QRNN-all a very strong correlation is observed (not shown). 
 
 \subsubsection{QRNN-single applied to channel 11, 12, 13 and 15}
 \label{sec:mwhs_others}
@@ -481,38 +480,38 @@ Even though QRNN-all gives slightly better prediction accuracy, its inherent con
 		& &  Clear-sky &   All-sky &  \multicolumn{2}{c|}{89+150\,GHz}    & SI & B183  \\
 		&	&		   &			& All & Pred.(5\,K) &&\\
 		\middlehline
-		Channel 11  &   Bias      & 0.00 &  -0.16 & -0.03 & -0.03		 &-0.04	& -0.05 \\
-				    &	MAE       & 0.80 &   0.89 &  0.79 &  0.79  		 & 0.81	&  0.81 \\
-					&	STD       & 1.00 &   1.71 &  1.03 &  1.01 		 & 1.02	&  1.03 \\
-					&	Skewness  & 0.01 & -20.18 & -0.68 & -0.45 		 &-0.12 & -0.24 \\
-					& Rejection   & -    & -      & -	  & 0.2\%        & 28.1\% & 3.5\%  \\
+		Channel 11  & Bias     & -0.00 &  -0.15 & -0.12 & -0.12 & -0.04 & -0.05\\
+					& MAE      &  0.80 &   0.88 &  0.80 &  0.80 &  0.81 & 0.81 \\
+					& STD      &  1.00 &   1.51 &  1.03 &  1.02 &  1.02 & 1.03 \\
+					& Skewness &  0.01 & -15.73 & -0.61 & -0.45 & -0.07 & -0.29\\
+					& Rejection   & -    & -      & -	  & 0.2\% & 28.8\% & 3.5\%  \\
 		\middlehline
-		Channel 12  & Bias      & -0.00 &  -0.28 & -0.05 & -0.05		&  -0.07 & -0.15 \\
-					& MAE       &  0.80 &   0.98 &  0.81 &  0.80  		&   0.82 &	0.86 \\
-					& STD       &  1.00 &   2.26 &  1.07 &  1.05  		&  1.04  &  1.14 \\
-					& Skewness  &  0.00 & -20.72 & -0.91 & -0.70  		&  -0.38 & -0.86 \\
-					& Rejection & -    & -      & -	  & 0.6\%        & 28.1\% & 3.5\%  \\
+		Channel 12  &  Bias     & -0.01 &  -0.29 & -0.12 & -0.11  & -0.08 & -0.16\\
+					&  MAE      &  0.80 &   0.98 &  0.82 &  0.81  &  0.82 & 0.87\\
+					&  STD      &  1.00 &   2.02 &  1.08 &  1.06  &  1.04 & 1.15\\
+					&  Skewness & -0.01 & -17.27 & -0.96 & -0.79  &  -0.25 & -1.02 \\
+					& Rejection & -     & -      & -	 & 0.6\%  & 28.8\% & 3.5\%  \\
 		\middlehline
-		Channel 13  & Bias      & -0.00 &  -0.52 & -0.08 & -0.07 		& -0.14  & -0.29 \\
-					& MAE       &  0.80 &   1.17 &  0.84 &  0.83  		&  0.86  &  0.97 \\
-					& STD       &  1.00 &   3.04 &  1.13 &  1.10  		&  112  &	1.39 \\
-					& Skewness  &  0.02 & -17.85 & -1.14 & -0.98  		& -0.91  & -2.23 \\	
-					& Rejection   & -    & -      & -	  & 1.6\%        & 28.1\% & 3.5\%  \\	
+		Channel 13  &Bias       & 0.00 &  -0.53 & -0.11 & -0.10 & -0.14 & -0.31\\
+					&MAE        & 0.80 &   1.18 &  0.85 &  0.84 &  0.86 & 0.98\\
+					&STD        & 1.00 &   2.83 &  1.15 &  1.12 &  1.12 & 1.41 \\
+					&Skewness   & 0.01 & -15.24 & -1.22 & -1.08 & -1.03 & -2.30\\  	
+					& Rejection & -     & -      & -	 & 1.6\%& 28.8\% & 3.5\%  \\	
 		\middlehline
-		Channel 15  & Bias      & -0.00 &  -1.28 & -0.07 & -0.06        & -0.33 &  -0.81 \\
-					& MAE       &  0.80 &   1.87 &  0.97 &  0.92 		&  1.03 &	1.44 \\
-					& STD       &  1.00 &   5.08 &  1.35 &  1.25 		&  1.53 &	2.64 \\
-					& Skewness  & -0.00 & -11.15 & -0.60 & -0.83 		& -2.85 &  -4.41 \\ 
-					& Rejection & -     & -      & -	 & 5.6\%        & 28.1\% & 3.5\%  \\
+		Channel 15  &  Bias     & 0.00 &  -1.28 & -0.09 & -0.07 & -0.33 & -0.83\\
+					&  MAE      & 0.80 &   1.88 &  0.98 &  0.93 &  1.03 &  1.46\\
+					&  STD      & 1.00 &   4.97 &  1.36 &  1.27 &  1.52 &  2.69\\
+					&  Skewness & 0.00 & -10.11 & -0.69 & -0.82 & -2.87 &  -4.33 \\ 
+					& Rejection & -     & -      & -	 & 5.5\% & 28.8\%& 3.5\%  \\
 		\bottomhline
 	\end{tabular}
 \end{table*}
 
 In this section, we extend QRNN-single to predict $\ynfcs$ for MWHS-2 channels 11, 12, 13, and 15. The experiment QRNN-single with combination 89+150\,GHz is used and the results are displayed in Table~\ref{tab:error_statistics_mwhs_others}.
 
-For channel 11, the error bias after correction is only -0.03\,K in comparison to 0.16\,K before correction. The strong negative tail also diminishes after correction, but a non-zero negative skewness indicates presence of cases with residual cloud impact in the corrected dataset. Filtering the cases with high cloud impact has only a marginal positive effect. A similar performance is evident for channel 12. Correction reduces the bias to -0.05\,K and standard deviation to 1.07\,K. The MAE is approximately 17\% lower after correction, but still the negative skewness is not removed completely. For channel 13 and 15 also, a similar performance is seen. But in the latter, error distributions are most symmetric but with largest spread as compared to other four channels.
+For channel 11, the error bias after correction is  -0.12\,K in comparison to 0.15\,K before correction. The strong negative tail also diminishes after correction, but a non-zero negative skewness indicates presence of cases with residual cloud impact in the corrected dataset. Filtering the cases with high cloud impact has only a marginal positive effect. A similar performance is evident for channel 12. Correction reduces the bias to -0.12\,K and standard deviation to 1.08\,K. The MAE is approximately 16\% lower after correction, but still the negative skewness is not removed completely. For channel 13 and 15 also, a similar performance is seen. But in the latter, error distributions are most skewed and have a larger spread as compared to other four channels. The impact of poor predictions is highest in channel 15 owing to its sensitivity to hydrometeor impact.
 
-A comparison with SI based filtering and B183 is displayed in last columns of Table~\ref{tab:error_statistics_mwhs_others}. For channel 11 the performance of QRNN is comparable to both SI and B183. Similar is the case with channel 12, though the results from B183 are slightly poorer. Both these channels are mostly transparent to hydrometeor impact, and the filtering schemes work well. The major caveat is the rejection of clear cases. With comparable accuracy, the fraction of rejection in SI is approx. 28\% in comparison to approx. 3\% in B183. For channels 13 and 15 the error statistics obtained with SI are slightly inferior in comparison to QRNN. The results with B183 are even worse. For all channels, the two filters succeed in removing the high ice cloud cases, but for lower peaking channels, the high negative skewness values indicate presence of cases with low cloud impact. Clearly the ``one for all'' approach of both filters is not adequate to cater for channel specific hydrometeor impact.  
+A comparison with SI based filtering and B183 is displayed in last columns of Table~\ref{tab:error_statistics_mwhs_others}. For channel 11 the performance of QRNN is comparable to both SI and B183. Similar is the case with channel 12 and channel 13, though the results from B183 are slightly poorer. The higher peaking channels are mostly transparent to hydrometeor impact, and the filtering schemes work well. The major caveat is the rejection of clear cases. With comparable accuracy, the fraction of rejection in SI is approx. 28\% in comparison to approx. 3\% in B183. For channel, 15 the error statistics obtained with SI are slightly inferior in comparison to QRNN. The results with B183 are even worse. For all channels, the two filters succeed in removing the high ice cloud cases, but for lower peaking channels, the high negative skewness values indicate presence of cases with low cloud impact. Clearly the ``one for all'' approach of both filters is not adequate to cater for channel specific hydrometeor impact.  
 
 \subsection{Prediction uncertainty}
 \label{sec:uncertainty_mwhs}
@@ -532,10 +531,10 @@ A comparison with SI based filtering and B183 is displayed in last columns of Ta
 	\label{fig:predicted_errors_mwhs}	
 \end{figure}
 
-The quantiles given out by QRNN can be used to construct the probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. Examples of the uncertainties given out by QRNN are shown in Fig.~\ref{fig:prediction_uncertainty_mwhs}. The spread of error distribution is asymmetric. The predictions over quantiles $-3\sigma$, $-2\sigma$ and $-1\sigma$ are quite sharp and lie close to the median value. In contrast, the spread of predictions over quantiles $1\sigma$, $2\sigma$ and $3\sigma$ is wider. Also, cases with very high uncertainty occur infrequently. The box plots show that all the quantiles, except $3\sigma$ also follow the Gaussian distribution. 
+The quantiles given out by QRNN can be used to construct the probability distribution of the predictions in contrast to other correction approaches which give out only point estimates. Examples of the uncertainties given out by QRNN are shown in Fig.~\ref{fig:prediction_uncertainty_mwhs}. The spread of error distribution is asymmetric. The predictions over quantiles $-3\sigma$, $-2\sigma$ and $-1\sigma$ are quite sharp and lie close to the median value. In contrast, the spread of predictions over quantiles $1\sigma$, $2\sigma$ and $3\sigma$ is wider. The box plots indicate that cases with very high uncertainty occur infrequently. Also, all quantiles but  $3\sigma$, follow the Gaussian distribution. 
 
 
-The calibration of the prediction intervals is displayed in Fig.~\ref{fig:calibration_mwhs}. For the entire dataset, the predictions follow the $y=x$ line, i.e. the predicted uncertainties are perfectly calibrated with the errors observed on the test data. However for the cases with correction greater than 5\,K, the distribution is poorly calibrated, and the curve lies below the $y =x$ line, indicating that the prediction intervals are too narrow. This is in agreement with the wider spread of predictions over the  higher quantiles (Fig.~\ref{fig:prediction_uncertainty_mwhs}). However such cases form less than 6\% of the dataset and filtering them has little effect on the overall calibration.
+The calibration of the prediction intervals is displayed in Fig.~\ref{fig:calibration_mwhs}. For the entire dataset, the predictions follow the $y=x$ line, i.e. the predicted uncertainties are perfectly calibrated with the errors observed on the test data. However for the cases with correction greater than 5\,K, the distribution is poorly calibrated, and the curve lies below the $y =x$ line, indicating that the prediction intervals are too narrow. This is in agreement with the wider spread of uncertainties for cases with low accuracy (Fig.~\ref{fig:prediction_uncertainty_mwhs}). However such cases form less than 6\% of the dataset and filtering them has little effect on the overall calibration.
 
 Further, we analyse if the  predicted errors obtained from QRNN are representative of observed errors (Fig.~\ref{fig:predicted_errors_mwhs}). Both error distributions are asymmetric, and this is in fact covered by the percentile distribution  in Fig.~\ref{fig:prediction_uncertainty_mwhs}. The predicted errors are slightly overestimated for negative values, but overall the predicted errors from the QRNN posterior distribution and the observed errors have a good match. This is in agreement with the perfect calibration seen in Fig.~\ref{fig:calibration_mwhs}. It should be noted that the density plot is curtailed at $10^{-4}$. With a test dataset of 70\,000 samples, we cannot represent the far wings of the distribution accurately. The high errors which we try to estimate are rare, and cannot be fully represented by QRNN. 
 
@@ -552,7 +551,7 @@ Two QRNN experiments are performed to investigate the efficacy of sub-mm channel
 \begin{enumerate}
 	\item In the first experiment, we apply QRNN-single configuration for cloud correction at three ICI humidity channels. In this case, the training data is the target 183\,GHz channel and from all frequencies  centered around 325\,GHz, 448\,GHz and 664\,GHz. For 664\,GHz only vertical polarisation is included. No other data are considered. The experiment is also channel specific. For example, to predict NFCS values for channel I1V, the input training dataset includes noisy all-sky simulations from channels I1V, I5V, I6V, I7V, I8V, I9V, I10V, and I11V and the target is NFCS simulations for channel I1V.
 	
-	\item In the second experiment, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilising only 325\,GHz channel can be relevant for smaller satellite missions like AWS where higher sub-mm channels are not available. In this experiment, QRNN-single configuration is used and it is trained with all-sky simulations from all 325\,GHz frequencies from AWS and the target 183\,GHz channel. For example, for target AWS-32, the training inputs are AWS-32, AWS-41, AWS-42, AWS-43, AWS-44. QRNN is trained five times for each 183\,GHz channel as target. Note that for this experiment, AWS was chosen due to availability of extra 325\,GHz and 183\,GHz channels. 	
+	\item In the second experiment, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilising only 325\,GHz channel can be relevant for smaller satellite missions like AWS where higher sub-mm channels are not available. In this experiment, QRNN-single configuration is used and it is trained with all-sky simulations from all 325\,GHz frequencies from AWS and the target 183\,GHz channel. For example, for the target AWS-32, the training inputs are AWS-32, AWS-41, AWS-42, AWS-43, AWS-44. QRNN is trained five times for each 183\,GHz channel as target. Note that for this experiment, AWS was chosen due to availability of extra 325\,GHz and 183\,GHz channels. 	
 \end{enumerate}	
 
 \subsection{Prediction accuracy}
@@ -610,36 +609,36 @@ The error distributions of the point estimates obtained from QRNN are shown in F
 		&&Clear-sky &   All-sky &  \multicolumn{2}{c}{Pred.}  \\
 		&&   &    &   (All) & (5\,K) \\
 		\middlehline
-		AWS-32  &Bias      & 0.00 & -1.32 &  -0.03 & -0.02(4.77\%) \\
-				&MAE      & 0.36 &  1.57 &   0.54 &  0.43 \\
-				&STD      & 0.46 &  6.42 &   1.02 &  0.61 \\
-				&Skewness & 0.01 & -8.43 &  -0.07 & -1.98 \\
+		AWS-32  &bias     & 0.00 & -1.32 & -0.04 & -0.02(4.71\%) \\
+				&mae      & 0.36 &  1.57 &  0.58 &  0.44 \\
+				&std      & 0.46 &  6.42 &  1.15 &  0.64 \\
+				&skewness & 0.01 & -8.43 & -1.09 & -2.29 \\
 		\middlehline
-		AWS-33	&Bias      & -0.01 & -0.98 &  0.02 &  0.01(3.82\%) \\
-				&MAE      &  0.36 &  1.23 &  0.49 &  0.42 \\
-				&STD      &  0.45 &  4.70 &  0.76 &  0.56 \\
-				&Skewness & -0.00 & -8.78 &  0.04 & -0.79 \\
+		AWS-33	&bias     &  0.00 & -1.00 & -0.04 & -0.02(3.75\%)  \\
+				&mae      &  0.36 &  1.24 &  0.46 &  0.37  \\
+				&std      &  0.45 &  5.17 &  0.87 &  0.52  \\
+				&skewness & -0.01 & -9.59 & -3.25 & -1.26  \\
 		
 		\middlehline
-		AWS-34	&Bias      &  0.00 &  -0.68 &  0.02 &  0.01(2.89\%) \\
-				&MAE      &  0.51 &   1.07 &  0.51 &  0.46 \\
-				&STD      &  0.64 &   3.67 &  0.75 &  0.60 \\
-				&Skewness & -0.00 & -10.32 & -0.55 & -0.59 \\
+		AWS-34	& bias    &  0.00 &  -0.71 & -0.06 & -0.04(2.86\%)  \\
+				&mae      &  0.50 &   1.10 &  0.47 &  0.41  \\
+				&std      &  0.63 &   4.05 &  0.82 &  0.56  \\
+				&skewness & -0.01 & -11.06 & -3.53 & -1.02  \\
 		\middlehline
-		AWS-35	&Bias      &  0.00 &  -0.43 &  0.01 &  0.00(1.93\%) \\
-				&MAE      &  0.50 &   0.84 &  0.48 &  0.44 \\
-				&STD      &  0.63 &   2.65 &  0.71 &  0.57 \\
-				&Skewness & -0.01 & -12.49 & -0.40 & -0.29 \\
+		AWS-35	& bias    & -0.00 &  -0.45 & -0.03 & -0.03(1.92\%)  \\
+				&mae      &  0.50 &   0.86 &  0.48 &  0.43  \\
+				&std      &  0.63 &   2.90 &  0.77 &  0.57  \\
+				&skewness &  0.00 & -13.43 & -2.46 & -0.62  \\
 		\middlehline
-		AWS-36  &Bias      & 0.00 &  -0.28 &   0.03  &  0.03(1.27\%) \\
-				&MAE       & 0.70 &   0.90 &   0.63  &  0.60 \\
-				&STD      & 0.88 &   2.06 &   0.86  &  0.76 \\
-				&Skewness & 0.01 & -11.80 &  -0.35  & -0.20 \\
+		AWS-36  & bias    & -0.01 &  -0.29 & -0.04 & -0.04(1.23\%)  \\
+				&mae      &  0.71 &   0.90 &  0.63 &  0.60  \\
+				&std      &  0.89 &   2.17 &  0.88 &  0.77  \\
+				&skewness &  0.00 & -13.54 & -1.32 & -0.27  \\
 		\bottomhline				
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table*}
-In an analogy between the results from ICI channels, we perform a similar error distribution analysis  and the results are displayed in Table~\ref{tab:statistics_qrnn_aws}. For channel AWS-32, the average bias and standard deviation in the uncorrected dataset is -1.32\,K and 6.42\,K respectively. However, after correction, the bias and standard deviation reduce to -0.03\,K and 1.02\,K. A decrease in the skewness of error distributions is evident, but a relatively high value after prediction indicates presence of cases with partially-corrected cloud impact. Filtering out cases with 5\,K correction improves the statistics except for skewness, which increases. For AWS-33, the predictions have slightly higher accuracy than AWS-32. The MAE in predictions is only 0.49\,K in comparison to 1.23\,K for the measurements. Low skewness and bias values indicate that the error distribution is quite symmetric. Similar results are also seen for AWS-35 and AWS-36. For both channels, the error distributions are relatively more symmetric than the other channels. Also, it is worth to noting that when cases with 5\,K cloud correction are removed, the spread of prediction errors is narrower than noise for AWS-34, AWS-35 and AWS-36. 
+In an analogy between the results from ICI channels, we perform a similar error distribution analysis  and the results are displayed in Table~\ref{tab:statistics_qrnn_aws}. For channel AWS-32, the average bias and standard deviation in the uncorrected dataset is -1.32\,K and 6.42\,K respectively. However, after correction, the bias and standard deviation reduce to -0.04\,K and 1.15\,K. A decrease in the skewness of error distributions is evident, but a relatively high value after correction indicates presence of cases with partially-corrected cloud impact. Filtering out cases with 5\,K correction improves the statistics but introduces asymmetry in the error distribution. This is most likely to due rejected cases suffering from over-estimation. For AWS-33, the predictions have slightly higher accuracy than AWS-32. The MAE in predictions is only 0.46\,K in comparison to 1.24\,K for the measurements. High skewness despite low bias is most likely due to presence of isolated cases with large negative deviations. Though, filtering such cases makes the distribution more symmetric. For AWS-34 and AWS-35, again a similar behaviour is seen, though the distributions are more symmetric in the latter. For AWS-36, we obtain the most symmetric and narrow distributions after correction owing to the low sensitivity of AWS-36 to hydrometeor impact.  Also, it is worth to noting that when cases with 5\,K cloud correction are removed, the spread of prediction errors is narrower than noise for AWS-34, AWS-35 and AWS-36. 
 
 
 \subsection{Prediction uncertainty}
@@ -675,13 +674,13 @@ In an analogy between the results from ICI channels, we perform a similar error 
 
 Similar to evaluation of uncertainty estimates for MWHS-2 (Sect.~\ref{sec:uncertainty_mwhs}), we analyse the spread of predicted quantiles, their calibration and distribution of predicted errors. 
 
-Fig.~\ref{fig:prediction_uncertainty_I2V} shows the spread of prediction uncertainties over different quantiles for randomly chosen 1500 cases. The large spread in the predicted errors indicates that QRNN is successful in representing uncertainties for each case individually, rather than expressing them as a single measure. In the latter case, the uncertainty estimates would be concentrated along a narrow interval. Among the cases associated with low uncertainty, the distribution is quite symmetric along the median value. These cases are concentrated along a narrow interval and lie close to the blue line representing a Gaussian spread. On the contrast, cases with high uncertainty are unequally spaced and have a larger spread over positive quantiles than negative quantiles. The narrow box plots also indicate that the majority of the predictions are sharp. These are clear-cases which dominate the dataset, while cloudy cases have more spread out uncertainties. 
+Figure~\ref{fig:prediction_uncertainty_I2V} shows the spread of prediction uncertainties over different quantiles for randomly chosen 1500 cases. The large spread in the predicted errors indicates that QRNN is successful in representing uncertainties for each case individually, rather than expressing them as a single measure. In the latter case, the uncertainty estimates would be concentrated along a narrow interval. Among the cases associated with low uncertainty, the distribution is quite symmetric along the median value. These cases are concentrated along a narrow interval and lie close to the blue line representing a Gaussian spread. On the contrast, cases with high uncertainty are unequally spaced and have a larger spread over positive quantiles than negative quantiles. The narrow box plots also indicate that the majority of the predictions are sharp. These are clear-cases which dominate the dataset, while cloudy cases have more spread out uncertainties. 
 
-Fig.~\ref{fig:calibration_I1V} shows the calibration of the prediction intervals for I2V. The predictions for the complete test dataset are well calibrated and follow the $y =x$ curve. On the other hand, when only the cases with  cloud correction greater than 10\,K are considered, the predictions in all the intervals are poorly calibrated. In this case, the predicted intervals are too wide over lower quantiles and too wide over higher quantiles. 
+Figure~\ref{fig:calibration_I1V} shows the calibration of the prediction intervals for I2V. The predictions for the complete test dataset are well calibrated and follow the $y =x$ curve. On the other hand, when only the cases with  cloud correction greater than 10\,K are considered, the predictions in all the intervals are poorly calibrated. In this case, the predicted intervals are too wide over lower quantiles and too wide over higher quantiles. 
 
-Fig.~\ref{fig:predicted_errors} shows the comparison of observed errors to predicted errors. The predicted and observed errors mostly have a good agreement but the predicted errors are spread out more asymmetrically towards the negative departures. QRNN is also not able to completely represent the wings of the distribution. This could also be a sampling issue, as the high errors we try to predict constitute a very small part of the complete dataset. Note that since we do not derive any sample from outside $\pm3\sigma$, such cases could also belong to 0.003\% population not represented by the quantiles.   
+Figure~\ref{fig:predicted_errors} shows the comparison of observed errors to predicted errors. The predicted and observed errors mostly have a good agreement but the predicted errors are spread out more asymmetrically towards the negative departures. QRNN is also not able to completely represent the wings of the distribution. This could also be a sampling issue, as the high errors we try to predict constitute a very small part of the complete dataset. Note that since we do not derive any sample from outside $\pm3\sigma$, such cases could also belong to 0.003\% population not represented by the quantiles.   
 
-With AWS, the behaviour of predicted uncertainties is observed to be similar as for ICI (not shown). However, the relation between the mean uncertainty estimate and cloud impact is displayed in Fig.~\ref{fig:uncertainty_cloud_impact}. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. The most uncertain predictions are for the lowest peaking channel AWS-32, which incidentally is also most affected by  hydrometeor impact.  
+With AWS, the behaviour of predicted uncertainties is observed to be similar as for ICI (not shown). However, the relation between the mean uncertainty estimate ($\pm3\sigma$) and cloud impact is displayed in Fig.~\ref{fig:uncertainty_cloud_impact}. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. The most uncertain predictions are for the lowest peaking channel AWS-32, which incidentally is also most affected by  hydrometeor impact.  
 
 To conclude the results, we analyse if the uncertainty estimates given by QRNN are representative of prediction accuracy. Fig.~\ref{fig:error_distribution_uncertainty_bins} shows the observed errors binned by their corresponding uncertainty in $\pm2\sigma$  confidence interval. For all three channels, the spread of error distribution increases as the uncertainty about the accuracy of the trial increases. The cases with high certainty have a narrow and sharp distribution, and the errors are mostly less than $\pm$2.5\,K. With increase in the uncertainty, frequency of cases with high accuracy decreases and the distributions spread out symmetrically to higher errors. Poor predictions occur more frequently when uncertainty is high. Cases with accurate predictions yet high uncertainty are also present. In spite of individual variations in the error distributions for each channel, predictions and their corresponding uncertainties follow the same relationship. Similar results are also obtained with AWS (not shown). 
 
@@ -711,7 +710,7 @@ With ICI and AWS, for some channels the variability of errors smaller than measu
 
 Another advantage of QRNN is estimation of case-specific uncertainties. The predictions over chosen quantiles quantify the underlying uncertainty. The analysis of QRNN predicted errors and calibration plots show that QRNN is successful in providing well calibrated probabilistic predictions of the posterior distributions except for few cases associated with high error. The poorly calibrated predictions are a consequence of cases with different underlying a priori distribution. Predictions with high error originate from cases with high cloud impact or cases with no orthogonal information. Such cases have a significantly distinct a priori distribution as compared to clear cases, which dominate the training dataset and influence the a priori information. The distribution of rare cases can be improved by increasing the training dataset size, but lack of orthogonal information can only be balanced by including additional training inputs, e.g. brightness temperatures for other channels. 
 
-The symmetric and low spread error distribution with uncertainty estimates is an important result from the DA perspective. Most of the existing cloud filtering schemes work well only at removing cases with high cloud impact, and as a consequence, the error distributions are highly skewed. To use these observations correctly, data assimilation schemes often inflate their asymmetric error distributions at the cost of artificially suppressing the observational impact. However, the symmetric error distributions obtained from QRNN allow effective utilization more than 94\% of the data without the need for artificial error inflation. 
+The symmetric and low spread error distribution with uncertainty estimates is an important result from the DA perspective. Most of the existing cloud filtering schemes work well only at removing cases with high cloud impact, and as a consequence, the error distributions are highly skewed. To use these observations correctly, data assimilation schemes often inflate their asymmetric error distributions at the cost of artificially suppressing the observational impact. However, the symmetric error distributions obtained from QRNN allow effective utilization of almost complete data without the need for artificial error inflation. In fact for DA, filtering based on correction threshold would be needless as cases with low accuracy shall inevitably get inhibited due to high uncertainty.   
 
 \section{Conclusion and outlook}  %% \conclusions[modified heading if necessary]
 \label{conclusions}
