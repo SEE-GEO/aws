@@ -44,9 +44,8 @@
 
 %\title{Cloud correction and filtering of operational microwave humidity radiances with case specific uncertainty estimation}
 
-\title{Estimation of cloud-corrected microwave humidity radiances with associated uncertainties}
-
-%\title{Cloud correction and uncertainty characterisation of operational microwave humidty channels}
+\title{Cloud correction of humidity radiances with case-specific uncertainty 
+	estimate}
 
 \Author[1]{Inderpreet}{Kaur}
 \Author[1]{Patrick}{Eriksson}
@@ -358,7 +357,7 @@ For all three sensors described in this study, one or both of the above QRNN con
 \label{sec:validation}
 \begin{figure}[t]
 	\centering
-	\includegraphics[height=45mm]{Figures/posterior_distribution_I1V.pdf} 
+	\includegraphics[height=45mm]{Figures/fig01.pdf} 
 	\caption{Examples showing the predicted quantiles of the conditional distribution of $\ynfcs$ }
 	\label{fig:posterior_distribution_I1V}	
 \end{figure}
@@ -415,13 +414,13 @@ For MWHS-2, multiple experiments using both QRNN configurations are performed. W
 \subsubsection{QRNN-single applied to MWHS-2 channel 14} 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width = 70mm]{Figures/QRNN_output_mwhs.pdf} 
+	\includegraphics[width = 70mm]{Figures/fig02.pdf} 
 	\caption{The distribution of point estimate obtained from QRNN-single 89+150\,GHz for MWHS-2 channel 14. The corresponding distributions for all-sky and clear-sky simulations are also shown.}
 	\label{fig:distribution_predicted_mwhs14}	
 \end{figure}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width = 70mm]{Figures/MWHS_error_dist_14.pdf} 
+	\includegraphics[width = 70mm]{Figures/fig03.pdf} 
 	\caption{The error distribution for deviations of point estimates to NFCS simulations. The results are from QRNN-single experiment 89+150\,GHz and MWHS-2 channel 14. Noise is also plotted for reference. The label ``All-sky'' represents the all-sky simulations, ``Predicted(All)'' denotes the predicted point estimates. The error distribution achieved with scattering index (SI) filtering is also shown (Filtered(SI)). }
 	\label{fig:error_distribution_mwhs14}	
 \end{figure}
@@ -459,7 +458,7 @@ The three experiments were also performed for other four 183\,GHz channels, and 
 %f
 \begin{figure}[t]
 	\centering
-	\includegraphics[height=45mm]{Figures/correlation.pdf} 
+	\includegraphics[height=45mm]{Figures/fig04.pdf} 
 	\caption{ The triangular error correlation matrix obtained from QRNN-single and QRNN-all for MWHS-2. The label ``Clear'' represents cases with cloud impact less than 2\,K.}
 	\label{fig:correlations_mwhs}	
 \end{figure}
@@ -516,17 +515,17 @@ A comparison with SI based filtering and B183 is displayed in last columns of Ta
 \subsection{Prediction uncertainty}
 \label{sec:uncertainty_mwhs}
 \begin{figure}[t]
-	\includegraphics[width = 70mm]{Figures/prediction_uncertainty_MWHS_14.pdf}	
+	\includegraphics[width = 70mm]{Figures/fig05.pdf}	
 	\caption{Examples of prediction uncertainties obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. 1500 randomly selected cases are shown. The quantiles have been plotted at equidistant points. The blue line represents a Gaussian distribution with a standard deviation of $1.0$\,K. For each quantile, the sample variation is also shown as box plot. }
 	\label{fig:prediction_uncertainty_mwhs}	
 \end{figure}
 \begin{figure}[t]
-	\includegraphics[height = 70mm]{Figures/calibration_QRNN_MWHS_14.pdf}	
+	\includegraphics[height = 70mm]{Figures/fig06.pdf}	
 	\caption{Calibration of the prediction intervals derived from QRNN-single (89+150\,GHz) for MWHS-2 channel 14, and prediction intervals derived from Gaussian error model for ECMWF NWP system (SI). For the former, the calibration for both the entire predicted dataset and the subset with correction greater than 5\,K are shown. }
 	\label{fig:calibration_mwhs}	
 \end{figure}
 \begin{figure}[t]
-	\includegraphics[width=70mm]{Figures/deviation_posterior_mwhs_samples_14.pdf}	
+	\includegraphics[width=70mm]{Figures/fig07.pdf}	
 	\caption{The distribution of predicted errors and observed errors  obtained from QRNN-single (89+150\,GHz) for MWHS-2 channel 14. The predicted errors are estimated as deviation of random samples from posteriori distribution to corresponding median values.}
 	\label{fig:predicted_errors_mwhs}	
 \end{figure}
@@ -557,7 +556,7 @@ Two QRNN experiments are performed to investigate the efficacy of sub-mm channel
 \subsubsection{ICI}
 %
 \begin{figure*}[t]
-	\includegraphics[width=\textwidth]{Figures/error_distribution_QRNN-single.pdf} 
+	\includegraphics[width=\textwidth]{Figures/fig08.pdf} 
 	\caption{Same as Fig.~\ref{fig:error_distribution_mwhs14}, but from QRNN-single experiment for ICI channels I1V, I2V and I3V. }
 	\label{fig:error_distributions}	
 \end{figure*}
@@ -645,28 +644,28 @@ In an analogy between the results from ICI channels, we perform a similar error 
 \label{sec:prediction_uncertainty}
 %f 
 \begin{figure}[t]
-	\includegraphics[width = 70mm]{Figures/prediction_uncertainty_I2V.pdf}	
+	\includegraphics[width = 70mm]{Figures/fig09.pdf}	
 	\caption{Same as Fig.~\ref{fig:prediction_uncertainty_mwhs}, but from QRNN-single for ICI channel I2V. The blue line represents a Gaussian distribution with a standard deviation of $0.65$\,K.}
 	\label{fig:prediction_uncertainty_I2V}	
 \end{figure}
 \begin{figure}[t]
-	\includegraphics[height = 70mm]{Figures/calibration_QRNN_I2V.pdf}	
+	\includegraphics[height = 70mm]{Figures/fig10.pdf}	
 	\caption{Same as Fig.~\ref{fig:calibration_mwhs}, but from QRNN-single for ICI channel I2V. }
 	\label{fig:calibration_I2V}	
 \end{figure}
 \begin{figure}[t]
-	\includegraphics[width=70mm]{Figures/deviation_posterior_samples_I2V.pdf}	
+	\includegraphics[width=70mm]{Figures/fig11.pdf}	
 	\caption{Same as Fig.~\ref{fig:predicted_errors_mwhs}, but from QRNN-single for ICI channel I2V.}
 	\label{fig:predicted_errors}	
 \end{figure}
 
 \begin{figure}[t]
-	\includegraphics[width = 70mm]{Figures/cloud_impact_uncertainty_AWS.pdf}	
+	\includegraphics[width = 70mm]{Figures/fig12.pdf}	
 	\caption{The average confidence intervals ($\pm3\sigma$) plotted against the magnitude of cloud impact for all AWS channels.}
 	\label{fig:uncertainty_cloud_impact}	
 \end{figure}
 \begin{figure*}[t]
-	\includegraphics[width=\textwidth]{Figures/PDF_uncertainty_bins_QRNN-single.pdf}	
+	\includegraphics[width=\textwidth]{Figures/fig13.pdf}	
 	\caption{Distribution of errors binned according to their uncertainty. Results are from QRNN-single for channels I1V, I2V and I3V.}
 	\label{fig:error_distribution_uncertainty_bins}	
 \end{figure*}
@@ -708,7 +707,9 @@ With ICI and AWS, for some channels the variability of errors smaller than measu
 
 \subsection{Prediction uncertainty and implications for data assimilation}
 
-Another advantage of QRNN is the estimation of case-specific uncertainties. That is, the predictions over chosen quantiles quantify the underlying uncertainty of the particular case, and not just represent some ensemble mean error. This has the consequence that a DA system can assign a proper weighting of each individual QRNN prediction.The analysis of QRNN predicted errors and calibration plots confirmed that QRNN is successful in providingwell calibrated probabilistic predictions also in practice, except for few cases associated with high error. Poorly calibrated predictions are a consequence of cases with different underlying a priori distribution. Predictions with high error originate from cases which occur infrequently or cases with no orthogonal information. Such cases have a significantly distinct a priori distribution as compared to clear cases, which dominate the training dataset and influence the a priori information. The distribution of rare cases can be improved by increasing the training dataset size, but lack of orthogonal information can only be balanced by including additional training inputs, e.g. brightness temperatures for other channels. 
+Another advantage of QRNN is the estimation of case-specific uncertainties. That is, the predictions over chosen quantiles quantify the underlying uncertainty of the particular case, and not just represent some ensemble mean error. This has the consequence that a DA system can assign a proper weighting of each individual QRNN prediction.
+The analysis of QRNN predicted errors and calibration plots confirmed that QRNN is successful in providing
+well calibrated probabilistic predictions also in practice, except for few cases associated with high error. Poorly calibrated predictions are a consequence of cases with different underlying a priori distribution. Predictions with high error originate from cases which occur infrequently or cases with no orthogonal information. Such cases have a significantly distinct a priori distribution as compared to clear cases, which dominate the training dataset and influence the a priori information. The distribution of rare cases can be improved by increasing the training dataset size, but lack of orthogonal information can only be balanced by including additional training inputs, e.g. brightness temperatures for other channels. 
 
 The symmetric and low spread error distribution with uncertainty estimates is also an important result from the DA perspective. Most of the existing cloud filtering schemes work well only at removing cases with high cloud impact, and as a consequence, the error distributions are highly skewed. To use these observations correctly, DA schemes often inflate their asymmetric error distributions at the cost of artificially suppressing the observational impact. However, the symmetric error distributions obtained from QRNN allow effective utilization of almost complete data without the need for artificial error inflation. In fact for DA, filtering based on correction threshold would be needless as cases with low accuracy shall inevitably get inhibited due to high uncertainty.   
 
@@ -767,7 +768,7 @@ Using the setup described above, forward simulations are performed for ICI and A
 %
 \begin{figure*}[t]
 	\centering
-	\includegraphics[height=60mm]{Figures/CRPS.pdf} 
+	\includegraphics[height=60mm]{Figures/figB1.pdf} 
 	\caption{CRPS(left) and mean quantile loss(right) averaged over all predicted quantiles for different combinations of layer width and hidden layers ($n_h$). The results are from QRNN-single applied to I2V.}
 	\label{fig:grid_search}	
 \end{figure*}
@@ -777,6 +778,39 @@ In this study, we investigated the performance of QRNN only to certain hyper-par
 In order to select the batch size, we simply compared the performance for two batch sizes: 128 and 256, and the former gave better results. Concerning number of epochs, we obtained best results when the network was trained longer. Choosing a lower value of epochs (e.g. 50), did not affect the accuracy of the median value, yet deteriorated the prediction uncertainty. We did not optimise the type of activation function and Rectified Linear Unit (ReLu) was used in all layers. 
 
 Though these set of hyper-parameters were selected for QRNN-single applied to I2V, they worked well for both ICI and AWS QRNN experiments. However, for MWHS-2, an identical hyper-parameter framework but three hidden layers gave best results.  
+
+\begin{table*}[t]
+	\caption{ Same as Table~\ref{tab:error_statistics_mwhs_others}, but from QRNN-single for ICI channels I1V, I2V and I3V. The fraction of rejected cases is given in parentheses.}
+	\label{tab:error_statistics_ici}
+	%	\tabcolsep=0.11cm
+	\begin{tabular}{llrr|rr|rr}
+		\tophline
+		&&\multicolumn{2}{c|}{Simulations}& \multicolumn{2}{c|}{QRNN All sub-mm}&\multicolumn{2}{c}{QRNN only 325 GHz} \\
+		\cline{3-8}
+		%		\hline
+		&&Clear-sky &   All-sky &  \multicolumn{2}{c|}{Predicted}&  \multicolumn{2}{c}{Predicted}   \\
+		&&			   &			&	(All) & (5\,K) &	(All) & (5\,K)\\
+		\middlehline
+		%		\multicolumn{7}{c}{Channel - I1V}\\
+		
+		I1V&  Bias      &  0.00 & -1.87 & -0.02 & -0.00(6.1\%) & -0.03 & -0.01(6.2\%) \\
+		&MAE       		&  0.64 &  2.32 &  0.70 &  0.60  &   0.73 &  0.61 \\
+		&STD       		&  0.80 &  8.84 &  1.06 &  0.79  &  1.14 &  0.81 \\
+		&Skewness 		& -0.01 & -8.10 & -1.51 & -0.64  & -1.26 & -0.70\\
+		\middlehline
+		I2V & Bias      & 0.00 &  -1.04 &  0.00 &  0.01(3.6\%) & -0.03 & -0.01(3.6\%)  \\
+		&MAE       		& 0.64 &   1.53 &  0.57 &  0.51 &  0.62 &  0.54\\
+		&STD       		& 0.80 &   5.95 &  0.86 &  0.65 &  0.99 &  0.70\\
+		&Skewness 		& 0.00 & -10.79 & -1.85 & -0.22 & -2.67 & -0.38 \\
+		\middlehline	
+		I3V & Bias      & 0.01 &  -0.63 &  0.02 &  0.02(2.2\%)&  0.02 &  0.03(2.2\%)  \\
+		&MAE       		& 0.64 &   1.15 &  0.54 &  0.50  &  0.60 &  0.55\\
+		&STD       		& 0.80 &   4.27 &  0.80 &  0.63  &  0.94 &  0.70\\
+		&Skewness 		& 0.01 & -13.37 & -1.51 & -0.13  & -3.28 & -0.22\\
+		\bottomhline
+	\end{tabular}
+	\belowtable{} % Table Footnotes
+\end{table*}
 
      %% Appendix A1, A2, etc.
 
@@ -800,14 +834,14 @@ Though these set of hyper-parameters were selected for QRNN-single applied to I2
 
 
 
-\authorcontribution{The study was conceptualised and supervised by PE. The analysis, validation and visualisation of results was done IK. The QRNN package is made available by SP. IK wrote the original draft, with contributions from PE, SP and DID. DID also provided the data for MWHS-2. All authors contributed to the study with discussions and feedback.}  
+\authorcontribution{The study was conceptualised and supervised by PE. The analysis, validation and visualisation of results was done by IK. The QRNN package is made available by SP. ARTS bulk simulations were set up by SP, and MWHS-2 data was provided by DID. IK wrote the original draft, with contributions from PE, SP and DID. All authors contributed to the study with discussions and feedback.}  
 
 \competinginterests{The authors declare no conflict of interest.}  
 
 
 \begin{acknowledgements}
 The part associated with AWS was done with funding from EUMETSAT (contract  EUM/CO/20/4600002417/CJA), while remaining work was mainly funded by the Swedish National Space Agency (grants 166/18 and 154/19). David Duncan is supported by the EUMETSAT Fellowship Programme.
-This project would not had been possible without the contribution of all individuals behind the open source softwares used (ARTS, Python and PyTorch).
+This project would not had been possible without the contribution of all individuals behind the open source softwares used (ARTS, Python, PyTorch, Numpy and Matplotlib).
 \end{acknowledgements}
 
 
