@@ -149,10 +149,7 @@ of the corresponding uncertainty.
 
 The main focus of this study is the potential of this cloud-correction
 method using sub-millimetre (sub-mm) observations, which will become available
-operationally with the launch of the Ice Cloud Imager \citep[ICI,][]{eriksson:towar:20} on board the next generation of European Organisation for the Exploitation of Meteorological Satellites Polar System - Second Generation (EUMETSAT EPS-SG), but will likely also be included in
-several smaller missions (such as Arctic Weather Satellite (AWS); presented
-below). Additionally, we demonstrate the feasibility of the approach based on
-89 and 150\ GHz channels \citep[following][]{geer2015scatteringindex}, which are available on several sensors extant today. The focus
+operationally with the launch of the Ice Cloud Imager \citep[ICI,][]{eriksson:towar:20} on board the next generation of European Organisation for the Exploitation of Meteorological Satellites Polar System - Second Generation (EUMETSAT EPS-SG). Additionally, we demonstrate the feasibility of the approach based on 89 and 150\ GHz channels \citep[following][]{geer2015scatteringindex}, which are available on several sensors extant today. The focus
 on sub-mm channels is motivated by several reasons. First, the higher
 frequencies are more sensitive to scattering effects from smaller
 hydrometeors and are thus expected to provide greater sensitivity to high altitude cirrus clouds. For example, in some cloudy situations the
@@ -233,40 +230,38 @@ The ICI is a new instrument on board EPS-SG satellite MetOp-SG (Meteorological O
 
 For this study, we conducted the forward simulations of the channels around: 183\,GHz, 325\,GHz, 448\,GHz and 664\,GHz (Table~\ref{tab:ICI_MWI_channels}). For brevity, we assume that all simulations are mapped to a common footprint.
 
-\subsubsection{Artic Weather Satellite}
+\subsubsection{Small Microwave Satellite}
 %
 \begin{table}[t]
-	\caption{Specifications of AWS channels relevant to this study.}
-	\label{tab:specifications_AWS}	
+	\caption{Specifications of SMS channels.}
+	\label{tab:specifications_SMS}	
 	\begin{tabular}{lrrr}
 		\tophline
 		Channel & Frequency 	& Bandwidth & NE$\Delta$T \\
 				& [GHz]			& [MHz]		& [K]		\\
 		\middlehline
-		AWS-32	&	176.31    & 2000	&	0.45	\\
-		AWS-33	&	178.81    & 2000 	&	0.45\\
-		AWS-34	&	180.31    & 1000 	&	0.64\\
-		AWS-35	&	181.51    & 1000 	&	0.64 \\
-		AWS-36	&	182.31    & \phantom{0}500  &	0.88 \\
-		AWS-41  & 325.15$\pm$6.60    & 2800 	 &0.60\\
-		AWS-42  & 325.15$\pm$4.10    & 1800    &0.75	\\
-		AWS-43  & 325.15$\pm$2.40    & 1200    &0.92\\
-		AWS-44  & 325.15$\pm$1.20    & \phantom{0}800  &1.12  \\
+		SMS-1	&	176.31    & 2000	&	0.45	\\
+		SMS-2	&	178.81    & 2000 	&	0.45\\
+		SMS-3	&	180.31    & 1000 	&	0.64\\
+		SMS-4	&	181.51    & 1000 	&	0.64 \\
+		SMS-5	&	182.31    & \phantom{0}500  &	0.88 \\
+		SMS-6  & 325.15$\pm$6.60    & 2800 	 &0.60\\
+		SMS-7  & 325.15$\pm$4.10    & 1800    &0.75	\\
+		SMS-8  & 325.15$\pm$2.40    & 1200    &0.92\\
+		SMS-9  & 325.15$\pm$1.20    & \phantom{0}800  &1.12  \\
 		\bottomhline
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table}
-The AWS is a small satellite mission suggested as an European Space Agency (ESA) Earth Watch Programme Element. It is a small platform carrying a single across-track scanning microwave radiometer. It is planned as a small but cost-effective platform, which can supplement the information from other polar orbiting satellites. The first prototype mission is expected to be delivered around 2023. The exact channels onboard AWS are not yet set, but five 183\,GHz and four 325\,GHz channels are presently planned. A brief summary of these channels is provided in Table~\ref{tab:specifications_AWS}.
- 
-In this study, forward simulations of the channels around 183\,GHz and 325\,GHz were conducted. 
+The Small Microwave Satellite (SMS) is a hypothetical satellite which we consider to represent the type of sensors currently being considered for future missions. We assume it to be a single across-track scanning microwave radiometer with five 183\,GHz channels and four 325\,GHz channels. A brief summary of the  channel specifications assumed is provided in Table~\ref{tab:specifications_SMS}.
 
 \subsection{Simulations}
 %
 MWHS-2 simulated radiances during the period June--July 2020 are sourced from ECMWF. In the current version of the ECMWF Integrated Forecasting System (IFS), cycle 47R1 \citep{IFS47R1chap1}, clear-sky and all-sky radiative transfer are performed simultaneously for monitoring purposes, despite all humidity sounders being assimilated via all-sky exclusively. These side by side radiative transfer calculations on a large variety of model scenes provides an ideal dataset for comparing radiances with and without cloud effects. Out of all the available observations during the period, we use data for the latitudinal range: $60^{\degree}$\,S to $60^{\degree}$\,N and satellite zenith angle, less than $7.5^{\degree}$. With this filter, we have approximately 290\,000 cases.
 
-ICI and AWS frequencies are simulated with Atmospheric Radiative Transfer Simulator \citep[ARTS,][]{buehler:artst:18}. For the forward simulations, Cloud Satellite \citep[Cloudsat,][]{Stephens2002cloudsat} profiles during August 2015 are randomly selected. The input data are restricted between $60\unit{^{\degree}S}$ to $60\unit{^{\degree}N}$, and surface is below 500\,m. Both clear-sky and all-sky scenarios  are simulated. The complete simulation setup is described in Appendix \ref{appendix:ARTS_setup}. For ICI and AWS, 220\,000 and 143\,000 cases are simulated, respectively. All AWS sensor viewing angles (from $0^{\degree}$ to $45^{\degree}$) are simulated, but the results described in this study are based on nadir viewing angle. Simulations for all three sensors are noise free, so to incorporate the measurement uncertainties, whenever needed, Gaussian noise is added according to the channel NE$\Delta$T (Table~\ref{tab:specifications_MWHS2} -- Table~\ref{tab:specifications_AWS}). 
+ICI and SMS frequencies are simulated with Atmospheric Radiative Transfer Simulator \citep[ARTS,][]{buehler:artst:18}. For the forward simulations, Cloud Satellite \citep[Cloudsat,][]{Stephens2002cloudsat} profiles during August 2015 are randomly selected. The input data are restricted between $60\unit{^{\degree}S}$ to $60\unit{^{\degree}N}$, and surface is below 500\,m. Both clear-sky and all-sky scenarios  are simulated. The complete simulation setup is described in Appendix \ref{appendix:ARTS_setup}. For ICI and SMS, 220\,000 and 143\,000 cases are simulated, respectively. For SMS, sensor viewing angles from $0\unit{^{\degree}S}$ to $45\unit{^{\degree}N}$ are simulated, but the results described in this study are based on nadir viewing angle. Simulations for all three sensors are noise free, so to incorporate the measurement uncertainties, whenever needed, Gaussian noise is added according to the channel NE$\Delta$T (Table~\ref{tab:specifications_MWHS2} -- Table~\ref{tab:specifications_SMS}). 
 
-The simulations are split into training and testing datasets. The training dataset is used to train the machine learning model, while the testing dataset is used to evaluate the trained model. The construction and details of the model are described in Sect.~\ref{sec:QRNN}. For MWHS-2, 220\,000 simulations are randomly selected as training dataset, while 70\,000 are used for testing. For ICI, 175\,000 cases are randomly picked to form the training set. The remaining 45\,000 are used for testing. A smaller database is selected for AWS. 120\,000 simulations are used for training and the remaining 23\,000 for testing.
+The simulations are split into training and testing datasets. The training dataset is used to train the machine learning model, while the testing dataset is used to evaluate the trained model. The construction and details of the model are described in Sect.~\ref{sec:QRNN}. For MWHS-2, 220\,000 simulations are randomly selected as training dataset, while 70\,000 are used for testing. For ICI, 175\,000 cases are randomly picked to form the training set. The remaining 45\,000 are used for testing. A smaller database is selected for SMS. 120\,000 simulations are used for training and the remaining 23\,000 for testing.
 
 \subsection{Quantile regression neural networks}
 \label{sec:QRNN}
@@ -544,7 +539,8 @@ Two QRNN experiments are performed to investigate the efficacy of sub-mm channel
 \begin{enumerate}
 	\item In the first experiment, we apply QRNN-single configuration for cloud correction at three ICI humidity channels. In this case, the training data is the target 183\,GHz channel and from all frequencies  centered around 325\,GHz, 448\,GHz and 664\,GHz. For 664\,GHz only vertical polarisation is included. No other data are considered. The experiment is also channel specific. For example, to predict NFCS values for channel I1V, the input training dataset includes noisy all-sky simulations from channels I1V, I5V, I6V, I7V, I8V, I9V, I10V, and I11V and the target is NFCS simulations for channel I1V.
 	
-	\item In the second experiment, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilizing only 325\,GHz channels can be relevant for smaller satellite missions like AWS where higher sub-mm channels are not available. In this experiment, QRNN-single configuration is used and it is trained with all-sky simulations from all 325\,GHz frequencies from AWS and the target 183\,GHz channel. For example, for the target AWS-32, the training inputs are AWS-32, AWS-41, AWS-42, AWS-43, AWS-44. QRNN is trained five times for each 183\,GHz channel as target. Note that for this experiment, AWS was chosen due to availability of extra 325\,GHz and 183\,GHz channels. 	
+	\item In the second experiment, we investigate the possibility of using only channels around 325\,GHz for cloud correction at 183\,GHz. This special case of utilizing only 325\,GHz channels can be relevant for smaller satellite missions, as represented by SMS, where higher sub-mm channels are not available. In this experiment, QRNN-single configuration is used and it is trained with all-sky simulations from all 325\,GHz frequencies from SMS and the target 183\,GHz channel. For example, for the target SMS-1, the training inputs are SMS-1, SMS-6, SMS-7, SMS-8, SMS-9. QRNN is trained five times for each 183\,GHz channel as target.
+	
 \end{enumerate}	
 
 \subsection{Prediction accuracy}
@@ -591,11 +587,11 @@ Two QRNN experiments are performed to investigate the efficacy of sub-mm channel
 The error distributions of the point estimates obtained from QRNN are shown in Fig.~\ref{fig:error_distributions}. The predicted values have symmetric error distributions albeit with a large spread. The large spread on the left is due to cases which end up with incomplete cloud correction, while the spread on the right is from cases where the predicted values are warmer than the simulations. For all three channels, quite similar behaviour is observed, though I1V has the most cases with residual cloud impact. If the predicted cases with correction more than 5\,K are rejected, the resulting error distributions fit the measurement noise, except for I1V, where cases with residual cloud impact introduce a small negative bias. For a quantitative assessment of the errors, the results from various error metrics described in  Sect.~\ref{sec:validation} are displayed in Table~\ref{tab:error_statistics_ici}. The average bias in I1V all-sky simulations is $-$1.87\,K, which reduces to $-$0.02\,K after cloud correction. The corresponding standard deviation is 1.06\,K in comparison to 8.84\,K in the all-sky simulations. The prediction accuracy of QRNN is further higher, when filtering is made on the predictions. In this case, the residual bias is zero, and the standard deviation is 0.79\,K, which is in fact of the order of measurement noise (0.80\,K). Similar results are seen for I2V, though a better performance is observed. In I2V, the all-sky bias is $-$1.04\,K which reduces to zero after correction and the MAE improves by almost 60\,\%. Removing cases with correction greater than 5\,K from the predictions removes only 3.6\,\% of the data and reduces the absolute error further by 10\,\%. The standard deviation of the resulting dataset is only 0.65\,K as compared to 0.80\,K from noise. The reduction in the standard deviation is also evident in the Fig.~\ref{fig:error_distributions}, where the peak of distributions is sharper. In comparison to I1V and I2V, I3V has the lowest fraction of the cases with significant cloud impact. In the predicted dataset, the MAE is 0.54\,K  and standard deviation is 0.80\,K. Filtering the cases with large correction reduces the MAE to 0.50\,K and standard deviation to 0.63\,K.  For all three channels, the correction threshold filter successfully removes the cases with low accuracy. This is in contrast with results obtained with MWHS-2, where negative bias due to low cloudy cases is persistent even after filtering. 
 
 
-\subsubsection{AWS}
+\subsubsection{SMS}
 
 \begin{table*}[t]
-	\caption{Same as Table~\ref{tab:error_statistics_mwhs_others}, but from QRNN-single for AWS channels. The fraction of rejected cases is given in parentheses. }
-	\label{tab:statistics_qrnn_aws}
+	\caption{Same as Table~\ref{tab:error_statistics_mwhs_others}, but from QRNN-single for SMS channels. The fraction of rejected cases is given in parentheses. }
+	\label{tab:statistics_qrnn_sms}
 	\begin{tabular}{llrr|rr}
 		\tophline
 		&&\multicolumn{2}{c|}{Simulations}& \multicolumn{2}{c}{QRNN-single} \\
@@ -603,28 +599,28 @@ The error distributions of the point estimates obtained from QRNN are shown in F
 		&&Clear-sky &   All-sky &  \multicolumn{2}{c}{Pred.}  \\
 		&&   &    &   (All) & (5\,K) \\
 		\middlehline
-		AWS-32  &Bias     & 0.00 &$-$1.32 &$-$0.04 &$-$0.02 (4.71\,\%) \\
+		SMS-1  &Bias     & 0.00 &$-$1.32 &$-$0.04 &$-$0.02 (4.71\,\%) \\
 				&MAE      & 0.36 &  1.57 &  0.58 &  0.44 \\
 				&STD      & 0.46 &  6.42 &  1.15 &  0.64 \\
 				&Skewness & 0.01 &$-$8.43 &$-$1.09 &$-$2.29 \\
 		\middlehline
-		AWS-33	&Bias     &  0.00 &$-$1.00 &$-$0.04 &$-$0.02 (3.75\,\%)  \\
+		SMS-2	&Bias     &  0.00 &$-$1.00 &$-$0.04 &$-$0.02 (3.75\,\%)  \\
 				&MAE      &  0.36 &  1.24 &  0.46 &  0.37  \\
 				&STD      &  0.45 &  5.17 &  0.87 &  0.52  \\
 				&Skewness &$-$0.01 &$-$9.59 &$-$3.25 &$-$1.26  \\
 		
 		\middlehline
-		AWS-34	&Bias    &  0.00 & $-$0.71 &$-$0.06 &$-$0.04 (2.86\,\%)  \\
+		SMS-3	&Bias    &  0.00 & $-$0.71 &$-$0.06 &$-$0.04 (2.86\,\%)  \\
 				&MAE      &  0.50 &   1.10 &  0.47 &  0.41  \\
 				&STD      &  0.63 &   4.05 &  0.82 &  0.56  \\
 				&Skewness &$-$0.01 &$-$11.06 &$-$3.53 &$-$1.02  \\
 		\middlehline
-		AWS-35	&Bias    &$-$0.00 & $-$0.45 &$-$0.03 &$-$0.03 (1.92\%)  \\
+		SMS-4	&Bias    &$-$0.00 & $-$0.45 &$-$0.03 &$-$0.03 (1.92\%)  \\
 				&MAE      &  0.50 &   0.86 &  0.48 &  0.43  \\
 				&STD      &  0.63 &   2.90 &  0.77 &  0.57  \\
 				&Skewness &  0.00 &$-$13.43 &$-$2.46 &$-$0.62  \\
 		\middlehline
-		AWS-36  &Bias    &$-$0.01 & $-$0.29 &$-$0.04 &$-$0.04 (1.23\,\%)  \\
+		SMS-5  &Bias    &$-$0.01 & $-$0.29 &$-$0.04 &$-$0.04 (1.23\,\%)  \\
 				&MAE      &  0.71 &   0.90 &  0.63 &  0.60  \\
 				&STD      &  0.89 &   2.17 &  0.88 &  0.77  \\
 				&Skewness &  0.00 &$-$13.54 &$-$1.32 &$-$0.27  \\
@@ -632,7 +628,7 @@ The error distributions of the point estimates obtained from QRNN are shown in F
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table*}
-In an analogy to the results from ICI channels, we perform a similar error distribution analysis  and the results are displayed in Table~\ref{tab:statistics_qrnn_aws}. For channel AWS-32, the average bias and standard deviation in the uncorrected dataset is $-$1.32\,K and 6.42\,K respectively. However, after correction, the bias and standard deviation reduce to $-$0.04\,K and 1.15\,K, respectively. A decrease in the skewness of error distributions is evident, but a relatively high value after correction indicates presence of cases with partially-corrected cloud impact. Filtering out cases with 5\,K correction improves the statistics but introduces asymmetry in the error distribution. This is most likely due to rejection of cases affected by over-estimation. For AWS-33, the predictions have slightly higher accuracy than AWS-32. The MAE in predictions is only 0.46\,K in comparison to 1.24\,K for the all-sky simulations. High skewness despite low bias (0.04\,K) is most likely due to presence of isolated cases with large negative deviations. Nonetheless, filtering such cases makes the distribution more symmetric. For AWS-34 and AWS-35, again a similar behaviour is seen, though the distributions are more symmetric in the latter. For AWS-36, we obtain the most symmetric and narrow distributions after correction owing to the low sensitivity of AWS-36 to hydrometeor impact.  Also, it is worth to noting that when cases with 5\,K cloud correction are removed, the spread of prediction errors is narrower than noise for AWS-34, AWS-35 and AWS-36. 
+In an analogy to the results from ICI channels, we perform a similar error distribution analysis  and the results are displayed in Table~\ref{tab:statistics_qrnn_sms}. For channel SMS-1, the average bias and standard deviation in the uncorrected dataset is $-$1.32\,K and 6.42\,K respectively. However, after correction, the bias and standard deviation reduce to $-$0.04\,K and 1.15\,K, respectively. A decrease in the skewness of error distributions is evident, but a relatively high value after correction indicates presence of cases with partially-corrected cloud impact. Filtering out cases with 5\,K correction improves the statistics but introduces asymmetry in the error distribution. This is most likely due to rejection of cases affected by over-estimation. For SMS-2, the predictions have slightly higher accuracy than SMS-1. The MAE in predictions is only 0.46\,K in comparison to 1.24\,K for the all-sky simulations. High skewness despite low bias (0.04\,K) is most likely due to presence of isolated cases with large negative deviations. Nonetheless, filtering such cases makes the distribution more symmetric. For SMS-3 and SMS-4, again a similar behaviour is seen, though the distributions are more symmetric in the latter. For SMS-5, we obtain the most symmetric and narrow distributions after correction owing to the low sensitivity of SMS-5 to hydrometeor impact.  Also, it is worth to noting that when cases with 5\,K cloud correction are removed, the spread of prediction errors is narrower than noise for SMS-3, SMS-4 and SMS-5. 
 
 
 \subsection{Prediction uncertainty}
@@ -656,7 +652,7 @@ In an analogy to the results from ICI channels, we perform a similar error distr
 
 \begin{figure}[t]
 	\includegraphics[width = 70mm]{Figures/fig12.pdf}	
-	\caption{The average confidence intervals ($\pm3\sigma$) plotted against the magnitude of cloud impact for all AWS channels.}
+	\caption{The average confidence intervals ($\pm3\sigma$) plotted against the magnitude of cloud impact for all SMS channels.}
 	\label{fig:uncertainty_cloud_impact}	
 \end{figure}
 \begin{figure*}[t]
@@ -674,9 +670,9 @@ Figure~\ref{fig:calibration_I2V} shows the calibration of the prediction interva
 
 Figure~\ref{fig:predicted_errors} shows the comparison of observed errors to predicted errors. The predicted and observed errors mostly have a good agreement but the predicted errors are spread out more asymmetrically towards the negative departures. QRNN is also not able to completely represent the wings of the distribution. This could also be a sampling issue, as the high errors we try to predict constitute a very small part of the complete dataset. 
 
-With AWS, the behaviour of predicted uncertainties is observed to be similar as for ICI (not shown). However, the relation between the mean uncertainty estimate ($\pm3\sigma$) and cloud impact is displayed in Fig.~\ref{fig:uncertainty_cloud_impact}. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. The most uncertain predictions are for the lowest peaking channel AWS-32, which incidentally is also most affected by  hydrometeor impact.  
+With SMS, the behaviour of predicted uncertainties is observed to be similar as for ICI (not shown). However, the relation between the mean uncertainty estimate ($\pm3\sigma$) and cloud impact is displayed in Fig.~\ref{fig:uncertainty_cloud_impact}. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. The most uncertain predictions are for the lowest peaking channel SMS-1, which incidentally is also most affected by  hydrometeor impact.  
 
-To conclude the results, we analyse if the uncertainty estimates given by QRNN are representative of prediction accuracy. Figure~\ref{fig:error_distribution_uncertainty_bins} shows the observed ICI errors binned by their corresponding uncertainty in $\pm\,2\sigma$  confidence interval. For all three channels, the spread of error distribution increases as the uncertainty about the accuracy of the prediction increases. The cases with high certainty have a narrow and sharp distribution, and the errors are mostly less than $\pm\,$2.5\,K. With increase in the uncertainty, frequency of cases with high accuracy decreases and the distributions spread out symmetrically to higher errors. Poor predictions occur more frequently when uncertainty is high. Cases with accurate predictions yet high uncertainty are also present. In spite of individual variations in the error distributions for each channel, predictions and their corresponding uncertainties follow the same relationship. Similar results are also obtained with AWS (not shown). 
+To conclude the results, we analyse if the uncertainty estimates given by QRNN are representative of prediction accuracy. Figure~\ref{fig:error_distribution_uncertainty_bins} shows the observed ICI errors binned by their corresponding uncertainty in $\pm\,2\sigma$  confidence interval. For all three channels, the spread of error distribution increases as the uncertainty about the accuracy of the prediction increases. The cases with high certainty have a narrow and sharp distribution, and the errors are mostly less than $\pm\,$2.5\,K. With increase in the uncertainty, frequency of cases with high accuracy decreases and the distributions spread out symmetrically to higher errors. Poor predictions occur more frequently when uncertainty is high. Cases with accurate predictions yet high uncertainty are also present. In spite of individual variations in the error distributions for each channel, predictions and their corresponding uncertainties follow the same relationship. Similar results are also obtained with SMS (not shown). 
 
 
 \section{Discussion}
@@ -694,9 +690,9 @@ The partial performance of QRNN is due to incomplete complementary information t
 %
 In the ICI observations examined here, the results show that using sub-mm channels can successfully predict the NFCS values with very high accuracy for I2V, and I3V. The predicted values have an excellent match with the true values, and the departures are symmetrically distributed around zero mean. Few cases with high cloud impact do affect the accuracy and introduce a small negative bias, but such cases are easily filtered out with a simple correction threshold filter. For example, it is shown that filtering out cases with correction greater than 5\,K, results in variabilities of the order of sensor noise with minimal reduction in data (2--6\,\%). For channel I1V, a slightly lower accuracy is observed due to relatively higher number of cases with residual cloud impact. The accuracy is improved by activating the correction filter, but some effect of residual cases is still apparent. Interestingly, reducing the correction threshold further has no significant effect on flagging these residual cases. In fact only clear-sky cases are removed. This is a consequence of the correction being too low. Since such cases introduce a small negative bias and skewness, they are more appropriately related to low-cloud impact. Compared to other two higher peaking channels, I1V is more sensitive to the effect of hydrometeors  and contamination from surface effects \citep[Fig. 4 of][]{eriksson:towar:20}. The cases with surface contamination are also localized and seasonal. The weighting functions of sub-mm channels can provide only a partial coverage to the hydrometeor impact at I1V. A part of lower troposphere sensed by I1V has almost zero coverage from sub-mm channels. Though such cases are few, their lack of representation prevents QRNN from correctly learning to predict the clear-sky values accurately.
 
-A similar pattern is seen when only one 325\,GHz channel is used to correct cloud impact in AWS. QRNN is successful in predicting NFCS values for all channels except for the lowest peaking channel AWS-32. For AWS-32, the resulting error distributions have significantly lower spread than the all-sky simulations, but are still negatively skewed. In spite of the slightly inferior performance for AWS-32, the high accuracy for other channels indicates that a single sub-mm channel like 325\,GHz is also sufficient for cloud correction at 183\,GHz. This is an important result as smaller satellites may be limited by their size to measure several sub-mm wavelengths.
+A similar pattern is seen when only one 325\,GHz channel is used to correct cloud impact in SMS. QRNN is successful in predicting NFCS values for all channels except for the lowest peaking channel SMS-1. For SMS-1, the resulting error distributions have significantly lower spread than the all-sky simulations, but are still negatively skewed. In spite of the slightly inferior performance for SMS-1, the high accuracy for other channels indicates that a single sub-mm channel like 325\,GHz is also sufficient for cloud correction at 183\,GHz. This is an important result as smaller satellites may be limited by their size to measure several sub-mm wavelengths.
 
-With ICI and AWS, for some channels the variability of errors smaller than measurement noise is achieved. This is a consequence of predictions for cases which lack cloud impact. QRNN predictions are weighted mean of measurements between channels. In the absence of clouds, also the sub-mm channels provide humidity information that is incorporated in the 183 GHz NFCS estimate and some compensation of noise can be achieved. This effect is observed to be stronger in ICI than AWS, as the former has a higher number of channels giving redundant information. Note that with actual satellite measurements, the spread of error distributions smaller than sensor noise could be difficult to achieve due to other underlying uncertainties not considered here. 
+With ICI and SMS, for some channels the variability of errors smaller than measurement noise is achieved. This is a consequence of predictions for cases which lack cloud impact. QRNN predictions are weighted mean of measurements between channels. In the absence of clouds, also the sub-mm channels provide humidity information that is incorporated in the 183 GHz NFCS estimate and some compensation of noise can be achieved. This effect is observed to be stronger in ICI than SMS, as the former has a higher number of channels giving redundant information. Note that with actual satellite measurements, the spread of error distributions smaller than sensor noise could be difficult to achieve due to other underlying uncertainties not considered here. 
  
 
 
@@ -715,7 +711,7 @@ In this study, a methodology based on quantile regression neural network (QRNN) 
 The applicability of QRNN based correction to current sensors is demonstrated with MHWS-2 (MicroWave Humidity Sounder-2) and it is shown that QRNN is partially successful in removing the cloud impact. In comparison to existing clear-filtering approaches, QRNN gives comparable or better performance with minimal rejection of data. Nonetheless, since cloud correction
 using a limited number of microwave channels is an ill-posed problem, a point-estimate-based correction using only microwave observations between 89 and 150 GHz is inherently limited in its capability of correcting cloud-contaminated brightness temperatures. 
 
-Based on the promising results from MWHS-2, and with future scope, we extend the study to include data from Ice Cloud Imager (ICI) sub-millimetre (sub-mm) channels. The results show that with  sub-mm channels, QRNN is able to correctly predict most of the cloudy cases and can provide high quality cloud corrected radiances. The predicted radiances have symmetric and narrow error distributions and for some channels the spread is smaller than the measurement noise. This makes it highly suitable for application to data assimilation (DA) systems. The robustness of sub-mm channels in cloud correction is also demonstrated with use of only 325\,GHz for cloud correction. This is applicable to smaller satellite missions like AWS, where only one of the higher frequencies is available. The results indicate that utilisation of only 325\,GHz can also be beneficial when other channels are absent. It's possible that the ICI sub-mm channels could also be used to cloud correct humidity radiances from MicroWave Imager (MWI)---another conically scanning radiometer onboard Metop-SG. MWI will measure frequencies from 18\,GHz to 183\,GHz. Both MWI and ICI have the same requirements for incidence angle and fore-view observations, but different footprints. Although re-mapping to a common footprint  would slightly compromise the data quality, the high accuracy achieved with ICI simulations suggests that the QRNN would work well even when actual measurements are available.
+Based on the promising results from MWHS-2, and with future scope, we extend the study to include data from Ice Cloud Imager (ICI) sub-millimetre (sub-mm) channels. The results show that with  sub-mm channels, QRNN is able to correctly predict most of the cloudy cases and can provide high quality cloud corrected radiances. The predicted radiances have symmetric and narrow error distributions and for some channels the spread is smaller than the measurement noise. This makes it highly suitable for application to data assimilation (DA) systems. The robustness of sub-mm channels in cloud correction is also demonstrated with use of only 325\,GHz for cloud correction. This is applicable to smaller satellite missions as represented by SMS, where only one of the higher frequencies is available. The results indicate that utilisation of only 325\,GHz can also be beneficial when other channels are absent. It's possible that the ICI sub-mm channels could also be used to cloud correct humidity radiances from MicroWave Imager (MWI)---another conically scanning radiometer onboard Metop-SG. MWI will measure frequencies from 18\,GHz to 183\,GHz. Both MWI and ICI have the same requirements for incidence angle and fore-view observations, but different footprints. Although re-mapping to a common footprint  would slightly compromise the data quality, the high accuracy achieved with ICI simulations suggests that the QRNN would work well even when actual measurements are available.
 
 The biggest advantage of QRNN compared to other regression based approaches is its probabilistic nature. The QRNN predictions over chosen quantiles are a measure of the accuracy at different probability levels. In this study, the predicted quantiles given by QRNN work well in representing the accuracy of the point estimate. The point estimates with low error have high certainty and incorrect predictions have low confidence. In comparison to deterministic correction approaches, the corrected radiances along with uncertainty estimates give additional benefit for DA systems. The statistical structures of underlying uncertainty are extremely important for DA systems as they offer a measure of reliability and robustness of observations.
 
@@ -734,22 +730,17 @@ In this study, we demonstrate the correction scheme with data from a limited per
 All radiative transfer forward simulations are made by the Atmospheric Radiative
 Transfer System \citep[ARTS,][]{eriksson:arts2:11,buehler:artst:18}), version
 arts-2.3.1. All simulations are based on dBZ-based model system presented by \citet{ekelund2020using}, i.e.\ CloudSat reflectivities are used as input and are converted to ice water content (IWC) and rain water content (RWC) using microphysical assumptions. For each atmospheric case, both all-sky and clear-sky calculations are performed. In the former, all hydrometeors contents are set to zero, while in the latter, IWC and RWC derived from CloudSat reflectivities, and liquid water content (LWC) from ERA-Interim \citep{dee2011erainterim} are included. In order to avoid a possible bias between clear-sky and all-sky calculations for insignificant hydrometeor contents, both calculations are made by the RT4 solver \citep{evans1995microwavec}. The absorption model takes into account the effect from nitrogen
-\citep{pwr:93}, oxygen \citep{pwr:93}, liquid water content \citep[LWC,][]{ellison2007permittivity}, and water vapour. For water vapour, absorption model as  in RTTOV \citep[Radiative transfer for TOVS,][]{saunders2018update} is followed, but with few modifications \citep{turner2019amsutran}. LWC is assumed to be totally absorbing. In the mapping of CloudSat reflectivities to RWC and IWC, a total separation between liquid and ice phase is assumed. All scattering hydrometeors at temperatures above 0$^{\degree}$C and below 0$^{\degree}$\,C are assumed to be rain and ice hydrometeors, respectively. For RWC the particle size distribution (PSD) of \citet{abel2012improved} is applied. The PSD of IWC follows the basic formulation applied in DARDAR \citep[\url{
+\citep{pwr:93}, oxygen \citep{pwr:93}, liquid water content \citep[LWC,][]{ellison2007permittivity}, and water vapour. For water vapour, absorption model as  in RTTOV \citep[Radiative transfer for TOVS,][]{saunders2018update} is followed, but with few modifications \citep{turner2019amsutran}. LWC is assumed to be totally absorbing. In the mapping of CloudSat reflectivities to RWC and IWC, a total separation between liquid and ice phase is assumed. All scattering hydrometeors at temperatures above 0$^{\degree}$C  and below 0$^{\degree}$\,C are assumed to be rain and ice hydrometeors respectively. For RWC, the particle size distribution (PSD) of \citet{abel2012improved} is applied. The PSD of IWC follows the basic formulation applied in DARDAR \citep[\url{
 	http://www.icare.univ-lille1.fr/projects/dardar}][]{delanoe2008variational}, using latest parameter values (i.e.\ $\alpha$ and $\beta$) as given by \citet{cazenave2019evolution}.
-This PSD can be considered as a ``two moment'' scheme, but is here applied in
-a one moment manner by setting $N_0^*$ (as a function of temperature)
-following Table~5 of \citet{delanoe2014normalized}, and letting the radar
-reflectivity set the remaining moment. Single scattering data are taken from
+This PSD can be considered as a ``two moment'' scheme, but is here applied in a one moment manner by setting $N_0^*$ (as a function of temperature)
+following Table~5 of \citet{delanoe2014normalized}, and letting the radar reflectivity set the remaining moment. Single scattering data are taken from
 \citet{eriksson:agene:18}. For ice hydrometeors, three habits are applied:
 perpendicular 3-bullet rosette, large plate aggregate and large column
-aggregate. In the last two cases, the aggregates are complemented with single
-crystal data to also cover smaller sizes. These data describe particles
-assumed to have a totally random orientation. To apply oriented particles is
-much more computationally costly and could not be accommodated inside the
-study. The land emissivity was taken from Tool to Estimate Land‐Surface Emissivities at Microwave frequencies \citep[TELSEM,][]{aires2011tool} and the
+aggregate. In the last two cases, the aggregates are complemented with single crystal data to also cover smaller sizes. The particles are assumed to have a totally random orientation. 
+To apply oriented particles is much more computationally costly and could not be accommodated inside the study. The land emissivity was taken from Tool to Estimate Land‐Surface Emissivities at Microwave frequencies \citep[TELSEM,][]{aires2011tool} and the
 Ocean/water from Tool to Estimate Sea‐Surface Emissivity from Microwaves to sub‐Millimeter waves \citep[TESSEM,][]{prigent2017sea}.
 
-Using the setup described above, forward simulations are performed for ICI and AWS. The output from ARTS is first two elements of the Stokes vector,  which are converted to brightness temperatures for H- and V-polarisation. 
+Using the setup described above, forward simulations are performed for ICI and SMS. The output from ARTS is first two elements of the Stokes vector,  which are converted to brightness temperatures for H- and V-polarisation. 
 
 \section{QRNN network structure}
 \label{appendix:hyperparamter}
@@ -765,7 +756,7 @@ A high performing QRNN model also requires tuning of multiple hyper-parameters. 
 In this study, we investigated the performance of QRNN only to certain hyper-parameters like number of neurons, hidden layers, learning rate, convergence epochs and batch size. The optimization of other hyper-parameters was not performed and were chosen empirically. Firstly, we performed a grid search to define the structure of the neural network. We evaluated the performance for three sizes of hidden layers ($\mathrm{n_h}$ = 2, 3, 4), and layer widths of sizes in the set [8, 16, 32, 64, 128, 256, 512]. The mean quantile loss and CRPS over all predicted quantiles was computed for each configuration (Fig.~\ref{fig:grid_search}). Increasing the complexity of the network by increasing the layer width and depth has a positive impact on performance. However for four hidden layers, increasing the number of neurons beyond 128 has no significant impact on the performance. On basis of these results, a neural network with four hidden layers and 128 neurons in each layer is selected. For optimising the training parameters, a customised  learning rate scheduler was implemented. The initial learning rate was reset after a certain number of epochs.  We started the training process with a initial learning rate of 0.1, and decreased it by a factor of 10 after 100 epochs. The best neural network performance was obtained when the network was trained three times. Each time with a new initial learning rate. For each training, if the validation loss remained unchanged till 6 training epochs, the learning rate was reduced by a factor of 2. 
 In order to select the batch size, we simply compared the performance for two batch sizes: 128 and 256, and the former gave better results. Concerning number of epochs, we obtained best results when the network was trained longer. Choosing a lower value of epochs (e.g. 50), did not affect the accuracy of the median value, yet deteriorated the prediction uncertainty. We did not optimise the type of activation function and Rectified Linear Unit (ReLu) was used in all layers. 
 
-Though these set of hyper-parameters were selected for QRNN-single applied to I2V, they worked well for both ICI and AWS QRNN experiments. However, for MWHS-2, an identical hyper-parameter framework but three hidden layers gave best results.  
+Though these set of hyper-parameters were selected for QRNN-single applied to I2V, they worked well for both ICI and SMS QRNN experiments. However, for MWHS-2, an identical hyper-parameter framework but three hidden layers gave best results.  
 
 
      %% Appendix A1, A2, etc.
@@ -796,11 +787,9 @@ Though these set of hyper-parameters were selected for QRNN-single applied to I2
 
 
 \begin{acknowledgements}
-The part associated with AWS was done with funding from EUMETSAT (contract  EUM/CO/20/4600002417/CJA), while remaining work was mainly funded by the Swedish National Space Agency (grants 166/18 and 154/19). David Duncan is supported by the EUMETSAT Fellowship Programme.
+The part associated with SMS was done with funding from EUMETSAT (contract  EUM/CO/20/4600002417/CJA), while remaining work was mainly funded by the Swedish National Space Agency (grants 166/18 and 154/19). David Duncan is supported by the EUMETSAT Fellowship Programme.
 This project would not had been possible without the contribution of all individuals behind the open source softwares used (ARTS, Python, PyTorch, Numpy and Matplotlib).
 \end{acknowledgements}
-
-
 
 
 %% REFERENCES
