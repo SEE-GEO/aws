@@ -1,0 +1,109 @@
+\documentclass[11pt,a4paper,draft]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+%\usepackage{showframe} %This line can be used to clearly show the new margins
+
+\newgeometry{vmargin={30mm}, hmargin={35mm,25mm}} 
+
+\begin{document}
+\textbf{Response Reviewer 2}
+
+\textbf{
+	Interactive comment on ``Can machine learning
+	correct microwave humidity radiances for the
+	influence of clouds?'' by Inderpreet Kaur et al.}
+
+\begin{itemize}
+
+\item 			
+			As I understand it, this study uses only simulated measurements (either with or without hydrometeors included), even for MWHS-2 for which actual measurements are available. This should be made clearer, especially given line 66, which states that no``background'' data is required for the method. I'd also like to see a bit more discussion 	about whether the results you present should be expected to hold for real data. An assumption that you are making is that your forward model can represent real clouds with enough fidelity that a model trained on simulated data will still work on real-world data. Can you point to any evidence to back up this assumption? Have you tried comparing the histograms of model-simulated Tbs with real-world MWHS-2 Tbs?
+
+\textcolor{blue}{Reply: }
+
+		
+\item  	
+			What is the computational cost of the QRNN method compared to simpler cloud-
+			clearing filters? Could it feasibly be implemented into existing NWP models given
+			current computational constraints?
+
+\textcolor{blue}{Reply:}
+
+\item  
+			Lines 135-143: Why the large difference in number of cases simulated for ICI (220,000)
+			vs. AWS (143,000), if they are both coming from the same population of CloudSat
+			profiles? For the training dataset, you use about 75\% of total cases for MWHS-2,
+			about 80\% of cases for ICI, and about 84\% of cases for AWS. Why this difference in
+			proportions?
+
+\textcolor{blue}{Reply: Yes, both ICI and AWS simulations come from same population of Cloudsat. For SMS, we had access to a smaller database, which was used for a earlier study. Due to difference in sizes of the available obseravtions, maximum possible observations were incorporated to allow  representation to each cloud event. }
+
+\item  
+			Line 340: ``With a test dataset of 70 000 samples, we cannot represent the far wings of the distribution accurately.'' Couldn't one apply this same reasoning to Figures 2,3, or
+			8, which have density values below $10^{-4}$ included?
+
+\textcolor{blue}{Reply: Yes, the same reasoning applies to Figures 2, 3 and 8 as well. We do not curtail the plot at $10^{-4}$ in these figures, so that it can be shown that most of the cases with density less than $10^{-4}$ correspond to low accuracy, due to their incomplete representation.}
+
+
+\item 
+			Figure 13: I wonder if there might be an easier, more concise way to evaluate whether
+			the uncertainty intervals are properly calibrated. Namely, could you simply calculate
+			how often the true value falls within the $\pm2\sigma$ uncertainty range, for each of the un-
+			certainty bins ($0 - 3$K, $3 - 8$K, $8 +$ K) that you've included on the plot? If this percentage
+			is significantly less than 95\%, it would suggests that your uncertainties are too small,
+			while if it were closer to 100\% it would suggest your uncertainties are too large. Even
+			if you don't get rid of Fig. 13, I think this would be useful information to include in the paper.
+
+\textcolor{blue}{Reply:}
+
+\item  
+			Lines 498-499: ``. . . other underlying uncertainties not considered here.'' Whether here or elsewhere in the paper, I think you should talk a bit more about what these other uncertainties are (radiative transfer model errors should certainly be discussed), and what effects they might have on your results.
+
+\textcolor{blue}{Reply:}
+
+\end{itemize}
+	
+\textbf{Typos}
+\begin{itemize}
+
+
+\item Line 26: The phrase ``weather satellites are since some time equipped'' is confusing to
+me. I suggest ``weather satellites have for some time been equipped. . .''
+
+\textcolor{blue}{Reply: The sentence is re-written as per suggestion.}
+
+\item Line 51: I believe you are missing the word ``on'' between ``predicated'' and ``Gaussian.''
+
+\textcolor{blue}{Reply: The typo is corrected.}
+
+\item Line 154: Should 85\% be changed to 84\%? That would be +2 sigma for a normal
+distribution.
+
+\textcolor{blue}{Reply: Yes, the predicted percentile should be 84\% instead of 85\%. The typo is corrected.} 
+
+
+\item Line 455:``. . . provide coverage to the humidity channels in, lower and mid troposphere''
+This is confusing - get rid of the comma and add the word ``the'' instead?
+
+\textcolor{blue}{Reply: The comma is removed and the word ``the'' is added.}
+
+
+\item Line 494:	``QRNN predictions are weighted mean. . .'' I think this should say, ``QRNN
+predictions are the weighted mean. . .''
+
+\textcolor{blue}{Reply: The word ``the'' is added.}
+
+
+
+\item Line 508: Missing ``the'' before ``same''
+
+
+\textcolor{blue}{Reply: The word ``the'' is added.}
+
+\end{itemize}
+	
+\end{document}

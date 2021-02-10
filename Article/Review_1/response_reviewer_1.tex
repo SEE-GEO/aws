@@ -1,0 +1,138 @@
+\documentclass[11pt,a4paper,draft]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{xcolor}
+%\usepackage{showframe} %This line can be used to clearly show the new margins
+
+\newgeometry{vmargin={30mm}, hmargin={35mm,25mm}} 
+
+\begin{document}
+\textbf{Response Reviewer 1}
+	
+\textbf{	Interactive comment on ``Can machine learning
+	correct microwave humidity radiances for the
+	influence of clouds?'' by Inderpreet Kaur et al.}
+
+
+\begin{itemize}
+
+\item 	precipitation and most dense clouds" I think the hydrometeor size is an important
+		
+		
+\textcolor{blue}{Reply: We agree that the hydrometeor size is an important aspect, but when it comes to an overview of the contamination at 183\,GHz, precipitating clouds and clouds with large optical thickness have the strongest effect. Though a dense cloud could be composed of hydrometeors of different shapes and size. }
+		
+		
+\item	L66: ``only using measurements (no background data involved)'' My understanding is
+		that the method is in theory model-free, but for the demonstration in this study, sim-
+		ulations (e.g. background simulated at MWHS2 frequency) are used. Am I correct?
+		Maybe this should be stressed here. Why not try with real MWHS2 observation for the
+		all sky dataset?
+		
+\textcolor{blue}{Reply: Yes, the demonstration of the entire concept is based on simulations. We do not try with the real MWHS-2 observations as for the training process we would still require the clear-sky simulations.} 
+		
+		
+\item
+		L137 "Simulations for all three sensors are noise free, so to incorporate the measurement uncertainties, whenever needed, Gaussian noise is added according to the chan-
+		nel NEDT (Table 1 ? Table 3)." Are the errors arising from the radiative transfer calculation accounted for?
+		
+\textcolor{red}{Reply: } 
+		
+		
+		
+\item	
+		L159: "for all selected quantile fractions " by quantile fraction, do you mean the n th
+		amongst the 7 selected (from 0.2 to 99.8\%)? Also, 16, 50 and 85\% are not symmetric
+		(rounding?)
+		
+\textcolor{blue}{Reply: Yes, the selected quantiles are the seven percentiles mentioned. We re-phrase some sentences here to make it more clear. 85\% is a typo, it should be 84\%. }
+		
+		
+\item	
+		L163: Pfreundschuh uses an indicator function I (=1 or 0) in the CRPS, the authors
+		here use y, can they explain the difference?
+		
+\textcolor{blue}{Reply: In the study by Pfreundschuh et al., 2018, CRPS is defined as using an indicator function ($I$), however for QRNN the integral is evaluated only by approximation. To calculate the CRPS, we use a piece-wise linear fit to the approximate posterior CDF obtain from the predicted quantiles. This approximation is further used to calculate CRPS. }
+		
+		
+\item	
+		L173: " The input data is all-sky brightness temperature" the simulated one, even for
+		MWHS2, right?
+		
+\textcolor{blue}{Reply: Yes, even for MWHS-2 we use simulated all-sky brightness temperatures.}
+		
+		
+\item	L301: "0.15 K" should be -0.15
+		
+\textcolor{blue}{Reply: The correction is made.} 
+		
+		
+	
+\item	
+		L453: "Among these four channels, 150 GHz has the highest peaking function around 4
+		C2km (Chen and Bennartz, 2020)" Could you please clarify what you mean here, 150GHz
+		is neither the highest nor the lowest peaking channel nor it peaks at 4km. Channel 89,
+		118+/-1.1, 118+/-2.5, and 150 GHz peak at 0.1, 9.6, 2.9, 1km, respectively (according
+		to Chen and Bennartz, 2020), this can also be seen in Lawrence et al. (2018) Fig. 1
+		through the Jacobians of channels 6 and 7.
+	
+\textcolor{blue}{Reply: The reviewer is correct. It was wrongly mentioned that 150 GHz is the highest peaking channel, at 4\,km. We have corrected the text and it now reads as:	
+``The channels, 150\,GHz and 118.75$\pm$2.5 peak between surface and 4\,km. These channels can only provide coverage to the humidity channels in the lower and mid troposphere. However, the 183\,GHz channels are sensitive to hydrometeor content up to 10\,km. The channel 118.75$\pm$1.1 peaks around 10\,km, but such information is only partly relevant for the higher peaking channels of 183\,GHz.'' }
+
+		
+\item	L460: "but such information would be not be completely orthogonal" duplicate "be"
+		
+\textcolor{blue}{Reply: The duplicate word is removed. }
+		
+		
+		
+\item	
+		Table 1: NEDT are constructor specifications, the real noise is lower, see
+		Fig 5 Guo, Y., J. Y. He, S. Y. Gu, and N. M. Lu, 2019: Calibration and validation of
+		Feng Yun-3-D microwave humidity sounder II. IEEE Geoscience and Remote Sensing
+		Letters, doi:10.1109/LGRS.2019.2957403.	Tab 5 Carminati, F., Atkinson, N., Candy, B., Lu, Q.: Insights into the Microwave Instruments Onboard the Feng-Yun 3D Satellite: Data Quality and Assimilation in the Met Office NWP System. Adv. Atmos. Sci. (2020). https://doi.org/10.1007/s00376-020-0010-1
+	
+\textcolor{red}{Reply:  }
+		
+\end{itemize}
+
+		
+		
+		\textbf{Questions:}
+		\newline
+\begin{itemize}
+		
+\item	
+		Is this method applicable to IR e.g. to an ATOVS system?
+	
+\textcolor{blue}{Reply:  Yes, the method could potentially be applied to IR. The functioning and the performance of the cloud correction approach is based on the differences in cloud signatures over different frequencies in the same field of view. For IR, infact, this feature is regularly used to flag out cloud contamination. Most cloud flagging schemes for IR are based on brightness temperature threshold.
+}
+
+\item 		
+		The authors explain that it could benefit the all-sky assimilation systems indirectly for
+		the analysis increment. Instead (or in addition) could it be used to model the variable
+		observation error (when and by how much to be inflated)? This would be, in my view,
+		the most valuable.	
+			
+\textcolor{blue}{Reply: }
+		
+\item	Could the uncertainty use for weak constraint 4dvar?
+		
+\textcolor{blue}{Reply:}
+		
+		
+		
+\item	
+		What is the resource cost of this method (is this fast enough to be used in 1-h regional
+		nwp with 30min window)?
+	
+\textcolor{blue}{Reply:}
+		
+\end{itemize}		
+
+	
+	
+\end{document}
