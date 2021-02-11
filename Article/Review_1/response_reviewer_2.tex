@@ -23,7 +23,9 @@
 \item 			
 			As I understand it, this study uses only simulated measurements (either with or without hydrometeors included), even for MWHS-2 for which actual measurements are available. This should be made clearer, especially given line 66, which states that no``background'' data is required for the method. I'd also like to see a bit more discussion 	about whether the results you present should be expected to hold for real data. An assumption that you are making is that your forward model can represent real clouds with enough fidelity that a model trained on simulated data will still work on real-world data. Can you point to any evidence to back up this assumption? Have you tried comparing the histograms of model-simulated Tbs with real-world MWHS-2 Tbs?
 
-\textcolor{blue}{Reply: }
+\textcolor{blue}{Reply: We agree with the reviewer, the line 66, can be confusing. We have rearranged the text to give clarity.
+Regarding the the discussion about simulations holding well for the real-data, we have added a new subsection () under Discussion.
+Also, MWHS-2 simulations used in the study are the background radiance simulated by ECMWF for their assimilation systems. Their observational error model is already described in literature e.g. Lawrence et al., 2015. }
 
 		
 \item  	
@@ -31,7 +33,7 @@
 			clearing filters? Could it feasibly be implemented into existing NWP models given
 			current computational constraints?
 
-\textcolor{blue}{Reply:}
+\textcolor{blue}{Reply: \textcolor{red}{add time} Yes, it would be feasible to implement the scheme into existing NWP models. It should be noted QRNN was not optimized to get the maximum computational performance. However, with the modern computing architectures a much faster computation can be expected. }
 
 \item  
 			Lines 135-143: Why the large difference in number of cases simulated for ICI (220,000)
@@ -40,25 +42,21 @@
 			about 80\% of cases for ICI, and about 84\% of cases for AWS. Why this difference in
 			proportions?
 
-\textcolor{blue}{Reply: Yes, both ICI and AWS simulations come from same population of Cloudsat. For SMS, we had access to a smaller database, which was used for a earlier study. Due to difference in sizes of the available obseravtions, maximum possible observations were incorporated to allow  representation to each cloud event. }
+\textcolor{blue}{Reply: Yes, both ICI and AWS simulations come from same population of Cloudsat. For SMS, we had access to a smaller database, which was used for a earlier study. Due to difference in sizes of the available observations, maximum possible observations were incorporated to allow  representation to each cloud event. Even with differences in the database sizes, the results show that the predicted quantiles are well calibrated for all three sensors. With a larger database, one could expect similar or even better performance.}
 
 \item  
 			Line 340: ``With a test dataset of 70 000 samples, we cannot represent the far wings of the distribution accurately.'' Couldn't one apply this same reasoning to Figures 2,3, or
 			8, which have density values below $10^{-4}$ included?
 
-\textcolor{blue}{Reply: Yes, the same reasoning applies to Figures 2, 3 and 8 as well. We do not curtail the plot at $10^{-4}$ in these figures, so that it can be shown that most of the cases with density less than $10^{-4}$ correspond to low accuracy, due to their incomplete representation.}
+\textcolor{blue}{Reply: Yes one could apply the same reasoning to the Figures 2, 3, or 8, but we prefer to show the complete distribution to emphasize that the cases with large errors occur infrequently. \textcolor{red}{Shall we show the complete dist?}}
 
 
 \item 
 			Figure 13: I wonder if there might be an easier, more concise way to evaluate whether
 			the uncertainty intervals are properly calibrated. Namely, could you simply calculate
-			how often the true value falls within the $\pm2\sigma$ uncertainty range, for each of the un-
-			certainty bins ($0 - 3$K, $3 - 8$K, $8 +$ K) that you've included on the plot? If this percentage
-			is significantly less than 95\%, it would suggests that your uncertainties are too small,
-			while if it were closer to 100\% it would suggest your uncertainties are too large. Even
-			if you don't get rid of Fig. 13, I think this would be useful information to include in the paper.
+			how often the true value falls within the $\pm2\sigma$ uncertainty range, for each of the uncertainty bins ($0 - 3$K, $3 - 8$K, $8 +$ K) that you've included on the plot? If this percentage is significantly less than 95\%, it would suggests that your uncertainties are too small, while if it were closer to 100\% it would suggest your uncertainties are too large. Even if you don't get rid of Fig. 13, I think this would be useful information to include in the paper.
 
-\textcolor{blue}{Reply:}
+\textcolor{blue}{Reply: As per suggestion of the reviewer, we have included the information highlighting how well calibrated the uncertainties are. We add this information in Fig. 13. We provide the occurence percentage of true value for each uncertainty bin. We would also like to point out that Fig.6 and Fig.10 already show the calibration of uncertainty intervals, but this additional information reinforces the results further.} 
 
 \item  
 			Lines 498-499: ``. . . other underlying uncertainties not considered here.'' Whether here or elsewhere in the paper, I think you should talk a bit more about what these other uncertainties are (radiative transfer model errors should certainly be discussed), and what effects they might have on your results.

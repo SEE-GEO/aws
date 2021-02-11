@@ -126,15 +126,7 @@ At 183\,GHz, the impact of hydrometeors typically causes a decrease in the obser
 In this study, we approach the cloud filtering task from a new angle. The basic idea
 is to derive an estimate of the corresponding noise-free clear-sky (NFCS) value
 (i.e.\ the radiance that would have been measured in absence of noise and
-hydrometeors). This is done for each channel separately, only using
-measurements (no ``background'' data involved). Not only a best estimate is
-provided, but also a case-specific uncertainty. This information could be used as a pure filter, by rejecting data where the correction exceeds some threshold value. However, even
-better is to replace the original value with the predicted NFCS value when
-forming the clear-sky dataset. We denote this approach as cloud correction. It
-is shown below that a basically bias free cloud correction can be obtained.
-This feature also removes the need for defining threshold values, as long as the retrieval or
-assimilation system can incorporate the uncertainty of the corrected value. As
-also will be shown, the uncertainty for originally clear-sky data is determined
+hydrometeors). Not only a best estimate is provided, but also a case-specific uncertainty. This information could be used as a pure filter, by rejecting data where the correction exceeds some threshold value. However, even better is to replace the original value with the predicted NFCS value when forming the clear-sky dataset. We denote this approach as cloud correction. This is done for each channel separately and by only using the measurements, although the scheme is demonstrated in the study by using simulated observations. It is shown below that a basically bias free cloud correction can be obtained. This feature also removes the need for defining threshold values, as long as the retrieval or assimilation system can incorporate the uncertainty of the corrected value. As also will be shown, the uncertainty for originally clear-sky data is determined
 by noise, but the uncertainty increases with magnitude of correction.
 Accordingly, the cloud correction approach permits the full weight of
 clear-sky data to be preserved.
@@ -196,9 +188,9 @@ presents the conclusions from this work, and the future outlook.
 	\end{tabular}
 	\belowtable{} % Table Footnotes
 \end{table}
-The MicroWave Humidity Sounder 2 (MWHS-2) is an instrument on two current satellites in the FengYun-3 series, FY-3C and FY-3D. MWHS-2 is a cross track scanning microwave radiometer and measures 15 frequencies in the range 89--191\,GHz. 89\,GHz and 150\,GHz are window channels, five humidity sounding channels are centered around 183\,GHz, and eight temperature sounding channels are centered on the 118\,GHz oxygen absorption line. The five humidity sounding channels are similar to ATMS. Observations from MWHS-2 are routinely assimilated in all-sky conditions at the European Centre for Medium-Range Weather Forecasts (ECMWF) with demonstrable positive impact on forecast performance \citep{duncan2020MWHS}. The channels relevant to this study are described in Table~\ref{tab:specifications_MWHS2}. 
+The MicroWave Humidity Sounder 2 (MWHS-2) is an instrument on two current satellites in the FengYun-3 series, FY-3C and FY-3D. MWHS-2 is a cross track scanning microwave radiometer and measures 15 frequencies in the range 89--191\,GHz. 89\,GHz and 150\,GHz are window channels, five humidity sounding channels are centered around 183\,GHz, and eight temperature sounding channels are centered on the 118\,GHz oxygen absorption line. The five humidity sounding channels are similar to ATMS. Observations from MWHS-2 are routinely assimilated in all-sky conditions at the European Centre for Medium-Range Weather Forecasts (ECMWF) with demonstrable positive impact on forecast performance \citep{duncan2020MWHS}. 
 
-For this study, MWHS-2 simulations were sourced from the operational ECMWF assimilation system.
+For the demonstation of the study, MWHS-2 background observations or simulations are used. Actual measurements are not taken into account. The requisite data was obtained from ECMWF. More details are described in Sect.~\ref{simulations}.
 
 \subsubsection{Ice Cloud Imager}
 %
@@ -264,6 +256,7 @@ if the mission has additional channels at lower frequencies or not. A brief summ
 
 \subsection{Simulations}
 %
+\label{simulations}
 MWHS-2 simulated radiances during the period June--July 2020 are sourced from ECMWF. In the current version of the ECMWF Integrated Forecasting System (IFS), cycle 47R1 \citep{IFS47R1chap1}, clear-sky and all-sky radiative transfer are performed simultaneously for monitoring purposes, despite all humidity sounders being assimilated via all-sky exclusively. These side by side radiative transfer calculations on a large variety of model scenes provides an ideal dataset for comparing radiances with and without cloud effects. Out of all the available observations during the period, we use data for the latitudinal range: $60^{\degree}$\,S to $60^{\degree}$\,N and satellite zenith angle, less than $7.5^{\degree}$. With this filter, we have approximately 290\,000 cases.
 
 ICI and SMS frequencies are simulated with Atmospheric Radiative Transfer Simulator \citep[ARTS,][]{buehler:artst:18}. For the forward simulations, Cloud Satellite \citep[Cloudsat,][]{Stephens2002cloudsat} profiles during August 2015 are randomly selected. The input data are restricted between $60\unit{^{\degree}S}$ to $60\unit{^{\degree}N}$, and surface is below 500\,m. Both clear-sky and all-sky scenarios  are simulated. The complete simulation setup is described in Appendix \ref{appendix:ARTS_setup}. For ICI and SMS, 220\,000 and 143\,000 cases are simulated, respectively. For SMS, sensor viewing angles from $0\unit{^{\degree}S}$ to $45\unit{^{\degree}N}$ are simulated, but the results described in this study are based on nadir viewing angle. Simulations for all three sensors are noise free, so to incorporate the measurement uncertainties, whenever needed, Gaussian noise is added according to the channel NE$\Delta$T (Table~\ref{tab:specifications_MWHS2} -- Table~\ref{tab:specifications_SMS}). 
@@ -664,7 +657,7 @@ In an analogy to the results from ICI channels, we perform a similar error distr
 \end{figure}
 \begin{figure*}[t]
 	\includegraphics[width=\textwidth]{Figures/fig13.pdf}	
-	\caption{Distribution of errors binned according to their uncertainty. Results are from QRNN-single for channels I1V, I2V and I3V.}
+	\caption{Distribution of errors binned according to their uncertainty. The occurrence of true value in each uncertainty interval bin is given in the parentheses. Results are from QRNN-single for channels I1V, I2V and I3V.}
 	\label{fig:error_distribution_uncertainty_bins}	
 \end{figure*}
 %f
@@ -679,11 +672,17 @@ Figure~\ref{fig:predicted_errors} shows the comparison of observed errors to pre
 
 With SMS, the behaviour of predicted uncertainties is observed to be similar as for ICI (not shown). However, the relation between the mean uncertainty estimate ($\pm3\sigma$) and cloud impact is displayed in Fig.~\ref{fig:uncertainty_cloud_impact}. For all five channels, the predictions with small or relatively low cloud signal have a low uncertainty or in other words have high sharpness. As fraction of cloud impact increases, the predictions become increasingly uncertain. The most uncertain predictions are for the lowest peaking channel SMS-1, which incidentally is also most affected by  hydrometeor impact.  
 
-To conclude the results, we analyse if the uncertainty estimates given by QRNN are representative of prediction accuracy. Figure~\ref{fig:error_distribution_uncertainty_bins} shows the observed ICI errors binned by their corresponding uncertainty in $\pm\,2\sigma$  confidence interval. For all three channels, the spread of error distribution increases as the uncertainty about the accuracy of the prediction increases. The cases with high certainty have a narrow and sharp distribution, and the errors are mostly less than $\pm\,$2.5\,K. With increase in the uncertainty, frequency of cases with high accuracy decreases and the distributions spread out symmetrically to higher errors. Poor predictions occur more frequently when uncertainty is high. Cases with accurate predictions yet high uncertainty are also present. In spite of individual variations in the error distributions for each channel, predictions and their corresponding uncertainties follow the same relationship. Similar results are also obtained with SMS (not shown). 
+To conclude the results, we analyse if the uncertainty estimates given by QRNN are representative of prediction accuracy. Figure~\ref{fig:error_distribution_uncertainty_bins} shows the observed ICI errors binned by their corresponding uncertainty in $\pm\,2\sigma$  confidence interval. For all three channels, the spread of error distribution increases as the uncertainty about the accuracy of the prediction increases. The cases with high certainty have a narrow and sharp distribution, and the errors are mostly less than $\pm\,$2.5\,K. With increase in the uncertainty, frequency of cases with high accuracy decreases and the distributions spread out symmetrically to higher errors. Poor predictions occur more frequently when uncertainty is high. Cases with accurate predictions yet high uncertainty are also present. In spite of individual variations in the error distributions for each channel, predictions and their corresponding uncertainties follow the same relationship. We also evaluated if the uncertainty intervals are properly calibrated  Similar results are also obtained with SMS (not shown). 
 
 
 \section{Discussion}
 \label{discussions}
+
+\subsection{Cloud impact in simulations}
+
+
+\todo{As mentioned in Sect.~{}, the MWHS-2 simulations are the background radiances simulated by ECMWF for their assimilation systems. The 
+For ICI and SMS, the incorporate cloud variability by randomly selecting between three habits. But with only one particle size distribution (PSD), the true hydrometeor variability will be underestimated. But the all-sky DA systems, still assume a single PSD and habit combination. This can cause some model uncertainty and the mapping of cloud information from sub-mm channels to 183\,GHz shall not be perfect. Nonetheless, the advantge of the our scheme is that it allows to incorporate multiple PSD and habit variations and adapt to the local conditions.} 
 
 \subsection{Cloud correction with existing sensors}
 %
