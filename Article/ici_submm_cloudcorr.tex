@@ -315,9 +315,11 @@ addition to the quantile loss, also the Continuously Ranked Probability Score
 $F$ and the reference value $y$, the CRPS is defined as
 %
 \begin{align}
-\text{CRPS}(F, y) = \int_{-\infty}^{\infty} \left (F(y') - y\right )^2\: dy'.
+\text{CRPS}(F, y) = \int_{-\infty}^{\infty} \left (F(y') - \mathbf{I}_{y \leq y'} \right)^2\: dy',
 \end{align}
 %
+where $\mathbf{I}_{y \leq y'}$ is the indicator function taking the value $1$ when the condition
+$y \leq y'$ is true and $0$ otherwise.
 To compute the CRPS for a prediction from a QRNN, the predicted quantiles are
 used to derive a piece-wise linear approximation of the CDF of the predicted
 distribution. Note that CRPS is only used to evaluate hyper-parameter tuning.
